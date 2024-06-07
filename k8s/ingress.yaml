@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: beta
+  annotations:
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+spec:
+  tls:
+    - hosts:
+        - beta.klimatkollen.se
+      secretName: beta-klimatkollen-se-tls
+
+  rules:
+    - host: beta.klimatkollen.se
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: beta
+                port:
+                  number: 8080
