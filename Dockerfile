@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN astro telemetry disable
+RUN npm run telemetry
 RUN npm run build
 
 FROM nginx:alpine AS runtime
