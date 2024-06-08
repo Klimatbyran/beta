@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import { Company } from '../components/ui/company.tsx'
+import { Companies } from '../components/ui/companies.tsx'
 import '../../app/globals.css'
-import data from '../data/Lifco_Group.json'
+
 ---
 
 <Layout title="Welcome to Astro.">
   <main class="flex flex-wrap gap-2">
-    <Company company={data} className="flex w-1/3" />
+    <Companies />
   </main>
 </Layout>
 
