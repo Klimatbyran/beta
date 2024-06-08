@@ -56,10 +56,12 @@ export interface EmissionsScope {
 }
 
 export interface Emissions {
-  year: string;
-  scope1: EmissionsScope;
-  scope2: EmissionsScope;
-  scope3: EmissionsScope;
+  [year: string]: {
+    year: string;
+    scope1: EmissionsScope;
+    scope2: EmissionsScope;
+    scope3: EmissionsScope;
+  }
 }
 
 export interface BaseFacts {
@@ -106,7 +108,7 @@ export interface CompanyData {
   industryNace: IndustryNace;
   baseYear: string;
   url: string;
-  emissions: Emissions[];
+  emissions: Emissions;
   baseFacts: BaseFacts;
   factors: Factors[];
   contacts: Contact[];
@@ -115,4 +117,12 @@ export interface CompanyData {
   reliability: string;
   needsReview: boolean;
   reviewComment: string;
+}
+
+export const isCompany = (value: CompanyData): value is CompanyData => {
+  console.log('isCompany', !!value.companyName , !!value.description , !!value.industryGics , !!value.industryNace , !!value.url , !!value.emissions , !!value.baseFacts)
+  if (value.companyName && value.industryGics && value.industryNace && value.url && value.emissions && value.baseFacts)
+    return true
+  else
+    return false;
 }

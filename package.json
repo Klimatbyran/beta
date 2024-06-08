@@ -16,6 +16,7 @@
     "@astrojs/check": "^0.7.0",
     "@astrojs/react": "^3.4.0",
     "@astrojs/tailwind": "^5.1.0",
+    "@fontsource/dm-sans": "^5.0.21",
     "@nivo/line": "^0.87.0",
     "@radix-ui/react-avatar": "^1.0.4",
     "@types/react": "^18.3.3",
