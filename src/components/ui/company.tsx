@@ -24,7 +24,7 @@ function extractInitials(name: string) {
 export function Company({ company }: { company: CompanyData }) {
   const year = '2023'
   console.log(company)
-  const emissions = company.emissions?.find((emission) => emission.year == year)
+  const emissions = company.emissions[year]
   const totalEmissions = emissions && (emissions.scope1.emissions || 0) + (emissions.scope2.emissions || emissions.scope2.mb ||emissions.scope2.lb || 0) + (emissions.scope3.emissions || 0)
   return (
     <div className="flex flex-col bg-gray-950 dark:bg-muted/40">
