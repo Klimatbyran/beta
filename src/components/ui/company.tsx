@@ -12,7 +12,7 @@ import {
   Card,
 } from '@/components/ui/card'
 
-import { CompanyData } from '@/data/companyData'
+import type { CompanyData } from '@/data/companyData'
 
 function extractInitials(name: string) {
   return (name || '')
