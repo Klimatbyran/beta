@@ -15,7 +15,7 @@ import {
 import { CompanyData } from '@/data/companyData'
 
 function extractInitials(name: string) {
-  return name
+  return (name || '')
     .split(' ')
     .map((part) => part[0])
     .join('')
@@ -23,8 +23,9 @@ function extractInitials(name: string) {
 
 export function Company({ company }: { company: CompanyData }) {
   const year = '2023'
-  const emissions = company.emissions.find((emission) => emission.year === year)
-  const totaltEmissions = (emissions.scope1.emissions || 0) + (emissions.scope2.emissions || emissions.scope2.mb ||emissions.scope2.lb || 0) + (emissions.scope3.emissions || 0)
+  console.log(company)
+  const emissions = company.emissions?.find((emission) => emission.year == year)
+  const totalEmissions = emissions && (emissions.scope1.emissions || 0) + (emissions.scope2.emissions || emissions.scope2.mb ||emissions.scope2.lb || 0) + (emissions.scope3.emissions || 0)
   return (
     <div className="flex flex-col bg-gray-950 dark:bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-gray-950 dark:bg-background sm:flex" />
@@ -39,10 +40,10 @@ export function Company({ company }: { company: CompanyData }) {
               <div className="text-lg font-bold text-gray-50 dark:text-gray-900">
                 {company.companyName}
               </div>
-              <div className="text-sm text-gray-400 dark:text-gray-500">
-                
-                Omsättning: {Math.round(company.baseFacts[year].turnover / 1_000_000)}M{company.baseFacts[year].unit} | Employees: {company.baseFacts[year].employees}
-              </div>
+              {company.baseFacts && (
+                <div className="text-sm text-gray-400 dark:text-gray-500">
+                  Omsättning: {Math.round(company.baseFacts[year].turnover / 1_000_000)}M{company.baseFacts[year].unit} | Employees: {company.baseFacts[year].employees}
+                </div>)}
             </div>
           </div>
         </header>
@@ -80,7 +81,7 @@ export function Company({ company }: { company: CompanyData }) {
                       </div>
                       <div className="text-2xl font-bold flex items-center gap-2 text-gray-50 dark:text-gray-900">
                         <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                          {totaltEmissions.toLocaleString('sv-se')}
+                          {totalEmissions.toLocaleString('sv-se')}
                         </div>
                       </div>
                     </div>

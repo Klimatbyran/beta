@@ -1,13 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import { Companies } from '../components/ui/companies.tsx'
+import { Company } from '../components/ui/company.tsx'
+import { isCompany } from '../data/companyData'
 import '../../app/globals.css'
 
+const response = await fetch('https://api.klimatkollen.se/api/companies')
+const data = await response.json()
+const company = data.filter(isCompany)[0]
+console.log('company', company)
 ---
 
 <Layout title="Welcome to Astro.">
   <main class="flex flex-wrap gap-2">
-    <Companies />
+    {company ? <Company company={company}/> : <div>No company found</div>}
   </main>
 </Layout>
 
@@ -16,7 +21,7 @@ import '../../app/globals.css'
     margin: auto;
     padding: 1rem;
     max-width: calc(100% - 2rem);
-    color: black;
+    color: white;
     font-size: 20px;
     line-height: 1.6;
   }
