@@ -12,7 +12,19 @@ import {
   Card,
 } from '@/components/ui/card'
 
-export function Company({ className }) {
+import { CompanyData } from '@/data/companyData'
+
+function extractInitials(name: string) {
+  return name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+}
+
+export function Company({ company, className }: { company: CompanyData, className: string }) {
+  const year = '2023'
+  const emissions = company.emissions.find((emission) => emission.year === year)
+  const totaltEmissions = (emissions.scope1.emissions || 0) + (emissions.scope2.emissions || emissions.scope2.mb ||emissions.scope2.lb || 0) + (emissions.scope3.emissions || 0)
   return (
     <div className={className}>
       <div className="flex flex-col bg-gray-950 dark:bg-muted/40">
@@ -21,15 +33,16 @@ export function Company({ className }) {
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-gray-950 px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 dark:bg-background">
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarImage alt="Company Logo" src="/placeholder-user.jpg" />
-                <AvatarFallback>AZ</AvatarFallback>
+                <AvatarImage alt={company.companyName} src="/placeholder-user.jpg" />
+                <AvatarFallback>{extractInitials(company.companyName)}</AvatarFallback>
               </Avatar>
               <div>
                 <div className="text-lg font-bold text-gray-50 dark:text-gray-900">
-                  AstraZeneca
+                  {company.companyName}
                 </div>
                 <div className="text-sm text-gray-400 dark:text-gray-500">
-                  Turnover: $120M | Employees: 1,200
+                  
+                  Omsättning: {Math.round(company.baseFacts[year].turnover / 1_000_000)}M{company.baseFacts[year].unit} | Employees: {company.baseFacts[year].employees}
                 </div>
               </div>
             </div>
@@ -47,15 +60,14 @@ export function Company({ className }) {
                         alt="Company Logo"
                         src="/placeholder-user.jpg"
                       />
-                      <AvatarFallback>AC</AvatarFallback>
+                      <AvatarFallback>{extractInitials(company.companyName)}</AvatarFallback>
                     </Avatar>
                     <div>
                       <CardTitle className="text-gray-50 dark:text-gray-900">
-                        Acme Inc
+                       {company.companyName}
                       </CardTitle>
                       <div className="text-sm text-gray-400 dark:text-gray-500">
-                        "We're committed to reducing our environmental impact
-                        and leading the way in sustainable business practices."
+                       {company.description}
                       </div>
                     </div>
                   </div>
@@ -65,11 +77,11 @@ export function Company({ className }) {
                     <div className="grid gap-4">
                       <div className="flex items-center justify-between">
                         <div className="font-semibold text-gray-50 dark:text-gray-900">
-                          Total Emissions
+                          Totala utsläpp {year}
                         </div>
                         <div className="text-2xl font-bold flex items-center gap-2 text-gray-50 dark:text-gray-900">
                           <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                            12,450
+                            {totaltEmissions.toLocaleString('sv-se')}
                           </div>
                         </div>
                       </div>
@@ -77,22 +89,21 @@ export function Company({ className }) {
                     </div>
                     <div className="grid gap-4">
                       <div className="font-semibold text-gray-50 dark:text-gray-900">
-                        Scope 1 and 2 Emissions
+                        Scope 1 and 2 utsläpp
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="font-medium text-gray-50 dark:text-gray-900">
-                              Scope 1 Emissions
+                              Scope 1 utsläpp
                             </div>
                             <div className="text-sm text-gray-400 dark:text-gray-500">
-                              Direct emissions from sources owned or controlled
-                              by the organization.
+                              Utsläpp från egna källor eller kontrollerade av organisationen.
                             </div>
                           </div>
                           <div className="text-2xl font-bold flex items-center gap-2 text-gray-50 dark:text-gray-900">
                             <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                              2,400
+                              {emissions.scope1.emissions.toLocaleString('sv-se')}
                             </div>
                           </div>
                         </div>
@@ -102,14 +113,13 @@ export function Company({ className }) {
                               Scope 2 Emissions
                             </div>
                             <div className="text-sm text-gray-400 dark:text-gray-500">
-                              Indirect emissions from the generation of
-                              purchased electricity, steam, heating, and cooling
-                              consumed by the organization.
+                              Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som
+                              konsumeras av organisationen.
                             </div>
                           </div>
                           <div className="text-2xl font-bold flex items-center gap-2 text-gray-50 dark:text-gray-900">
                             <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                              1,500
+                              {emissions.scope2.emissions.toLocaleString('sv-se')}
                             </div>
                           </div>
                         </div>
@@ -117,7 +127,7 @@ export function Company({ className }) {
                     </div>
                     <div className="grid gap-4">
                       <div className="font-semibold text-gray-50 dark:text-gray-900">
-                        Scope 3 Emissions Categories
+                        Scope 3 Utsläppskategorier
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
@@ -127,17 +137,16 @@ export function Company({ className }) {
                             </div>
                             <div>
                               <div className="font-medium text-gray-50 dark:text-gray-900">
-                                Purchased Goods and Services
+                                Köpta varor och tjänster
                               </div>
                               <div className="text-sm text-gray-400 dark:text-gray-500">
-                                Emissions from the production of goods and
-                                services purchased by the organization.
+                                Utsläpp från produktion av varor och tjänster som köpts av organisationen.
                               </div>
                             </div>
                           </div>
                           <div className="text-2xl font-bold mt-2 flex items-center gap-2 text-gray-50 dark:text-gray-900 justify-end">
                             <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                              5,200
+                              {emissions.scope3.categories['1_purchasedGoods']?.toLocaleString('sv-se')}
                             </div>
                           </div>
                         </div>
@@ -148,17 +157,16 @@ export function Company({ className }) {
                             </div>
                             <div>
                               <div className="font-medium text-gray-50 dark:text-gray-900">
-                                Business Travel
+                                Affärsresor
                               </div>
                               <div className="text-sm text-gray-400 dark:text-gray-500">
-                                Emissions from the transportation of employees
-                                for business-related activities.
+                                Utsläpp från transport av anställda för affärsrelaterade aktiviteter.
                               </div>
                             </div>
                           </div>
                           <div className="text-2xl font-bold mt-2 flex items-center gap-2 text-gray-50 dark:text-gray-900 justify-end">
                             <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                              1,800
+                              {emissions.scope3.categories['6_businessTravel']?.toLocaleString('sv-se')}
                             </div>
                           </div>
                         </div>
@@ -169,18 +177,17 @@ export function Company({ className }) {
                             </div>
                             <div>
                               <div className="font-medium text-gray-50 dark:text-gray-900">
-                                Employee Commuting
+                                Anställdas pendling
                               </div>
                               <div className="text-sm text-gray-400 dark:text-gray-500">
-                                Emissions from the transportation of employees
-                                between their homes and their worksites.
+                                Utsläpp från transport av anställda mellan deras hem och arbetsplatser.
                               </div>
                             </div>
                           </div>
                           <div className="text-2xl font-bold mt-2 flex items-center gap-2 text-gray-50 dark:text-gray-900 justify-end">
                             <div className="text-2xl font-bold flex items-center gap-2 text-gray-50 dark:text-gray-900 justify-end">
                               <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                                2,100
+                                {emissions.scope3.categories['7_employeeCommuting']?.toLocaleString('sv-se')}
                               </div>
                             </div>
                           </div>
@@ -192,40 +199,25 @@ export function Company({ className }) {
                             </div>
                             <div>
                               <div className="font-medium text-gray-50 dark:text-gray-900">
-                                Upstream Transportation and Distribution
+                                Uppströms transporter och distribution
                               </div>
                               <div className="text-sm text-gray-400 dark:text-gray-500">
-                                Emissions from the transportation and
-                                distribution of products purchased by the
-                                organization.
+                                Utsläpp från transport och distribution av produkter
+                                som köpts av organisationen, dvs från sina leverantörer.
                               </div>
                             </div>
                           </div>
                           <div className="text-2xl font-bold mt-2 flex items-center gap-2 text-gray-50 dark:text-gray-900 justify-end">
                             <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                              1,500
+                              {emissions.scope3.categories['4_upstreamTransportationAndDistribution']?.toLocaleString('sv-se')}
                             </div>
                           </div>
                         </div>
                         <div>
-                          <div className="flex items-center gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-200">
-                              <WormIcon className="h-5 w-5 text-gray-50 dark:text-gray-900" />
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-50 dark:text-gray-900">
-                                Waste Generated in Operations
-                              </div>
-                              <div className="text-sm text-gray-400 dark:text-gray-500">
-                                Emissions from the disposal and treatment of
-                                waste generated by the organization's
-                                operations.
-                              </div>
-                            </div>
-                          </div>
+                          {newFunction()}
                           <div className="text-2xl font-bold mt-2 flex items-center gap-2 text-gray-50 dark:text-gray-900 justify-end">
                             <div className="rounded-full bg-gray-800 dark:bg-gray-200 p-2">
-                              1,750
+                              {emissions.scope3.categories['5_wasteGeneratedInOperations']?.toLocaleString('sv-se')}
                             </div>
                           </div>
                         </div>
@@ -254,51 +246,23 @@ export function Company({ className }) {
                     </div>
                     <div className="col-span-2">
                       <div className="font-semibold text-gray-50 dark:text-gray-900">
-                        Our Sustainability Pledges and Goals
+                        Våra initiativ och löften
                       </div>
                       <ul className="grid gap-2">
-                        <li className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-200">
-                            <CheckIcon className="h-5 w-5 text-gray-50 dark:text-gray-900" />
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-50 dark:text-gray-900">
-                              Achieve Net Zero Emissions by 2030
+                        {company.initiatives.map((initiative, i) => (
+                          <li key={i} className="flex items-center gap-4">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-200">
+                              <CheckIcon className="h-5 w-5 text-gray-50 dark:text-gray-900" />
                             </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              We are committed to reducing our greenhouse gas
-                              emissions to net zero by the year 2030.
+                            <div>
+                              <div className="font-medium text-gray-50 dark:text-gray-900">
+                                {initiative.title}
+                              </div>
+                              <div className="text-sm text-gray-400 dark:text-gray-500">
+                                {initiative.description}%
+                              </div>
                             </div>
-                          </div>
-                        </li>
-                        <li className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-200">
-                            <CheckIcon className="h-5 w-5 text-gray-50 dark:text-gray-900" />
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-50 dark:text-gray-900">
-                              Transition to 100% Renewable Energy
-                            </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              We are working to transition our operations to
-                              100% renewable energy sources by 2025.
-                            </div>
-                          </div>
-                        </li>
-                        <li className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-200">
-                            <CheckIcon className="h-5 w-5 text-gray-50 dark:text-gray-900" />
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-50 dark:text-gray-900">
-                              Transition to 100% Renewable Energy
-                            </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              We are working to transition our operations to
-                              100% renewable energy sources by 2025.
-                            </div>
-                          </div>
-                        </li>
+                          </li>))}
                       </ul>
                     </div>
                   </div>
@@ -310,6 +274,22 @@ export function Company({ className }) {
       </div>
     </div>
   )
+}
+
+function newFunction() {
+  return <div className="flex items-center gap-4">
+    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-200">
+      <WormIcon className="h-5 w-5 text-gray-50 dark:text-gray-900" />
+    </div>
+    <div>
+      <div className="font-medium text-gray-50 dark:text-gray-900">
+        Avfall genererat i verksamheten
+      </div>
+      <div className="text-sm text-gray-400 dark:text-gray-500">
+        Utsläpp från avfall som genereras av organisationens verksamhet.
+      </div>
+    </div>
+  </div>
 }
 
 function CheckIcon(props) {
