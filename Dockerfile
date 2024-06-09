@@ -6,4 +6,4 @@ COPY . .
 RUN npm run telemetry
 ENV PORT=8080
 RUN npm run build
-RUN npm start
+CMD npm start
