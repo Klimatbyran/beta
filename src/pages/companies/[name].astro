@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { Company } from '../../components/company'
+import { Footer } from '../../components/footer'
+import { Card } from '../../components/ui/card'
+import { isCompany } from '../../data/companyData'
+import '../../../app/globals.css'
+
+const { name } = Astro.params
+console.log(name)
+const response = await fetch('https://api.klimatkollen.se/api/companies')
+const data = await response.json()
+const company = data
+  .filter(isCompany)
+  .find((company) => company.companyName.replaceAll(' ', '-') === name)
+---
+
+<Layout title="Welcome to Astro.">
+  <Card>
+    {company ? <Company company={company} /> : <div>No company found</div>}
+  </Card>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+</style>
