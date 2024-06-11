@@ -15,7 +15,7 @@ const company = data
   .find((company) => company.companyName.toLowerCase().replaceAll(' ', '-') === name)
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Klimatkollen — Få koll på företagens klimatomställning">
   <Card>
     {company ? <Company company={company} /> : <div>No company found</div>}
   </Card>
