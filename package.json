@@ -22,11 +22,13 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.10.2",
+    "bits-ui": "^0.21.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "svelte": "^4.2.18",
+    "tailwind-variants": "^0.2.1",
     "tailwindcss": "^3.4.4",
-    "typescript": "^5.4.5",
-    "svelte": "^4.2.18"
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "prettier": "^3.3.2",
