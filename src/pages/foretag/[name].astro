@@ -11,7 +11,7 @@ const company: CompanyData = data
   .find(
     (company: CompanyData) =>
       company.companyName.toLowerCase().replaceAll(' ', '-') ===
-      name.toLowerCase()
+      name.toLowerCase(),
   )
 ---
 
