@@ -1,0 +1,55 @@
+---
+import type { CompanyData } from '@/data/companyData'
+import { Card } from '../ui/card'
+import DataCard from '../DataCard.astro'
+
+interface Props {
+  company: CompanyData
+  year: number
+}
+
+const { company, year } = Astro.props
+---
+
+<Card class="flex flex-col gap-4" level={1}>
+  {
+    company.industryNace.division.name && (
+      <DataCard title="Industri" data={company.industryNace.division.name} />
+    )
+  }
+  {
+    company.baseFacts[year]?.turnover && (
+      <DataCard
+        title={'Omsättning ' + year}
+        data={
+          company.baseFacts[year].turnover.toLocaleString('sv-se') +
+          ' ' +
+          company.baseFacts.unit
+        }
+      />
+    )
+  }
+  {
+    company.baseFacts[year]?.employees && (
+      <DataCard
+        title={'Anställda 2023'}
+        data={company.baseFacts[year].employees}
+      />
+    )
+  }
+
+  {
+    company.contacts.length ? (
+      <div class="col-span-2">
+        <h3 class="text-lg font-semibold">Kontakt</h3>
+        <ul class="list-disc pl-5">
+          {company.contacts.map(({ name, email }) => (
+            <li class="text-sm text-muted">
+              {name} - {email}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : null
+  }
+</Card>

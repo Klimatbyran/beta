@@ -1,11 +1,9 @@
 ---
-import { Card, CardHeader, CardContent } from './ui/card'
 import { type CompanyData } from '@/data/companyData'
-import DataCard from './DataCard.astro'
-import ScopeEmissions from './ScopeEmissions.astro'
-import Scope3Emissions from './Scope3Emissions.astro'
-import InitiativeList from './InitiativeList.astro'
 import { buttonVariants } from './ui/button'
+import CompanyFacts from './company/CompanyFacts.astro'
+import CompanyEmissions from './company/CompanyEmissions.astro'
+import CompanyInitiatives from './company/CompanyInitiatives.astro'
 
 interface Props {
   company: CompanyData
@@ -13,113 +11,19 @@ interface Props {
 
 const { company } = Astro.props
 
-const year = '2023'
+const year = 2023
 const emissions = company.emissions[year]
-
-const totalEmissions = emissions
-  ? (emissions.scope1.emissions || 0) +
-    (emissions.scope2.emissions ||
-      emissions.scope2.mb ||
-      emissions.scope2.lb ||
-      0) +
-    (emissions.scope3.emissions || 0)
-  : 0
-
-const scopeEmissionsList = emissions
-  ? [
-      {
-        subtitle: 'Scope 1 utsläpp',
-        description:
-          'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        value: emissions.scope1.emissions,
-      },
-      {
-        subtitle: 'Scope 2 utsläpp',
-        description:
-          'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-        value: emissions.scope2.emissions,
-      },
-    ]
-  : []
-
-// TODO: Add fiscal year
 ---
 
 <article class="mx-auto max-w-screen-lg">
   {
     emissions ? (
-      <div class="mt-8 grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-4">
-        <Card class="sm:col-span-2" level={1}>
-          <CardHeader>
-            <h1 class="text-4xl font-bold leading-none tracking-tight">
-              {company.companyName}
-            </h1>
-            <div class="text-sm text-muted">{company.description}</div>
-            <div class="text-sm text-muted">
-              Läs
-              <a
-                href={company.url}
-                class="text-sm text-blue-500 underline dark:text-blue-300"
-              >
-                hållbarhetsrapport
-              </a>
-            </div>
-          </CardHeader>
-          <CardContent class="grid gap-6">
-            <DataCard
-              title={'Totala utsläpp ' + year}
-              data={totalEmissions.toLocaleString('sv-se')}
-            />
-            <ScopeEmissions
-              title="Scope 1 and 2 utsläpp"
-              emissions={scopeEmissionsList}
-            />
-            <Scope3Emissions emissions={emissions.scope3.categories} />
-          </CardContent>
-        </Card>
+      <div class="mt-8 grid auto-rows-max gap-4 md:gap-8">
+        <CompanyEmissions {company} {year} />
 
-        <Card class="sm:col-span-2" level={1}>
-          <h2 class="pb-4 text-3xl font-bold">Initiativ och löften</h2>
-          <InitiativeList initiatives={company.initiatives} />
-        </Card>
+        <CompanyInitiatives initiatives={company.initiatives} />
 
-        <Card class="flex flex-col gap-4 sm:col-span-2" level={1}>
-          {company.industryNace.division.name && (
-            <DataCard
-              title="Industri"
-              data={company.industryNace.division.name}
-            />
-          )}
-          {company.baseFacts[year]?.turnover && (
-            <DataCard
-              title={'Omsättning ' + year}
-              data={
-                company.baseFacts[year].turnover.toLocaleString('sv-se') +
-                ' ' +
-                company.baseFacts.unit
-              }
-            />
-          )}
-          {company.baseFacts[year]?.employees && (
-            <DataCard
-              title={'Anställda 2023'}
-              data={company.baseFacts[year].employees}
-            />
-          )}
-
-          {company.contacts.length ? (
-            <div class="col-span-2">
-              <h3 class="text-lg font-semibold">Kontakt</h3>
-              <ul class="list-disc pl-5">
-                {company.contacts.map(({ name, email }) => (
-                  <li class="text-sm text-muted">
-                    {name} - {email}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-        </Card>
+        <CompanyFacts {company} {year} />
       </div>
     ) : (
       <div class="mx-auto max-w-screen-md p-4">
