@@ -4,6 +4,7 @@ import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
+import CompanyGoals from './CompanyGoals.astro'
 
 interface Props {
   company: CompanyData
@@ -21,9 +22,11 @@ const emissions = company.emissions[year]
       <div class="mt-8 grid auto-rows-max gap-4 md:gap-8">
         <CompanyEmissions {company} {year} />
 
+        <CompanyFacts {company} {year} />
+
         <CompanyInitiatives initiatives={company.initiatives} />
 
-        <CompanyFacts {company} {year} />
+        <CompanyGoals goals={company.goals} />
       </div>
     ) : (
       <div class="mx-auto max-w-screen-md p-4">

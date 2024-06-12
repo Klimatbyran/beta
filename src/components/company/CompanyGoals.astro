@@ -4,24 +4,24 @@ import { Card } from '../ui/card'
 import type { CompanyData } from '@/data/companyData'
 
 interface Props {
-  initiatives: CompanyData['initiatives']
+  goals: CompanyData['goals']
 }
 
-const { initiatives } = Astro.props
+const { goals } = Astro.props
 ---
 
 <Card level={1}>
-  <h2 class="pb-4 text-3xl font-bold">Initiativ och löften</h2>
+  <h2 class="pb-4 text-3xl font-bold">Mål</h2>
   <ul class="grid gap-2">
     {
-      initiatives.map((initiative) => (
+      goals.map((goal) => (
         <li class="flex items-center gap-4">
           <div class="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800">
             <CheckIcon class="h-5 w-5" />
           </div>
           <div>
-            <div class="font-medium">{initiative.title}</div>
-            <div class="text-sm text-muted">{initiative.description}</div>
+            <div class="font-medium">{goal.description}</div>
+            <div class="text-sm text-muted">Fram till {goal.year}</div>
           </div>
         </li>
       ))
