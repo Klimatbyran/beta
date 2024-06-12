@@ -73,3 +73,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.no-border-radius {
+  border-radius: 0 !important;
+}
