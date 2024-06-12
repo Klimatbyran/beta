@@ -61,7 +61,7 @@ export function CompanyList(props: any) {
             {companies.map((company, i) => (
               <a
                 href={
-                  '/companies/' +
+                  '/foretag/' +
                   company.companyName.toLowerCase().replace(/ /g, '-')
                 }
                 key={i}
@@ -69,7 +69,7 @@ export function CompanyList(props: any) {
                 <TableRow>
                   <TableCell className="font-bold">
                     <a
-                      href={`/companies/${company.companyName.replaceAll(' ', '-')}`}
+                      href={`/foretag/${company.companyName.toLowerCase().replaceAll(' ', '-')}`}
                     >
                       {company.companyName}
                     </a>
