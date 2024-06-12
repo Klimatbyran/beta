@@ -40,7 +40,7 @@ function getMonthName(month: number) {
     company.baseFacts[year]?.employees && (
       <DataCard
         title="Anställda 2023"
-        data={company.baseFacts[year].employees}
+        data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
       />
     )
   }
