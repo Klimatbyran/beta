@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import { Company } from '../../components/company'
-import { Footer } from '../../components/footer'
 import { Card } from '../../components/ui/card'
 import { isCompany } from '../../data/companyData'
 import '../../../app/globals.css'
@@ -23,9 +22,6 @@ const company = data
 
 <style>
   main {
-    margin: auto;
-    padding: 1rem;
-    max-width: calc(100% - 2rem);
     color: white;
     font-size: 20px;
     line-height: 1.6;
