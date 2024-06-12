@@ -23,8 +23,8 @@ export function ScopeEmissions({ title, emissions }: ScopeEmissionsProps) {
                 <div className="font-medium">{emission.subtitle}</div>
                 <div className="text-sm text-muted">{emission.description}</div>
               </div>
-              <div className="flex items-center gap-2 text-2xl font-bold">
-                <div className="rounded-full bg-gray-800 p-2 dark:bg-gray-800">
+              <div className="flex items-center gap-2 text-lg font-bold sm:text-2xl">
+                <div className="rounded-full bg-gray-800 p-2">
                   {emission.value.toLocaleString('sv-se')}
                 </div>
               </div>

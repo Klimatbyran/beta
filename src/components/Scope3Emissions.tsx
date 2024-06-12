@@ -24,7 +24,7 @@ const EmissionCategory = ({
   <div className="mb-4">
     <div className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
+        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800">
           {icon}
         </div>
         <div>
@@ -32,10 +32,8 @@ const EmissionCategory = ({
           <div className="text-sm text-muted">{description}</div>
         </div>
       </div>
-      <div className="flex items-center gap-2 text-2xl font-bold">
-        <div className="rounded-full bg-gray-800 p-2 dark:bg-gray-800">
-          {value}
-        </div>
+      <div className="flex items-center gap-2 text-lg font-bold sm:text-2xl">
+        <div className="rounded-full bg-gray-800 p-2">{value}</div>
       </div>
     </div>
   </div>
