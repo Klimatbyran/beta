@@ -5,6 +5,7 @@ import DataCard from './DataCard.astro'
 import ScopeEmissions from './ScopeEmissions'
 import Scope3Emissions from './Scope3Emissions'
 import InitiativeList from './InitiativeList'
+import { buttonVariants } from './ui/button'
 
 interface Props {
   company: CompanyData
@@ -42,7 +43,6 @@ const scopeEmissionsList = emissions
   : []
 
 // TODO: Add fiscal year
-// TODO: Replace all text-gray-x with text-muted
 ---
 
 <article class="mx-auto max-w-screen-lg">
@@ -71,10 +71,6 @@ const scopeEmissionsList = emissions
           </CardContent>
           <CardFooter>
             <div class="grid grid-cols-2 gap-4">
-              <div>
-                <div class="font-semibold">Ranking</div>
-                <div class="text-2xl font-bold">3rd</div>
-              </div>
               <div class="col-span-2">
                 <div class="font-semibold">Våra initiativ och löften</div>
                 <InitiativeList initiatives={company.initiatives} />
@@ -84,7 +80,18 @@ const scopeEmissionsList = emissions
         </Card>
       </div>
     ) : (
-      <p>No data for year {year}!</p>
+      <div class="mx-auto max-w-screen-md p-4">
+        <h1 class="text-4xl font-bold leading-none tracking-tight">
+          {company.companyName}
+        </h1>
+        <p class="py-4">Data saknas för år {year}.</p>
+        <a
+          class={buttonVariants({ variant: 'default' })}
+          href="https://klimatkollen.se/foretag/utslappen/lista"
+        >
+          Tillbaka till alla företag
+        </a>
+      </div>
     )
   }
 </article>
