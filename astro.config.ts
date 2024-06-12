@@ -7,22 +7,6 @@ import Icons from 'unplugin-icons/vite'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 
-// TODO: This might be removed
-// function loadCustomIcon(name: string) {
-//   return readFile(resolve(localIconsDir, `${name}.svg`), { encoding: 'utf-8' })
-// }
-
-// const localIconsDir = resolve('./src/icons')
-// const localIcons = (await readdir(localIconsDir, { withFileTypes: true }))
-//   .filter((item) => item.isFile())
-//   .reduce(
-//     (icons, { name }) => {
-//       icons[name.replace('.svg', '')] = loadCustomIcon
-//       return icons
-//     },
-//     {} as Record<string, CustomIconLoader>,
-//   )
-
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
@@ -48,10 +32,6 @@ export default defineConfig({
       Icons({
         compiler: 'astro',
         customCollections: {
-          // local: (name) => {
-          //   console.log('custom icon', { name })
-          //   return 'LOCAL ICON'
-          // },
           local: (name) =>
             readFile(resolve('./src/icons', `${name}.svg`), {
               encoding: 'utf-8',
