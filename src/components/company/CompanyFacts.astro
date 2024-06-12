@@ -31,7 +31,7 @@ function getMonthName(month: number) {
         data={
           company.baseFacts[year].turnover.toLocaleString('sv-se') +
           ' ' +
-          company.baseFacts.unit
+          company.baseFacts[year].unit
         }
       />
     )
@@ -40,7 +40,7 @@ function getMonthName(month: number) {
     company.baseFacts[year]?.employees && (
       <DataCard
         title="Anställda 2023"
-        data={company.baseFacts[year].employees}
+        data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
       />
     )
   }

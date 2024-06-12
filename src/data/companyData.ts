@@ -69,7 +69,7 @@ export interface BaseFacts {
   [year: string]: {
     turnover: number
     employees: number
-    currency: string
+    unit: string
   }
 }
 
