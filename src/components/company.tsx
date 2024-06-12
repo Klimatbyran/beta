@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card'
 
 import type { CompanyData } from '@/data/companyData'
+import DataCard from './dataCard'
 
 function extractInitials(name: string) {
   return (name || '')
@@ -58,17 +59,10 @@ export function Company({ company }: { company: CompanyData }) {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-6">
-                  <div className="grid gap-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-2xl">Totala utsläpp {year}</div>
-                      <div className="text-2xl font-bold flex items-center gap-2">
-                        <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                          {totalEmissions.toLocaleString('sv-se')}
-                        </div>
-                      </div>
-                    </div>
-                    {/*<LineChart className="aspect-[9/4]" />*/}
-                  </div>
+                  <DataCard
+                    title={'Totala utsläpp ' + year}
+                    data={totalEmissions.toLocaleString('sv-se')}
+                  />
                   <div className="grid gap-4">
                     <div className="font-semibold">Scope 1 and 2 utsläpp</div>
                     <div className="grid grid-cols-2 gap-4">
