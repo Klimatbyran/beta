@@ -1,5 +1,9 @@
 ---
-import { type CompanyData, getCompanyName } from '@/data/companyData'
+import {
+  type CompanyData,
+  getCompanyName,
+  latestYearWithData,
+} from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
@@ -14,7 +18,7 @@ interface Props {
 
 const { company, companies } = Astro.props
 
-const year = 2023
+const year = latestYearWithData
 const emissions = company.emissions[year]
 ---
 

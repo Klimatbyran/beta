@@ -50,6 +50,7 @@
       <Command.Empty>{emptyMessage}</Command.Empty>
       <Command.Group>
         {#each items as item}
+          <!-- IDEA: Maybe hide items that are not relevant, only show top 5 most relevant to improve performance -->
           <Command.Item
             value={item.value}
             onSelect={(currentValue) => {
