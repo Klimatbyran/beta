@@ -54,6 +54,7 @@ export function CompanyList(props: any) {
               <TableHead className="hidden md:table-cell">
                 I värdekedjan
               </TableHead>
+              <TableHead>Wikidata?</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -89,6 +90,16 @@ export function CompanyList(props: any) {
                       {company.emissions['2023']?.scope3.emissions}
                     </Badge>
                   </TableCell>
+                  {company.wikidata?.url && (
+                    <TableCell>
+                      <Badge
+                        variant="secondary"
+                        className="bg-green-400 text-black"
+                      >
+                        OK
+                      </Badge>
+                    </TableCell>
+                  )}
                 </TableRow>
               </a>
             ))}
