@@ -1,0 +1,30 @@
+---
+import CheckIcon from '~icons/local/check'
+
+interface Initiative {
+  title: string
+  description: string
+}
+
+interface Props {
+  initiatives: Initiative[]
+}
+
+const { initiatives } = Astro.props
+---
+
+<ul class="grid gap-2">
+  {
+    initiatives.map((initiative) => (
+      <li class="flex items-center gap-4">
+        <div class="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800">
+          <CheckIcon class="h-5 w-5" />
+        </div>
+        <div>
+          <div class="font-medium">{initiative.title}</div>
+          <div class="text-sm text-muted">{initiative.description}%</div>
+        </div>
+      </li>
+    ))
+  }
+</ul>

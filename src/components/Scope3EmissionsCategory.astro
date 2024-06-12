@@ -1,0 +1,27 @@
+---
+interface Props {
+  Icon: astroHTML.JSX.Element
+  title: string
+  description: string
+  value: string | null | undefined
+}
+
+const { Icon, title, description, value } = Astro.props
+---
+
+<div class="flex items-center justify-between gap-4">
+  <div class="flex items-center gap-4">
+    <div
+      class="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800"
+    >
+      <Icon class="h-5 w-5" />
+    </div>
+    <div>
+      <div class="font-medium">{title}</div>
+      <div class="text-sm text-muted">{description}</div>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 text-lg font-bold sm:text-2xl">
+    <div class="rounded-full bg-gray-800 p-2">{value}</div>
+  </div>
+</div>
