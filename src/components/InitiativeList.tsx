@@ -15,7 +15,7 @@ export function InitiativeList({ initiatives }: InitiativeListProps) {
     <ul className="grid gap-2">
       {initiatives.map((initiative, i) => (
         <li key={i} className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
+          <div className="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800">
             <CheckIcon className="h-5 w-5" />
           </div>
           <div>

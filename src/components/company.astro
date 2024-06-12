@@ -55,6 +55,15 @@ const scopeEmissionsList = emissions
               {company.companyName}
             </h1>
             <div class="text-sm text-muted">{company.description}</div>
+            <div class="text-sm text-muted">
+              Läs
+              <a
+                href={company.url}
+                class="text-sm text-blue-500 underline dark:text-blue-300"
+              >
+                hållbarhetsrapport
+              </a>
+            </div>
           </CardHeader>
           <CardContent>
             <div class="grid gap-6">
@@ -72,11 +81,50 @@ const scopeEmissionsList = emissions
           <CardFooter>
             <div class="grid grid-cols-2 gap-4">
               <div class="col-span-2">
-                <div class="font-semibold">Våra initiativ och löften</div>
+                <div class="pb-4 font-semibold">Initiativ och löften</div>
                 <InitiativeList initiatives={company.initiatives} />
               </div>
             </div>
           </CardFooter>
+        </Card>
+
+        <Card class="sm:col-span-2" level={1}>
+          <CardHeader>
+            <div class="flex flex-col gap-4">
+              {company.industryNace.division.name && (
+                <DataCard
+                  title={'Industri'}
+                  data={company.industryNace.division.name}
+                />
+              )}
+              {company.baseFacts[year]?.turnover && (
+                <DataCard
+                  title={'Omsättning ' + year}
+                  data={
+                    company.baseFacts[year].turnover.toLocaleString('sv-se') +
+                    ' ' +
+                    company.baseFacts.unit
+                  }
+                />
+              )}
+              {company.baseFacts[year]?.employees && (
+                <DataCard
+                  title={'Anställda 2023'}
+                  data={company.baseFacts[year].employees}
+                />
+              )}
+              <div class="col-span-2">
+                <div class="font-semibold">Kontakt</div>
+                <ul class="list-disc pl-5">
+                  {company.contacts.map(({ name, email }) => (
+                    <li class="text-sm text-muted">
+                      {name} - {email}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </CardHeader>
         </Card>
       </div>
     ) : (
