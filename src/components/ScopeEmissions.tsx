@@ -3,7 +3,7 @@ import React from 'react'
 interface Emission {
   subtitle: string
   description: string
-  value: number
+  value: number | null
 }
 
 interface ScopeEmissionsProps {
