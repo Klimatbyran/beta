@@ -45,6 +45,8 @@ interface Scope3EmissionsProps {
   emissions: EmissionsScope['categories']
 }
 
+// TODO: Replace mb-4 on each element by using grid gap instead.
+
 const Scope3Emissions = ({ emissions }: Scope3EmissionsProps) => {
   return emissions ? (
     <div className="grid gap-4">
