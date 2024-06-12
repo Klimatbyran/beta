@@ -24,8 +24,8 @@ export function ScopeEmissions({ title, emissions }: ScopeEmissionsProps) {
                 {emission.description}
               </div>
             </div>
-            <div className="text-2xl font-bold flex items-center gap-2">
-              <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
+            <div className="flex items-center gap-2 text-2xl font-bold">
+              <div className="rounded-full bg-gray-800 p-2 dark:bg-gray-800">
                 {emission.value.toLocaleString('sv-se')}
               </div>
             </div>

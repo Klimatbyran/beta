@@ -33,8 +33,8 @@ const EmissionCategory = ({
           </div>
         </div>
       </div>
-      <div className="text-2xl font-bold flex items-center gap-2">
-        <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
+      <div className="flex items-center gap-2 text-2xl font-bold">
+        <div className="rounded-full bg-gray-800 p-2 dark:bg-gray-800">
           {value}
         </div>
       </div>
