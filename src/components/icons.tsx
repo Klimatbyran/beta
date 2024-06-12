@@ -1,4 +1,6 @@
-export function CheckIcon(props) {
+import type { SVGAttributes } from 'react'
+
+export function CheckIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       {...props}
@@ -17,7 +19,7 @@ export function CheckIcon(props) {
   )
 }
 
-export function CompassIcon(props) {
+export function CompassIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       {...props}
@@ -110,7 +112,7 @@ export function LineChart(props) {
   )
 }*/
 
-export function PlaneIcon(props) {
+export function PlaneIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       {...props}
@@ -129,7 +131,7 @@ export function PlaneIcon(props) {
   )
 }
 
-export function TruckIcon(props) {
+export function TruckIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       {...props}
@@ -152,7 +154,7 @@ export function TruckIcon(props) {
   )
 }
 
-export function WarehouseIcon(props) {
+export function WarehouseIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       {...props}
@@ -174,7 +176,7 @@ export function WarehouseIcon(props) {
   )
 }
 
-export function WormIcon(props) {
+export function WormIcon(props: SVGAttributes<SVGElement>) {
   return (
     <svg
       {...props}
