@@ -21,20 +21,18 @@ const EmissionCategory = ({
   description,
   value,
 }: EmissionCategoryProps) => (
-  <div className="mb-4">
-    <div className="flex items-center justify-between gap-4">
-      <div className="flex items-center gap-4">
-        <div className="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800">
-          {icon}
-        </div>
-        <div>
-          <div className="font-medium">{title}</div>
-          <div className="text-sm text-muted">{description}</div>
-        </div>
+  <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center gap-4">
+      <div className="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800">
+        {icon}
       </div>
-      <div className="flex items-center gap-2 text-lg font-bold sm:text-2xl">
-        <div className="rounded-full bg-gray-800 p-2">{value}</div>
+      <div>
+        <div className="font-medium">{title}</div>
+        <div className="text-sm text-muted">{description}</div>
       </div>
+    </div>
+    <div className="flex items-center gap-2 text-lg font-bold sm:text-2xl">
+      <div className="rounded-full bg-gray-800 p-2">{value}</div>
     </div>
   </div>
 )
@@ -43,12 +41,10 @@ interface Scope3EmissionsProps {
   emissions: EmissionsScope['categories']
 }
 
-// TODO: Replace mb-4 on each element by using grid gap instead.
-
 const Scope3Emissions = ({ emissions }: Scope3EmissionsProps) => {
   return emissions ? (
     <div className="grid gap-4">
-      <div className="font-semibold">Scope 3 Utsläppskategorier</div>
+      <div className="font-semibold">Scope 3 utsläppskategorier</div>
       <div className="grid gap-4">
         <EmissionCategory
           icon={<TruckIcon className="h-5 w-5" />}
