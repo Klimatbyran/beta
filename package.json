@@ -20,8 +20,6 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/ts-plugin": "^1.8.0",
     "@fontsource-variable/dm-sans": "^5.0.6",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
     "astro": "^4.10.2",
     "bits-ui": "^0.21.10",
     "clsx": "^2.1.1",
@@ -35,10 +33,12 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",
     "prettier-plugin-svelte": "^3.2.4",
-    "prettier-plugin-tailwindcss": "^0.6.3",
+    "prettier-plugin-tailwindcss": "^0.6.4",
     "unplugin-icons": "^0.19.0"
   },
   "prettier": {

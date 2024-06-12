@@ -9,6 +9,13 @@ interface Props {
 }
 
 const { company, year } = Astro.props
+
+function getMonthName(month: number) {
+  const date = new Date()
+  date.setMonth(month === 0 ? 12 : month - 1)
+
+  return date.toLocaleString('sv-SE', { month: 'long' })
+}
 ---
 
 <Card class="flex flex-col gap-4" level={1}>
@@ -32,8 +39,17 @@ const { company, year } = Astro.props
   {
     company.baseFacts[year]?.employees && (
       <DataCard
-        title={'Anställda 2023'}
+        title="Anställda 2023"
         data={company.baseFacts[year].employees}
+      />
+    )
+  }
+
+  {
+    company.fiscalYear && (
+      <DataCard
+        title="Räkenskapsår"
+        data={`${getMonthName(company.fiscalYear.startMonth)} - ${getMonthName(company.fiscalYear.endMonth)}`}
       />
     )
   }

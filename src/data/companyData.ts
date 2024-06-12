@@ -158,6 +158,14 @@ export interface Wikidata {
   emissions: Emissions
 }
 
+/**
+ * Gregorian calendar months, where 1 is January and 12 is December
+ */
+export type FiscalYear = {
+  startMonth: number
+  endMonth: number
+}
+
 export interface CompanyData {
   companyName: string
   description: string
@@ -176,6 +184,7 @@ export interface CompanyData {
   needsReview: boolean
   publicComment: string
   reviewComment: string
+  fiscalYear?: FiscalYear
 }
 
 export const isCompany = (value: CompanyData): value is CompanyData => {
