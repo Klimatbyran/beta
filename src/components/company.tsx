@@ -1,4 +1,3 @@
-import { AvatarImage, AvatarFallback, Avatar } from '@/components/ui/avatar'
 import {
   CardTitle,
   CardHeader,
@@ -8,25 +7,10 @@ import {
 } from '@/components/ui/card'
 
 import type { CompanyData } from '@/data/companyData'
-import {
-  CheckIcon,
-  CompassIcon,
-  PlaneIcon,
-  TruckIcon,
-  WarehouseIcon,
-  WormIcon,
-} from './icons'
 import DataCard from './dataCard'
 import InitiativeList from './initiativeList'
 import ScopeEmissions from './ScopeEmissions'
 import Scope3Emissions from './Scope3Emissions'
-
-function extractInitials(name: string) {
-  return (name || '')
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-}
 
 export function Company({ company }: { company: CompanyData }) {
   const year = '2023'
@@ -54,6 +38,7 @@ export function Company({ company }: { company: CompanyData }) {
       value: emissions.scope2.emissions,
     },
   ]
+
   return (
     <div className="flex flex-col">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col sm:flex" />
@@ -71,6 +56,15 @@ export function Company({ company }: { company: CompanyData }) {
                     <div className="text-sm text-gray-400 dark:text-gray-500">
                       {company.description}
                     </div>
+                    <div className="text-sm text-gray-400 dark:text-gray-500">
+                      Läs {company.companyName}s{' '}
+                      <a
+                        href={company.url}
+                        className="text-sm text-blue-500 dark:text-blue-300 underline"
+                      >
+                        hållbarhetsrapport
+                      </a>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
@@ -86,13 +80,7 @@ export function Company({ company }: { company: CompanyData }) {
                   />
                   <Scope3Emissions emissions={emissions.scope3.categories} />
                 </div>
-              </CardContent>
-              <CardFooter>
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="font-semibold">Ranking</div>
-                    <div className="text-2xl font-bold">3rd</div>
-                  </div>
                   <div className="col-span-2">
                     <div className="font-semibold">
                       Våra initiativ och löften
@@ -100,7 +88,48 @@ export function Company({ company }: { company: CompanyData }) {
                     <InitiativeList initiatives={company.initiatives} />
                   </div>
                 </div>
-              </CardFooter>
+              </CardContent>
+              <CardHeader className="pb-3">
+                <div className="flex flex-col gap-4">
+                  {company.industryNace.division.name && (
+                    <DataCard
+                      title={'Industri'}
+                      data={company.industryNace.division.name}
+                    />
+                  )}
+                  {company.baseFacts[year]?.turnover && (
+                    <DataCard
+                      title={'Omsättning ' + year}
+                      data={
+                        company.baseFacts[year].turnover.toLocaleString(
+                          'sv-se',
+                        ) +
+                        ' ' +
+                        company.baseFacts.unit
+                      }
+                    />
+                  )}
+                  {company.baseFacts[year]?.employees && (
+                    <DataCard
+                      title={'Anställda 2023'}
+                      data={company.baseFacts[year].employees}
+                    />
+                  )}
+                  <div className="col-span-2">
+                    <div className="font-semibold">Kontakt</div>
+                    <ul className="list-disc pl-5">
+                      {company.contacts.map((contact, index) => (
+                        <li
+                          key={index}
+                          className="text-sm text-gray-400 dark:text-gray-500"
+                        >
+                          {contact.name} - {contact.email}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </CardHeader>
             </Card>
           </div>
         </main>
@@ -109,18 +138,4 @@ export function Company({ company }: { company: CompanyData }) {
   )
 }
 
-function newFunction() {
-  return (
-    <div className="flex items-center gap-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
-        <WormIcon className="h-5 w-5" />
-      </div>
-      <div>
-        <div className="font-medium">Avfall genererat i verksamheten</div>
-        <div className="text-sm text-gray-400 dark:text-gray-500">
-          Utsläpp från avfall som genereras av organisationens verksamhet.
-        </div>
-      </div>
-    </div>
-  )
-}
+export default Company
