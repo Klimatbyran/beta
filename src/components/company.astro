@@ -45,11 +45,11 @@ const scopeEmissionsList = emissions
 // TODO: Replace all text-gray-x with text-muted
 ---
 
-<article class="p-4">
+<article class="mx-auto max-w-screen-lg">
   {
     emissions ? (
       <div class="mt-8 grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-4">
-        <Card class="sm:col-span-2">
+        <Card class="sm:col-span-2" level={1}>
           <CardHeader class="pb-3">
             <h1 class="text-4xl font-bold leading-none tracking-tight">
               {company.companyName}

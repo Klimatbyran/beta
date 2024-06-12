@@ -28,9 +28,7 @@ const EmissionCategory = ({
         </div>
         <div>
           <div className="font-medium">{title}</div>
-          <div className="text-sm text-gray-400 dark:text-gray-500">
-            {description}
-          </div>
+          <div className="text-sm text-muted">{description}</div>
         </div>
       </div>
       <div className="flex items-center gap-2 text-2xl font-bold">

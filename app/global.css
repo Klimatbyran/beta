@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* NOTE: Disable light theme for now since we only use the dark theme */
+  /*:root {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
 
@@ -16,7 +17,7 @@
     --card: 0 0% 100%;
     --card-foreground: 224 71.4% 4.1%;
 
-    --border: 220 13% 91%;
+    --border: 0 0% 88%;
     --input: 220 13% 91%;
 
     --primary: 220.9 39.3% 11%;
@@ -32,22 +33,22 @@
     --destructive-foreground: 210 20% 98%;
 
     --ring: 224 71.4% 4.1%;
-  }
+  }*/
 
   .dark {
     --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    --foreground: 0 0% 97%;
 
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
+    --muted: 0 0% 53%;
+    --muted-foreground: 0 0% 53%;
 
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
 
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 97%;
 
-    --border: 215 27.9% 16.9%;
+    --border: 0 0% 88%;
     --input: 215 27.9% 16.9%;
 
     --primary: 210 20% 98%;
@@ -73,8 +74,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.no-border-radius {
-  border-radius: 0 !important;
 }
