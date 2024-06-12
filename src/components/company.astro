@@ -1,0 +1,15 @@
+---
+import { CompanyData } from '@/data/companyData'
+
+interface Props {
+  company: CompanyData
+}
+
+const { company } = Astro.props
+---
+
+<article class="p-4">
+  <h1 class="text-4xl font-bold">{company.companyName}</h1>
+
+  <pre>{JSON.stringify(company, null, 2)}</pre>
+</article>

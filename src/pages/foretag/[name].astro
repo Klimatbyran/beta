@@ -1,20 +1,33 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import { type CompanyData, isCompany } from '@/data/companyData'
+import Company from '@/components/company.astro'
 
 const { name = '' } = Astro.params
 
 const response = await fetch('https://api.klimatkollen.se/api/companies')
 const data = await response.json()
-const company: CompanyData = data
-  .filter(isCompany)
-  .find(
-    (company: CompanyData) =>
-      company.companyName.toLowerCase().replaceAll(' ', '-') ===
-      name.toLowerCase(),
-  )
+const companies: CompanyData[] = data.filter(isCompany)
+const company = companies.find(
+  (company) =>
+    company.companyName.toLowerCase().replaceAll(' ', '-') ===
+    name.toLowerCase(),
+)
 ---
 
 <Layout title="Klimatkollen - få koll på företagens utsläpp">
-  {company.companyName}
+  <div class="flex flex-wrap gap-2 text-nowrap p-4">
+    {
+      companies.map((c) => (
+        <a
+          href={c.companyName.toLocaleLowerCase().replaceAll(' ', '-')}
+          class="underline"
+        >
+          {c.companyName}
+        </a>
+      ))
+    }
+  </div>
+
+  {company ? <Company {company} /> : null}
 </Layout>
