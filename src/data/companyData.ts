@@ -179,16 +179,16 @@ export interface CompanyData {
 }
 
 export const isCompany = (value: CompanyData): value is CompanyData => {
-  console.log(
-    'isCompany',
-    !!value.companyName,
-    !!value.description,
-    !!value.industryGics,
-    !!value.industryNace,
-    !!value.url,
-    !!value.emissions,
-    !!value.baseFacts,
-  )
+  // console.log(
+  //   'isCompany',
+  //   !!value.companyName,
+  //   !!value.description,
+  //   !!value.industryGics,
+  //   !!value.industryNace,
+  //   !!value.url,
+  //   !!value.emissions,
+  //   !!value.baseFacts,
+  // )
   if (
     value.companyName &&
     value.industryGics &&
