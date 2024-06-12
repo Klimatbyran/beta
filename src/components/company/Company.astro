@@ -35,7 +35,7 @@ const emissions = company.emissions[year]
         <CompanyGoals goals={company.goals} />
 
         <div class="grid place-content-center py-16">
-          <OtherCompanies client:load {companies} />
+          <OtherCompanies client:idle {companies} />
         </div>
       </div>
     ) : (
