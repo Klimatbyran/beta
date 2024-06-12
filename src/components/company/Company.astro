@@ -1,0 +1,43 @@
+---
+import { type CompanyData } from '@/data/companyData'
+import { buttonVariants } from '../ui/button'
+import CompanyFacts from './CompanyFacts.astro'
+import CompanyEmissions from './CompanyEmissions.astro'
+import CompanyInitiatives from './CompanyInitiatives.astro'
+
+interface Props {
+  company: CompanyData
+}
+
+const { company } = Astro.props
+
+const year = 2023
+const emissions = company.emissions[year]
+---
+
+<article class="mx-auto max-w-screen-lg">
+  {
+    emissions ? (
+      <div class="mt-8 grid auto-rows-max gap-4 md:gap-8">
+        <CompanyEmissions {company} {year} />
+
+        <CompanyInitiatives initiatives={company.initiatives} />
+
+        <CompanyFacts {company} {year} />
+      </div>
+    ) : (
+      <div class="mx-auto max-w-screen-md p-4">
+        <h1 class="text-4xl font-bold leading-none tracking-tight">
+          {company.companyName}
+        </h1>
+        <p class="py-4">Data saknas för år {year}.</p>
+        <a
+          class={buttonVariants({ variant: 'default' })}
+          href="https://klimatkollen.se/foretag/utslappen/lista"
+        >
+          Tillbaka till alla företag
+        </a>
+      </div>
+    )
+  }
+</article>

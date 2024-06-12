@@ -1,0 +1,70 @@
+---
+import type { CompanyData } from '@/data/companyData'
+import { Card, CardContent, CardHeader } from '../ui/card'
+import ScopeEmissions from './ScopeEmissions.astro'
+import DataCard from '../DataCard.astro'
+import Scope3Emissions from './Scope3Emissions.astro'
+
+interface Props {
+  company: CompanyData
+  year: number
+}
+
+const { company, year } = Astro.props
+
+const emissions = company.emissions[year]
+const totalEmissions = emissions
+  ? (emissions.scope1.emissions || 0) +
+    (emissions.scope2.emissions ||
+      emissions.scope2.mb ||
+      emissions.scope2.lb ||
+      0) +
+    (emissions.scope3.emissions || 0)
+  : 0
+
+const scopeEmissionsList = emissions
+  ? [
+      {
+        subtitle: 'Scope 1 utsläpp',
+        description:
+          'Utsläpp från egna källor eller kontrollerade av organisationen.',
+        value: emissions.scope1.emissions,
+      },
+      {
+        subtitle: 'Scope 2 utsläpp',
+        description:
+          'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
+        value: emissions.scope2.emissions,
+      },
+    ]
+  : []
+---
+
+<Card level={1}>
+  <CardHeader>
+    <h1 class="text-4xl font-bold leading-none tracking-tight">
+      {company.companyName}
+    </h1>
+    <div class="text-sm text-muted">{company.description}</div>
+    <div class="text-sm text-muted">
+      Läs
+      <a
+        href={company.url}
+        class="text-sm text-blue-500 underline dark:text-blue-300"
+      >
+        hållbarhetsrapport
+      </a>
+    </div>
+  </CardHeader>
+  <CardContent class="grid gap-6">
+    <DataCard
+      title={'Totala utsläpp ' + year}
+      data={totalEmissions.toLocaleString('sv-se')}
+    />
+    <ScopeEmissions
+      title="Scope 1 and 2 utsläpp"
+      emissions={scopeEmissionsList}
+    />
+    <Scope3Emissions emissions={emissions.scope3.categories} />
+  </CardContent>
+</Card>
