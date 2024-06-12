@@ -187,6 +187,14 @@ export interface CompanyData {
   fiscalYear?: FiscalYear
 }
 
+export function getCompanyName(company: CompanyData) {
+  return company.wikidata?.label ?? company.companyName
+}
+
+export function getCompanyURL(company: CompanyData) {
+  return company.companyName.toLowerCase().replaceAll(' ', '-')
+}
+
 export const isCompany = (value: CompanyData): value is CompanyData => {
   // console.log(
   //   'isCompany',

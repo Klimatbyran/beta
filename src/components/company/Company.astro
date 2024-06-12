@@ -1,17 +1,18 @@
 ---
-import { type CompanyData } from '@/data/companyData'
+import { type CompanyData, getCompanyName } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
 import CompanyGoals from './CompanyGoals.astro'
-import Combobox from '../ui/combobox/combobox.svelte'
+import OtherCompanies from './OtherCompanies.svelte'
 
 interface Props {
   company: CompanyData
+  companies: CompanyData[]
 }
 
-const { company } = Astro.props
+const { company, companies } = Astro.props
 
 const year = 2023
 const emissions = company.emissions[year]
@@ -21,8 +22,6 @@ const emissions = company.emissions[year]
   {
     emissions ? (
       <div class="mt-8 grid gap-8">
-        <Combobox client:load />
-
         <CompanyEmissions {company} {year} />
 
         <CompanyFacts {company} {year} />
@@ -30,15 +29,20 @@ const emissions = company.emissions[year]
         <CompanyInitiatives initiatives={company.initiatives} />
 
         <CompanyGoals goals={company.goals} />
+
+        <OtherCompanies client:load {companies} />
       </div>
     ) : (
-      <div class="mx-auto max-w-screen-md p-4">
+      <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <h1 class="text-4xl font-bold leading-none tracking-tight">
-          {company.companyName}
+          {getCompanyName(company)}
         </h1>
         <p class="py-4">Data saknas för år {year}.</p>
+
+        <OtherCompanies client:load {companies} />
+
         <a
-          class={buttonVariants({ variant: 'default' })}
+          class={buttonVariants({ variant: 'default', class: 'mt-8' })}
           href="https://klimatkollen.se/foretag/utslappen/lista"
         >
           Tillbaka till alla företag

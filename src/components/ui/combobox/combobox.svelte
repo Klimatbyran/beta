@@ -7,43 +7,18 @@
   import * as Popover from '@/components/ui/popover/index.js'
   import { Button } from '@/components/ui/button/index.js'
   import { cn } from '@/lib/utils.js'
+  import { type Item } from './index'
 
-  type Item = {
-    value: string
-    label: string
-  }
-
-  export let items: { value: string; label: string }[] = [
-    {
-      value: 'sveltekit',
-      label: 'SvelteKit',
-    },
-    {
-      value: 'next.js',
-      label: 'Next.js',
-    },
-    {
-      value: 'nuxt.js',
-      label: 'Nuxt.js',
-    },
-    {
-      value: 'remix',
-      label: 'Remix',
-    },
-    {
-      value: 'astro',
-      label: 'Astro',
-    },
-  ]
-  export let buttonLabel = 'Select a framework...'
-  export let placeholder = 'Search framework...'
-  export let emptyMessage = 'No framework found.'
+  export let items: Item[]
+  export let buttonLabel: string
+  export let placeholder: string
+  export let emptyMessage: string
   export let onSelect: ((item: Item) => void) | undefined = undefined
 
   let open = false
   let value = ''
 
-  $: selectedValue = items.find((f) => f.value === value)?.label ?? buttonLabel
+  $: selectedValue = items.find((i) => i.value === value)?.label ?? buttonLabel
 
   // We want to refocus the trigger button when the user selects
   // an item from the list so users can continue navigating the

@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-import { type CompanyData, isCompany } from '@/data/companyData'
+import { type CompanyData, isCompany, getCompanyURL } from '@/data/companyData'
 import Company from '@/components/company/Company.astro'
 
 const { name = '' } = Astro.params
@@ -33,16 +33,13 @@ const company = companies.find(
 ---
 
 <Layout title="Klimatkollen - få koll på företagens utsläpp">
-  {company ? <Company {company} /> : null}
+  {company ? <Company {company} {companies} /> : null}
 
   {
     process.env.NODE_ENV === 'development' ? (
       <div class="mt-16 flex flex-wrap gap-2 text-nowrap p-4">
         {companies.map((c) => (
-          <a
-            href={c.companyName.toLocaleLowerCase().replaceAll(' ', '-')}
-            class="underline"
-          >
+          <a href={getCompanyURL(c)} class="underline">
             {c.companyName}
           </a>
         ))}
