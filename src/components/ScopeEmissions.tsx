@@ -15,7 +15,7 @@ export function ScopeEmissions({ title, emissions }: ScopeEmissionsProps) {
   return (
     <div className="grid gap-4">
       <div className="font-semibold">{title}</div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4">
         {emissions.map((emission, index) => (
           <div key={index} className="flex items-center justify-between">
             <div>
