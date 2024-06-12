@@ -1,0 +1,90 @@
+---
+import { Card, CardHeader, CardContent, CardFooter } from './ui/card'
+import { type CompanyData } from '@/data/companyData'
+import DataCard from './DataCard.astro'
+import ScopeEmissions from './ScopeEmissions'
+import Scope3Emissions from './Scope3Emissions'
+import InitiativeList from './InitiativeList'
+
+interface Props {
+  company: CompanyData
+}
+
+const { company } = Astro.props
+
+const year = '2023'
+const emissions = company.emissions[year]
+
+const totalEmissions = emissions
+  ? (emissions.scope1.emissions || 0) +
+    (emissions.scope2.emissions ||
+      emissions.scope2.mb ||
+      emissions.scope2.lb ||
+      0) +
+    (emissions.scope3.emissions || 0)
+  : 0
+
+const scopeEmissionsList = emissions
+  ? [
+      {
+        subtitle: 'Scope 1 utsläpp',
+        description:
+          'Utsläpp från egna källor eller kontrollerade av organisationen.',
+        value: emissions.scope1.emissions,
+      },
+      {
+        subtitle: 'Scope 2 utsläpp',
+        description:
+          'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
+        value: emissions.scope2.emissions,
+      },
+    ]
+  : []
+
+// TODO: Add fiscal year
+// TODO: Replace all text-gray-x with text-muted
+---
+
+<article class="mx-auto max-w-screen-lg">
+  {
+    emissions ? (
+      <div class="mt-8 grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-4">
+        <Card class="sm:col-span-2" level={1}>
+          <CardHeader class="pb-3">
+            <h1 class="text-4xl font-bold leading-none tracking-tight">
+              {company.companyName}
+            </h1>
+            <div class="text-sm text-muted">{company.description}</div>
+          </CardHeader>
+          <CardContent>
+            <div class="grid gap-6">
+              <DataCard
+                title={'Totala utsläpp ' + year}
+                data={totalEmissions.toLocaleString('sv-se')}
+              />
+              <ScopeEmissions
+                title="Scope 1 and 2 utsläpp"
+                emissions={scopeEmissionsList}
+              />
+              <Scope3Emissions emissions={emissions.scope3.categories} />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <div class="font-semibold">Ranking</div>
+                <div class="text-2xl font-bold">3rd</div>
+              </div>
+              <div class="col-span-2">
+                <div class="font-semibold">Våra initiativ och löften</div>
+                <InitiativeList initiatives={company.initiatives} />
+              </div>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
+    ) : (
+      <p>No data for year {year}!</p>
+    )
+  }
+</article>

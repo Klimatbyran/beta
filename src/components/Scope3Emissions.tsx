@@ -6,12 +6,13 @@ import {
   WarehouseIcon,
   WormIcon,
 } from './icons'
+import type { EmissionsScope } from '@/data/companyData'
 
 interface EmissionCategoryProps {
   icon: React.ReactNode
   title: string
   description: string
-  value: string
+  value: string | null | undefined
 }
 
 const EmissionCategory = ({
@@ -28,13 +29,11 @@ const EmissionCategory = ({
         </div>
         <div>
           <div className="font-medium">{title}</div>
-          <div className="text-sm text-gray-400 dark:text-gray-500">
-            {description}
-          </div>
+          <div className="text-sm text-muted">{description}</div>
         </div>
       </div>
-      <div className="text-2xl font-bold flex items-center gap-2">
-        <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
+      <div className="flex items-center gap-2 text-2xl font-bold">
+        <div className="rounded-full bg-gray-800 p-2 dark:bg-gray-800">
           {value}
         </div>
       </div>
@@ -43,17 +42,11 @@ const EmissionCategory = ({
 )
 
 interface Scope3EmissionsProps {
-  emissions: {
-    '1_purchasedGoods': number
-    '6_businessTravel': number
-    '7_employeeCommuting': number
-    '4_upstreamTransportationAndDistribution': number
-    '5_wasteGeneratedInOperations': number
-  }
+  emissions: EmissionsScope['categories']
 }
 
 const Scope3Emissions = ({ emissions }: Scope3EmissionsProps) => {
-  return (
+  return emissions ? (
     <div className="grid gap-4">
       <div className="font-semibold">Scope 3 Utsläppskategorier</div>
       <div className="grid gap-4">
@@ -93,7 +86,7 @@ const Scope3Emissions = ({ emissions }: Scope3EmissionsProps) => {
         />
       </div>
     </div>
-  )
+  ) : null
 }
 
 export default Scope3Emissions

@@ -21,13 +21,11 @@ export function EmissionCategory({
         </div>
         <div>
           <div className="font-medium">{title}</div>
-          <div className="text-sm text-gray-400 dark:text-gray-500">
-            {description}
-          </div>
+          <div className="text-sm text-muted">{description}</div>
         </div>
       </div>
-      <div className="text-2xl font-bold mt-2 flex items-center gap-2 justify-end">
-        <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
+      <div className="mt-2 flex items-center justify-end gap-2 text-2xl font-bold">
+        <div className="rounded-full bg-gray-800 p-2 dark:bg-gray-800">
           {emissions.toLocaleString('sv-se')}
         </div>
       </div>

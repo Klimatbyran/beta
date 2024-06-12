@@ -20,9 +20,7 @@ export function InitiativeList({ initiatives }: InitiativeListProps) {
           </div>
           <div>
             <div className="font-medium">{initiative.title}</div>
-            <div className="text-sm text-gray-400 dark:text-gray-500">
-              {initiative.description}%
-            </div>
+            <div className="text-sm text-muted">{initiative.description}%</div>
           </div>
         </li>
       ))}
