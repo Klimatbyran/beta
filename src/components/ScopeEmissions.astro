@@ -1,0 +1,37 @@
+---
+interface Emission {
+  subtitle: string
+  description: string
+  value: number | null
+}
+
+interface Props {
+  title: string
+  emissions: Emission[]
+}
+
+const { title, emissions } = Astro.props
+---
+
+<div class="grid gap-4">
+  <div class="font-semibold">{title}</div>
+  <div class="grid gap-4">
+    {
+      emissions.map((emission) =>
+        emission.value ? (
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-medium">{emission.subtitle}</div>
+              <div class="text-sm text-muted">{emission.description}</div>
+            </div>
+            <div class="flex items-center gap-2 text-lg font-bold sm:text-2xl">
+              <div class="rounded-full bg-gray-800 p-2">
+                {emission.value.toLocaleString('sv-se')}
+              </div>
+            </div>
+          </div>
+        ) : null,
+      )
+    }
+  </div>
+</div>
