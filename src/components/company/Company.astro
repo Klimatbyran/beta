@@ -5,6 +5,7 @@ import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
 import CompanyGoals from './CompanyGoals.astro'
+import Combobox from '../ui/combobox/combobox.svelte'
 
 interface Props {
   company: CompanyData
@@ -20,6 +21,8 @@ const emissions = company.emissions[year]
   {
     emissions ? (
       <div class="mt-8 grid gap-8">
+        <Combobox client:load />
+
         <CompanyEmissions {company} {year} />
 
         <CompanyFacts {company} {year} />
