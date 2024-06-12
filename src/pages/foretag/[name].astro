@@ -5,9 +5,26 @@ import Company from '@/components/company.astro'
 
 const { name = '' } = Astro.params
 
-const response = await fetch('https://api.klimatkollen.se/api/companies')
-const data = await response.json()
-const companies: CompanyData[] = data.filter(isCompany)
+/**
+ * Conditionally load cached local JSON file instead of fetching from the API
+ */
+async function getCompanies() {
+  let data: CompanyData[]
+
+  if (process.env.NODE_ENV === 'production') {
+    data = await fetch('https://api.klimatkollen.se/api/companies').then(
+      (res) => res.json(),
+    )
+  } else {
+    // prettier-ignore
+    // @ts-ignore Don't care about this TS error
+    data = (await import('@/data/12-jun-test-companies.json')).default as CompanyData[]
+  }
+
+  return data.filter(isCompany) as CompanyData[]
+}
+
+const companies = await getCompanies()
 const company = companies.find(
   (company) =>
     company.companyName.toLowerCase().replaceAll(' ', '-') ===
