@@ -17,6 +17,9 @@ import {
   WormIcon,
 } from './icons'
 import DataCard from './dataCard'
+import InitiativeList from './initiativeList'
+import ScopeEmissions from './ScopeEmissions'
+import Scope3Emissions from './Scope3Emissions'
 
 function extractInitials(name: string) {
   return (name || '')
@@ -36,6 +39,21 @@ export function Company({ company }: { company: CompanyData }) {
         emissions.scope2.lb ||
         0) +
       (emissions.scope3.emissions || 0)
+
+  const scopeEmissionsList = [
+    {
+      subtitle: 'Scope 1 utsläpp',
+      description:
+        'Utsläpp från egna källor eller kontrollerade av organisationen.',
+      value: emissions.scope1.emissions,
+    },
+    {
+      subtitle: 'Scope 2 utsläpp',
+      description:
+        'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
+      value: emissions.scope2.emissions,
+    },
+  ]
   return (
     <div className="flex flex-col">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col sm:flex" />
@@ -62,149 +80,11 @@ export function Company({ company }: { company: CompanyData }) {
                     title={'Totala utsläpp ' + year}
                     data={totalEmissions.toLocaleString('sv-se')}
                   />
-                  <div className="grid gap-4">
-                    <div className="font-semibold">Scope 1 and 2 utsläpp</div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-medium">Scope 1 utsläpp</div>
-                          <div className="text-sm text-gray-400 dark:text-gray-500">
-                            Utsläpp från egna källor eller kontrollerade av
-                            organisationen.
-                          </div>
-                        </div>
-                        <div className="text-2xl font-bold flex items-center gap-2">
-                          <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                            {emissions.scope1.emissions.toLocaleString('sv-se')}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-medium">Scope 2 Emissions</div>
-                          <div className="text-sm text-gray-400 dark:text-gray-500">
-                            Indirekta utsläpp från produktion av köpt el, ånga,
-                            värme och kyla som konsumeras av organisationen.
-                          </div>
-                        </div>
-                        <div className="text-2xl font-bold flex items-center gap-2">
-                          <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                            {emissions.scope2.emissions.toLocaleString('sv-se')}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="grid gap-4">
-                    <div className="font-semibold">
-                      Scope 3 Utsläppskategorier
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
-                            <TruckIcon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <div className="font-medium">
-                              Köpta varor och tjänster
-                            </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              Utsläpp från produktion av varor och tjänster som
-                              köpts av organisationen.
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-2xl font-bold mt-2 flex items-center gap-2 justify-end">
-                          <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                            {emissions.scope3.categories[
-                              '1_purchasedGoods'
-                            ]?.toLocaleString('sv-se')}
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
-                            <PlaneIcon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <div className="font-medium">Affärsresor</div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              Utsläpp från transport av anställda för
-                              affärsrelaterade aktiviteter.
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-2xl font-bold mt-2 flex items-center gap-2 justify-end">
-                          <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                            {emissions.scope3.categories[
-                              '6_businessTravel'
-                            ]?.toLocaleString('sv-se')}
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
-                            <CompassIcon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <div className="font-medium">
-                              Anställdas pendling
-                            </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              Utsläpp från transport av anställda mellan deras
-                              hem och arbetsplatser.
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-2xl font-bold mt-2 flex items-center gap-2 justify-end">
-                          <div className="text-2xl font-bold flex items-center gap-2 justify-end">
-                            <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                              {emissions.scope3.categories[
-                                '7_employeeCommuting'
-                              ]?.toLocaleString('sv-se')}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
-                            <WarehouseIcon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <div className="font-medium">
-                              Uppströms transporter och distribution
-                            </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              Utsläpp från transport och distribution av
-                              produkter som köpts av organisationen, dvs från
-                              sina leverantörer.
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-2xl font-bold mt-2 flex items-center gap-2 justify-end">
-                          <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                            {emissions.scope3.categories[
-                              '4_upstreamTransportationAndDistribution'
-                            ]?.toLocaleString('sv-se')}
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        {newFunction()}
-                        <div className="text-2xl font-bold mt-2 flex items-center gap-2 justify-end">
-                          <div className="rounded-full bg-gray-800 dark:bg-gray-800 p-2">
-                            {emissions.scope3.categories[
-                              '5_wasteGeneratedInOperations'
-                            ]?.toLocaleString('sv-se')}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ScopeEmissions
+                    title="Scope 1 and 2 utsläpp"
+                    emissions={scopeEmissionsList}
+                  />
+                  <Scope3Emissions emissions={emissions.scope3.categories} />
                 </div>
               </CardContent>
               <CardFooter>
@@ -213,34 +93,11 @@ export function Company({ company }: { company: CompanyData }) {
                     <div className="font-semibold">Ranking</div>
                     <div className="text-2xl font-bold">3rd</div>
                   </div>
-                  <div>
-                    <div className="text-4xl font-bold text-center">2028</div>
-                    <div className="text-center text-gray-400 dark:text-gray-500">
-                      According to current emissions, Acme Inc will run out of
-                      its CO2 budget by 2028.
-                    </div>
-                  </div>
                   <div className="col-span-2">
                     <div className="font-semibold">
                       Våra initiativ och löften
                     </div>
-                    <ul className="grid gap-2">
-                      {company.initiatives.map((initiative, i) => (
-                        <li key={i} className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-800 dark:bg-gray-800">
-                            <CheckIcon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <div className="font-medium">
-                              {initiative.title}
-                            </div>
-                            <div className="text-sm text-gray-400 dark:text-gray-500">
-                              {initiative.description}%
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                    <InitiativeList initiatives={company.initiatives} />
                   </div>
                 </div>
               </CardFooter>
