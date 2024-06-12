@@ -22,6 +22,12 @@ const totalEmissions = emissions
     (emissions.scope3.emissions || 0)
   : 0
 
+const totalBiogenicEmissions = emissions
+  ? (emissions.scope1.biogenic || 0) +
+    (emissions.scope2.biogenic || 0) +
+    (emissions.scope3.biogenic || 0)
+  : 0
+
 const scopeEmissionsList = emissions
   ? [
       {
@@ -41,29 +47,30 @@ const scopeEmissionsList = emissions
 ---
 
 <Card level={1}>
-  <CardHeader>
+  <CardHeader class="text-sm">
     <h1 class="text-4xl font-bold leading-none tracking-tight">
-      {company.companyName}
+      {company.wikidata?.label ?? company.companyName}
     </h1>
-    <div class="text-sm text-muted">{company.description}</div>
-    <div class="text-sm text-muted">
+    <p class="text-muted">{company.description}</p>
+    <p class="text-muted">
       Läs
-      <a
-        href={company.url}
-        class="text-sm text-blue-500 underline dark:text-blue-300"
-      >
+      <a href={company.url} class="text-sm text-blue-500 underline">
         hållbarhetsrapport
       </a>
-    </div>
+    </p>
   </CardHeader>
   <CardContent class="grid gap-6">
     <DataCard
       title={'Totala utsläpp ' + year}
-      data={totalEmissions.toLocaleString('sv-se')}
+      data={totalEmissions.toLocaleString('sv-SE')}
     />
     <ScopeEmissions
       title="Scope 1 and 2 utsläpp"
       emissions={scopeEmissionsList}
+    />
+    <DataCard
+      title="Biogena utsläpp"
+      data={totalBiogenicEmissions.toLocaleString('sv-SE')}
     />
     <Scope3Emissions emissions={emissions.scope3.categories} />
   </CardContent>
