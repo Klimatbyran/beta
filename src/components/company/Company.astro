@@ -16,10 +16,10 @@ const year = 2023
 const emissions = company.emissions[year]
 ---
 
-<article class="mx-auto max-w-screen-lg">
+<article class="mx-auto max-w-screen-lg px-4">
   {
     emissions ? (
-      <div class="mt-8 grid auto-rows-max gap-4 md:gap-8">
+      <div class="mt-8 grid gap-8">
         <CompanyEmissions {company} {year} />
 
         <CompanyFacts {company} {year} />
