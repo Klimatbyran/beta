@@ -34,7 +34,9 @@ const emissions = company.emissions[year]
 
         <CompanyGoals goals={company.goals} />
 
-        <OtherCompanies client:load {companies} />
+        <div class="grid place-content-center py-16">
+          <OtherCompanies client:load {companies} />
+        </div>
       </div>
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
