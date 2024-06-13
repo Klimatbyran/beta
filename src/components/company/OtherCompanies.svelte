@@ -1,0 +1,26 @@
+<script lang="ts">
+  import { Combobox, type Item } from '../ui/combobox'
+  import {
+    getCompanyName,
+    getCompanyURL,
+    type CompanyData,
+  } from '@/data/companyData'
+
+  export let companies: CompanyData[]
+
+  function onSelect(item: Item) {
+    window.location.href = `/foretag/${getCompanyURL(item.data as CompanyData)}`
+  }
+</script>
+
+<Combobox
+  items={companies.map((c) => ({
+    label: getCompanyName(c),
+    value: getCompanyName(c),
+    data: c,
+  }))}
+  buttonLabel="Visa annat företag"
+  placeholder="Sök företag..."
+  emptyMessage="Inga företag hittade."
+  {onSelect}
+/>

@@ -1,5 +1,5 @@
 ---
-import type { CompanyData } from '@/data/companyData'
+import { getCompanyName, type CompanyData } from '@/data/companyData'
 import { Card, CardContent, CardHeader } from '../ui/card'
 import ScopeEmissions from './ScopeEmissions.astro'
 import DataCard from '../DataCard.astro'
@@ -49,7 +49,7 @@ const scopeEmissionsList = emissions
 <Card level={1}>
   <CardHeader class="text-sm">
     <h1 class="text-4xl font-bold leading-none tracking-tight">
-      {company.wikidata?.label ?? company.companyName}
+      {getCompanyName(company)}
     </h1>
     <p class="text-muted">{company.description}</p>
     <p class="text-muted">

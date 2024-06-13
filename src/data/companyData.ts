@@ -187,6 +187,16 @@ export interface CompanyData {
   fiscalYear?: FiscalYear
 }
 
+export function getCompanyName(company: CompanyData) {
+  return company.wikidata?.label ?? company.companyName
+}
+
+export function getCompanyURL(company: CompanyData) {
+  return company.companyName.toLowerCase().replaceAll(' ', '-')
+}
+
+export const latestYearWithData = 2023
+
 export const isCompany = (value: CompanyData): value is CompanyData => {
   // console.log(
   //   'isCompany',
@@ -204,6 +214,7 @@ export const isCompany = (value: CompanyData): value is CompanyData => {
     value.industryNace &&
     value.url &&
     value.emissions &&
+    value.emissions[latestYearWithData] &&
     value.baseFacts
   )
     return true
