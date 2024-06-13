@@ -5,6 +5,21 @@ import PlaneIcon from '~icons/local/plane'
 import CompassIcon from '~icons/local/compass'
 import WarehouseIcon from '~icons/local/warehouse'
 import WormIcon from '~icons/local/worm'
+import Fa6SolidGifts from '~icons/fa6-solid/gifts'
+import MingcuteWashMachineLine from '~icons/mingcute/wash-machine-line'
+import IconParkOutlineSolarEnergyOne from '~icons/icon-park-outline/solar-energy-one'
+import IconParkOutlineTransport from '~icons/icon-park-outline/transport'
+import MakiWasteBasket from '~icons/maki/waste-basket'
+import ZondiconsTravelTrain from '~icons/zondicons/travel-train'
+import MaterialSymbolsCommuteOutline from '~icons/material-symbols/commute-outline'
+import IconParkOutlineWashingMachineOne from '~icons/icon-park-outline/washing-machine-one'
+import IconParkOutlineTransporter from '~icons/icon-park-outline/transporter'
+import IconParkOutlineGateMachine from '~icons/icon-park-outline/gate-machine'
+import MaterialSymbolsPersonPlayOutlineRounded from '~icons/material-symbols/person-play-outline-rounded'
+import IonTrashBin from '~icons/ion/trash-bin'
+import ClarityBuildingSolid from '~icons/clarity/building-solid'
+import BiHouses from '~icons/bi/houses'
+import StreamlineInvestmentSelection from '~icons/streamline/investment-selection'
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 
@@ -31,81 +46,81 @@ const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
     title: '1. Inköpta varor och tjänster',
     description:
       'Utsläpp från produktion av varor och tjänster som köpts av organisationen.',
-    Icon: TruckIcon,
+    Icon: Fa6SolidGifts,
   },
   '2_capitalGoods': {
     title: '2. Kapitalvaror',
     description: '',
-    Icon: undefined,
+    Icon: MingcuteWashMachineLine,
   },
   '3_fuelAndEnergyRelatedActivities': {
     title: '3. Bränsle- och energirelaterade aktiviteter',
     description: '',
-    Icon: undefined,
+    Icon: IconParkOutlineSolarEnergyOne,
   },
   '4_upstreamTransportationAndDistribution': {
     title: '4. Uppströms transport och distribution',
     description:
       'Utsläpp från transport och distribution av produkter som köpts av organisationen, dvs från sina leverantörer.',
-    Icon: WarehouseIcon,
+    Icon: IconParkOutlineTransport,
   },
   '5_wasteGeneratedInOperations': {
     title: '5. Avfall genererat i verksamheten',
     description:
       'Utsläpp från avfall som genereras av organisationens verksamhet.',
-    Icon: WormIcon,
+    Icon: MakiWasteBasket,
   },
   '6_businessTravel': {
     title: '6. Affärsresor',
     description:
       'Utsläpp från transport av anställda för affärsrelaterade aktiviteter.',
-    Icon: PlaneIcon,
+    Icon: ZondiconsTravelTrain,
   },
   '7_employeeCommuting': {
     title: '7. Anställdas pendling',
     description:
       'Utsläpp från transport av anställda mellan deras hem och arbetsplatser.',
-    Icon: CompassIcon,
+    Icon: MaterialSymbolsCommuteOutline,
   },
   '8_upstreamLeasedAssets': {
     title: '8. Uppströms leasade tillgångar',
     description: '',
-    Icon: undefined,
+    Icon: IconParkOutlineWashingMachineOne,
   },
   '9_downstreamTransportationAndDistribution': {
     title: '9. Nedströms transport och distribution',
     description: '',
-    Icon: undefined,
+    Icon: IconParkOutlineTransporter,
   },
   '10_processingOfSoldProducts': {
     title: '10. Bearbetning av sålda produkter',
     description: '',
-    Icon: undefined,
+    Icon: IconParkOutlineGateMachine,
   },
   '11_useOfSoldProducts': {
     title: '11. Användning av sålda produkter',
     description: '',
-    Icon: undefined,
+    Icon: MaterialSymbolsPersonPlayOutlineRounded,
   },
   '12_endOfLifeTreatmentOfSoldProducts': {
     title: '12. Slutbehandling av sålda produkter',
     description: '',
-    Icon: undefined,
+    Icon: IonTrashBin,
   },
   '13_downstreamLeasedAssets': {
     title: '13. Nedströms leasade tillgångar',
     description: '',
-    Icon: undefined,
+    Icon: ClarityBuildingSolid,
   },
   '14_franchises': {
     title: '14. Franchiser',
     description: '',
-    Icon: undefined,
+    Icon: BiHouses,
   },
   '15_investments': {
     title: '15. Investeringar',
     description: '',
-    Icon: undefined,
+    Icon: StreamlineInvestmentSelection,
   },
 }
 
