@@ -3,6 +3,7 @@ import { getCompanyName, type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import CompanyFacts from './CompanyFacts.astro'
+import { cn } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -33,28 +34,33 @@ const scopeEmissionsList = emissions
         subtitle: 'Totala utsläpp',
         description: '',
         value: totalEmissions,
+        verified: emissions.scope2.verified,
       },
       {
         subtitle: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
         value: emissions.scope1.emissions,
+        verified: emissions.scope2.verified,
       },
       {
         subtitle: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
         value: emissions.scope2.emissions,
+        verified: emissions.scope2.verified,
       },
       {
         subtitle: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
         value: emissions.scope3.emissions,
+        verified: emissions.scope2.verified,
       },
       {
         subtitle: 'Biogena utsläpp',
         description: '',
         value: totalBiogenicEmissions,
+        verified: emissions.scope2.verified,
       },
     ]
   : []
@@ -80,7 +86,7 @@ const scopeEmissionsList = emissions
   <h2
     class="flex items-center justify-between pb-4 text-3xl leading-none tracking-tight"
   >
-    Utsläpp 2023 <span class="xs:text-xl text-base text-muted">(ton CO₂e)</span>
+    Utsläpp 2023 <span class="text-base text-muted xs:text-xl">(ton CO₂e)</span>
   </h2>
   {
     scopeEmissionsList.length ? (
@@ -94,7 +100,14 @@ const scopeEmissionsList = emissions
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
-              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-xl">
+              <span
+                class={cn(
+                  'rounded-full px-4 py-2 font-bold md:text-xl',
+                  emission.verified
+                    ? 'bg-blue-250 text-blue-950'
+                    : 'bg-gray-800',
+                )}
+              >
                 {emission.value.toLocaleString('sv-SE')}
               </span>
             </div>
