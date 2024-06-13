@@ -1,5 +1,5 @@
 ---
-import type { EmissionsScope } from '@/data/companyData'
+import type { EmissionsScope, Scope3Category } from '@/data/companyData'
 import TruckIcon from '~icons/local/truck'
 import PlaneIcon from '~icons/local/plane'
 import CompassIcon from '~icons/local/compass'
@@ -12,8 +12,6 @@ interface Props {
 }
 
 const { emissions } = Astro.props
-
-type Scope3Category = keyof Exclude<EmissionsScope['categories'], undefined>
 
 type CategoryDefinition = {
   title: string
@@ -103,7 +101,6 @@ const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
     description: '',
     Icon: undefined,
   },
-  '16_other': { title: 'Övrigt', description: '', Icon: undefined },
 }
 
 function getReportedCategories(
