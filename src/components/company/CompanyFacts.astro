@@ -22,7 +22,7 @@ function getMonthName(month: number) {
   {
     company.industryNace.division.name && (
       <CompanyFactSection
-        title="Industri"
+        title="Bransch"
         data={company.industryNace.division.name}
         class="col-span-full flex flex-wrap justify-between gap-2"
       />
@@ -33,7 +33,7 @@ function getMonthName(month: number) {
     {
       company.baseFacts[year]?.turnover && (
         <CompanyFactSection
-          title={'Omsättning ' + year}
+          title="Omsättning"
           data={
             company.baseFacts[year].turnover.toLocaleString('sv-SE') +
             ' ' +
@@ -45,7 +45,7 @@ function getMonthName(month: number) {
     {
       company.baseFacts[year]?.employees && (
         <CompanyFactSection
-          title="Anställda 2023"
+          title="Anställda"
           data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
         />
       )

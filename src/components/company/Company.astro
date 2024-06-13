@@ -40,9 +40,9 @@ const emissions = company.emissions[year]
         <div class="mt-8 grid gap-8">
           <CompanyEmissions {company} {year} />
 
-          <CompanyInitiatives initiatives={company.initiatives} />
-
           <CompanyGoals goals={company.goals} />
+
+          <CompanyInitiatives initiatives={company.initiatives} />
 
           <div class="grid place-content-center py-16">
             <OtherCompanies client:idle {companies} />
