@@ -18,13 +18,13 @@ function getMonthName(month: number) {
 }
 ---
 
-<div class="grid gap-4 sm:grid-cols-2">
+<div class="grid gap-4 pt-4 sm:grid-cols-2">
   {
     company.industryNace.division.name && (
       <CompanyFactSection
         title="Industri"
         data={company.industryNace.division.name}
-        class="col-span-full flex flex-wrap justify-between gap-4 px-4"
+        class="col-span-full flex flex-wrap justify-between gap-2"
       />
     )
   }
@@ -66,6 +66,7 @@ function getMonthName(month: number) {
       company.contacts.length ? (
         <div class="col-span-2">
           <h3 class="text-lg font-semibold">Kontakt</h3>
+          <div class="" />
           <ul class="list-disc pl-5">
             {company.contacts.map(({ name, email }) => (
               <li class="text-sm text-muted">
