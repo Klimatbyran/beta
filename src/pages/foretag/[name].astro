@@ -13,12 +13,12 @@ async function getCompanies() {
 
   if (process.env.NODE_ENV === 'production') {
     data = await fetch('https://api.klimatkollen.se/api/companies').then(
-      (res) => res.json(),
+      (res) => res.json()
     )
   } else {
     // prettier-ignore
     // @ts-ignore Don't care about this TS error
-    data = (await import('@/data/12-jun-test-companies.json')).default as CompanyData[]
+    data = (await import('@/data/test.json')).default as CompanyData[]
   }
 
   return (
@@ -28,7 +28,7 @@ async function getCompanies() {
       // IDEA: Maybe open an issue in garbo to let the API return proper data.
       .filter(
         (c, i, array) =>
-          i === array.findLastIndex((company) => c.url === company.url),
+          i === array.findLastIndex((company) => c.url === company.url)
       ) as CompanyData[]
   )
 }
@@ -37,7 +37,7 @@ const companies = await getCompanies()
 const company = companies.find(
   (company) =>
     company.companyName.toLowerCase().replaceAll(' ', '-') ===
-    name.toLowerCase(),
+    name.toLowerCase()
 )
 ---
 
