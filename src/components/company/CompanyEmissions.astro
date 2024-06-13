@@ -70,13 +70,15 @@ const scopeEmissionsList = emissions
       },
     ]
   : []
+
+const companyName = getCompanyName(company)
 ---
 
 <Card class="p-4 text-sm" level={1}>
   <h1
     class="text-balance pb-4 text-4xl leading-none tracking-tight lg:text-5xl"
   >
-    {getCompanyName(company)}
+    {companyName}
   </h1>
   <p class="pb-4 text-muted">{company.description}</p>
   <p class="text-muted">
@@ -114,7 +116,7 @@ const scopeEmissionsList = emissions
                 'rounded-full px-4 py-2 text-lg font-bold md:text-xl',
                 totalEmissionsData.verified
                   ? 'bg-blue-250 text-blue-950'
-                  : 'bg-gray-800'
+                  : 'bg-gray-800',
               )}
             >
               {totalEmissionsData.value.toLocaleString('sv-SE')}
@@ -135,16 +137,16 @@ const scopeEmissionsList = emissions
                   'rounded-full px-4 py-2 font-bold md:text-base',
                   emission.verified
                     ? 'bg-blue-250 text-blue-950'
-                    : 'bg-gray-800'
+                    : 'bg-gray-800',
                 )}
               >
                 {emission.value.toLocaleString('sv-SE')}
               </span>
             </div>
-          ) : null
+          ) : null,
         )}
       </div>
     ) : null
   }
-  <Scope3Emissions emissions={emissions.scope3.categories} />
+  <Scope3Emissions emissions={emissions.scope3.categories} {companyName} />
 </Card>

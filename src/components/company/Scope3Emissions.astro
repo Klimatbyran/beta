@@ -6,12 +6,14 @@ import CompassIcon from '~icons/local/compass'
 import WarehouseIcon from '~icons/local/warehouse'
 import WormIcon from '~icons/local/worm'
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
+import { Card } from '../ui/card'
 
 interface Props {
   emissions: EmissionsScope['categories']
+  companyName: string
 }
 
-const { emissions } = Astro.props
+const { emissions, companyName } = Astro.props
 
 type CategoryDefinition = {
   title: string
@@ -26,78 +28,82 @@ type ReportedCategoryDefinition = CategoryDefinition & {
 
 const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
   '1_purchasedGoods': {
-    title: 'Inköpta varor och tjänster',
+    title: '1. Inköpta varor och tjänster',
     description:
       'Utsläpp från produktion av varor och tjänster som köpts av organisationen.',
     Icon: TruckIcon,
   },
   '2_capitalGoods': {
-    title: 'Kapitalvaror',
+    title: '2. Kapitalvaror',
     description: '',
     Icon: undefined,
   },
   '3_fuelAndEnergyRelatedActivities': {
-    title: 'Bränsle- och energirelaterade aktiviteter',
+    title: '3. Bränsle- och energirelaterade aktiviteter',
     description: '',
     Icon: undefined,
   },
   '4_upstreamTransportationAndDistribution': {
-    title: 'Uppströms transport och distribution',
+    title: '4. Uppströms transport och distribution',
     description:
       'Utsläpp från transport och distribution av produkter som köpts av organisationen, dvs från sina leverantörer.',
     Icon: WarehouseIcon,
   },
   '5_wasteGeneratedInOperations': {
-    title: 'Avfall genererat i verksamheten',
+    title: '5. Avfall genererat i verksamheten',
     description:
       'Utsläpp från avfall som genereras av organisationens verksamhet.',
     Icon: WormIcon,
   },
   '6_businessTravel': {
-    title: 'Affärsresor',
+    title: '6. Affärsresor',
     description:
       'Utsläpp från transport av anställda för affärsrelaterade aktiviteter.',
     Icon: PlaneIcon,
   },
   '7_employeeCommuting': {
-    title: 'Anställdas pendling',
+    title: '7. Anställdas pendling',
     description:
       'Utsläpp från transport av anställda mellan deras hem och arbetsplatser.',
     Icon: CompassIcon,
   },
   '8_upstreamLeasedAssets': {
-    title: 'Uppströms leasade tillgångar',
+    title: '8. Uppströms leasade tillgångar',
     description: '',
     Icon: undefined,
   },
   '9_downstreamTransportationAndDistribution': {
-    title: 'Nedströms transport och distribution',
+    title: '9. Nedströms transport och distribution',
     description: '',
     Icon: undefined,
   },
   '10_processingOfSoldProducts': {
-    title: 'Bearbetning av sålda produkter',
+    title: '10. Bearbetning av sålda produkter',
     description: '',
     Icon: undefined,
   },
   '11_useOfSoldProducts': {
-    title: 'Användning av sålda produkter',
+    title: '11. Användning av sålda produkter',
     description: '',
     Icon: undefined,
   },
   '12_endOfLifeTreatmentOfSoldProducts': {
-    title: 'Slutbehandling av sålda produkter',
+    title: '12. Slutbehandling av sålda produkter',
     description: '',
     Icon: undefined,
   },
   '13_downstreamLeasedAssets': {
-    title: 'Nedströms leasade tillgångar',
+    title: '13. Nedströms leasade tillgångar',
     description: '',
     Icon: undefined,
   },
-  '14_franchises': { title: 'Franchiser', description: '', Icon: undefined },
+  '14_franchises': {
+    title: '14. Franchiser',
+    description: '',
+    Icon: undefined,
+  },
   '15_investments': {
-    title: 'Investeringar',
+    title: '15. Investeringar',
     description: '',
     Icon: undefined,
   },
@@ -107,36 +113,41 @@ function getReportedCategories(
   emissions: EmissionsScope['categories'],
 ): ReportedCategoryDefinition[] {
   return emissions
-    ? Object.entries(emissions).reduce((categories, [category, value]) => {
-        if (value) {
-          categories.push({
-            ...categoryDefinitions[category as Scope3Category],
-            category: category as Scope3Category,
-            value,
-          })
-        }
-        return categories
-      }, [] as ReportedCategoryDefinition[])
+    ? Object.entries(emissions ?? {}).reduce(
+        (categories, [category, value]) => {
+          if (value) {
+            categories.push({
+              ...categoryDefinitions[category as Scope3Category],
+              category: category as Scope3Category,
+              value,
+            })
+          }
+          return categories
+        },
+        [] as ReportedCategoryDefinition[],
+      )
     : []
 }
+
+const reportedCategories = getReportedCategories(emissions)
 ---
 
 {
   emissions ? (
-    <div class="grid gap-4">
-      <div class="font-semibold">Scope 3 utsläppskategorier</div>
-      <div class="grid gap-4 text-sm">
-        {getReportedCategories(emissions).map(
-          ({ Icon, title, description, value }) => (
-            <Scope3EmissionsCategory
-              {Icon}
-              {title}
-              {description}
-              value={value.toLocaleString('sv-SE')}
-            />
-          ),
-        )}
+    <Card class="grid gap-4" level={2}>
+      <h3 class="font-semibold">
+        {companyName} rapporterar {reportedCategories.length}/15 kategorier:
+      </h3>
+      <div class="grid gap-2 text-sm">
+        {reportedCategories.map(({ Icon, title, description, value }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            value={value.toLocaleString('sv-SE')}
+          />
+        ))}
       </div>
-    </div>
+    </Card>
   ) : null
 }
