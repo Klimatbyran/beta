@@ -30,6 +30,11 @@ const totalBiogenicEmissions = emissions
 const scopeEmissionsList = emissions
   ? [
       {
+        subtitle: 'Totala utsläpp',
+        description: '',
+        value: totalEmissions,
+      },
+      {
         subtitle: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
@@ -49,7 +54,7 @@ const scopeEmissionsList = emissions
       {
         subtitle: 'Biogena utsläpp',
         description: '',
-        value: totalBiogenicEmissions.toLocaleString('sv-SE'),
+        value: totalBiogenicEmissions,
       },
     ]
   : []
@@ -73,12 +78,11 @@ const scopeEmissionsList = emissions
 
 <Card level={1}>
   <CardContent class="grid gap-6">
-    <div class="flex items-center justify-between">
-      <div class="text-2xl">Totala utsläpp {year} (ton CO₂e)</div>
-      <span class="rounded-full bg-gray-800 px-4 py-2 font-bold sm:text-xl">
-        {totalEmissions.toLocaleString('sv-SE')}
-      </span>
-    </div>
+    <h2 class="flex items-center justify-between pb-4 text-3xl font-bold">
+      Utsläpp 2023 <span class="xs:text-xl text-base text-muted"
+        >(ton CO₂e)</span
+      >
+    </h2>
     {
       scopeEmissionsList.length ? (
         <div class="grid gap-4">
