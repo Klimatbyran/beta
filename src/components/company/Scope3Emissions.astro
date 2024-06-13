@@ -131,6 +131,21 @@ function getReportedCategories(
 
 const reportedCategories = getReportedCategories(emissions)
 
+const { upstream, downstream } = reportedCategories.reduce(
+  (result, c) => {
+    if (Number(c.category.split('_')[0]) < 9) {
+      result.upstream.push(c)
+    } else {
+      result.downstream.push(c)
+    }
+    return result
+  },
+  {
+    upstream: [] as ReportedCategoryDefinition[],
+    downstream: [] as ReportedCategoryDefinition[],
+  },
+)
+
 function getGradeColor(count: number) {
   if (count > 9) return 'text-green-500'
   else if (count > 5) return 'text-orange-500'
@@ -152,14 +167,33 @@ function getGradeColor(count: number) {
         kategorier:
       </h3>
       <div class="grid gap-2 text-sm">
-        {reportedCategories.map(({ Icon, title, description, value }) => (
-          <Scope3EmissionsCategory
-            {Icon}
-            {title}
-            {description}
-            value={value.toLocaleString('sv-SE')}
-          />
-        ))}
+        {upstream.length ? (
+          <div class="grid gap-2">
+            <h4 class="pb-2 text-lg leading-none tracking-tight">Uppströms</h4>
+            {upstream.map(({ Icon, title, description, value }) => (
+              <Scope3EmissionsCategory
+                {Icon}
+                {title}
+                {description}
+                value={value.toLocaleString('sv-SE')}
+              />
+            ))}
+          </div>
+        ) : null}
+
+        {downstream.length ? (
+          <div class="grid gap-2 pt-4">
+            <h4 class="pb-2 text-lg leading-none tracking-tight">Nedströms</h4>
+            {downstream.map(({ Icon, title, description, value }) => (
+              <Scope3EmissionsCategory
+                {Icon}
+                {title}
+                {description}
+                value={value.toLocaleString('sv-SE')}
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
     </Card>
   ) : null
