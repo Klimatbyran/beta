@@ -1,14 +1,18 @@
 ---
+import { cn } from '@/lib/utils'
+
 interface Props {
   Icon?: astroHTML.JSX.Element
   title: string
   description: string
-  value: string | null | undefined
+  value?: string | null
+  verified?: string | null
 }
 
-const { Icon, title, description, value } = Astro.props
+const { Icon, title, description, value, verified } = Astro.props
 ---
 
+<!-- TODO: Provide data and make these data points verified too. For this, we need new API data though. -->
 <div class="flex items-center justify-between gap-4">
   <div class="flex items-center gap-4">
     <div
@@ -21,7 +25,10 @@ const { Icon, title, description, value } = Astro.props
       <div class="text-sm text-muted">{description}</div>
     </div>
   </div>
-  <span class="rounded-full bg-gray-800 px-4 py-2 text-lg font-bold sm:text-xl"
-    >{value}</span
+  <span
+    class={cn(
+      'rounded-full px-4 py-2 text-lg font-bold sm:text-xl',
+      verified ? 'bg-blue-250 text-blue-950' : 'bg-gray-800',
+    )}>{value}</span
   >
 </div>
