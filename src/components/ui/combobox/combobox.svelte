@@ -51,12 +51,11 @@
     </Button>
   </Popover.Trigger>
   <Popover.Content class="p-0" id="combobox-content" style="width: {width}px">
-    <Command.Root>
+    <Command.Root loop>
       <Command.Input {placeholder} />
       <Command.Empty>{emptyMessage}</Command.Empty>
       <Command.Group>
         {#each items as item}
-          <!-- IDEA: Maybe hide items that are not relevant, only show top 5 most relevant to improve performance -->
           <Command.Item
             value={item.value}
             onSelect={(currentValue) => {
@@ -64,7 +63,7 @@
               closeAndFocusTrigger(ids.trigger)
               onSelect?.(item)
             }}
-            class="text-balance"
+            class="text-balance combobox-item"
           >
             <Check
               class={cn(
@@ -79,3 +78,15 @@
     </Command.Root>
   </Popover.Content>
 </Popover.Root>
+
+<style>
+  /*
+    Only show the top results.
+
+    NOTE: A better solution would be to use a virtualized list and only render the most relevant items using JS
+    However, that likely requires changes to the combobox
+   */
+  :global(.combobox-item:nth-of-type(1n + 6)) {
+    display: none;
+  }
+</style>
