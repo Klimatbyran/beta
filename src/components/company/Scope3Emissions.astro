@@ -138,7 +138,7 @@ const reportedCategories = getReportedCategories(emissions)
       <h3 class="font-semibold">
         {companyName} rapporterar {reportedCategories.length}/15 kategorier:
       </h3>
-      <div class="grid gap-4 text-sm">
+      <div class="grid gap-2 text-sm">
         {reportedCategories.map(({ Icon, title, description, value }) => (
           <Scope3EmissionsCategory
             {Icon}
