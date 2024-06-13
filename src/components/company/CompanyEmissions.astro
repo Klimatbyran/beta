@@ -47,7 +47,7 @@ const scopeEmissionsList = emissions
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
         value: emissions.scope1.emissions,
-        verified: emissions.scope2.verified,
+        verified: emissions.scope1.verified,
       },
       {
         subtitle: 'Indirekta (scope 2)',
@@ -60,13 +60,13 @@ const scopeEmissionsList = emissions
         subtitle: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
         value: emissions.scope3.emissions,
-        verified: emissions.scope2.verified,
+        verified: emissions.scope3.verified,
       },
       {
         subtitle: 'Biogena utsläpp',
         description: '',
         value: totalBiogenicEmissions,
-        verified: emissions.scope2.verified,
+        verified: null,
       },
     ]
   : []
