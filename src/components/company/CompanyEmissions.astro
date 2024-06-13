@@ -28,14 +28,20 @@ const totalBiogenicEmissions = emissions
     (emissions.scope3.biogenic || 0)
   : 0
 
+const totalEmissionsData = emissions
+  ? {
+      subtitle: 'Totala utsläpp',
+      description: '',
+      value: totalEmissions,
+      verified:
+        emissions.scope1.verified &&
+        emissions.scope2.verified &&
+        emissions.scope3.verified,
+    }
+  : {}
+
 const scopeEmissionsList = emissions
   ? [
-      {
-        subtitle: 'Totala utsläpp',
-        description: '',
-        value: totalEmissions,
-        verified: emissions.scope2.verified,
-      },
       {
         subtitle: 'Egna utsläpp (scope 1)',
         description:
@@ -91,27 +97,51 @@ const scopeEmissionsList = emissions
   {
     scopeEmissionsList.length ? (
       <div class="grid gap-4">
+        {totalEmissionsData.value && (
+          <div class={'flex items-center justify-between text-lg md:text-xl'}>
+            <div>
+              <h4 class={'text-lg font-medium md:text-xl'}>
+                {totalEmissionsData.subtitle}
+              </h4>
+              {totalEmissionsData.description && (
+                <p class="text-sm text-muted">
+                  {totalEmissionsData.description}
+                </p>
+              )}
+            </div>
+            <span
+              class={cn(
+                'rounded-full px-4 py-2 text-lg font-bold md:text-xl',
+                totalEmissionsData.verified
+                  ? 'bg-blue-250 text-blue-950'
+                  : 'bg-gray-800'
+              )}
+            >
+              {totalEmissionsData.value.toLocaleString('sv-SE')}
+            </span>
+          </div>
+        )}
         {scopeEmissionsList.map((emission) =>
           emission.value ? (
-            <div class="flex items-center justify-between">
+            <div class={'flex items-center justify-between'}>
               <div>
-                <h4 class="font-medium">{emission.subtitle}</h4>
+                <h4 class={'font-medium'}>{emission.subtitle}</h4>
                 {emission.description && (
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
               <span
                 class={cn(
-                  'rounded-full px-4 py-2 font-bold md:text-xl',
+                  'rounded-full px-4 py-2 font-bold md:text-base',
                   emission.verified
                     ? 'bg-blue-250 text-blue-950'
-                    : 'bg-gray-800',
+                    : 'bg-gray-800'
                 )}
               >
                 {emission.value.toLocaleString('sv-SE')}
               </span>
             </div>
-          ) : null,
+          ) : null
         )}
       </div>
     ) : null
