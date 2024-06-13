@@ -76,7 +76,7 @@ const biogenicEmissions = {
 const companyName = getCompanyName(company)
 ---
 
-<Card class="p-4 text-sm" level={1}>
+<Card class="text-sm" level={1}>
   <h1
     class="text-balance pb-4 text-4xl leading-none tracking-tight lg:text-5xl"
   >
@@ -156,7 +156,10 @@ const companyName = getCompanyName(company)
   <Card level={2}>
     <div class={'flex items-center justify-between'}>
       <div>
-        <h4 class={'font-medium'}>{biogenicEmissions.title}</h4>
+        <h4 class="font-medium">
+          {biogenicEmissions.title}
+          <span class="text-base text-muted xs:text-xl">(ton CO₂e)</span>
+        </h4>
         {
           biogenicEmissions.description && (
             <p class="text-sm text-muted">{biogenicEmissions.description}</p>
@@ -165,7 +168,7 @@ const companyName = getCompanyName(company)
       </div>
       <span
         class={cn(
-          'rounded-full px-4 py-2 font-bold md:text-base',
+          'rounded-full px-4 py-2 font-bold md:text-base ml-1',
           biogenicEmissions.verified
             ? 'bg-blue-250 text-blue-950'
             : 'bg-gray-800',
