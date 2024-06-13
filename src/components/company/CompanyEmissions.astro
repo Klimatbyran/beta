@@ -31,6 +31,12 @@ const totalBiogenicEmissions = emissions
 const scopeEmissionsList = emissions
   ? [
       {
+        subtitle: 'Totala utsläpp',
+        description: '',
+        value: totalEmissions,
+        verified: emissions.scope2.verified,
+      },
+      {
         subtitle: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
