@@ -23,4 +23,5 @@
   placeholder="Sök företag..."
   emptyMessage="Inga företag hittade."
   {onSelect}
+  width={260}
 />

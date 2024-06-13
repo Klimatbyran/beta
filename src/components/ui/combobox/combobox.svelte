@@ -14,6 +14,7 @@
   export let placeholder: string
   export let emptyMessage: string
   export let onSelect: ((item: Item) => void) | undefined = undefined
+  export let width = 200
 
   let open = false
   let value = ''
@@ -38,14 +39,18 @@
       variant="outline"
       role="combobox"
       aria-expanded={open}
-      class="w-[200px] justify-between"
+      class="justify-between"
+      style="width: {width}px"
       aria-controls="combobox-content"
     >
-      {selectedValue}
-      <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      <span
+        class="text-ellipsis overflow-hidden text-left"
+        style="width: {width - 20}px">{selectedValue}</span
+      >
+      <ChevronsUpDown class="h-4 ml-1 w-4 shrink-0 opacity-50" />
     </Button>
   </Popover.Trigger>
-  <Popover.Content class="w-[200px] p-0" id="combobox-content">
+  <Popover.Content class="p-0" id="combobox-content" style="width: {width}px">
     <Command.Root>
       <Command.Input {placeholder} />
       <Command.Empty>{emptyMessage}</Command.Empty>
@@ -59,6 +64,7 @@
               closeAndFocusTrigger(ids.trigger)
               onSelect?.(item)
             }}
+            class="text-balance"
           >
             <Check
               class={cn(
