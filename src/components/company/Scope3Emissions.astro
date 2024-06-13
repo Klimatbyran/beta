@@ -40,81 +40,89 @@ const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
   '1_purchasedGoods': {
     title: '1. Inköpta varor och tjänster',
     description:
-      'Utsläpp från produktion av varor och tjänster som köpts av organisationen.',
+      'Utsläpp från produktion av varor och tjänster som köps av organisationen.',
     Icon: Fa6SolidGifts,
   },
   '2_capitalGoods': {
     title: '2. Kapitalvaror',
-    description: '',
+    description:
+      'Utsläpp från produktion av kapitalvaror som köps av organisationen.',
     Icon: MingcuteWashMachineLine,
   },
   '3_fuelAndEnergyRelatedActivities': {
     title: '3. Bränsle- och energirelaterade aktiviteter',
-    description: '',
+    description:
+      'Utsläpp från produktion av bränslen och energi som köps av organisationen, inklusive transport och distribution, som inte inkluderas i scope 2.',
     Icon: IconParkOutlineSolarEnergyOne,
   },
   '4_upstreamTransportationAndDistribution': {
     title: '4. Uppströms transport och distribution',
     description:
-      'Utsläpp från transport och distribution av produkter som köpts av organisationen, dvs från sina leverantörer.',
+      'Utsläpp från transport och distribution av inköpta varor mellan leverantörer och/eller inom organisationen.',
     Icon: IconParkOutlineTransport,
   },
   '5_wasteGeneratedInOperations': {
     title: '5. Avfall genererat i verksamheten',
     description:
-      'Utsläpp från avfall som genereras av organisationens verksamhet.',
+      'Utsläpp från behandling av avfall som genereras av organisationen.',
     Icon: MakiWasteBasket,
   },
   '6_businessTravel': {
-    title: '6. Affärsresor',
+    title: '6. Tjänsteresor',
     description:
-      'Utsläpp från transport av anställda för affärsrelaterade aktiviteter.',
+      'Utsläpp från resor i tjänsten med fordon som inte ägs av organisationen.',
     Icon: ZondiconsTravelTrain,
   },
   '7_employeeCommuting': {
-    title: '7. Anställdas pendling',
+    title: '7. Pendlingsresor',
     description:
-      'Utsläpp från transport av anställda mellan deras hem och arbetsplatser.',
+      'Utsläpp från anställdas resor mellan hemmet och arbetsplatsen.',
     Icon: MaterialSymbolsCommuteOutline,
   },
   '8_upstreamLeasedAssets': {
     title: '8. Uppströms leasade tillgångar',
-    description: '',
+    description:
+      'Utsläpp från verksamhet i leasade tillgångar som inte inkluderas i scope 1 och 2.',
     Icon: IconParkOutlineWashingMachineOne,
   },
   '9_downstreamTransportationAndDistribution': {
     title: '9. Nedströms transport och distribution',
-    description: '',
+    description:
+      'Utsläpp från transport och distribution av sålda varor mellan organisationen och kund.',
     Icon: IconParkOutlineTransporter,
   },
   '10_processingOfSoldProducts': {
     title: '10. Bearbetning av sålda produkter',
-    description: '',
+    description: 'Utsläpp från vidareförädling av sålda insatsvaror.',
     Icon: IconParkOutlineGateMachine,
   },
   '11_useOfSoldProducts': {
     title: '11. Användning av sålda produkter',
-    description: '',
+    description: 'Utsläpp från användning av sålda produkter av kunden.',
     Icon: MaterialSymbolsPersonPlayOutlineRounded,
   },
   '12_endOfLifeTreatmentOfSoldProducts': {
-    title: '12. Slutbehandling av sålda produkter',
-    description: '',
+    title: '12. Avfallshantering av sålda produkter',
+    description:
+      'Utsläpp från avfallshantering av sålda produkter vid slutet av livscykeln.',
     Icon: IonTrashBin,
   },
   '13_downstreamLeasedAssets': {
     title: '13. Nedströms leasade tillgångar',
-    description: '',
+    description:
+      'Utsläpp från verksamhet i nedströms leasade tillgångar som inte inkluderas i scope 1 och 2.',
     Icon: ClarityBuildingSolid,
   },
   '14_franchises': {
     title: '14. Franchiser',
-    description: '',
+    description:
+      'Utsläpp från franchisetagares verksamhet som inte inkluderas i scope 1 och 2.',
     Icon: BiHouses,
   },
   '15_investments': {
     title: '15. Investeringar',
-    description: '',
+    description:
+      'Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp.',
     Icon: StreamlineInvestmentSelection,
   },
 }
