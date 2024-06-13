@@ -56,6 +56,11 @@ export interface EmissionsScope {
   }
 }
 
+export type Scope3Category = keyof Omit<
+  Exclude<EmissionsScope['categories'], undefined>,
+  '16_other'
+>
+
 export interface Emissions {
   [year: string]: {
     year: string
