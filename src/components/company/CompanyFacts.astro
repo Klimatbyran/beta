@@ -10,11 +10,21 @@ interface Props {
 
 const { company, year } = Astro.props
 
-function getMonthName(month: number) {
-  const date = new Date()
-  date.setMonth(month === 0 ? 12 : month - 1)
+/**
+ * Get the reporting period.
+ *
+ * For fiscal years following the calendar year, show the last reported year.
+ * For non-calendar fiscal years, use special formatting
+ */
+function getPeriod(company: CompanyData) {
+  const latestYearReported = Math.max.apply(
+    0,
+    Object.keys(company.emissions ?? {}).map(Number),
+  )
 
-  return date.toLocaleString('sv-SE', { month: 'long' })
+  return company.fiscalYear && company.fiscalYear.startMonth !== 1
+    ? `${latestYearReported - 1}/${latestYearReported}`
+    : latestYearReported
 }
 ---
 
@@ -51,14 +61,7 @@ function getMonthName(month: number) {
       )
     }
 
-    {
-      company.fiscalYear && (
-        <CompanyFactSection
-          title="Räkenskapsår"
-          data={`${getMonthName(company.fiscalYear.startMonth)} - ${getMonthName(company.fiscalYear.endMonth)}`}
-        />
-      )
-    }
+    <CompanyFactSection title="Period" data={getPeriod(company)} />
   </Card>
 
   <Card level={2}>
@@ -66,7 +69,6 @@ function getMonthName(month: number) {
       company.contacts.length ? (
         <div class="col-span-2">
           <h3 class="text-lg font-semibold">Kontakt</h3>
-          <div class="" />
           <ul class="list-disc pl-5">
             {company.contacts.map(({ name, email }) => (
               <li class="text-sm text-muted">
