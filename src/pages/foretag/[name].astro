@@ -21,7 +21,16 @@ async function getCompanies() {
     data = (await import('@/data/12-jun-test-companies.json')).default as CompanyData[]
   }
 
-  return data.filter(isCompany) as CompanyData[]
+  return (
+    data
+      .filter(isCompany)
+      // HACK: Keep unique companies. This should ideally be solved with filtering on the API side.
+      // IDEA: Maybe open an issue in garbo to let the API return proper data.
+      .filter(
+        (c, i, array) =>
+          i === array.findLastIndex((company) => c.url === company.url),
+      ) as CompanyData[]
+  )
 }
 
 const companies = await getCompanies()
