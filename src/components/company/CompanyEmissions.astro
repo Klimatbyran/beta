@@ -1,8 +1,6 @@
 ---
 import { getCompanyName, type CompanyData } from '@/data/companyData'
-import { Card, CardContent, CardHeader } from '../ui/card'
-import ScopeEmissions from './ScopeEmissions.astro'
-import DataCard from '../DataCard.astro'
+import { Card, CardContent } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import CompanyFacts from './CompanyFacts.astro'
 
@@ -32,16 +30,26 @@ const totalBiogenicEmissions = emissions
 const scopeEmissionsList = emissions
   ? [
       {
-        subtitle: 'Scope 1 utsläpp',
+        subtitle: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
         value: emissions.scope1.emissions,
       },
       {
-        subtitle: 'Scope 2 utsläpp',
+        subtitle: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
         value: emissions.scope2.emissions,
+      },
+      {
+        subtitle: 'Värdekedjan (scope 3)',
+        description: 'Indirekta utsläpp från organisationens värdekedja.',
+        value: emissions.scope3.emissions,
+      },
+      {
+        subtitle: 'Biogena utsläpp',
+        description: '',
+        value: totalBiogenicEmissions.toLocaleString('sv-SE'),
       },
     ]
   : []
@@ -65,18 +73,33 @@ const scopeEmissionsList = emissions
 
 <Card level={1}>
   <CardContent class="grid gap-6">
-    <DataCard
-      title={'Totala utsläpp ' + year}
-      data={totalEmissions.toLocaleString('sv-SE')}
-    />
-    <ScopeEmissions
-      title="Scope 1 and 2 utsläpp"
-      emissions={scopeEmissionsList}
-    />
-    <DataCard
-      title="Biogena utsläpp"
-      data={totalBiogenicEmissions.toLocaleString('sv-SE')}
-    />
+    <div class="flex items-center justify-between">
+      <div class="text-2xl">Totala utsläpp {year} (ton CO₂e)</div>
+      <span class="rounded-full bg-gray-800 px-4 py-2 font-bold sm:text-xl">
+        {totalEmissions.toLocaleString('sv-SE')}
+      </span>
+    </div>
+    {
+      scopeEmissionsList.length ? (
+        <div class="grid gap-4">
+          {scopeEmissionsList.map((emission) =>
+            emission.value ? (
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-medium">{emission.subtitle}</h4>
+                  {emission.description && (
+                    <p class="text-sm text-muted">{emission.description}</p>
+                  )}
+                </div>
+                <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-xl">
+                  {emission.value.toLocaleString('sv-SE')}
+                </span>
+              </div>
+            ) : null,
+          )}
+        </div>
+      ) : null
+    }
     <Scope3Emissions emissions={emissions.scope3.categories} />
   </CardContent>
 </Card>
