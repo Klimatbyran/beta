@@ -22,8 +22,6 @@ function getPeriod(company: CompanyData) {
     Object.keys(company.emissions ?? {}).map(Number),
   )
 
-  console.log({ latestYearReported, fiscalYear: company.fiscalYear })
-
   return company.fiscalYear && company.fiscalYear.startMonth !== 1
     ? `${latestYearReported - 1}/${latestYearReported}`
     : latestYearReported
