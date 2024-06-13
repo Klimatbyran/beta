@@ -104,7 +104,7 @@ const companyName = getCompanyName(company)
         {totalEmissionsData.value && (
           <div class={'flex items-center justify-between text-lg md:text-xl'}>
             <div>
-              <h4 class={'text-lg font-medium md:text-xl'}>
+              <h4 class="text-lg font-medium md:text-xl">
                 {totalEmissionsData.title}
               </h4>
               {totalEmissionsData.description && (
@@ -127,9 +127,9 @@ const companyName = getCompanyName(company)
         )}
         {scopeEmissionsList.map((emission) =>
           emission.value ? (
-            <div class={'flex items-center justify-between'}>
+            <div class="flex items-center justify-between">
               <div>
-                <h4 class={'font-medium'}>{emission.title}</h4>
+                <h4 class="font-medium">{emission.title}</h4>
                 {emission.description && (
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
@@ -153,29 +153,27 @@ const companyName = getCompanyName(company)
 
   <Scope3Emissions emissions={emissions.scope3.categories} {companyName} />
 
-  <Card level={2}>
-    <div class={'flex items-center justify-between'}>
-      <div>
-        <h4 class="font-medium">
+  {
+    totalBiogenicEmissions ? (
+      <Card level={2}>
+        <h4 class="flex items-center justify-between pb-4 text-2xl">
           {biogenicEmissions.title}
-          <span class="text-base text-muted xs:text-xl">(ton CO₂e)</span>
+          <span class="text-base text-muted">(ton CO₂e)</span>
         </h4>
-        {
-          biogenicEmissions.description && (
-            <p class="text-sm text-muted">{biogenicEmissions.description}</p>
-          )
-        }
-      </div>
-      <span
-        class={cn(
-          'rounded-full px-4 py-2 font-bold md:text-base ml-1',
-          biogenicEmissions.verified
-            ? 'bg-blue-250 text-blue-950'
-            : 'bg-gray-800',
-        )}
-      >
-        {biogenicEmissions.value.toLocaleString('sv-SE')}
-      </span>
-    </div>
-  </Card>
+        <div class="flex items-center justify-between gap-4">
+          <p class="text-sm text-muted">{biogenicEmissions.description}</p>
+          <span
+            class={cn(
+              'self-start rounded-full px-4 py-2 font-bold',
+              biogenicEmissions.verified
+                ? 'bg-blue-250 text-blue-950'
+                : 'bg-gray-800',
+            )}
+          >
+            {biogenicEmissions.value.toLocaleString('sv-SE')}
+          </span>
+        </div>
+      </Card>
+    ) : null
+  }
 </Card>
