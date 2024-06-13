@@ -123,35 +123,16 @@ const scopeEmissionsList = emissions
         )}
         {scopeEmissionsList.map((emission) =>
           emission.value ? (
-            <div
-              class={cn(
-                'flex items-center justify-between',
-                emission.subtitle === 'Totala utsläpp'
-                  ? 'text-lg md:text-xl'
-                  : ''
-              )}
-            >
+            <div class={'flex items-center justify-between'}>
               <div>
-                <h4
-                  class={cn(
-                    'font-medium',
-                    emission.subtitle === 'Totala utsläpp'
-                      ? 'text-lg md:text-xl'
-                      : ''
-                  )}
-                >
-                  {emission.subtitle}
-                </h4>
+                <h4 class={'font-medium'}>{emission.subtitle}</h4>
                 {emission.description && (
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
               <span
                 class={cn(
-                  'rounded-full px-4 py-2 font-bold',
-                  emission.subtitle === 'Totala utsläpp'
-                    ? 'text-lg md:text-xl'
-                    : 'md:text-base',
+                  'rounded-full px-4 py-2 font-bold md:text-base',
                   emission.verified
                     ? 'bg-blue-250 text-blue-950'
                     : 'bg-gray-800'
