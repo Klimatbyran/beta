@@ -47,24 +47,24 @@ const scopeEmissionsList = emissions
   : []
 ---
 
-<Card level={1}>
-  <CardHeader class="p-4 text-sm">
-    <h1
-      class="text-balance pb-4 text-4xl leading-none tracking-tight lg:text-5xl"
-    >
-      {getCompanyName(company)}
-    </h1>
-    <p class="text-muted">{company.description}</p>
-    <p class="text-muted">
-      Läs
-      <a href={company.url} class="text-sm text-blue-500 underline">
-        hållbarhetsrapport
-      </a>
-    </p>
-  </CardHeader>
-  <CardContent class="grid gap-6">
-    <CompanyFacts {company} {year} />
+<Card class="p-4 text-sm" level={1}>
+  <h1
+    class="text-balance pb-4 text-4xl leading-none tracking-tight lg:text-5xl"
+  >
+    {getCompanyName(company)}
+  </h1>
+  <p class="text-muted">{company.description}</p>
+  <p class="text-muted">
+    Läs
+    <a href={company.url} class="text-sm text-blue-500 underline">
+      hållbarhetsrapport
+    </a>
+  </p>
+  <CompanyFacts {company} {year} />
+</Card>
 
+<Card level={1}>
+  <CardContent class="grid gap-6">
     <DataCard
       title={'Totala utsläpp ' + year}
       data={totalEmissions.toLocaleString('sv-SE')}
