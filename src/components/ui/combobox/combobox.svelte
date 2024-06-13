@@ -1,7 +1,6 @@
 <script lang="ts">
-  // TODO: replace lucide-svelte with unplugin-icons to allow using lucide icons in Astro components too
-  import Check from 'lucide-svelte/icons/check'
-  import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down'
+  import Check from 'icons:svelte/lucide/check'
+  import ChevronsUpDown from 'icons:svelte/lucide/chevrons-up-down'
   import { tick } from 'svelte'
   import * as Command from '@/components/ui/command/index.js'
   import * as Popover from '@/components/ui/popover/index.js'
