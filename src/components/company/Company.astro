@@ -21,20 +21,34 @@ const year = latestYearWithData
 const emissions = company.emissions[year]
 ---
 
-<article class="xs:px-4 mx-auto max-w-screen-lg">
+<div class="bg-blue-250 py-2 text-sm text-black">
+  <div class="mx-auto max-w-screen-lg px-4 xs:px-8 md:px-12 lg:px-16">
+    Denna sida är en betaversion och innehåller delvis AI-genererad data. Om du
+    upptäcker felaktigheter i datan, vänligen skicka ett e-postmeddelande till{
+      ' '
+    }
+    <a href="mailto:hej@klimatkollen.se" class="underline"
+      >hej@klimatkollen.se</a
+    >.
+  </div>
+</div>
+
+<article class="mx-auto max-w-screen-lg xs:px-4">
   {
     emissions ? (
-      <div class="mt-8 grid gap-8">
-        <CompanyEmissions {company} {year} />
+      <>
+        <div class="mt-8 grid gap-8">
+          <CompanyEmissions {company} {year} />
 
-        <CompanyInitiatives initiatives={company.initiatives} />
+          <CompanyInitiatives initiatives={company.initiatives} />
 
-        <CompanyGoals goals={company.goals} />
+          <CompanyGoals goals={company.goals} />
 
-        <div class="grid place-content-center py-16">
-          <OtherCompanies client:idle {companies} />
+          <div class="grid place-content-center py-16">
+            <OtherCompanies client:idle {companies} />
+          </div>
         </div>
-      </div>
+      </>
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <h1 class="text-4xl font-bold leading-none tracking-tight">
