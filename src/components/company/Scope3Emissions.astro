@@ -128,7 +128,7 @@ function getReportedCategories(
   emissions ? (
     <div class="grid gap-4">
       <div class="font-semibold">Scope 3 utsläppskategorier</div>
-      <div class="grid gap-4">
+      <div class="grid gap-4 text-sm">
         {getReportedCategories(emissions).map(
           ({ Icon, title, description, value }) => (
             <Scope3EmissionsCategory

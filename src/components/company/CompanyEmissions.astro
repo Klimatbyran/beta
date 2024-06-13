@@ -87,14 +87,14 @@ const scopeEmissionsList = emissions
       <div class="grid gap-4">
         {scopeEmissionsList.map((emission) =>
           emission.value ? (
-            <div class="flex items-center justify-between">
+            <div class={`flex items-center justify-between ${emission.subtitle === 'Totala utsläpp' ? 'text-lg md:text-xl' : ''}`}>
               <div>
-                <h4 class="font-medium">{emission.subtitle}</h4>
+                <h4 class={`font-medium ${emission.subtitle === 'Totala utsläpp' ? 'text-lg md:text-xl' : ''}`}>{emission.subtitle}</h4>
                 {emission.description && (
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
-              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-xl">
+              <span class={`rounded-full bg-gray-800 px-4 py-2 font-bold ${emission.subtitle === 'Totala utsläpp' ? 'text-lg md:text-xl' : 'md:text-base'}`}>
                 {emission.value.toLocaleString('sv-SE')}
               </span>
             </div>
