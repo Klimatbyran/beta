@@ -3,9 +3,17 @@ import react from '@astrojs/react'
 import svelte from '@astrojs/svelte'
 import node from '@astrojs/node'
 import tailwind from '@astrojs/tailwind'
+import { type Options } from 'unplugin-icons'
 import Icons from 'unplugin-icons/vite'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
+
+const customCollections: Options['customCollections'] = {
+  local: (name) =>
+    readFile(resolve('./src/icons', `${name}.svg`), {
+      encoding: 'utf-8',
+    }),
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -29,15 +37,20 @@ export default defineConfig({
         }
       : undefined,
   vite: {
+    resolve: {
+      alias: [
+        { find: 'icons:astro', replacement: '~icons' },
+        { find: 'icons:svelte', replacement: '~icons' },
+      ],
+    },
     plugins: [
       Icons({
+        compiler: 'svelte',
+        customCollections,
+      }),
+      Icons({
         compiler: 'astro',
-        customCollections: {
-          local: (name) =>
-            readFile(resolve('./src/icons', `${name}.svg`), {
-              encoding: 'utf-8',
-            }),
-        },
+        customCollections,
       }),
     ],
   },

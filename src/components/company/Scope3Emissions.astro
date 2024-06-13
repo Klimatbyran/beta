@@ -1,10 +1,20 @@
 ---
 import type { EmissionsScope, Scope3Category } from '@/data/companyData'
-import TruckIcon from '~icons/local/truck'
-import PlaneIcon from '~icons/local/plane'
-import CompassIcon from '~icons/local/compass'
-import WarehouseIcon from '~icons/local/warehouse'
-import WormIcon from '~icons/local/worm'
+import Fa6SolidGifts from 'icons:astro/fa6-solid/gifts'
+import MingcuteWashMachineLine from 'icons:astro/mingcute/wash-machine-line'
+import IconParkOutlineSolarEnergyOne from 'icons:astro/icon-park-outline/solar-energy-one'
+import IconParkOutlineTransport from 'icons:astro/icon-park-outline/transport'
+import MakiWasteBasket from 'icons:astro/maki/waste-basket'
+import ZondiconsTravelTrain from 'icons:astro/zondicons/travel-train'
+import MaterialSymbolsCommuteOutline from 'icons:astro/material-symbols/commute-outline'
+import IconParkOutlineWashingMachineOne from 'icons:astro/icon-park-outline/washing-machine-one'
+import IconParkOutlineTransporter from 'icons:astro/icon-park-outline/transporter'
+import IconParkOutlineGateMachine from 'icons:astro/icon-park-outline/gate-machine'
+import MaterialSymbolsPersonPlayOutlineRounded from 'icons:astro/material-symbols/person-play-outline-rounded'
+import IonTrashBin from 'icons:astro/ion/trash-bin'
+import ClarityBuildingSolid from 'icons:astro/clarity/building-solid'
+import BiHouses from 'icons:astro/bi/houses'
+import StreamlineInvestmentSelection from 'icons:astro/streamline/investment-selection'
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 
@@ -30,82 +40,90 @@ const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
   '1_purchasedGoods': {
     title: '1. Inköpta varor och tjänster',
     description:
-      'Utsläpp från produktion av varor och tjänster som köpts av organisationen.',
-    Icon: TruckIcon,
+      'Utsläpp från produktion av varor och tjänster som köps av organisationen.',
+    Icon: Fa6SolidGifts,
   },
   '2_capitalGoods': {
     title: '2. Kapitalvaror',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från produktion av kapitalvaror som köps av organisationen.',
+    Icon: MingcuteWashMachineLine,
   },
   '3_fuelAndEnergyRelatedActivities': {
     title: '3. Bränsle- och energirelaterade aktiviteter',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från produktion av bränslen och energi som köps av organisationen, inklusive transport och distribution, som inte inkluderas i scope 2.',
+    Icon: IconParkOutlineSolarEnergyOne,
   },
   '4_upstreamTransportationAndDistribution': {
     title: '4. Uppströms transport och distribution',
     description:
-      'Utsläpp från transport och distribution av produkter som köpts av organisationen, dvs från sina leverantörer.',
-    Icon: WarehouseIcon,
+      'Utsläpp från transport och distribution av inköpta varor mellan leverantörer och/eller inom organisationen.',
+    Icon: IconParkOutlineTransport,
   },
   '5_wasteGeneratedInOperations': {
     title: '5. Avfall genererat i verksamheten',
     description:
-      'Utsläpp från avfall som genereras av organisationens verksamhet.',
-    Icon: WormIcon,
+      'Utsläpp från behandling av avfall som genereras av organisationen.',
+    Icon: MakiWasteBasket,
   },
   '6_businessTravel': {
-    title: '6. Affärsresor',
+    title: '6. Tjänsteresor',
     description:
-      'Utsläpp från transport av anställda för affärsrelaterade aktiviteter.',
-    Icon: PlaneIcon,
+      'Utsläpp från resor i tjänsten med fordon som inte ägs av organisationen.',
+    Icon: ZondiconsTravelTrain,
   },
   '7_employeeCommuting': {
-    title: '7. Anställdas pendling',
+    title: '7. Pendlingsresor',
     description:
-      'Utsläpp från transport av anställda mellan deras hem och arbetsplatser.',
-    Icon: CompassIcon,
+      'Utsläpp från anställdas resor mellan hemmet och arbetsplatsen.',
+    Icon: MaterialSymbolsCommuteOutline,
   },
   '8_upstreamLeasedAssets': {
     title: '8. Uppströms leasade tillgångar',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från verksamhet i leasade tillgångar som inte inkluderas i scope 1 och 2.',
+    Icon: IconParkOutlineWashingMachineOne,
   },
   '9_downstreamTransportationAndDistribution': {
     title: '9. Nedströms transport och distribution',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från transport och distribution av sålda varor mellan organisationen och kund.',
+    Icon: IconParkOutlineTransporter,
   },
   '10_processingOfSoldProducts': {
     title: '10. Bearbetning av sålda produkter',
-    description: '',
-    Icon: undefined,
+    description: 'Utsläpp från vidareförädling av sålda insatsvaror.',
+    Icon: IconParkOutlineGateMachine,
   },
   '11_useOfSoldProducts': {
     title: '11. Användning av sålda produkter',
-    description: '',
-    Icon: undefined,
+    description: 'Utsläpp från användning av sålda produkter av kunden.',
+    Icon: MaterialSymbolsPersonPlayOutlineRounded,
   },
   '12_endOfLifeTreatmentOfSoldProducts': {
-    title: '12. Slutbehandling av sålda produkter',
-    description: '',
-    Icon: undefined,
+    title: '12. Avfallshantering av sålda produkter',
+    description:
+      'Utsläpp från avfallshantering av sålda produkter vid slutet av livscykeln.',
+    Icon: IonTrashBin,
   },
   '13_downstreamLeasedAssets': {
     title: '13. Nedströms leasade tillgångar',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från verksamhet i nedströms leasade tillgångar som inte inkluderas i scope 1 och 2.',
+    Icon: ClarityBuildingSolid,
   },
   '14_franchises': {
     title: '14. Franchiser',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från franchisetagares verksamhet som inte inkluderas i scope 1 och 2.',
+    Icon: BiHouses,
   },
   '15_investments': {
     title: '15. Investeringar',
-    description: '',
-    Icon: undefined,
+    description:
+      'Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp.',
+    Icon: StreamlineInvestmentSelection,
   },
 }
 
