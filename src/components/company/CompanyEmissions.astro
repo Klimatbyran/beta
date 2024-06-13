@@ -1,6 +1,6 @@
 ---
 import { getCompanyName, type CompanyData } from '@/data/companyData'
-import { Card, CardContent } from '../ui/card'
+import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import CompanyFacts from './CompanyFacts.astro'
 
@@ -62,7 +62,7 @@ const scopeEmissionsList = emissions
 
 <Card class="p-4 text-sm" level={1}>
   <h1
-    class="text-balance pb-4 pt-4 text-4xl leading-none tracking-tight md:pt-0 lg:text-5xl"
+    class="text-balance pb-4 text-4xl leading-none tracking-tight lg:text-5xl"
   >
     {getCompanyName(company)}
   </h1>
@@ -76,34 +76,32 @@ const scopeEmissionsList = emissions
   <CompanyFacts {company} {year} />
 </Card>
 
-<Card level={1}>
-  <CardContent class="grid gap-6">
-    <h2 class="flex items-center justify-between pb-4 text-3xl font-bold">
-      Utsläpp 2023 <span class="xs:text-xl text-base text-muted"
-        >(ton CO₂e)</span
-      >
-    </h2>
-    {
-      scopeEmissionsList.length ? (
-        <div class="grid gap-4">
-          {scopeEmissionsList.map((emission) =>
-            emission.value ? (
-              <div class="flex items-center justify-between">
-                <div>
-                  <h4 class="font-medium">{emission.subtitle}</h4>
-                  {emission.description && (
-                    <p class="text-sm text-muted">{emission.description}</p>
-                  )}
-                </div>
-                <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-xl">
-                  {emission.value.toLocaleString('sv-SE')}
-                </span>
+<Card class="grid gap-4" level={1}>
+  <h2
+    class="flex items-center justify-between pb-4 text-3xl leading-none tracking-tight"
+  >
+    Utsläpp 2023 <span class="xs:text-xl text-base text-muted">(ton CO₂e)</span>
+  </h2>
+  {
+    scopeEmissionsList.length ? (
+      <div class="grid gap-4">
+        {scopeEmissionsList.map((emission) =>
+          emission.value ? (
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-medium">{emission.subtitle}</h4>
+                {emission.description && (
+                  <p class="text-sm text-muted">{emission.description}</p>
+                )}
               </div>
-            ) : null,
-          )}
-        </div>
-      ) : null
-    }
-    <Scope3Emissions emissions={emissions.scope3.categories} />
-  </CardContent>
+              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-xl">
+                {emission.value.toLocaleString('sv-SE')}
+              </span>
+            </div>
+          ) : null,
+        )}
+      </div>
+    ) : null
+  }
+  <Scope3Emissions emissions={emissions.scope3.categories} />
 </Card>

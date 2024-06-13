@@ -10,8 +10,8 @@ interface Props {
 const { goals } = Astro.props
 ---
 
-<Card level={1}>
-  <h2 class="pb-4 text-3xl font-bold">Mål</h2>
+<Card class="grid gap-4" level={1}>
+  <h2 class="pb-4 text-3xl leading-none tracking-tight">Mål</h2>
   <ul class="grid gap-2">
     {
       goals.map((goal) => (
