@@ -130,13 +130,26 @@ function getReportedCategories(
 }
 
 const reportedCategories = getReportedCategories(emissions)
+
+function getGradeColor(count: number) {
+  if (count > 9) return 'text-green-500'
+  else if (count > 5) return 'text-orange-500'
+  return 'text-red-600'
+}
 ---
 
 {
   emissions ? (
     <Card class="grid gap-4" level={2}>
-      <h3 class="font-semibold">
-        {companyName} rapporterar {reportedCategories.length}/15 kategorier:
+      <h3 class="pb-4 leading-none tracking-tight sm:text-xl lg:text-2xl">
+        {companyName} rapporterar{' '}
+        <span class="text-nowrap">
+          <span class={getGradeColor(reportedCategories.length)}>
+            {reportedCategories.length}
+          </span>
+          / 15
+        </span>{' '}
+        kategorier:
       </h3>
       <div class="grid gap-2 text-sm">
         {reportedCategories.map(({ Icon, title, description, value }) => (
