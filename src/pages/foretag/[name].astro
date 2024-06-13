@@ -37,7 +37,7 @@ const company = companies.find(
 
   {
     process.env.NODE_ENV === 'development' ? (
-      <div class="mt-16 flex flex-wrap gap-2 text-nowrap p-4">
+      <div class="mt-16 flex flex-wrap gap-2 text-nowrap px-8">
         {companies.map((c) => (
           <a href={getCompanyURL(c)} class="underline">
             {c.companyName}

@@ -1,4 +1,4 @@
-import { fontFamily } from 'tailwindcss/defaultTheme'
+import { fontFamily, screens } from 'tailwindcss/defaultTheme'
 import { white, black, transparent, current } from 'tailwindcss/colors'
 
 const colors = {
@@ -135,6 +135,11 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        '2xs': '375px',
+        xs: '475px',
+        ...screens,
+      },
       colors: {
         border: 'hsl(var(--border) / <alpha-value>)',
         input: 'hsl(var(--input) / <alpha-value>)',

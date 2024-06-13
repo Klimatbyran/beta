@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from '../ui/card'
 import ScopeEmissions from './ScopeEmissions.astro'
 import DataCard from '../DataCard.astro'
 import Scope3Emissions from './Scope3Emissions.astro'
+import CompanyFacts from './CompanyFacts.astro'
 
 interface Props {
   company: CompanyData
@@ -46,19 +47,23 @@ const scopeEmissionsList = emissions
   : []
 ---
 
+<Card class="p-4 text-sm" level={1}>
+  <h1
+    class="text-balance pb-4 pt-4 text-4xl leading-none tracking-tight md:pt-0 lg:text-5xl"
+  >
+    {getCompanyName(company)}
+  </h1>
+  <p class="pb-4 text-muted">{company.description}</p>
+  <p class="text-muted">
+    Läs
+    <a href={company.url} class="text-sm text-blue-500 underline">
+      hållbarhetsrapport
+    </a>
+  </p>
+  <CompanyFacts {company} {year} />
+</Card>
+
 <Card level={1}>
-  <CardHeader class="text-sm">
-    <h1 class="text-4xl font-bold leading-none tracking-tight">
-      {getCompanyName(company)}
-    </h1>
-    <p class="text-muted">{company.description}</p>
-    <p class="text-muted">
-      Läs
-      <a href={company.url} class="text-sm text-blue-500 underline">
-        hållbarhetsrapport
-      </a>
-    </p>
-  </CardHeader>
   <CardContent class="grid gap-6">
     <DataCard
       title={'Totala utsläpp ' + year}

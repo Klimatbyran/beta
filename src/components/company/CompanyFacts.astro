@@ -1,7 +1,7 @@
 ---
 import type { CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
-import DataCard from '../DataCard.astro'
+import CompanyFactSection from './CompanyFactSection.astro'
 
 interface Props {
   company: CompanyData
@@ -18,54 +18,64 @@ function getMonthName(month: number) {
 }
 ---
 
-<Card class="flex flex-col gap-4" level={1}>
+<div class="grid gap-4 pt-4 sm:grid-cols-2">
   {
     company.industryNace.division.name && (
-      <DataCard title="Industri" data={company.industryNace.division.name} />
-    )
-  }
-  {
-    company.baseFacts[year]?.turnover && (
-      <DataCard
-        title={'Omsättning ' + year}
-        data={
-          company.baseFacts[year].turnover.toLocaleString('sv-SE') +
-          ' ' +
-          company.baseFacts[year].unit
-        }
-      />
-    )
-  }
-  {
-    company.baseFacts[year]?.employees && (
-      <DataCard
-        title="Anställda 2023"
-        data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
+      <CompanyFactSection
+        title="Industri"
+        data={company.industryNace.division.name}
+        class="col-span-full flex flex-wrap justify-between gap-2"
       />
     )
   }
 
-  {
-    company.fiscalYear && (
-      <DataCard
-        title="Räkenskapsår"
-        data={`${getMonthName(company.fiscalYear.startMonth)} - ${getMonthName(company.fiscalYear.endMonth)}`}
-      />
-    )
-  }
+  <Card class="flex flex-col gap-4" level={2}>
+    {
+      company.baseFacts[year]?.turnover && (
+        <CompanyFactSection
+          title={'Omsättning ' + year}
+          data={
+            company.baseFacts[year].turnover.toLocaleString('sv-SE') +
+            ' ' +
+            company.baseFacts[year].unit
+          }
+        />
+      )
+    }
+    {
+      company.baseFacts[year]?.employees && (
+        <CompanyFactSection
+          title="Anställda 2023"
+          data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
+        />
+      )
+    }
 
-  {
-    company.contacts.length ? (
-      <div class="col-span-2">
-        <h3 class="text-lg font-semibold">Kontakt</h3>
-        <ul class="list-disc pl-5">
-          {company.contacts.map(({ name, email }) => (
-            <li class="text-sm text-muted">
-              {name} - {email}
-            </li>
-          ))}
-        </ul>
-      </div>
-    ) : null
-  }
-</Card>
+    {
+      company.fiscalYear && (
+        <CompanyFactSection
+          title="Räkenskapsår"
+          data={`${getMonthName(company.fiscalYear.startMonth)} - ${getMonthName(company.fiscalYear.endMonth)}`}
+        />
+      )
+    }
+  </Card>
+
+  <Card level={2}>
+    {
+      company.contacts.length ? (
+        <div class="col-span-2">
+          <h3 class="text-lg font-semibold">Kontakt</h3>
+          <div class="" />
+          <ul class="list-disc pl-5">
+            {company.contacts.map(({ name, email }) => (
+              <li class="text-sm text-muted">
+                {name} - {email}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null
+    }
+  </Card>
+</div>
