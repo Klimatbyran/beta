@@ -7,7 +7,6 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["unplugin-icons/types/astro"],
     "plugins": [{ "name": "@astrojs/ts-plugin" }]
   },
   "exclude": ["dist"]
