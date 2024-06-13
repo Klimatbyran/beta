@@ -19,7 +19,7 @@
   let open = false
   let value = ''
 
-  $: selectedValue = items.find((i) => i.value === value)?.label ?? buttonLabel
+  $: selectedValue = items.find((i) => i.value === value)?.label || buttonLabel
 
   // We want to refocus the trigger button when the user selects
   // an item from the list so users can continue navigating the
