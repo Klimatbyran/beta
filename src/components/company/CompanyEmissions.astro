@@ -2,7 +2,6 @@
 import { getCompanyName, type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
-import CompanyFacts from './CompanyFacts.astro'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -76,27 +75,13 @@ const biogenicEmissions = {
 const companyName = getCompanyName(company)
 ---
 
-<Card class="text-sm" level={1}>
-  <h1
-    class="text-balance pb-4 text-4xl leading-none tracking-tight lg:text-5xl"
-  >
-    {companyName}
-  </h1>
-  <p class="pb-4 text-muted">{company.description}</p>
-  <p class="text-muted">
-    Läs
-    <a href={company.url} class="text-sm text-blue-500 underline">
-      hållbarhetsrapport
-    </a>
-  </p>
-  <CompanyFacts {company} {year} />
-</Card>
-
-<Card class="grid gap-4" level={1}>
+<Card class="grid gap-8" level={1}>
   <h2
-    class="flex items-center justify-between pb-4 text-3xl leading-none tracking-tight"
+    class="flex items-center justify-between pt-4 text-3xl leading-none tracking-tight md:pt-0"
   >
-    Utsläpp 2023 <span class="text-base text-muted xs:text-xl">(ton CO₂e)</span>
+    Utsläpp 2023 <span class="pr-4 text-base text-muted xs:text-xl"
+      >(ton CO₂e)</span
+    >
   </h2>
   {
     scopeEmissionsList.length ? (
@@ -158,7 +143,7 @@ const companyName = getCompanyName(company)
       <Card level={2}>
         <h4 class="flex items-center justify-between pb-4 text-2xl">
           {biogenicEmissions.title}
-          <span class="text-base text-muted">(ton CO₂e)</span>
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
         </h4>
         <div class="flex items-center justify-between gap-4">
           <p class="text-sm text-muted">{biogenicEmissions.description}</p>

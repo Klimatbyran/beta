@@ -5,9 +5,10 @@ import {
   latestYearWithData,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
+import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
-import CompanyInitiatives from './CompanyInitiatives.astro'
 import CompanyGoals from './CompanyGoals.astro'
+import CompanyInitiatives from './CompanyInitiatives.astro'
 import OtherCompanies from './OtherCompanies.svelte'
 
 interface Props {
@@ -21,14 +22,14 @@ const year = latestYearWithData
 const emissions = company.emissions[year]
 ---
 
-<div class="bg-blue-250 py-2 text-sm text-black">
-  <div class="mx-auto max-w-screen-lg px-4 xs:px-8 md:px-12 lg:px-16">
-    Denna betaversion innehåller delvis Al-genererad data. Om du upptäcker
-    felaktigheter, mejla{' '}
-    <a href="mailto:data@klimatkollen.se" class="underline"
-      >data@klimatkollen.se</a
-    >.
-  </div>
+<div class="bg-blue-150 px-4 py-1.5 text-center text-xs text-black">
+  <span class="text-nowrap">Betaversion med delvis AI-genererat innehåll.</span>
+  <span class="text-nowrap"
+    >Ser du något fel,
+    <a href="mailto:data@klimatkollen.se" class="font-semibold underline"
+      >mejla gärna</a
+    >!</span
+  >
 </div>
 
 <article class="mx-auto max-w-screen-lg xs:px-4">
@@ -36,6 +37,8 @@ const emissions = company.emissions[year]
     emissions ? (
       <>
         <div class="mt-8 grid gap-8">
+          <CompanyFacts {company} {year} />
+
           <CompanyEmissions {company} {year} />
 
           <CompanyGoals goals={company.goals} />
