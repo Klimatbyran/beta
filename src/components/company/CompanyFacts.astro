@@ -39,15 +39,6 @@ function getPeriod(company: CompanyData) {
   <div class="grid gap-4 pt-4 sm:grid-cols-2">
     <Card class="flex flex-col gap-2" level={2}>
       {
-        company.industryGics.group.name && (
-          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Bransch</h3>
-            <p class="text-sm text-muted">{company.industryGics.group.name}</p>
-          </div>
-        )
-      }
-
-      {
         company.baseFacts[year]?.turnover && (
           // TODO: Use the last available year instead of hard coded year
           <CompanyFactSection
@@ -67,6 +58,15 @@ function getPeriod(company: CompanyData) {
             title={`Anställda (${year})`}
             data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
           />
+        )
+      }
+
+      {
+        company.industryGics.group.name && (
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+            <h3>Bransch</h3>
+            <p class="text-sm text-muted">{company.industryGics.group.name}</p>
+          </div>
         )
       }
 
