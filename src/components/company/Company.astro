@@ -5,9 +5,10 @@ import {
   latestYearWithData,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
+import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
-import CompanyInitiatives from './CompanyInitiatives.astro'
 import CompanyGoals from './CompanyGoals.astro'
+import CompanyInitiatives from './CompanyInitiatives.astro'
 import OtherCompanies from './OtherCompanies.svelte'
 
 interface Props {
@@ -36,6 +37,8 @@ const emissions = company.emissions[year]
     emissions ? (
       <>
         <div class="mt-8 grid gap-8">
+          <CompanyFacts {company} {year} />
+
           <CompanyEmissions {company} {year} />
 
           <CompanyGoals goals={company.goals} />
