@@ -168,13 +168,21 @@ const { upstream, downstream } = reportedCategories.reduce(
 {
   emissions ? (
     <Card class="grid gap-4" level={2}>
-      <h3 class="text-balance pb-4 leading-none tracking-tight sm:text-xl lg:text-2xl">
-        {companyName} rapporterar
-        <span class="text-nowrap">
-          <span class="text-orange-250">{reportedCategories.length}</span> / 15
-        </span>
-        kategorier:
-      </h3>
+      <div>
+        <h3 class="text-balance pb-2 leading-none tracking-tight sm:text-xl lg:text-2xl">
+          {companyName} rapporterar
+          <span class="text-nowrap">
+            <span class="text-orange-250">{reportedCategories.length}</span> /
+            15
+          </span>
+          kategorier:
+        </h3>
+        <p class="text-sm text-muted">
+          Företag ska rapportera i alla kategorier som är relevanta för
+          verksamheten.
+        </p>
+      </div>
+
       <div class="grid gap-2 text-sm">
         {upstream.length ? (
           <div class="grid gap-2">
