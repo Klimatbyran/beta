@@ -189,7 +189,7 @@ function getGradeColor(count: number) {
           <div class="grid gap-2">
             <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
               Uppströms
-              <span class="text-base text-muted xs:text-lg">(ton CO₂e)</span>
+              <span class="xs:text-l text-base text-muted">(ton CO₂e)</span>
             </h4>
             {upstream.map(({ Icon, title, description, value }) => (
               <Scope3EmissionsCategory
@@ -206,7 +206,7 @@ function getGradeColor(count: number) {
           <div class="grid gap-2 pt-4">
             <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
               Nedströms
-              <span class="text-base text-muted xs:text-lg">(ton CO₂e)</span>
+              <span class="xs:text-l text-base text-muted">(ton CO₂e)</span>
             </h4>
             {downstream.map(({ Icon, title, description, value }) => (
               <Scope3EmissionsCategory
