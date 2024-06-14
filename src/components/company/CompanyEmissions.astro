@@ -75,9 +75,9 @@ const biogenicEmissions = {
 const companyName = getCompanyName(company)
 ---
 
-<Card class="grid gap-4" level={1}>
+<Card class="grid gap-8" level={1}>
   <h2
-    class="flex items-center justify-between pb-4 text-3xl leading-none tracking-tight"
+    class="flex items-center justify-between pt-4 text-3xl leading-none tracking-tight md:pt-0"
   >
     Utsläpp 2023 <span class="text-base text-muted xs:text-xl">(ton CO₂e)</span>
   </h2>
@@ -141,7 +141,7 @@ const companyName = getCompanyName(company)
       <Card level={2}>
         <h4 class="flex items-center justify-between pb-4 text-2xl">
           {biogenicEmissions.title}
-          <span class="text-base text-muted">(ton CO₂e)</span>
+          <span class="text-base text-muted xs:text-lg">(ton CO₂e)</span>
         </h4>
         <div class="flex items-center justify-between gap-4">
           <p class="text-sm text-muted">{biogenicEmissions.description}</p>

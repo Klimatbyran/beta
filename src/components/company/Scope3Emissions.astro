@@ -167,9 +167,9 @@ const { upstream, downstream } = reportedCategories.reduce(
 
 {
   emissions ? (
-    <Card class="grid gap-4" level={2}>
+    <Card class="grid gap-8" level={2}>
       <div>
-        <h3 class="text-balance pb-2 leading-none tracking-tight sm:text-xl lg:text-2xl">
+        <h3 class="text-balance pb-2 text-lg leading-none tracking-tight xs:text-xl lg:text-2xl">
           {companyName} rapporterar
           <span class="text-nowrap">
             <span class="text-orange-250">{reportedCategories.length}</span> /
@@ -183,41 +183,39 @@ const { upstream, downstream } = reportedCategories.reduce(
         </p>
       </div>
 
-      <div class="grid gap-2 text-sm">
-        {upstream.length ? (
-          <div class="grid gap-2">
-            <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
-              Uppströms
-              <span class="xs:text-l text-base text-muted">(ton CO₂e)</span>
-            </h4>
-            {upstream.map(({ Icon, title, description, value }) => (
-              <Scope3EmissionsCategory
-                {Icon}
-                {title}
-                {description}
-                value={value.toLocaleString('sv-SE')}
-              />
-            ))}
-          </div>
-        ) : null}
+      {upstream.length ? (
+        <div class="grid gap-2 text-sm">
+          <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+            Uppströms
+            <span class="text-base text-muted xs:text-lg">(ton CO₂e)</span>
+          </h4>
+          {upstream.map(({ Icon, title, description, value }) => (
+            <Scope3EmissionsCategory
+              {Icon}
+              {title}
+              {description}
+              value={value.toLocaleString('sv-SE')}
+            />
+          ))}
+        </div>
+      ) : null}
 
-        {downstream.length ? (
-          <div class="grid gap-2 pt-4">
-            <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
-              Nedströms
-              <span class="xs:text-l text-base text-muted">(ton CO₂e)</span>
-            </h4>
-            {downstream.map(({ Icon, title, description, value }) => (
-              <Scope3EmissionsCategory
-                {Icon}
-                {title}
-                {description}
-                value={value.toLocaleString('sv-SE')}
-              />
-            ))}
-          </div>
-        ) : null}
-      </div>
+      {downstream.length ? (
+        <div class="grid gap-2 text-sm">
+          <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+            Nedströms
+            <span class="text-base text-muted xs:text-lg">(ton CO₂e)</span>
+          </h4>
+          {downstream.map(({ Icon, title, description, value }) => (
+            <Scope3EmissionsCategory
+              {Icon}
+              {title}
+              {description}
+              value={value.toLocaleString('sv-SE')}
+            />
+          ))}
+        </div>
+      ) : null}
     </Card>
   ) : null
 }

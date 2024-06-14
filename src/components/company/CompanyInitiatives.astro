@@ -12,17 +12,19 @@ const { initiatives } = Astro.props
 
 {
   initiatives ? (
-    <Card class="grid gap-4" level={1}>
-      <h2 class="pb-4 text-3xl leading-none tracking-tight">Initiativ</h2>
+    <Card class="grid gap-8" level={1}>
+      <h2 class="pt-4 text-center text-3xl leading-none tracking-tight md:pt-0">
+        Initiativ
+      </h2>
       <ul class="grid gap-2">
         {initiatives.map((initiative) => (
           <li class="flex items-center gap-4">
-            <div class="flex aspect-square h-10 w-10 items-center justify-center rounded-md bg-gray-800">
+            <div class="flex aspect-square h-10 w-10 items-center justify-center self-start rounded-md bg-gray-800">
               <MingcuteCheckLine class="h-5 w-5 text-pink-250" />
             </div>
             <div>
-              <div class="font-medium">{initiative.title}</div>
-              <div class="text-sm text-muted">{initiative.description}</div>
+              <p class="font-medium">{initiative.title}</p>
+              <p class="pt-1 text-sm text-muted">{initiative.description}</p>
             </div>
           </li>
         ))}

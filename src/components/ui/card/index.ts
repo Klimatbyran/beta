@@ -12,8 +12,8 @@ const cardVariants = tv({
   base: 'text-card-foreground',
   variants: {
     level: {
-      1: 'rounded-xl lg:rounded-3xl bg-gray-750 p-4 pt-8 md:p-8 lg:p-12',
-      2: 'rounded-lg lg:rounded-2xl bg-gray-700 p-4 pt-8 lg:p-8',
+      1: 'rounded-xl lg:rounded-3xl bg-gray-750 p-4 md:p-8 lg:p-12',
+      2: 'rounded-lg lg:rounded-2xl bg-gray-700 p-4 lg:p-8',
     },
   },
   defaultVariants: {
