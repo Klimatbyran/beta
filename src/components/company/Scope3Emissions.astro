@@ -102,7 +102,7 @@ const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
     Icon: MaterialSymbolsPersonPlayOutlineRounded,
   },
   '12_endOfLifeTreatmentOfSoldProducts': {
-    title: '12. Avfallshantering av sålda produkter',
+    title: '12. Slutbehandling av sålda produkter',
     description:
       'Utsläpp från avfallshantering av sålda produkter vid slutet av livscykeln.',
     Icon: IonTrashBin,
@@ -163,27 +163,26 @@ const { upstream, downstream } = reportedCategories.reduce(
     downstream: [] as ReportedCategoryDefinition[],
   },
 )
-
-function getGradeColor(count: number) {
-  if (count > 9) return 'text-green-500'
-  else if (count > 5) return 'text-orange-500'
-  return 'text-red-600'
-}
 ---
 
 {
   emissions ? (
     <Card class="grid gap-4" level={2}>
-      <h3 class="pb-4 leading-none tracking-tight sm:text-xl lg:text-2xl">
-        {companyName} rapporterar{' '}
-        <span class="text-nowrap">
-          <span class={getGradeColor(reportedCategories.length)}>
-            {reportedCategories.length}
+      <div>
+        <h3 class="text-balance pb-2 leading-none tracking-tight sm:text-xl lg:text-2xl">
+          {companyName} rapporterar
+          <span class="text-nowrap">
+            <span class="text-orange-250">{reportedCategories.length}</span> /
+            15
           </span>
-          / 15
-        </span>{' '}
-        kategorier:
-      </h3>
+          kategorier:
+        </h3>
+        <p class="text-sm text-muted">
+          Företag ska rapportera i alla kategorier som är relevanta för
+          verksamheten.
+        </p>
+      </div>
+
       <div class="grid gap-2 text-sm">
         {upstream.length ? (
           <div class="grid gap-2">

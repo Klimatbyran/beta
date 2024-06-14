@@ -61,23 +61,9 @@ function getPeriod(company: CompanyData) {
       )
     }
 
-    <CompanyFactSection title="Period" data={getPeriod(company)} />
+    <CompanyFactSection title="År" data={getPeriod(company)} />
   </Card>
 
-  <Card level={2}>
-    {
-      company.contacts.length ? (
-        <div class="col-span-2">
-          <h3 class="text-lg font-semibold">Kontakt</h3>
-          <ul class="list-disc pl-5">
-            {company.contacts.map(({ name, email }) => (
-              <li class="text-sm text-muted">
-                {name} - {email}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null
-    }
-  </Card>
+  <!-- NOTE: Maybe add total emissions in this card instead -->
+  <Card level={2} />
 </div>
