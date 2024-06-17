@@ -1,5 +1,5 @@
 ---
-import MingcuteCheckLine from 'icons:astro/mingcute/check-line'
+import LucideLightbulb from 'icons:astro/lucide/lightbulb'
 import { Card } from '../ui/card'
 import type { CompanyData } from '@/data/companyData'
 
@@ -20,7 +20,7 @@ const { initiatives } = Astro.props
         {initiatives.map((initiative) => (
           <li class="flex items-center gap-4">
             <div class="flex aspect-square h-10 w-10 items-center justify-center self-start rounded-md bg-gray-800">
-              <MingcuteCheckLine class="h-5 w-5 text-pink-250" />
+              <LucideLightbulb class="h-5 w-5 text-orange-250" />
             </div>
             <div>
               <p class="font-medium">{initiative.title}</p>
