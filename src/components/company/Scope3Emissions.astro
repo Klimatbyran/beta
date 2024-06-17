@@ -32,7 +32,7 @@ type CategoryDefinition = {
 }
 
 type ReportedCategoryDefinition = CategoryDefinition & {
-  value: number
+  value: number | null
   category: Scope3Category
 }
 
@@ -133,9 +133,11 @@ function getReportedCategories(
   return emissions
     ? Object.entries(emissions ?? {}).reduce(
         (categories, [category, value]) => {
-          if (value) {
+          const definition = categoryDefinitions[category as Scope3Category]
+
+          if (value || definition) {
             categories.push({
-              ...categoryDefinitions[category as Scope3Category],
+              ...definition,
               category: category as Scope3Category,
               value,
             })
@@ -148,6 +150,7 @@ function getReportedCategories(
 }
 
 const reportedCategories = getReportedCategories(emissions)
+const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const { upstream, downstream } = reportedCategories.reduce(
   (result, c) => {
@@ -172,8 +175,7 @@ const { upstream, downstream } = reportedCategories.reduce(
         <h3 class="text-balance pb-2 text-xl tracking-tight sm:leading-none lg:text-2xl">
           {companyName} rapporterar
           <span class="text-nowrap">
-            <span class="text-orange-250">{reportedCategories.length}</span> /
-            15
+            <span class="text-orange-250">{reportedCount}</span> / 15
           </span>
           kategorier:
         </h3>
@@ -194,7 +196,7 @@ const { upstream, downstream } = reportedCategories.reduce(
               {Icon}
               {title}
               {description}
-              value={value.toLocaleString('sv-SE')}
+              value={value?.toLocaleString('sv-SE')}
             />
           ))}
         </div>
@@ -211,7 +213,7 @@ const { upstream, downstream } = reportedCategories.reduce(
               {Icon}
               {title}
               {description}
-              value={value.toLocaleString('sv-SE')}
+              value={value?.toLocaleString('sv-SE')}
             />
           ))}
         </div>
