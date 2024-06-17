@@ -174,6 +174,7 @@ export type FiscalYear = {
 export interface CompanyData {
   companyName: string
   description: string
+  wikidataId: string
   industryGics: IndustryGics
   industryNace: IndustryNace
   baseYear: string
@@ -197,7 +198,7 @@ export function getCompanyName(company: CompanyData) {
 }
 
 export function getCompanyURL(company: CompanyData) {
-  return company.companyName.toLowerCase().replaceAll(' ', '-')
+  return `${company.companyName.toLowerCase().replaceAll(' ', '-')}-${company.wikidataId}`
 }
 
 export const latestYearWithData = 2023
@@ -216,7 +217,6 @@ export const isCompany = (value: CompanyData): value is CompanyData => {
   if (
     value.companyName &&
     value.industryGics &&
-    value.industryNace &&
     value.url &&
     value.emissions &&
     value.emissions[latestYearWithData] &&

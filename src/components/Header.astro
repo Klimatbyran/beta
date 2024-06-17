@@ -1,4 +1,6 @@
 ---
+import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
+
 // const navItems = [
 //   {
 //     href: 'https://www.klimatkollen.se/kallor-och-metod',
@@ -17,23 +19,11 @@
     <div class="absolute left-0 z-30 flex h-full items-center pl-4">
       <a
         href="https://www.klimatkollen.se/foretag/utslappen/lista"
-        class="text-white"
+        class="-ml-2 p-2 text-white"
         title="Gå tillbaka"
         aria-label="Gå tillbaka"
       >
-        <svg
-          class="h-6 w-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"></path>
-        </svg>
+        <LucideChevronLeft class="h-6 w-6" />
       </a>
     </div>
     <div class="absolute inset-0 z-20 flex items-center justify-center">

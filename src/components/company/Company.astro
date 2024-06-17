@@ -1,4 +1,5 @@
 ---
+import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import {
   type CompanyData,
   getCompanyName,
@@ -55,16 +56,22 @@ const emissions = company.emissions[year]
         <h1 class="text-4xl font-bold leading-none tracking-tight">
           {getCompanyName(company)}
         </h1>
-        <p class="py-4">Data saknas för år {year}.</p>
+        <p class="py-4">Utsläppsdata saknas för år {year}.</p>
 
-        <OtherCompanies client:load {companies} />
+        <div class="grid w-full place-items-center">
+          <OtherCompanies client:load {companies} />
 
-        <a
-          class={buttonVariants({ variant: 'default', class: 'mt-8' })}
-          href="https://klimatkollen.se/foretag/utslappen/lista"
-        >
-          Tillbaka till alla företag
-        </a>
+          <a
+            class={buttonVariants({
+              variant: 'default',
+              class: 'mt-8 gap-1 pl-2',
+            })}
+            href="https://klimatkollen.se/foretag/utslappen/lista"
+          >
+            <LucideChevronLeft class="h-5 w-5" />
+            Tillbaka till alla företag
+          </a>
+        </div>
       </div>
     )
   }

@@ -1,0 +1,63 @@
+---
+import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
+
+import Layout from '@/layouts/Layout.astro'
+import { getCompanyURL } from '@/data/companyData'
+import { getCompanies } from '@/data/companies'
+import Company from '@/components/company/Company.astro'
+import OtherCompanies from '@/components/company/OtherCompanies.svelte'
+import { buttonVariants } from '@/components/ui/button'
+
+const { id = '' } = Astro.params
+
+// Asusme the wikidataId to be in the final part of the URL
+const wikidataId = id.split('-').at(-1) ?? ''
+
+const companies = await getCompanies()
+
+const company = companies.find(
+  (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
+)
+---
+
+<Layout title="Klimatkollen - få koll på företagens utsläpp">
+  {
+    company ? (
+      <Company {company} {companies} />
+    ) : (
+      <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
+        <p class="py-4">
+          Vi hittade inget företag med den länken, men testa gärna att söka här
+          nedanför!
+        </p>
+
+        <div class="grid w-full place-items-center">
+          <OtherCompanies client:load {companies} />
+
+          <a
+            class={buttonVariants({
+              variant: 'default',
+              class: 'mt-8 gap-1 pl-2',
+            })}
+            href="https://klimatkollen.se/foretag/utslappen/lista"
+          >
+            <LucideChevronLeft class="h-5 w-5" />
+            Tillbaka till alla företag
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    process.env.NODE_ENV === 'development' ? (
+      <div class="mt-16 flex flex-wrap gap-2 text-nowrap px-8">
+        {companies.map((c) => (
+          <a href={getCompanyURL(c)} class="underline">
+            {c.companyName}
+          </a>
+        ))}
+      </div>
+    ) : null
+  }
+</Layout>
