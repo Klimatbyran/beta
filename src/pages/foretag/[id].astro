@@ -27,15 +27,13 @@ async function getCompanies() {
     data = (await import('@/data/test.json')).default as CompanyData[]
   }
 
-  console.log(data)
-
   return data
 
+  // TODO: Move filtering to the backend.
   // return (
   //   data
   //     .filter(isCompany)
   //     // HACK: Keep unique companies. This should ideally be solved with filtering on the API side.
-  //     // IDEA: Maybe open an issue in garbo to let the API return proper data.
   //     .filter(
   //       (c, i, array) =>
   //         i === array.findLastIndex((company) => c.url === company.url),
@@ -58,8 +56,6 @@ async function getCompany(wikidataId: string) {
 }
 
 const companies = await getCompanies()
-
-console.log([id, wikidataId])
 
 const company = companies.find(
   (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
