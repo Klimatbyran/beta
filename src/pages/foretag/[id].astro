@@ -2,58 +2,16 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import { type CompanyData, getCompanyURL } from '@/data/companyData'
+import { getCompanyURL } from '@/data/companyData'
+import { getCompanies } from '@/data/companies'
 import Company from '@/components/company/Company.astro'
 import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
 
 const { id = '' } = Astro.params
 
+// Asusme the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
-
-/**
- * Conditionally load cached local JSON file instead of fetching from the API
- */
-async function getCompanies() {
-  let data: CompanyData[]
-
-  if (process.env.NODE_ENV === 'production') {
-    data = await fetch('https://api.klimatkollen.se/api/companies').then(
-      (res) => res.json(),
-    )
-  } else {
-    // prettier-ignore
-    // @ts-ignore Don't care about this TS error
-    data = (await import('@/data/test.json')).default as CompanyData[]
-  }
-
-  return data
-
-  // TODO: Move filtering to the backend.
-  // return (
-  //   data
-  //     .filter(isCompany)
-  //     // HACK: Keep unique companies. This should ideally be solved with filtering on the API side.
-  //     .filter(
-  //       (c, i, array) =>
-  //         i === array.findLastIndex((company) => c.url === company.url),
-  //     ) as CompanyData[]
-  // )
-}
-
-async function getCompany(wikidataId: string) {
-  let data: CompanyData[]
-
-  if (process.env.NODE_ENV === 'production') {
-    data = await fetch(
-      `https://api.klimatkollen.se/api/companies/${wikidataId}`,
-    ).then((res) => res.json())
-  } else {
-    // prettier-ignore
-    // @ts-ignore Don't care about this TS error
-    data = (await import('@/data/test.json')).default as CompanyData[]
-  }
-}
 
 const companies = await getCompanies()
 
