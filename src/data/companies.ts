@@ -1,8 +1,10 @@
 import { createCache } from '@/lib/createCache'
 import type { CompanyData } from './companyData'
 
+const FIVE_MINUTES = 5 * 60 * 1000
+
 const cachedCompanies = createCache<'companies', CompanyData[]>({
-  maxAge: 5 * 60 * 1000,
+  maxAge: FIVE_MINUTES,
 })
 
 /**
