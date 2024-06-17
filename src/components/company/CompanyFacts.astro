@@ -70,9 +70,16 @@ function getPeriod(company: CompanyData) {
         )
       }
 
-      <a href={company.url} class="self-start text-sm text-blue-500 underline">
-        Läs hållbarhetsrapport för {getPeriod(company)}
-      </a>
+      {
+        company.url && (
+          <a
+            href={company.url}
+            class="self-start text-sm text-blue-500 underline"
+          >
+            Läs hållbarhetsrapport för {getPeriod(company)}
+          </a>
+        )
+      }
     </Card>
 
     <!-- NOTE: Maybe add total emissions in this card instead -->

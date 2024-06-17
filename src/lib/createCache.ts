@@ -22,7 +22,7 @@ export function createCache<K, V>({ maxAge }: { maxAge: number }) {
     },
     get(key: K) {
       const value = cache.get(key)
-      if (value) {
+      if (value && Date.now() - value.cachedAt < maxAge) {
         return value.data
       }
     },
