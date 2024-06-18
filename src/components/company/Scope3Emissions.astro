@@ -142,14 +142,22 @@ function getReportedCategories(
         company.facit?.emissions?.[year]?.scope3?.categories?.[
           category as Scope3Category
         ] ?? null
+
+      const wikiValue =
+        (company.wikidata?.emissions &&
+          Object.values(company.wikidata?.emissions).findLast(
+            (yearlyEmissions) => yearlyEmissions.year === String(year),
+          )?.scope3?.categories?.[category as Scope3Category]) ??
+        null
+
       const value = emissions?.[category as Scope3Category] ?? null
 
-      if (value || definition) {
+      if (facitValue || wikiValue || value || definition) {
         categories.push({
           ...definition,
           category: category as Scope3Category,
-          value: facitValue ?? value,
-          verified: Boolean(facitValue !== null),
+          value: facitValue ?? wikiValue ?? value,
+          verified: facitValue !== null || wikiValue !== null,
         })
       }
       return categories

@@ -16,6 +16,7 @@ const { company, year } = Astro.props
 
 const emissions = company.emissions[year]
 const facit = company.facit?.emissions?.[year]
+const wiki = company.wikidata?.emissions?.[year]
 
 const totalBiogenicEmissions = emissions
   ? (emissions.scope1.biogenic || 0) +
@@ -25,10 +26,11 @@ const totalBiogenicEmissions = emissions
 
 function getValueAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
   const facitValue = facit?.[scope]?.emissions
+  const wikiValue = wiki?.[scope]?.emissions
   const value = emissions[scope].emissions
   return {
-    value: facitValue ?? value,
-    verified: facitValue !== null,
+    value: facitValue ?? wikiValue ?? value,
+    verified: facitValue !== null || wikiValue !== null,
   }
 }
 
