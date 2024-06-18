@@ -166,3 +166,15 @@ export function getCompanyURL(company: CompanyData) {
 }
 
 export const latestYearWithData = 2023
+
+export function getWikidataEmissionsYear(
+  wikidata: CompanyData['wikidata'],
+  year: number | string,
+) {
+  const formattedYear = String(year)
+  const wantedYear = Array.isArray(wikidata?.emissions)
+    ? wikidata.emissions.findLast((entry) => entry.year === formattedYear)
+    : wikidata?.emissions?.[formattedYear]
+
+  return wantedYear
+}

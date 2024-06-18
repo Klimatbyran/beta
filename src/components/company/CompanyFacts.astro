@@ -1,5 +1,9 @@
 ---
-import { getCompanyName, type CompanyData } from '@/data/companyData'
+import {
+  getCompanyName,
+  type CompanyData,
+  getWikidataEmissionsYear,
+} from '@/data/companyData'
 import { Card } from '../ui/card'
 import VerifiedBadge from '../VerifiedBadge.astro'
 
@@ -43,23 +47,18 @@ const totalEmissionsVerified =
   emissions.scope2.verified &&
   emissions.scope3.verified
 
-function getWikidataYear(wikidata: CompanyData['wikidata'], year: string) {
-  const wantedYear = Array.isArray(wikidata?.emissions)
-    ? wikidata.emissions.find((entry) => entry.year === year)
-    : wikidata?.emissions?.[year]
-
-  return wantedYear
-}
-
-function getWikidataReportURL(wikidata: CompanyData['wikidata'], year: string) {
-  const potentialURL = getWikidataYear(wikidata, year)?.reference
+function getWikidataReportURL(
+  wikidata: CompanyData['wikidata'],
+  year: number | string,
+) {
+  const potentialURL = getWikidataEmissionsYear(wikidata, year)?.reference
   // HACK: Ignore hallucinated URLs only return proper report URLs
   return potentialURL?.includes('wikidata') ? undefined : potentialURL
 }
 
 const reportURL =
   company.facit?.url ||
-  getWikidataReportURL(company.wikidata, String(year)) ||
+  getWikidataReportURL(company.wikidata, year) ||
   company.url
 ---
 
