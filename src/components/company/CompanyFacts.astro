@@ -72,7 +72,9 @@ const totalEmissionsVerified =
             <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
               <h3>Omsättning ({year})</h3>
               <p class="text-sm text-orange-250">
-                {company.baseFacts[year].turnover.toLocaleString('sv-SE') +
+                {company.baseFacts[year].turnover.toLocaleString('sv-SE', {
+                  maximumFractionDigits: 0,
+                }) +
                   ' ' +
                   company.baseFacts[year].unit}
               </p>
@@ -86,7 +88,9 @@ const totalEmissionsVerified =
             <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
               <h3>Antal anställda ({year})</h3>
               <p class="text-sm text-orange-250">
-                {company.baseFacts[year]?.employees.toLocaleString('sv-SE')}
+                {company.baseFacts[year]?.employees.toLocaleString('sv-SE', {
+                  maximumFractionDigits: 0,
+                })}
               </p>
             </div>
           )
@@ -119,7 +123,9 @@ const totalEmissionsVerified =
             </div>
 
             <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-              {totalEmissions.toLocaleString('sv-SE')}
+              {totalEmissions.toLocaleString('sv-SE', {
+                maximumFractionDigits: 0,
+              })}
             </p>
           </Card>
         )
