@@ -150,22 +150,8 @@ function getReportedCategories(
 const reportedCategories = getReportedCategories(emissions)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
-// Since we render all categories, we could just slice the array and render the first items in one section
-// and the rest in the other
-const { upstream, downstream } = reportedCategories.reduce(
-  (result, c) => {
-    if (Number(c.category.split('_')[0]) < 9) {
-      result.upstream.push(c)
-    } else {
-      result.downstream.push(c)
-    }
-    return result
-  },
-  {
-    upstream: [] as ReportedCategoryDefinition[],
-    downstream: [] as ReportedCategoryDefinition[],
-  },
-)
+const upstream = reportedCategories.slice(0, 8)
+const downstream = reportedCategories.slice(8)
 
 /**
  * Get all categories that don't align with the GHG protocol

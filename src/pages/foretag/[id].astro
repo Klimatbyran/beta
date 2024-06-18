@@ -2,12 +2,11 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import { getCompanyURL, type EmissionsScope } from '@/data/companyData'
+import { getCompanyURL } from '@/data/companyData'
 import { getCompanies } from '@/data/companies'
 import Company from '@/components/company/Company.astro'
 import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
-import { categoryDefinitions } from '@/components/company/Scope3Emissions.astro'
 
 const { id = '' } = Astro.params
 
@@ -19,15 +18,6 @@ const companies = await getCompanies()
 const company = companies.find(
   (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
 )
-
-function getNonStandardCategories(categories?: EmissionsScope['categories']) {
-  return Object.keys(categories ?? {}).filter(
-    (category) =>
-      !categoryDefinitions[
-        category as unknown as keyof typeof categoryDefinitions
-      ] && category !== '16_other',
-  )
-}
 ---
 
 <Layout title="Klimatkollen - få koll på företagens utsläpp">
@@ -62,19 +52,11 @@ function getNonStandardCategories(categories?: EmissionsScope['categories']) {
   {
     process.env.NODE_ENV === 'development' ? (
       <div class="mt-16 flex flex-wrap gap-2 text-nowrap px-8">
-        {companies
-          .filter((c) => {
-            console.log(
-              getNonStandardCategories(c.emissions[2023].scope3.categories),
-            )
-            return getNonStandardCategories(c.emissions[2023].scope3.categories)
-              .length
-          })
-          .map((c) => (
-            <a href={getCompanyURL(c)} class="underline">
-              {c.companyName}
-            </a>
-          ))}
+        {companies.map((c) => (
+          <a href={getCompanyURL(c)} class="underline">
+            {c.companyName}
+          </a>
+        ))}
       </div>
     ) : null
   }
