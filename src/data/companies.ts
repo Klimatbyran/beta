@@ -7,6 +7,9 @@ const cachedCompanies = createCache<'companies', CompanyData[]>({
   maxAge: FIVE_MINUTES,
 })
 
+// TODO: improve filtering to only keep the companies that have facit or wikidata properties
+// And secondly, prefer later hits (as long as they include more information
+
 const keepUniqueCompanies = (c: CompanyData, i: number, array: CompanyData[]) =>
   i === array.findLastIndex((company) => company.wikidataId === c.wikidataId)
 

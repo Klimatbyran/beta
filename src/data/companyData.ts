@@ -107,53 +107,6 @@ export interface Initiative {
   scope: string
 }
 
-/*
-{
-    "node": "Q123456",
-    "url": "https://www.wikidata.org/wiki/Q123456",
-    "logo": "https://commons.wikimedia.org/wiki/File:Example.jpg",
-    "label": "Company Name",
-    "description": "Company Description",
-    "url": "https://example.com",
-    "emissions": [
-      {
-        "year": "2019",
-        "reference": "https://example.com",
-        "scope1": {
-          "emissions": 1234,
-          "biogenic": 123,
-          "unit": "tCO2e"
-        },
-        "scope2": {
-          "emissions": 1235,
-          "unit": "tCO2e",
-          "mb": 1235,
-          "lb": 125
-        },
-        "scope3": {
-          "emissions": null,
-          "unit": "tCO2e",
-          "categories": {
-            "1_purchasedGoods": 100000000,
-            "2_capitalGoods": 100000000,
-            "3_fuelAndEnergyRelatedActivities": 100000000,
-            "4_upstreamTransportationAndDistribution": 100000000,
-            "5_wasteGeneratedInOperations": 100000000,
-            "6_businessTravel": 100000000,
-            "7_employeeCommuting": 100000000,
-            "8_upstreamLeasedAssets": 100000000,
-            "9_downstreamTransportationAndDistribution": 100000000,
-            "10_processingOfSoldProducts": 100000000,
-            "11_useOfSoldProducts": 100000000,
-            "12_endOfLifeTreatmentOfSoldProducts": 100000000,
-            "13_downstreamLeasedAssets": 100000000,
-            "14_franchises": 100000000,
-            "15_investments": 100000000,
-            "16_other": 100000000
-          }
-        }
-      }
-*/
 export interface Wikidata {
   node: string
   url: string
@@ -169,6 +122,14 @@ export interface Wikidata {
 export type FiscalYear = {
   startMonth: number
   endMonth: number
+}
+
+// TODO: EmissionScope actually doesn't include `vefrified` for facit.
+// Update the type for EmissionScope and omit the verified field, but only when used as part of Facit.
+export type Facit = {
+  companyName: string
+  url: string
+  emissions: Emissions
 }
 
 export interface CompanyData {
@@ -187,6 +148,7 @@ export interface CompanyData {
   initiatives: Initiative[]
   reliability: string
   wikidata: Wikidata
+  facit?: Facit
   needsReview: boolean
   publicComment: string
   reviewComment: string
@@ -194,7 +156,9 @@ export interface CompanyData {
 }
 
 export function getCompanyName(company: CompanyData) {
-  return company.wikidata?.label || company.companyName
+  return (
+    company.facit?.companyName || company.wikidata?.label || company.companyName
+  )
 }
 
 export function getCompanyURL(company: CompanyData) {

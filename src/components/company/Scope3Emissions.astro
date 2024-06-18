@@ -1,5 +1,10 @@
 ---
-import type { EmissionsScope, Scope3Category } from '@/data/companyData'
+import {
+  getCompanyName,
+  type CompanyData,
+  type EmissionsScope,
+  type Scope3Category,
+} from '@/data/companyData'
 import Fa6SolidGifts from 'icons:astro/fa6-solid/gifts'
 import MingcuteWashMachineLine from 'icons:astro/mingcute/wash-machine-line'
 import IconParkOutlineSolarEnergyOne from 'icons:astro/icon-park-outline/solar-energy-one'
@@ -19,11 +24,11 @@ import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 
 interface Props {
-  emissions: EmissionsScope['categories']
-  companyName: string
+  company: CompanyData
+  year: number
 }
 
-const { emissions, companyName } = Astro.props
+const { company, year } = Astro.props
 
 type CategoryDefinition = {
   title: string
@@ -34,6 +39,7 @@ type CategoryDefinition = {
 type ReportedCategoryDefinition = CategoryDefinition & {
   value: number | null
   category: Scope3Category
+  verified: boolean
 }
 
 export const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
@@ -132,13 +138,26 @@ function getReportedCategories(
 ): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).reduce(
     (categories, [category, definition]) => {
+      const facitValue =
+        company.facit?.emissions?.[year]?.scope3?.categories?.[
+          category as Scope3Category
+        ] ?? null
+
+      const wikiValue =
+        (company.wikidata?.emissions &&
+          Object.values(company.wikidata?.emissions).findLast(
+            (yearlyEmissions) => yearlyEmissions.year === String(year),
+          )?.scope3?.categories?.[category as Scope3Category]) ??
+        null
+
       const value = emissions?.[category as Scope3Category] ?? null
 
-      if (value || definition) {
+      if (facitValue || wikiValue || value || definition) {
         categories.push({
           ...definition,
           category: category as Scope3Category,
-          value,
+          value: facitValue ?? wikiValue ?? value,
+          verified: facitValue !== null || wikiValue !== null,
         })
       }
       return categories
@@ -146,6 +165,9 @@ function getReportedCategories(
     [] as ReportedCategoryDefinition[],
   )
 }
+
+const companyName = getCompanyName(company)
+const emissions = company.emissions[year].scope3.categories
 
 const reportedCategories = getReportedCategories(emissions)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
@@ -197,11 +219,12 @@ const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
             Uppströms
             <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
           </h4>
-          {upstream.map(({ Icon, title, description, value }) => (
+          {upstream.map(({ Icon, title, description, value, verified }) => (
             <Scope3EmissionsCategory
               {Icon}
               {title}
               {description}
+              {verified}
               value={value?.toLocaleString('sv-SE')}
             />
           ))}
@@ -214,11 +237,12 @@ const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
             Nedströms
             <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
           </h4>
-          {downstream.map(({ Icon, title, description, value }) => (
+          {downstream.map(({ Icon, title, description, value, verified }) => (
             <Scope3EmissionsCategory
               {Icon}
               {title}
               {description}
+              {verified}
               value={value?.toLocaleString('sv-SE')}
             />
           ))}
