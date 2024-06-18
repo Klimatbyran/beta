@@ -7,6 +7,9 @@ const cachedCompanies = createCache<'companies', CompanyData[]>({
   maxAge: FIVE_MINUTES,
 })
 
+const keepUniqueCompanies = (c: CompanyData, i: number, array: CompanyData[]) =>
+  i === array.findLastIndex((company) => company.wikidataId === c.wikidataId)
+
 /**
  * Conditionally load cached local JSON file instead of fetching from the API
  */
@@ -19,15 +22,17 @@ export async function getCompanies() {
   let data: CompanyData[]
 
   if (process.env.NODE_ENV === 'production') {
-    data = (await fetch('https://api.klimatkollen.se/api/companies').then(
-      (res) => res.json(),
-    )) as CompanyData[]
+    data = (
+      (await fetch('https://api.klimatkollen.se/api/companies').then((res) =>
+        res.json(),
+      )) as CompanyData[]
+    ).filter(keepUniqueCompanies)
 
     cachedCompanies.set('companies', data)
   } else {
     // prettier-ignore
     // @ts-ignore Don't care about this TS error
-    data = (await import('@/data/test.json')).default as CompanyData[]
+    data = ((await import('@/data/test.json')).default as CompanyData[]).filter(keepUniqueCompanies)
   }
 
   return data
