@@ -225,7 +225,9 @@ const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
               {title}
               {description}
               {verified}
-              value={value?.toLocaleString('sv-SE')}
+              value={value?.toLocaleString('sv-SE', {
+                maximumFractionDigits: 0,
+              })}
             />
           ))}
         </div>
@@ -243,7 +245,9 @@ const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
               {title}
               {description}
               {verified}
-              value={value?.toLocaleString('sv-SE')}
+              value={value?.toLocaleString('sv-SE', {
+                maximumFractionDigits: 0,
+              })}
             />
           ))}
         </div>
