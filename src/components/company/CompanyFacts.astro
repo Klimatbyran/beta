@@ -90,10 +90,13 @@ const reportURL =
             <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
               <h3>Omsättning ({year})</h3>
               <p class="text-sm text-orange-250">
-                {company.baseFacts[year].turnover.toLocaleString('sv-SE', {
-                  maximumFractionDigits: 0,
-                }) +
-                  ' ' +
+                {(company.baseFacts[year].turnover / 1000_000).toLocaleString(
+                  'sv-SE',
+                  {
+                    maximumFractionDigits: 0,
+                  },
+                ) +
+                  ' m' +
                   company.baseFacts[year].unit}
               </p>
             </div>
