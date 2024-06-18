@@ -1,29 +1,15 @@
-import { createCache } from '@/lib/createCache'
 import type { CompanyData } from './companyData'
-
-const FIVE_MINUTES = 5 * 60 * 1000
-
-const cachedCompanies = createCache<'companies', CompanyData[]>({
-  maxAge: FIVE_MINUTES,
-})
 
 /**
  * Conditionally load cached local JSON file instead of fetching from the API
  */
 export async function getCompanies() {
-  const cached = cachedCompanies.get('companies')
-  if (cached) {
-    return cached
-  }
-
   let data: CompanyData[]
 
   if (process.env.NODE_ENV === 'production') {
     data = (await fetch('https://api.klimatkollen.se/api/companies').then(
       (res) => res.json(),
     )) as CompanyData[]
-
-    cachedCompanies.set('companies', data)
   } else {
     // prettier-ignore
     // @ts-ignore Don't care about this TS error

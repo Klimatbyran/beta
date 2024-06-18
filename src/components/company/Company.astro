@@ -11,7 +11,6 @@ import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyGoals from './CompanyGoals.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
 import OtherCompanies from './OtherCompanies.svelte'
-import VerifiedBadge from '../VerifiedBadge.astro'
 import LucideBadgeCheck from 'icons:astro/lucide/badge-check'
 
 interface Props {
@@ -26,7 +25,7 @@ const emissions = company.emissions[year]
 ---
 
 <div class="bg-blue-150 py-1.5 text-xs text-black sm:text-sm">
-  <div class="xs:px-8 mx-auto max-w-screen-lg px-4 md:px-12 lg:px-16">
+  <div class="mx-auto max-w-screen-lg px-4 xs:px-8 md:px-12 lg:px-16">
     Detta är en betaversion med både manuellt verifierad
     <LucideBadgeCheck class="inline text-green-700" />
     data och AI-genererad data. Ser du något fel?
@@ -36,7 +35,7 @@ const emissions = company.emissions[year]
   </div>
 </div>
 
-<article class="xs:px-4 mx-auto max-w-screen-lg">
+<article class="mx-auto max-w-screen-lg xs:px-4">
   {
     emissions ? (
       <>
