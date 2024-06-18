@@ -166,26 +166,3 @@ export function getCompanyURL(company: CompanyData) {
 }
 
 export const latestYearWithData = 2023
-
-export const isCompany = (value: CompanyData): value is CompanyData => {
-  // console.log(
-  //   'isCompany',
-  //   !!value.companyName,
-  //   !!value.description,
-  //   !!value.industryGics,
-  //   !!value.industryNace,
-  //   !!value.url,
-  //   !!value.emissions,
-  //   !!value.baseFacts,
-  // )
-  if (
-    value.companyName &&
-    value.industryGics &&
-    value.url &&
-    value.emissions &&
-    value.emissions[latestYearWithData] &&
-    value.baseFacts
-  )
-    return true
-  else return false
-}
