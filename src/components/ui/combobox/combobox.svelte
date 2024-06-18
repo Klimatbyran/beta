@@ -49,7 +49,11 @@
       <ChevronsUpDown class="h-4 ml-1 w-4 shrink-0 opacity-50" />
     </Button>
   </Popover.Trigger>
-  <Popover.Content class="p-0" id="combobox-content" style="width: {width}px">
+  <Popover.Content
+    class="p-0 max-h-72 overflow-y-scroll"
+    id="combobox-content"
+    style="width: {width}px"
+  >
     <Command.Root loop>
       <Command.Input {placeholder} />
       <Command.Empty>{emptyMessage}</Command.Empty>
@@ -62,7 +66,7 @@
               closeAndFocusTrigger(ids.trigger)
               onSelect?.(item)
             }}
-            class="text-balance combobox-item"
+            class="text-balance"
           >
             <Check
               class={cn(
@@ -77,15 +81,3 @@
     </Command.Root>
   </Popover.Content>
 </Popover.Root>
-
-<style>
-  /*
-    Only show the top results.
-
-    NOTE: A better solution would be to use a virtualized list and only render the most relevant items using JS
-    However, that likely requires changes to the combobox
-   */
-  :global(.combobox-item:nth-of-type(1n + 6)) {
-    display: none;
-  }
-</style>
