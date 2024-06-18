@@ -107,13 +107,27 @@ export interface Initiative {
   scope: string
 }
 
+export type WikidataEmissionsEntry = {
+  year: string
+  scope1: EmissionsScope
+  scope2: EmissionsScope
+  scope3: EmissionsScope
+  reference: string
+}
+
+export type WikidataEmissions =
+  | {
+      [year: string]: WikidataEmissionsEntry
+    }
+  | WikidataEmissionsEntry[]
+
 export interface Wikidata {
   node: string
   url: string
   logo: string
   label: string
   description: string
-  emissions: Emissions
+  emissions: WikidataEmissions
 }
 
 /**
@@ -147,7 +161,7 @@ export interface CompanyData {
   goals: Goal[]
   initiatives: Initiative[]
   reliability: string
-  wikidata: Wikidata
+  wikidata?: Wikidata
   facit?: Facit
   needsReview: boolean
   publicComment: string
