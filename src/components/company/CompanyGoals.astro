@@ -13,9 +13,7 @@ const { goals } = Astro.props
 {
   goals && goals.length ? (
     <Card class="grid gap-8" level={1}>
-      <h2 class="pt-4 text-center text-3xl leading-none tracking-tight md:pt-0">
-        Mål
-      </h2>
+      <h2 class="pt-4 text-3xl leading-none tracking-tight md:pt-0">Mål</h2>
       <ul class="grid gap-2">
         {goals.map((goal) => (
           <li class="flex items-center gap-4">
