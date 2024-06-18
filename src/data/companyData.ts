@@ -194,7 +194,7 @@ export interface CompanyData {
 }
 
 export function getCompanyName(company: CompanyData) {
-  return company.wikidata?.label ?? company.companyName
+  return company.wikidata?.label || company.companyName
 }
 
 export function getCompanyURL(company: CompanyData) {
