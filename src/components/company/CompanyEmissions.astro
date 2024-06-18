@@ -3,6 +3,7 @@ import { getCompanyName, type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import { cn } from '@/lib/utils'
+import VerifiedBadge from '../VerifiedBadge.astro'
 
 interface Props {
   company: CompanyData
@@ -70,19 +71,14 @@ const companyName = getCompanyName(company)
           emission.value ? (
             <div class="flex items-center justify-between">
               <div>
-                <h4 class="font-medium">{emission.title}</h4>
+                <h4 class="flex items-center gap-1 font-medium">
+                  {emission.title} {emission.verified && <VerifiedBadge />}
+                </h4>
                 {emission.description && (
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
-              <span
-                class={cn(
-                  'rounded-full px-4 py-2 font-bold md:text-base',
-                  emission.verified
-                    ? 'bg-blue-250 text-blue-950'
-                    : 'bg-gray-800',
-                )}
-              >
+              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
                 {emission.value.toLocaleString('sv-SE')}
               </span>
             </div>
