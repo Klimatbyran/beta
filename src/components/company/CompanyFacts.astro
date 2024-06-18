@@ -1,7 +1,6 @@
 ---
 import { getCompanyName, type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
-import CompanyFactSection from './CompanyFactSection.astro'
 
 interface Props {
   company: CompanyData
@@ -52,31 +51,8 @@ const totalEmissionsVerified =
   </h1>
   <p class="text-muted">{company.description}</p>
 
-  <div class="grid gap-4 pt-4 sm:grid-cols-2">
+  <div class="grid gap-4 pt-4 md:grid-cols-2">
     <Card class="flex flex-col gap-2" level={2}>
-      {
-        company.baseFacts[year]?.turnover && (
-          // TODO: Use the last available year instead of hard coded year
-          <CompanyFactSection
-            title={`Omsättning (${year})`}
-            data={
-              company.baseFacts[year].turnover.toLocaleString('sv-SE') +
-              ' ' +
-              company.baseFacts[year].unit
-            }
-          />
-        )
-      }
-      {
-        company.baseFacts[year]?.employees && (
-          // TODO: Use the last available year instead of hard coded year
-          <CompanyFactSection
-            title={`Anställda (${year})`}
-            data={company.baseFacts[year].employees.toLocaleString('sv-SE')}
-          />
-        )
-      }
-
       {
         company.industryGics.industry.name && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
@@ -86,6 +62,33 @@ const totalEmissionsVerified =
             </p>
           </div>
         )
+      }
+
+      {
+        company.baseFacts[year]?.turnover &&
+          // TODO: Use the last available year instead of hard coded year
+          company.industryGics.industry.name && (
+            <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+              <h3>Omsättning ({year})</h3>
+              <p class="text-sm text-orange-250">
+                {company.baseFacts[year].turnover.toLocaleString('sv-SE') +
+                  ' ' +
+                  company.baseFacts[year].unit}
+              </p>
+            </div>
+          )
+      }
+      {
+        company.baseFacts[year]?.employees &&
+          // TODO: Use the last available year instead of hard coded year
+          company.baseFacts[year]?.employees && (
+            <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+              <h3>Antal anställda ({year})</h3>
+              <p class="text-sm text-orange-250">
+                {company.baseFacts[year]?.employees.toLocaleString('sv-SE')}
+              </p>
+            </div>
+          )
       }
 
       {
