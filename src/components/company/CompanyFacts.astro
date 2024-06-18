@@ -26,6 +26,22 @@ function getPeriod(company: CompanyData) {
     ? `${latestYearReported - 1}/${latestYearReported}`
     : latestYearReported
 }
+
+const emissions = company.emissions[year]
+const totalEmissions = emissions
+  ? (emissions.scope1.emissions || 0) +
+    (emissions.scope2.emissions ||
+      emissions.scope2.mb ||
+      emissions.scope2.lb ||
+      0) +
+    (emissions.scope3.emissions || 0)
+  : 0
+
+const totalEmissionsVerified =
+  emissions &&
+  emissions.scope1.verified &&
+  emissions.scope2.verified &&
+  emissions.scope3.verified
 ---
 
 <Card class="text-sm" level={1}>
@@ -84,7 +100,17 @@ function getPeriod(company: CompanyData) {
       }
     </Card>
 
-    <!-- NOTE: Maybe add total emissions in this card instead -->
-    <!-- <Card level={2} /> -->
+    <Card level={2} class="flex flex-col justify-between gap-4">
+      <div class="flex items-start justify-between">
+        <h3>Totala utsläpp (2023)</h3>
+        <span class="text-muted">(ton CO₂e)</span>
+      </div>
+
+      <p
+        class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl"
+      >
+        {totalEmissions.toLocaleString('sv-SE')}
+      </p>
+    </Card>
   </div>
 </Card>
