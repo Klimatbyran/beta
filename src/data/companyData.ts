@@ -124,6 +124,8 @@ export type FiscalYear = {
   endMonth: number
 }
 
+// TODO: EmissionScope actually doesn't include `vefrified` for facit.
+// Update the type for EmissionScope and omit the verified field, but only when used as part of Facit.
 export type Facit = {
   companyName: string
   url: string
@@ -146,7 +148,7 @@ export interface CompanyData {
   initiatives: Initiative[]
   reliability: string
   wikidata: Wikidata
-  facit: Facit
+  facit?: Facit
   needsReview: boolean
   publicComment: string
   reviewComment: string

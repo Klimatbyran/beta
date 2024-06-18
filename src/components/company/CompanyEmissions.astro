@@ -4,6 +4,8 @@ import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import { cn } from '@/lib/utils'
 import VerifiedBadge from '../VerifiedBadge.astro'
+import type { EmissionsScope } from '@/data/companyData'
+import type { Emissions } from '@/data/companyData'
 
 interface Props {
   company: CompanyData
@@ -13,6 +15,7 @@ interface Props {
 const { company, year } = Astro.props
 
 const emissions = company.emissions[year]
+const facit = company.facit?.emissions?.[year]
 
 const totalBiogenicEmissions = emissions
   ? (emissions.scope1.biogenic || 0) +
@@ -20,27 +23,33 @@ const totalBiogenicEmissions = emissions
     (emissions.scope3.biogenic || 0)
   : 0
 
+function getValueAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
+  const facitValue = facit?.[scope]?.emissions
+  const value = emissions[scope].emissions
+  return {
+    value: facitValue ?? value,
+    verified: facitValue !== null,
+  }
+}
+
 const scopeEmissionsList = emissions
   ? [
       {
         title: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        value: emissions.scope1.emissions,
-        verified: emissions.scope1.verified,
+        ...getValueAndVerified('scope1'),
       },
       {
         title: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-        value: emissions.scope2.emissions,
-        verified: emissions.scope2.verified,
+        ...getValueAndVerified('scope2'),
       },
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        value: emissions.scope3.emissions,
-        verified: emissions.scope3.verified,
+        ...getValueAndVerified('scope3'),
       },
     ]
   : []
