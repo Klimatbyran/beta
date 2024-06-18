@@ -1,6 +1,7 @@
 ---
 import { getCompanyName, type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
+import VerifiedBadge from '../VerifiedBadge.astro'
 
 interface Props {
   company: CompanyData
@@ -110,7 +111,10 @@ const totalEmissionsVerified =
           emissions.scope3.emissions) && (
           <Card level={2} class="flex flex-col justify-between gap-4">
             <div class="flex items-start justify-between">
-              <h3>Totala utsläpp (2023)</h3>
+              <h3 class="flex items-center gap-2">
+                Totala utsläpp (2023){' '}
+                {totalEmissionsVerified && <VerifiedBadge />}
+              </h3>
               <span class="text-muted">(ton CO₂e)</span>
             </div>
 

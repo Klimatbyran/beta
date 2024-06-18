@@ -1,0 +1,13 @@
+---
+import LucideCheck from 'icons:astro/lucide/check'
+
+interface Props {
+  title?: string
+}
+
+const { title = 'Verifierat' } = Astro.props
+---
+
+<div class="cursor-help rounded-full bg-green-600 p-1" {title}>
+  <LucideCheck class="h-3 w-3 text-black" />
+</div>
