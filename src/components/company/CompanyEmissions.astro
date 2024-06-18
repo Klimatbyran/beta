@@ -1,5 +1,5 @@
 ---
-import { getCompanyName, type CompanyData } from '@/data/companyData'
+import { type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import { cn } from '@/lib/utils'
@@ -52,8 +52,6 @@ const biogenicEmissions = {
   value: totalBiogenicEmissions,
   verified: null,
 }
-
-const companyName = getCompanyName(company)
 ---
 
 <Card class="grid gap-8" level={1}>
@@ -88,7 +86,7 @@ const companyName = getCompanyName(company)
     ) : null
   }
 
-  <Scope3Emissions emissions={emissions.scope3.categories} {companyName} />
+  <Scope3Emissions {company} {year} />
 
   {
     totalBiogenicEmissions ? (

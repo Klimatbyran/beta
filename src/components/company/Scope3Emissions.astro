@@ -1,5 +1,10 @@
 ---
-import type { EmissionsScope, Scope3Category } from '@/data/companyData'
+import {
+  getCompanyName,
+  type CompanyData,
+  type EmissionsScope,
+  type Scope3Category,
+} from '@/data/companyData'
 import Fa6SolidGifts from 'icons:astro/fa6-solid/gifts'
 import MingcuteWashMachineLine from 'icons:astro/mingcute/wash-machine-line'
 import IconParkOutlineSolarEnergyOne from 'icons:astro/icon-park-outline/solar-energy-one'
@@ -19,11 +24,11 @@ import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 
 interface Props {
-  emissions: EmissionsScope['categories']
-  companyName: string
+  company: CompanyData
+  year: number
 }
 
-const { emissions, companyName } = Astro.props
+const { company, year } = Astro.props
 
 type CategoryDefinition = {
   title: string
@@ -146,6 +151,9 @@ function getReportedCategories(
     [] as ReportedCategoryDefinition[],
   )
 }
+
+const companyName = getCompanyName(company)
+const emissions = company.emissions[year].scope3.categories
 
 const reportedCategories = getReportedCategories(emissions)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
