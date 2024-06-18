@@ -39,6 +39,7 @@ type CategoryDefinition = {
 type ReportedCategoryDefinition = CategoryDefinition & {
   value: number | null
   category: Scope3Category
+  verified: boolean
 }
 
 export const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
@@ -137,13 +138,18 @@ function getReportedCategories(
 ): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).reduce(
     (categories, [category, definition]) => {
+      const facitValue =
+        company.facit?.emissions?.[year]?.scope3?.categories?.[
+          category as Scope3Category
+        ] ?? null
       const value = emissions?.[category as Scope3Category] ?? null
 
       if (value || definition) {
         categories.push({
           ...definition,
           category: category as Scope3Category,
-          value,
+          value: facitValue ?? value,
+          verified: Boolean(facitValue !== null),
         })
       }
       return categories
@@ -205,11 +211,12 @@ const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
             Uppströms
             <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
           </h4>
-          {upstream.map(({ Icon, title, description, value }) => (
+          {upstream.map(({ Icon, title, description, value, verified }) => (
             <Scope3EmissionsCategory
               {Icon}
               {title}
               {description}
+              {verified}
               value={value?.toLocaleString('sv-SE')}
             />
           ))}
@@ -222,11 +229,12 @@ const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
             Nedströms
             <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
           </h4>
-          {downstream.map(({ Icon, title, description, value }) => (
+          {downstream.map(({ Icon, title, description, value, verified }) => (
             <Scope3EmissionsCategory
               {Icon}
               {title}
               {description}
+              {verified}
               value={value?.toLocaleString('sv-SE')}
             />
           ))}
