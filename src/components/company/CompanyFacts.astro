@@ -62,10 +62,12 @@ function getPeriod(company: CompanyData) {
       }
 
       {
-        company.industryGics.group.name && (
+        company.industryGics.industry.name && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Bransch</h3>
-            <p class="text-sm text-muted">{company.industryGics.group.name}</p>
+            <p class="text-sm text-muted">
+              {company.industryGics.industry.name}
+            </p>
           </div>
         )
       }
