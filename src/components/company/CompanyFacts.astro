@@ -42,6 +42,8 @@ const totalEmissionsVerified =
   emissions.scope1.verified &&
   emissions.scope2.verified &&
   emissions.scope3.verified
+
+const reportURL = company?.facit?.url || company.url
 ---
 
 <Card class="text-sm" level={1}>
@@ -97,9 +99,9 @@ const totalEmissionsVerified =
       }
 
       {
-        company.url && (
+        reportURL && (
           <a
-            href={company.url}
+            href={reportURL}
             class="self-start text-sm text-blue-500 underline"
           >
             Läs hållbarhetsrapport för {getPeriod(company)}
