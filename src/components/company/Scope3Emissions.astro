@@ -1,6 +1,7 @@
 ---
 import {
   getCompanyName,
+  getWikidataEmissionsYear,
   type CompanyData,
   type EmissionsScope,
   type Scope3Category,
@@ -144,11 +145,9 @@ function getReportedCategories(
         ] ?? null
 
       const wikiValue =
-        (company.wikidata?.emissions &&
-          Object.values(company.wikidata?.emissions).findLast(
-            (yearlyEmissions) => yearlyEmissions.year === String(year),
-          )?.scope3?.categories?.[category as Scope3Category]) ??
-        null
+        getWikidataEmissionsYear(company.wikidata, year)?.scope3?.categories?.[
+          category as Scope3Category
+        ] ?? null
 
       const value = emissions?.[category as Scope3Category] ?? null
 

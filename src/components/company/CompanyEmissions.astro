@@ -1,5 +1,5 @@
 ---
-import { type CompanyData } from '@/data/companyData'
+import { getWikidataEmissionsYear, type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import { cn } from '@/lib/utils'
@@ -14,7 +14,7 @@ const { company, year } = Astro.props
 
 const emissions = company.emissions[year]
 const facit = company.facit?.emissions?.[year]
-const wiki = company.wikidata?.emissions?.[year]
+const wiki = getWikidataEmissionsYear(company.wikidata, year)
 
 const totalBiogenicEmissions = emissions
   ? (emissions.scope1.biogenic || 0) +

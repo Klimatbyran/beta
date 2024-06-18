@@ -107,13 +107,27 @@ export interface Initiative {
   scope: string
 }
 
+export type WikidataEmissionsEntry = {
+  year: string
+  scope1: EmissionsScope
+  scope2: EmissionsScope
+  scope3: EmissionsScope
+  reference: string
+}
+
+export type WikidataEmissions =
+  | {
+      [year: string]: WikidataEmissionsEntry
+    }
+  | WikidataEmissionsEntry[]
+
 export interface Wikidata {
   node: string
   url: string
   logo: string
   label: string
   description: string
-  emissions: Emissions
+  emissions: WikidataEmissions
 }
 
 /**
@@ -147,7 +161,7 @@ export interface CompanyData {
   goals: Goal[]
   initiatives: Initiative[]
   reliability: string
-  wikidata: Wikidata
+  wikidata?: Wikidata
   facit?: Facit
   needsReview: boolean
   publicComment: string
@@ -167,25 +181,14 @@ export function getCompanyURL(company: CompanyData) {
 
 export const latestYearWithData = 2023
 
-export const isCompany = (value: CompanyData): value is CompanyData => {
-  // console.log(
-  //   'isCompany',
-  //   !!value.companyName,
-  //   !!value.description,
-  //   !!value.industryGics,
-  //   !!value.industryNace,
-  //   !!value.url,
-  //   !!value.emissions,
-  //   !!value.baseFacts,
-  // )
-  if (
-    value.companyName &&
-    value.industryGics &&
-    value.url &&
-    value.emissions &&
-    value.emissions[latestYearWithData] &&
-    value.baseFacts
-  )
-    return true
-  else return false
+export function getWikidataEmissionsYear(
+  wikidata: CompanyData['wikidata'],
+  year: number | string,
+) {
+  const formattedYear = String(year)
+  const wantedYear = Array.isArray(wikidata?.emissions)
+    ? wikidata.emissions.findLast((entry) => entry.year === formattedYear)
+    : wikidata?.emissions?.[formattedYear]
+
+  return wantedYear
 }
