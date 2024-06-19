@@ -1,7 +1,7 @@
 {
   "name": "beta",
   "type": "module",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "scripts": {
     "dev": "astro dev",
     "start": "node dist/server/entry.mjs",
