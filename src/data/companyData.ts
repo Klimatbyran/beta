@@ -150,8 +150,8 @@ export interface CompanyData {
   companyName: string
   description: string
   wikidataId: string
-  industryGics: IndustryGics
-  industryNace: IndustryNace
+  industryGics?: IndustryGics | null
+  industryNace?: IndustryNace | null
   baseYear: string
   url: string
   emissions: Emissions
