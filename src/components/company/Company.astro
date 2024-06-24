@@ -10,15 +10,13 @@ import CompanyFacts from './CompanyFacts.astro'
 import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyGoals from './CompanyGoals.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
-import OtherCompanies from './OtherCompanies.svelte'
 import LucideBadgeCheck from 'icons:astro/lucide/badge-check'
 
 interface Props {
   company: CompanyData
-  companies: CompanyData[]
 }
 
-const { company, companies } = Astro.props
+const { company } = Astro.props
 
 const year = latestYearWithData
 const emissions = company.emissions[year]
@@ -47,10 +45,6 @@ const emissions = company.emissions[year]
           <CompanyGoals goals={company.goals} />
 
           <CompanyInitiatives initiatives={company.initiatives} />
-
-          <div class="grid place-content-center py-16">
-            <OtherCompanies client:idle {companies} />
-          </div>
         </div>
       </>
     ) : (
@@ -61,8 +55,6 @@ const emissions = company.emissions[year]
         <p class="py-4">Utsläppsdata saknas för år {year}.</p>
 
         <div class="grid w-full place-items-center">
-          <OtherCompanies client:load {companies} />
-
           <a
             class={buttonVariants({
               variant: 'default',

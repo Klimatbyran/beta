@@ -2,10 +2,8 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import { getCompanyURL } from '@/data/companyData'
-import { getCompanies } from '@/data/companies'
+import { getCompany } from '@/data/companies'
 import Company from '@/components/company/Company.astro'
-import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
 
 const { id = '' } = Astro.params
@@ -13,17 +11,13 @@ const { id = '' } = Astro.params
 // Asusme the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
 
-const companies = await getCompanies()
-
-const company = companies.find(
-  (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
-)
+const company = await getCompany(wikidataId)
 ---
 
 <Layout title="Klimatkollen - få koll på företagens utsläpp">
   {
     company ? (
-      <Company {company} {companies} />
+      <Company {company} />
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <p class="py-4">
@@ -32,8 +26,6 @@ const company = companies.find(
         </p>
 
         <div class="grid w-full place-items-center">
-          <OtherCompanies client:load {companies} />
-
           <a
             class={buttonVariants({
               variant: 'default',
@@ -47,17 +39,5 @@ const company = companies.find(
         </div>
       </div>
     )
-  }
-
-  {
-    process.env.NODE_ENV === 'development' ? (
-      <div class="mt-16 flex flex-wrap gap-2 text-nowrap px-8">
-        {companies.map((c) => (
-          <a href={getCompanyURL(c)} class="underline">
-            {c.companyName}
-          </a>
-        ))}
-      </div>
-    ) : null
   }
 </Layout>
