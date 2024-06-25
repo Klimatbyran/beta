@@ -12,12 +12,12 @@ interface Props {
 const { company, year } = Astro.props
 
 const emissions = company.emissions[year]
-const facit = company.facit?.emissions?.[year]
 const wiki = getWikidataEmissionsYear(company.wikidata, year)
+const facit = company.facit?.emissions?.[year]
 
 const totalBiogenicEmissions = getTotalBiogenicEmissionsAndVerified()
 
-function getValueAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
+function getEmissionScopeAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
   const facitValue = facit?.[scope]?.emissions
   const wikiValue = wiki?.[scope]?.emissions
   const value = emissions[scope].emissions
@@ -47,18 +47,18 @@ const scopeEmissionsList = emissions
         title: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        ...getValueAndVerified('scope1'),
+        ...getEmissionScopeAndVerified('scope1'),
       },
       {
         title: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-        ...getValueAndVerified('scope2'),
+        ...getEmissionScopeAndVerified('scope2'),
       },
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        ...getValueAndVerified('scope3'),
+        ...getEmissionScopeAndVerified('scope3'),
       },
     ]
   : []

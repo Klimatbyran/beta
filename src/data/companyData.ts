@@ -141,7 +141,7 @@ export type FiscalYear = {
   endMonth: number
 }
 
-// TODO: EmissionScope actually doesn't include `vefrified` for facit.
+// TODO: EmissionScope actually doesn't include `verified` for facit.
 // Update the type for EmissionScope and omit the verified field, but only when used as part of Facit.
 export type Facit = {
   companyName: string

@@ -14,22 +14,6 @@ interface Props {
 
 const { company, year } = Astro.props
 
-const emissions = company.emissions[year]
-const totalEmissions = emissions
-  ? (emissions.scope1.emissions || 0) +
-    (emissions.scope2.emissions ||
-      emissions.scope2.mb ||
-      emissions.scope2.lb ||
-      0) +
-    (emissions.scope3.emissions || 0)
-  : 0
-
-const totalEmissionsVerified =
-  emissions &&
-  emissions.scope1.verified &&
-  emissions.scope2.verified &&
-  emissions.scope3.verified
-
 function getWikidataReportURL(
   wikidata: CompanyData['wikidata'],
   year: number | string,
@@ -38,6 +22,59 @@ function getWikidataReportURL(
   // HACK: Ignore hallucinated URLs only return proper report URLs
   return potentialURL?.includes('wikidata.org') ? undefined : potentialURL
 }
+
+/*
+ * HACK: We should really let the API handle data verification instead to deal with issues as close to the source as possible.
+ */
+function getTotalEmissions(company: CompanyData, year: number) {
+  const emissions = company.emissions[year]
+  const wiki = getWikidataEmissionsYear(company.wikidata, year)
+  const facit = company.facit?.emissions?.[year]
+
+  if (facit) {
+    return {
+      value:
+        (facit.scope1.emissions || 0) +
+        (facit.scope2.emissions || facit.scope2.mb || facit.scope2.lb || 0) +
+        (facit.scope3.emissions ||
+          Object.values(facit.scope3.categories ?? [])
+            .filter(Boolean)
+            .reduce((a, b) => (a ?? 0) + (b ?? 0), 0) ||
+          0),
+      verified: true,
+    }
+  } else if (wiki) {
+    return {
+      value:
+        (wiki.scope1.emissions || 0) +
+        (wiki.scope2.emissions || wiki.scope2.mb || wiki.scope2.lb || 0) +
+        (wiki.scope3.emissions ||
+          Object.values(wiki.scope3.categories ?? [])
+            .filter(Boolean)
+            .reduce((a, b) => (a ?? 0) + (b ?? 0), 0) ||
+          0),
+      verified: true,
+    }
+  }
+
+  return {
+    value: emissions
+      ? (emissions.scope1.emissions || 0) +
+        (emissions.scope2.emissions ||
+          emissions.scope2.mb ||
+          emissions.scope2.lb ||
+          0) +
+        (emissions.scope3.emissions || 0)
+      : 0,
+    verified:
+      emissions &&
+      emissions.scope1.verified &&
+      emissions.scope2.verified &&
+      emissions.scope3.verified,
+  }
+}
+
+const totalEmissions = getTotalEmissions(company, year)
 
 const reportURL =
   company.facit?.url ||
@@ -111,26 +148,23 @@ const reportURL =
     </Card>
 
     {
-      emissions &&
-        (emissions.scope1.emissions ||
-          emissions.scope2.mb ||
-          emissions.scope3.emissions) && (
-          <Card level={2} class="flex flex-col justify-between gap-4">
-            <div class="flex items-start justify-between">
-              <h3 class="flex items-center gap-1">
-                Totala utsläpp (2023){' '}
-                {totalEmissionsVerified && <VerifiedBadge />}
-              </h3>
-              <span class="text-muted">(ton CO₂e)</span>
-            </div>
+      totalEmissions && (
+        <Card level={2} class="flex flex-col justify-between gap-4">
+          <div class="flex items-start justify-between">
+            <h3 class="flex items-center gap-1">
+              Totala utsläpp (2023){' '}
+              {totalEmissions.verified && <VerifiedBadge />}
+            </h3>
+            <span class="text-muted">(ton CO₂e)</span>
+          </div>
 
-            <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-              {totalEmissions.toLocaleString('sv-SE', {
-                maximumFractionDigits: 0,
-              })}
-            </p>
-          </Card>
-        )
+          <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
+            {totalEmissions.value.toLocaleString('sv-SE', {
+              maximumFractionDigits: 0,
+            })}
+          </p>
+        </Card>
+      )
     }
   </div>
 </Card>
