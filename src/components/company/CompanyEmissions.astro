@@ -29,10 +29,6 @@ function getEmissionScopeAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
   const wikiValue = getNumberOrNull(wiki?.[scope]?.emissions)
   const value = getNumberOrNull(emissions[scope].emissions)
 
-  if (emissions[scope].emissions === 0) {
-    console.log(scope, emissions[scope].emissions)
-  }
-
   return {
     value: facitValue ?? wikiValue ?? value,
     verified: facitValue !== null || wikiValue !== null,
