@@ -14,23 +14,6 @@ interface Props {
 
 const { company, year } = Astro.props
 
-/**
- * Get the reporting period.
- *
- * For fiscal years following the calendar year, show the last reported year.
- * For non-calendar fiscal years, use special formatting
- */
-function getPeriod(company: CompanyData) {
-  const latestYearReported = Math.max.apply(
-    0,
-    Object.keys(company.emissions ?? {}).map(Number),
-  )
-
-  return company.fiscalYear && company.fiscalYear.startMonth !== 1
-    ? `${latestYearReported - 1}/${latestYearReported}`
-    : latestYearReported
-}
-
 const emissions = company.emissions[year]
 const totalEmissions = emissions
   ? (emissions.scope1.emissions || 0) +
@@ -53,7 +36,7 @@ function getWikidataReportURL(
 ) {
   const potentialURL = getWikidataEmissionsYear(wikidata, year)?.reference
   // HACK: Ignore hallucinated URLs only return proper report URLs
-  return potentialURL?.includes('wikidata') ? undefined : potentialURL
+  return potentialURL?.includes('wikidata.org') ? undefined : potentialURL
 }
 
 const reportURL =
@@ -116,12 +99,15 @@ const reportURL =
 
       {
         reportURL && (
-          <a
-            href={reportURL}
-            class="self-start text-sm text-blue-500 underline"
-          >
-            Läs hållbarhetsrapport för {getPeriod(company)}
-          </a>
+          <span>
+            Läs senaste{' '}
+            <a
+              href={reportURL}
+              class="self-start text-sm text-blue-500 underline"
+            >
+              hållbarhetsrapport
+            </a>
+          </span>
         )
       }
     </Card>
