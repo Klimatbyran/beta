@@ -182,7 +182,20 @@ export function getCompanyURL(company: CompanyData) {
   return `${company.companyName.toLowerCase().replaceAll(' ', '-')}-${company.wikidataId}`
 }
 
-export const latestYearWithData = 2023
+export function getLatestYearWithEmissionsData(
+  company: CompanyData,
+  maxYear = new Date().getUTCFullYear() - 1,
+) {
+  let year = maxYear
+
+  for (year; year >= maxYear - 5; year--) {
+    if (company.emissions[year]) {
+      return year
+    }
+  }
+
+  return maxYear
+}
 
 export function getWikidataEmissionsYear(
   wikidata: CompanyData['wikidata'],
