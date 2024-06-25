@@ -19,7 +19,9 @@ jobs:
 
     steps:
       - name: 🛎️ Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          progress: false
 
       - name: 🎫 Update patch version
         run: |
@@ -44,7 +46,9 @@ jobs:
 
     steps:
       - name: 🛎️ Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          progress: false
 
       - id: imagename
         uses: ASzc/change-string-case-action@v2
