@@ -67,6 +67,7 @@ export interface Emissions {
     scope1: EmissionsScope
     scope2: EmissionsScope
     scope3: EmissionsScope
+    totalBiogenic?: number | null
   }
 }
 
@@ -113,6 +114,8 @@ export type WikidataEmissionsEntry = {
   scope2: EmissionsScope
   scope3: EmissionsScope
   reference: string
+  // TODO: Update backend to get biogenic emissions from wikidata
+  // biogenic?: number
 }
 
 export type WikidataEmissions =

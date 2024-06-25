@@ -19,9 +19,9 @@ const customCollections: Options['customCollections'] = {
 export default defineConfig({
   output: 'server',
   server:
-    process.env.NODE_ENV === 'production'
-      ? { port: parseInt(process.env.PORT!) || 4321, host: true }
-      : undefined,
+    process.env.NODE_ENV === 'development'
+      ? undefined
+      : { port: parseInt(process.env.PORT!) || 4321, host: true },
   integrations: [react(), svelte(), tailwind()],
   adapter: node({
     mode: 'standalone',
@@ -30,12 +30,15 @@ export default defineConfig({
   // NOTE: Temporary redirect (HTTP 302) to reduce risk of broken links once we implement these URLs as part of the Astro site.
   // This should only happen when running in the docker environment (which is the only time we pass in an explicit PORT env variable).
   redirects:
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV === 'development'
       ? {
+          '/': '/foretag/x',
+          '/foretag': '/foretag/x',
+        }
+      : {
           '/': 'https://klimatkollen.se',
           '/foretag': 'https://klimatkollen.se',
-        }
-      : undefined,
+        },
   vite: {
     resolve: {
       alias: [
