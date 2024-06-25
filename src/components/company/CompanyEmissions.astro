@@ -17,10 +17,22 @@ const facit = company.facit?.emissions?.[year]
 
 const totalBiogenicEmissions = getTotalBiogenicEmissionsAndVerified()
 
+/**
+ * Get an explicit number or null to make it easier to distinguish verified data points
+ */
+function getNumberOrNull(x?: number | null) {
+  return Number.isFinite(x) ? x : null
+}
+
 function getEmissionScopeAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
-  const facitValue = facit?.[scope]?.emissions
-  const wikiValue = wiki?.[scope]?.emissions
-  const value = emissions[scope].emissions
+  const facitValue = getNumberOrNull(facit?.[scope]?.emissions)
+  const wikiValue = getNumberOrNull(wiki?.[scope]?.emissions)
+  const value = getNumberOrNull(emissions[scope].emissions)
+
+  if (emissions[scope].emissions === 0) {
+    console.log(scope, emissions[scope].emissions)
+  }
+
   return {
     value: facitValue ?? wikiValue ?? value,
     verified: facitValue !== null || wikiValue !== null,
@@ -28,7 +40,7 @@ function getEmissionScopeAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
 }
 
 function getTotalBiogenicEmissionsAndVerified() {
-  const facitValue = facit?.totalBiogenic
+  const facitValue = getNumberOrNull(facit?.totalBiogenic)
   const value = emissions
     ? (emissions.scope1.biogenic || 0) +
       (emissions.scope2.biogenic || 0) +
@@ -37,7 +49,7 @@ function getTotalBiogenicEmissionsAndVerified() {
 
   return {
     value: facitValue ?? value,
-    verified: Number.isFinite(Number(facitValue)) ? true : false,
+    verified: facitValue !== null,
   }
 }
 
@@ -73,7 +85,7 @@ const biogenicEmissions = {
 
 <Card class="grid gap-8" level={1}>
   <h2
-    class="flex items-center justify-between pt-4 text-3xl leading-none tracking-tight md:pt-0"
+    class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0"
   >
     Rapporterade utsläpp 2023 <span class="pr-4 text-base text-muted xs:text-xl"
       >(ton CO₂e)</span
@@ -83,7 +95,7 @@ const biogenicEmissions = {
     scopeEmissionsList.length ? (
       <div class="grid gap-4">
         {scopeEmissionsList.map((emission) =>
-          emission.value ? (
+          Number.isFinite(emission.value) ? (
             <div class="flex items-center justify-between">
               <div>
                 <h4 class="flex items-center gap-1 font-medium">
@@ -94,7 +106,7 @@ const biogenicEmissions = {
                 )}
               </div>
               <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
-                {emission.value.toLocaleString('sv-SE', {
+                {(emission.value as number).toLocaleString('sv-SE', {
                   maximumFractionDigits: 0,
                 })}
               </span>
@@ -110,9 +122,9 @@ const biogenicEmissions = {
   {
     biogenicEmissions.value ? (
       <Card level={2}>
-        <h4 class="flex items-center justify-between pb-4 text-2xl">
-          <span class="flex items-center gap-1">
-            {biogenicEmissions.title}{' '}
+        <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
+          <span class="flex items-center justify-start gap-1">
+            <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
             {biogenicEmissions.verified && <VerifiedBadge />}
           </span>
           <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
