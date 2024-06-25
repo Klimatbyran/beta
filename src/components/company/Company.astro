@@ -3,7 +3,7 @@ import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import {
   type CompanyData,
   getCompanyName,
-  latestYearWithData,
+  getLatestYearWithEmissionsData,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
@@ -20,7 +20,7 @@ interface Props {
 
 const { company, companies } = Astro.props
 
-const year = latestYearWithData
+const year = getLatestYearWithEmissionsData(company)
 const emissions = company.emissions[year]
 ---
 
