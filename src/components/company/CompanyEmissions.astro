@@ -73,7 +73,7 @@ const biogenicEmissions = {
 
 <Card class="grid gap-8" level={1}>
   <h2
-    class="flex items-center justify-between pt-4 text-3xl leading-none tracking-tight md:pt-0"
+    class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0"
   >
     Rapporterade utsläpp 2023 <span class="pr-4 text-base text-muted xs:text-xl"
       >(ton CO₂e)</span
@@ -110,9 +110,9 @@ const biogenicEmissions = {
   {
     biogenicEmissions.value ? (
       <Card level={2}>
-        <h4 class="flex items-center justify-between pb-4 text-2xl">
-          <span class="flex items-center gap-1">
-            {biogenicEmissions.title}{' '}
+        <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
+          <span class="flex items-center justify-start gap-1">
+            <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
             {biogenicEmissions.verified && <VerifiedBadge />}
           </span>
           <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
