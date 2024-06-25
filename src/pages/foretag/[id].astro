@@ -9,7 +9,7 @@ import { buttonVariants } from '@/components/ui/button'
 
 const { id = '' } = Astro.params
 
-// Asusme the wikidataId to be in the final part of the URL
+// Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
 
 const companies = await getCompanies()
@@ -17,9 +17,12 @@ const companies = await getCompanies()
 const company = companies.find(
   (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
 )
+
+const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
+const title = `${company?.companyName ? `${company?.companyName} | ` : ''}${baseTitle}`
 ---
 
-<Layout title="Klimatkollen - få koll på företagens utsläpp">
+<Layout {title}>
   {
     company ? (
       <Company {company} {companies} />
