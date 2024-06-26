@@ -8,10 +8,8 @@
 
   export let companies: CompanyData[]
 
-  function onSelect(item: Item) {
-    window.location.assign(
-      `/foretag/${getCompanyURL(item.data as CompanyData)}`,
-    )
+  function onSelect(item: Item<string>) {
+    window.location.assign(item.data)
   }
 </script>
 
@@ -19,7 +17,7 @@
   items={companies.map((c) => ({
     label: getCompanyName(c),
     value: getCompanyName(c),
-    data: c,
+    data: `/foretag/${getCompanyURL(c)}`,
   }))}
   buttonLabel="Visa annat företag"
   placeholder="Sök företag..."

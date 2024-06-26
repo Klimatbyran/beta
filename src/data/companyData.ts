@@ -1,3 +1,5 @@
+import { slugifyURL } from '@/lib/slugifyURL'
+
 export interface IndustryGics {
   name: string
   sector: {
@@ -179,7 +181,7 @@ export function getCompanyName(company: CompanyData) {
 }
 
 export function getCompanyURL(company: CompanyData) {
-  return `${company.companyName.toLowerCase().replaceAll(' ', '-')}-${company.wikidataId}`
+  return `${slugifyURL(company.companyName)}-${company.wikidataId}`
 }
 
 export function getLatestYearWithEmissionsData(
