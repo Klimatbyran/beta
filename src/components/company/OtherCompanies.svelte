@@ -9,7 +9,9 @@
   export let companies: CompanyData[]
 
   function onSelect(item: Item) {
-    window.location.href = `/foretag/${getCompanyURL(item.data as CompanyData)}`
+    window.location.assign(
+      `/foretag/${getCompanyURL(item.data as CompanyData)}`,
+    )
   }
 </script>
 
