@@ -10,6 +10,10 @@ import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 //   { href: 'https://klimatkollen.teamtailor.com/', label: 'Jobb' },
 //   { href: 'https://www.klimatkollen.se/in-english', label: 'In English' },
 // ]
+
+const baseURL = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : 'https://klimatkollen.se'
 ---
 
 <header class="sticky top-0 z-50 w-full bg-black">
@@ -18,7 +22,7 @@ import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
   >
     <div class="absolute left-0 z-30 flex h-full items-center pl-4">
       <a
-        href="https://www.klimatkollen.se/foretag/utslappen/lista"
+        href={`${baseURL}/foretag/utslappen/lista`}
         class="-ml-2 p-2 text-white"
         title="Gå tillbaka"
         aria-label="Gå tillbaka"
@@ -27,7 +31,7 @@ import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
       </a>
     </div>
     <div class="absolute inset-0 z-20 flex items-center justify-center">
-      <a class="flex items-center pt-1" href="https://www.klimatkollen.se/">
+      <a class="flex items-center pt-1" href={baseURL}>
         <img
           src="/klimatkollen_logo.svg"
           alt="Klimatkollen logga"
