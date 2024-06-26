@@ -1,9 +1,9 @@
 import Combobox from './combobox.svelte'
 
-export type Item = {
+export type Item<T> = {
   value: string
   label: string
-  data: any
+  data: T
 }
 
 export { Combobox }
