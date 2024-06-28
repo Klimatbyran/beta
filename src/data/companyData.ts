@@ -160,7 +160,7 @@ export interface CompanyData {
   baseYear: string
   url: string
   emissions: Emissions
-  baseFacts: BaseFacts
+  baseFacts?: BaseFacts
   factors: Factors[]
   contacts: Contact[]
   goals: Goal[]
