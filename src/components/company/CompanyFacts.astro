@@ -104,7 +104,6 @@ const reportURL =
       }
 
       {
-        // TODO: Use the last available year instead of hard coded year
         company.baseFacts?.[year]?.turnover && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Omsättning ({year})</h3>
@@ -119,12 +118,11 @@ const reportURL =
         )
       }
       {
-        // TODO: Use the last available year instead of hard coded year
-        company.baseFacts[year]?.employees && (
+        company.baseFacts?.[year]?.employees && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Antal anställda ({year})</h3>
             <p class="text-sm text-orange-250">
-              {company.baseFacts[year]?.employees.toLocaleString('sv-SE', {
+              {company.baseFacts[year].employees.toLocaleString('sv-SE', {
                 maximumFractionDigits: 0,
               })}
             </p>
@@ -135,7 +133,7 @@ const reportURL =
       {
         reportURL && (
           <span>
-            Läs senaste{' '}
+            Läs{' '}
             <a
               href={reportURL}
               class="self-start text-sm text-blue-500 underline"
