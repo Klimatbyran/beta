@@ -135,7 +135,7 @@ export const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
 }
 
 function getReportedCategories(
-  emissions: EmissionsScope['categories'],
+  scope3Categories: EmissionsScope['categories'],
 ): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).map(([category, definition]) => {
     const facitValue =
@@ -148,7 +148,7 @@ function getReportedCategories(
         category as Scope3Category
       ] ?? null
 
-    const value = emissions?.[category as Scope3Category] ?? null
+    const value = scope3Categories?.[category as Scope3Category] ?? null
 
     return {
       ...definition,
@@ -160,9 +160,9 @@ function getReportedCategories(
 }
 
 const companyName = getCompanyName(company)
-const emissions = company.emissions[year].scope3.categories
+const scope3Categories = company.emissions[year].scope3.categories
 
-const reportedCategories = getReportedCategories(emissions)
+const reportedCategories = getReportedCategories(scope3Categories)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const upstream = reportedCategories.slice(0, 8)
@@ -179,72 +179,77 @@ function getNonStandardCategories(categories?: Record<string, any> | null) {
   )
 }
 
-const nonStandardCategoriesCount = getNonStandardCategories(emissions).length
+const nonStandardCategoriesCount =
+  getNonStandardCategories(scope3Categories).length
 ---
 
-{
-  emissions ? (
-    <Card class="grid gap-8" level={2}>
-      <div>
-        <h3 class="text-balance pb-2 text-xl tracking-tight sm:leading-none lg:text-2xl">
-          {companyName} rapporterar
-          <span class="text-nowrap">
-            <span class="text-orange-250">{reportedCount}</span> / 15
-          </span>
-          kategorier:
-        </h3>
-        {Boolean(nonStandardCategoriesCount) && (
-          <p class="text-sm text-muted">
-            Utöver det anges
-            {`${nonStandardCategoriesCount} kategori${nonStandardCategoriesCount > 1 ? 'er' : ''} `}
-            som inte följer GHG-protokollet.
-          </p>
-        )}
+<Card class="grid gap-8" level={2}>
+  <div>
+    <h3
+      class="text-balance pb-2 text-xl tracking-tight sm:leading-none lg:text-2xl"
+    >
+      {companyName} rapporterar
+      <span class="text-nowrap">
+        <span class="text-orange-250">{reportedCount}</span> / 15
+      </span>
+      kategorier:
+    </h3>
+    {
+      Boolean(nonStandardCategoriesCount) && (
         <p class="text-sm text-muted">
-          Företag bör rapportera i alla kategorier som är relevanta för
-          verksamheten.
+          Utöver det anges
+          {`${nonStandardCategoriesCount} kategori${nonStandardCategoriesCount > 1 ? 'er' : ''} `}
+          som inte följer GHG-protokollet.
         </p>
+      )
+    }
+    <p class="text-sm text-muted">
+      Företag bör rapportera i alla kategorier som är relevanta för
+      verksamheten.
+    </p>
+  </div>
+
+  {
+    upstream.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Uppströms
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {upstream.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            value={value?.toLocaleString('sv-SE', {
+              maximumFractionDigits: 0,
+            })}
+          />
+        ))}
       </div>
+    ) : null
+  }
 
-      {upstream.length ? (
-        <div class="grid gap-2 text-sm">
-          <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
-            Uppströms
-            <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-          </h4>
-          {upstream.map(({ Icon, title, description, value, verified }) => (
-            <Scope3EmissionsCategory
-              {Icon}
-              {title}
-              {description}
-              {verified}
-              value={value?.toLocaleString('sv-SE', {
-                maximumFractionDigits: 0,
-              })}
-            />
-          ))}
-        </div>
-      ) : null}
-
-      {downstream.length ? (
-        <div class="grid gap-2 text-sm">
-          <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
-            Nedströms
-            <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-          </h4>
-          {downstream.map(({ Icon, title, description, value, verified }) => (
-            <Scope3EmissionsCategory
-              {Icon}
-              {title}
-              {description}
-              {verified}
-              value={value?.toLocaleString('sv-SE', {
-                maximumFractionDigits: 0,
-              })}
-            />
-          ))}
-        </div>
-      ) : null}
-    </Card>
-  ) : null
-}
+  {
+    downstream.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Nedströms
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {downstream.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            value={value?.toLocaleString('sv-SE', {
+              maximumFractionDigits: 0,
+            })}
+          />
+        ))}
+      </div>
+    ) : null
+  }
+</Card>
