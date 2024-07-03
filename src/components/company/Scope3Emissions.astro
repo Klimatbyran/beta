@@ -137,32 +137,26 @@ export const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
 function getReportedCategories(
   emissions: EmissionsScope['categories'],
 ): ReportedCategoryDefinition[] {
-  return Object.entries(categoryDefinitions).reduce(
-    (categories, [category, definition]) => {
-      const facitValue =
-        company.facit?.emissions?.[year]?.scope3?.categories?.[
-          category as Scope3Category
-        ] ?? null
+  return Object.entries(categoryDefinitions).map(([category, definition]) => {
+    const facitValue =
+      company.facit?.emissions?.[year]?.scope3?.categories?.[
+        category as Scope3Category
+      ] ?? null
 
-      const wikiValue =
-        getWikidataEmissionsYear(company.wikidata, year)?.scope3?.categories?.[
-          category as Scope3Category
-        ] ?? null
+    const wikiValue =
+      getWikidataEmissionsYear(company.wikidata, year)?.scope3?.categories?.[
+        category as Scope3Category
+      ] ?? null
 
-      const value = emissions?.[category as Scope3Category] ?? null
+    const value = emissions?.[category as Scope3Category] ?? null
 
-      if (facitValue || wikiValue || value || definition) {
-        categories.push({
-          ...definition,
-          category: category as Scope3Category,
-          value: facitValue ?? wikiValue ?? value,
-          verified: facitValue !== null || wikiValue !== null,
-        })
-      }
-      return categories
-    },
-    [] as ReportedCategoryDefinition[],
-  )
+    return {
+      ...definition,
+      category: category as Scope3Category,
+      value: facitValue ?? wikiValue ?? value,
+      verified: facitValue !== null || wikiValue !== null,
+    }
+  })
 }
 
 const companyName = getCompanyName(company)
