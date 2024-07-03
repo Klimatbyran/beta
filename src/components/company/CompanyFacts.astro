@@ -35,7 +35,7 @@ function getTotalEmissions(company: CompanyData, year: number) {
     return {
       value:
         (facit.scope1?.emissions || 0) +
-        (facit.scope2?.emissions || facit.scope2.mb || facit.scope2.lb || 0) +
+        (facit.scope2?.emissions || facit.scope2?.mb || facit.scope2?.lb || 0) +
         (facit.scope3?.emissions ||
           Object.values(facit.scope3?.categories ?? [])
             .filter(Boolean)
@@ -47,7 +47,7 @@ function getTotalEmissions(company: CompanyData, year: number) {
     return {
       value:
         (wiki.scope1?.emissions || 0) +
-        (wiki.scope2?.emissions || wiki.scope2.mb || wiki.scope2.lb || 0) +
+        (wiki.scope2?.emissions || wiki.scope2?.mb || wiki.scope2?.lb || 0) +
         (wiki.scope3?.emissions ||
           Object.values(wiki.scope3?.categories ?? [])
             .filter(Boolean)
