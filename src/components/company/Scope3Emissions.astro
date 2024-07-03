@@ -154,7 +154,7 @@ function getReportedCategories(
       ...definition,
       category: category as Scope3Category,
       value: facitValue ?? wikiValue ?? value,
-      verified: facitValue !== null || wikiValue !== null,
+      verified: facitValue !== null,
     }
   })
 }

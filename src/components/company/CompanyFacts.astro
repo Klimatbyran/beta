@@ -53,7 +53,9 @@ function getTotalEmissions(company: CompanyData, year: number) {
             .filter(Boolean)
             .reduce((a, b) => (a ?? 0) + (b ?? 0), 0) ||
           0),
-      verified: true,
+      // NOTE: Since this is not the actual wikidata response, but processed by GPT-4o, this data is completely unreliable until
+      // we have solved https://github.com/Klimatbyran/garbo/issues/169
+      verified: false,
     }
   }
 

@@ -166,6 +166,10 @@ export interface CompanyData {
   goals: Goal[]
   initiatives: Initiative[]
   reliability: string
+  /**
+   * NOTE: Data in the `wikidata` property is completely unreliable as long as its processed by GPT-4o.
+   * We need to solve https://github.com/Klimatbyran/garbo/issues/169 before we can trust this again.
+   */
   wikidata?: Wikidata
   facit?: Facit
   needsReview: boolean
