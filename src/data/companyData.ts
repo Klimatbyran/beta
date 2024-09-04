@@ -146,6 +146,6 @@ export function getCompanyURL(company: CompanyData) {
 
 export function getLatestYearWithEmissionsData(company: CompanyData) {
   return (
-    new Date(company.reportingPeriods?.[0]?.startDate)?.getFullYear() || '2023'
+    new Date(company.reportingPeriods?.[0]?.startDate)?.getFullYear() || 2023
   )
 }
