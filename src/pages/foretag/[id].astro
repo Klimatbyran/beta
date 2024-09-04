@@ -16,11 +16,11 @@ const companies = await getCompanies()
 
 const company = companies.find(
   (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
-)
+)!
 
 const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
 
-const title = `${company?.companyName ? `${company?.companyName} | ` : ''}${baseTitle}`
+const title = `${company.name ? `${company.name} | ` : ''}${baseTitle}`
 ---
 
 <Layout {title}>

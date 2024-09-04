@@ -1,206 +1,134 @@
 import { slugifyURL } from '@/lib/slugifyURL'
 
-export interface IndustryGics {
-  name: string
-  sector: {
-    code: string
-    name: string
-  }
-  group: {
-    code: string
-    name: string
-  }
-  industry: {
-    code: string
-    name: string
-  }
-  subIndustry: {
-    code: string
-    name: string
-  }
-}
-
-export interface IndustryNace {
-  section: {
-    code: string
-    name: string
-  }
-  division: {
-    code: string
-    name: string
-  }
-}
-
-export interface EmissionsScope {
-  emissions: number | null
-  verified: string
-  unit: string
-  biogenic?: number
-  mb?: number
-  lb?: number
-  categories?: {
-    '1_purchasedGoods': number | null
-    '2_capitalGoods': number | null
-    '3_fuelAndEnergyRelatedActivities': number | null
-    '4_upstreamTransportationAndDistribution': number | null
-    '5_wasteGeneratedInOperations': number | null
-    '6_businessTravel': number | null
-    '7_employeeCommuting': number | null
-    '8_upstreamLeasedAssets': number | null
-    '9_downstreamTransportationAndDistribution': number | null
-    '10_processingOfSoldProducts': number | null
-    '11_useOfSoldProducts': number | null
-    '12_endOfLifeTreatmentOfSoldProducts': number | null
-    '13_downstreamLeasedAssets': number | null
-    '14_franchises': number | null
-    '15_investments': number | null
-    '16_other': number | null
-  }
-}
-
-export type Scope3Category = keyof Omit<
-  Exclude<EmissionsScope['categories'], undefined>,
-  '16_other'
->
-
-export interface Emissions {
-  [year: string]: {
-    year: string
-    scope1: EmissionsScope
-    scope2: EmissionsScope
-    scope3: EmissionsScope
-    totalBiogenic?: number | null
-  }
-}
-
-export interface BaseFacts {
-  [year: string]: {
-    turnover: number
-    employees: number
-    unit: string
-  }
-}
-
-export interface Factors {
-  product: string
-  description: string
-  value: number
-  unit: string
-}
-
-export interface Contact {
-  name: string
-  role: string
-  email: string
-  phone: string
-}
-
-export interface Goal {
-  description: string
-  year: number
-  reductionPercent: number
-  baseYear: string
-}
-
-export interface Initiative {
-  title: string
-  description: string
-  year: number
-  reductionPercent: number
-  scope: string
-}
-
-export type WikidataEmissionsEntry = {
-  year: string
-  scope1: EmissionsScope
-  scope2: EmissionsScope
-  scope3: EmissionsScope
-  reference: string
-  // TODO: Update backend to get biogenic emissions from wikidata
-  // biogenic?: number
-}
-
-export type WikidataEmissions =
-  | {
-      [year: string]: WikidataEmissionsEntry
-    }
-  | WikidataEmissionsEntry[]
-
-export interface Wikidata {
-  node: string
-  url: string
-  logo: string
-  label: string
-  description: string
-  emissions: WikidataEmissions
-}
-
-/**
- * Gregorian calendar months, where 1 is January and 12 is December
- */
-export type FiscalYear = {
-  startMonth: number
-  endMonth: number
-}
-
-// TODO: EmissionScope actually doesn't include `verified` for facit.
-// Update the type for EmissionScope and omit the verified field, but only when used as part of Facit.
-export type Facit = {
-  companyName: string
-  url: string
-  emissions: Emissions
-}
-
-export interface CompanyData {
-  companyName: string
-  description: string
+export type CompanyData = {
   wikidataId: string
-  industryGics?: IndustryGics | null
-  industryNace?: IndustryNace | null
-  baseYear: string
-  url: string
-  emissions: Emissions
-  baseFacts?: BaseFacts
-  factors: Factors[]
-  contacts: Contact[]
+  name: string
+  description: string
+  reportingPeriods: ReportingPeriod[]
+  industryGics?: IndustryGics
   goals: Goal[]
   initiatives: Initiative[]
-  reliability: string
-  /**
-   * NOTE: Data in the `wikidata` property is completely unreliable as long as its processed by GPT-4o.
-   * We need to solve https://github.com/Klimatbyran/garbo/issues/169 before we can trust this again.
-   */
-  wikidata?: Wikidata
-  facit?: Facit
-  needsReview: boolean
-  publicComment: string
-  reviewComment: string
-  fiscalYear?: FiscalYear
 }
 
-export function getCompanyName(company: CompanyData) {
-  return (
-    company.facit?.companyName || company.wikidata?.label || company.companyName
-  )
+export type Goal = {
+  description: string
+  year: string | null
+  metadata: Metadata
+}
+
+export type Metadata = {
+  comment: MetadataComment
+  updatedAt: Date
+  user: User
+  source: Source
+}
+
+export enum MetadataComment {
+  InitialImport = 'Initial import',
+}
+
+export type Source = {
+  url: string
+  comment: SourceComment
+}
+
+export enum SourceComment {
+  GarboImport = 'Garbo import',
+}
+
+export type User = {
+  email: Email
+  name: Name
+}
+
+export enum Email {
+  HejKlimatkollenSE = 'hej@klimatkollen.se',
+}
+
+export enum Name {
+  Klimatkollen = 'Klimatkollen',
+}
+
+export type IndustryGics = {
+  sv: En
+  en: En
+}
+
+export type En = {
+  sectorName: string
+  groupName: string
+  industryName: string
+  subIndustryCode: string
+  subIndustryName: string
+  subIndustryDescription: string
+}
+
+export type Initiative = {
+  title: string
+  description: string
+  year: null | string
+  scope: null | string
+  metadata: Metadata
+}
+
+export type ReportingPeriod = {
+  startDate: Date
+  endDate: Date
+  emissions: Emissions | null
+  metadata: Metadata
+}
+
+export type Emissions = {
+  scope1: Scope1
+  scope2: Scope2
+  scope3: Scope3
+}
+
+export type Scope1 = {
+  total: number | null
+  unit: Unit
+  metadata: Metadata
+}
+
+export enum Unit {
+  TCO2E = 'tCO2e',
+}
+
+export type Scope2 = {
+  lb: number | null
+  mb: number | null
+  unknown: number | null
+  unit: Unit
+  metadata: Metadata
+}
+
+export type Scope3 = {
+  c1_purchasedGoods: number | null
+  c2_capitalGoods: number | null
+  c3_fuelAndEnergyRelatedActivities: number | null
+  c4_upstreamTransportationAndDistribution: number | null
+  c5_wasteGeneratedInOperations: number | null
+  c6_businessTravel: number | null
+  c7_employeeCommuting: number | null
+  c8_upstreamLeasedAssets: number | null
+  c9_downstreamTransportationAndDistribution: number | null
+  c10_processingOfSoldProducts: number | null
+  c11_useOfSoldProducts: number | null
+  c12_endOfLifeTreatmentOfSoldProducts: number | null
+  c13_downstreamLeasedAssets: number | null
+  c14_franchises: number | null
+  c15_investments: number | null
+  other: number | null
+  unit: Unit
+  metadata: Metadata
 }
 
 export function getCompanyURL(company: CompanyData) {
-  return `${slugifyURL(company.companyName)}-${company.wikidataId}`
+  return `${slugifyURL(company.name)}-${company.wikidataId}`
 }
 
-export function getLatestYearWithEmissionsData(
-  company: CompanyData,
-  maxYear = new Date().getUTCFullYear() - 1,
-) {
-  let year = maxYear
-
-  for (year; year >= maxYear - 5; year--) {
-    if (company.emissions[year]) {
-      return year
-    }
-  }
-
-  return maxYear
+export function getLatestYearWithEmissionsData(company: CompanyData) {
+  return company.reportingPeriods[0].startDate.getFullYear()
 }
 
 export function getWikidataEmissionsYear(

@@ -1,9 +1,5 @@
 ---
-import {
-  getCompanyName,
-  type CompanyData,
-  getWikidataEmissionsYear,
-} from '@/data/companyData'
+import { type CompanyData, getWikidataEmissionsYear } from '@/data/companyData'
 import { Card } from '../ui/card'
 import VerifiedBadge from '../VerifiedBadge.astro'
 
@@ -78,17 +74,19 @@ function getTotalEmissions(company: CompanyData, year: number) {
 
 const totalEmissions = getTotalEmissions(company, year)
 
-const reportURL =
-  company.facit?.url ||
-  getWikidataReportURL(company.wikidata, year) ||
-  company.url
+// TODO: get reportURL from the source, and show this for every datapoint instead
+// IDEA: Maybe use a common component to click a datapoint to open metadata about it, such as the source
+// const reportURL =
+//   company.facit?.url ||
+//   getWikidataReportURL(company.wikidata, year) ||
+//   company.url
 ---
 
 <Card class="text-sm" level={1}>
   <h1
     class="text-balance pb-4 pt-4 text-4xl leading-none tracking-tight md:pt-0 lg:text-5xl"
   >
-    {getCompanyName(company)}
+    {company.name}
   </h1>
   <p class="text-muted">{company.description}</p>
 
@@ -132,7 +130,7 @@ const reportURL =
         )
       }
 
-      {
+      <!-- {
         reportURL && (
           <span>
             Läs{' '}
@@ -144,7 +142,7 @@ const reportURL =
             </a>
           </span>
         )
-      }
+      } -->
     </Card>
 
     {

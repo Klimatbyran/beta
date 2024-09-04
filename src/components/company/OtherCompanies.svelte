@@ -1,10 +1,6 @@
 <script lang="ts">
   import { Combobox, type Item } from '../ui/combobox'
-  import {
-    getCompanyName,
-    getCompanyURL,
-    type CompanyData,
-  } from '@/data/companyData'
+  import { getCompanyURL, type CompanyData } from '@/data/companyData'
 
   export let companies: CompanyData[]
 
@@ -15,8 +11,8 @@
 
 <Combobox
   items={companies.map((c) => ({
-    label: getCompanyName(c),
-    value: getCompanyName(c),
+    label: c.name,
+    value: c.name,
     data: `/foretag/${getCompanyURL(c)}`,
   }))}
   buttonLabel="Visa annat företag"

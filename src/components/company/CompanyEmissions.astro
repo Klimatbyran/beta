@@ -1,5 +1,5 @@
 ---
-import { getWikidataEmissionsYear, type CompanyData } from '@/data/companyData'
+import { type CompanyData } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import VerifiedBadge from '../VerifiedBadge.astro'
@@ -11,43 +11,14 @@ interface Props {
 
 const { company, year } = Astro.props
 
-const emissions = company.emissions[year]
-const wiki = getWikidataEmissionsYear(company.wikidata, year)
-const facit = company.facit?.emissions?.[year]
+// NOTE: Maybe get based on a specific year here instead
+const emissions = company.reportingPeriods[0].emissions
 
-const totalBiogenicEmissions = getTotalBiogenicEmissionsAndVerified()
-
-/**
- * Get an explicit number or null to make it easier to distinguish verified data points
- */
-function getNumberOrNull(x?: number | null) {
-  return Number.isFinite(x) ? x : null
-}
-
-function getEmissionScopeAndVerified(scope: 'scope1' | 'scope2' | 'scope3') {
-  const facitValue = getNumberOrNull(facit?.[scope]?.emissions)
-  const wikiValue = getNumberOrNull(wiki?.[scope]?.emissions)
-  const value = getNumberOrNull(emissions[scope].emissions)
-
-  return {
-    value: facitValue ?? wikiValue ?? value,
-    verified: facitValue !== null,
-  }
-}
-
-function getTotalBiogenicEmissionsAndVerified() {
-  const facitValue = getNumberOrNull(facit?.totalBiogenic)
-  const value = emissions
-    ? (emissions.scope1.biogenic || 0) +
-      (emissions.scope2.biogenic || 0) +
-      (emissions.scope3.biogenic || 0)
-    : 0
-
-  return {
-    value: facitValue ?? value,
-    verified: facitValue !== null,
-  }
-}
+// TODO: Include biogenic emissions
+// const totalBiogenicEmissions = {
+//   value: emissions.biogenic,
+//   verified: facitValue !== null,
+// }
 
 const scopeEmissionsList = emissions
   ? [
@@ -55,28 +26,34 @@ const scopeEmissionsList = emissions
         title: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        ...getEmissionScopeAndVerified('scope1'),
+        value: emissions?.scope1.total,
+        verified: false,
       },
       {
         title: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-        ...getEmissionScopeAndVerified('scope2'),
+        value:
+          emissions?.scope2?.mb ??
+          emissions?.scope2?.lb ??
+          emissions?.scope2?.unknown,
+        verified: false,
       },
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        ...getEmissionScopeAndVerified('scope3'),
+        value: 0,
+        verified: false,
       },
     ]
   : []
 
-const biogenicEmissions = {
-  title: 'Biogena utsläpp',
-  description:
-    'Biogena utsläpp är koldioxidutsläpp som uppstår från icke-fossila (sk. förnybara) källor, som tex förbränning av biobränslen eller biprodukter vid pappersmassatillverkning. Enligt GHG-protokollet redovisas dessa utsläpp separat från scope 1-3, eftersom de är aktiv del av kolets kretslopp.',
-  ...totalBiogenicEmissions,
-}
+// const biogenicEmissions = {
+//   title: 'Biogena utsläpp',
+//   description:
+//     'Biogena utsläpp är koldioxidutsläpp som uppstår från icke-fossila (sk. förnybara) källor, som tex förbränning av biobränslen eller biprodukter vid pappersmassatillverkning. Enligt GHG-protokollet redovisas dessa utsläpp separat från scope 1-3, eftersom de är aktiv del av kolets kretslopp.',
+//   ...totalBiogenicEmissions,
+// }
 ---
 
 <Card class="grid gap-8" level={1}>
@@ -114,8 +91,8 @@ const biogenicEmissions = {
 
   <Scope3Emissions {company} {year} />
 
-  {
-    biogenicEmissions.value ? (
+  <!-- {
+    biogenicEmissions?.value ? (
       <Card level={2}>
         <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
           <span class="flex items-center justify-start gap-1">
@@ -134,5 +111,5 @@ const biogenicEmissions = {
         </div>
       </Card>
     ) : null
-  }
+  } -->
 </Card>

@@ -2,7 +2,6 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import {
   type CompanyData,
-  getCompanyName,
   getLatestYearWithEmissionsData,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
@@ -21,7 +20,7 @@ interface Props {
 const { company, companies } = Astro.props
 
 const year = getLatestYearWithEmissionsData(company)
-const emissions = company.emissions[year]
+const emissions = company.reportingPeriods[0]
 ---
 
 <div class="bg-blue-150 py-1.5 text-xs text-black sm:text-sm">
@@ -56,7 +55,7 @@ const emissions = company.emissions[year]
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <h1 class="text-4xl font-bold leading-none tracking-tight">
-          {getCompanyName(company)}
+          {company.name}
         </h1>
         <p class="py-4">Utsläppsdata saknas för år {year}.</p>
 
