@@ -5,7 +5,7 @@ import {
   getLatestYearWithEmissionsData,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
-// import CompanyFacts from './CompanyFacts.astro'
+import CompanyFacts from './CompanyFacts.astro'
 // import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyGoals from './CompanyGoals.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
@@ -39,7 +39,7 @@ const emissions = company.reportingPeriods[0]
     emissions ? (
       <>
         <div class="mt-8 grid gap-8">
-          {/* <CompanyFacts {company} {year} /> */}
+          <CompanyFacts {company} {year} />
 
           {/* <CompanyEmissions {company} {year} /> */}
 

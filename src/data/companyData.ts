@@ -12,7 +12,9 @@ export type CompanyData = {
 
 export type Goal = {
   description: string
-  year: string | null
+  year: null | string
+  baseYear: null | string
+  target: number | null
   metadata: Metadata
 }
 
@@ -74,23 +76,35 @@ export type Initiative = {
 export type ReportingPeriod = {
   startDate: Date
   endDate: Date
-  emissions: Emissions | null
+  economy: Economy
+  emissions: Emissions
+}
+
+export type Economy = {
+  turnover: number | null
+  employees: number | null
+  unit: EconomyUnit
   metadata: Metadata
 }
 
+export enum EconomyUnit {
+  Sek = 'SEK',
+}
+
 export type Emissions = {
-  scope1: Scope1
-  scope2: Scope2
-  scope3: Scope3
+  scope1?: Scope1
+  scope2?: Scope2
+  scope3?: Scope3
+  calculatedTotalEmissions: number | null
 }
 
 export type Scope1 = {
   total: number | null
-  unit: Unit
+  unit: Scope1Unit
   metadata: Metadata
 }
 
-export enum Unit {
+export enum Scope1Unit {
   TCO2E = 'tCO2e',
 }
 
@@ -98,8 +112,9 @@ export type Scope2 = {
   lb: number | null
   mb: number | null
   unknown: number | null
-  unit: Unit
+  unit: Scope1Unit
   metadata: Metadata
+  calculatedTotalEmissions: number | null
 }
 
 export type Scope3 = {
@@ -118,9 +133,11 @@ export type Scope3 = {
   c13_downstreamLeasedAssets: number | null
   c14_franchises: number | null
   c15_investments: number | null
+  statedTotalEmissions: null
   other: number | null
-  unit: Unit
+  unit: Scope1Unit
   metadata: Metadata
+  calculatedTotalEmissions: number
 }
 
 export function getCompanyURL(company: CompanyData) {
@@ -131,16 +148,4 @@ export function getLatestYearWithEmissionsData(company: CompanyData) {
   return (
     new Date(company.reportingPeriods?.[0]?.startDate)?.getFullYear() || '2023'
   )
-}
-
-export function getWikidataEmissionsYear(
-  wikidata: CompanyData['wikidata'],
-  year: number | string,
-) {
-  const formattedYear = String(year)
-  const wantedYear = Array.isArray(wikidata?.emissions)
-    ? wikidata.emissions.findLast((entry) => entry.year === formattedYear)
-    : wikidata?.emissions?.[formattedYear]
-
-  return wantedYear
 }
