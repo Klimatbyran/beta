@@ -1,5 +1,4 @@
 ---
-import { type CompanyData } from '@/data/companyData'
 import Fa6SolidGifts from 'icons:astro/fa6-solid/gifts'
 import MingcuteWashMachineLine from 'icons:astro/mingcute/wash-machine-line'
 import IconParkOutlineSolarEnergyOne from 'icons:astro/icon-park-outline/solar-energy-one'
@@ -15,15 +14,21 @@ import IonTrashBin from 'icons:astro/ion/trash-bin'
 import ClarityBuildingSolid from 'icons:astro/clarity/building-solid'
 import BiHouses from 'icons:astro/bi/houses'
 import StreamlineInvestmentSelection from 'icons:astro/streamline/investment-selection'
+
+import {
+  type CompanyData,
+  type Emissions,
+  type Scope3,
+} from '@/data/companyData'
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 
 interface Props {
   company: CompanyData
-  year: number
+  emissions: Emissions
 }
 
-const { company, year } = Astro.props
+const { company, emissions } = Astro.props
 
 type CategoryDefinition = {
   title: string
@@ -128,43 +133,27 @@ export const categoryDefinitions = {
   },
 }
 
-function getReportedCategories(
-  scope3Categories: EmissionsScope['categories'],
-): ReportedCategoryDefinition[] {
+function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).map(([category, definition]) => {
-    const value = scope3Categories?.[category as Scope3Category] ?? null
+    const value = scope3[category as keyof typeof categoryDefinitions] ?? null
 
     return {
       ...definition,
-      category: category as Scope3Category,
+      category,
       value,
-      // TODO: replace all verified: false and use metadata to determine if it is verified or not
+      // TODO: replace all verified: false and use metadata for each separate scope 3 category to determine if it is verified or not
       verified: false,
     }
   })
 }
 
-const scope3Categories = company.emissions[year].scope3.categories
-
-const reportedCategories = getReportedCategories(scope3Categories)
+const reportedCategories = emissions.scope3
+  ? getReportedCategories(emissions.scope3)
+  : []
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const upstream = reportedCategories.slice(0, 8)
 const downstream = reportedCategories.slice(8)
-
-/**
- * Get all categories that don't align with the GHG protocol
- */
-function getNonStandardCategories(categories?: Record<string, any> | null) {
-  return Object.keys(categories ?? {}).filter(
-    (category) =>
-      !categoryDefinitions[category as Scope3Category] &&
-      category !== '16_other',
-  )
-}
-
-const nonStandardCategoriesCount =
-  getNonStandardCategories(scope3Categories).length
 ---
 
 <Card class="grid gap-8" level={2}>
@@ -178,15 +167,7 @@ const nonStandardCategoriesCount =
       </span>
       kategorier:
     </h3>
-    {
-      Boolean(nonStandardCategoriesCount) && (
-        <p class="text-sm text-muted">
-          Utöver det anges
-          {`${nonStandardCategoriesCount} kategori${nonStandardCategoriesCount > 1 ? 'er' : ''} `}
-          som inte följer GHG-protokollet.
-        </p>
-      )
-    }
+
     <p class="text-sm text-muted">
       Företag bör rapportera i alla kategorier som är relevanta för
       verksamheten.
@@ -233,6 +214,7 @@ const nonStandardCategoriesCount =
             })}
           />
         ))}
+        {/* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */}
       </div>
     ) : null
   }
