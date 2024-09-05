@@ -1,14 +1,21 @@
 ---
-import { type CompanyData } from '@/data/companyData'
+import {
+  getLatestReportingPeriodWithEmissions,
+  getLatestReportingPeriodWithEconomy,
+  getFormattedReportingPeriod,
+  type CompanyData,
+} from '@/data/companyData'
 import { Card } from '../ui/card'
 import VerifiedBadge from '../VerifiedBadge.astro'
 
 interface Props {
   company: CompanyData
-  year: number
 }
 
-const { company, year } = Astro.props
+const { company } = Astro.props
+
+const latestEmissions = getLatestReportingPeriodWithEmissions(company)
+const latestEconomy = getLatestReportingPeriodWithEconomy(company)
 
 // TODO: get reportURL from the source, and show this for every datapoint instead
 // IDEA: Maybe use a common component to click a datapoint to open metadata about it, such as the source
@@ -16,8 +23,6 @@ const { company, year } = Astro.props
 //   company.facit?.url ||
 //   getWikidataReportURL(company.wikidata, year) ||
 //   company.url
-
-const reportingPeriod = company.reportingPeriods[0]
 ---
 
 <Card class="text-sm" level={1}>
@@ -41,33 +46,36 @@ const reportingPeriod = company.reportingPeriods[0]
         )
       }
 
-      <!-- {
-        reportingPeriod.baseFacts?.[year]?.turnover && (
+      {
+        latestEconomy?.economy?.turnover && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Omsättning ({year})</h3>
+            <h3>Omsättning ({getFormattedReportingPeriod(latestEconomy)})</h3>
             <p class="text-sm text-orange-250">
-              {company.baseFacts[year].turnover.toLocaleString('sv-SE', {
+              {latestEconomy.economy.turnover.toLocaleString('sv-SE', {
                 maximumFractionDigits: 0,
               }) +
                 ' ' +
-                company.baseFacts[year].unit}
+                latestEconomy.economy.currency?.name}
             </p>
           </div>
         )
-      } -->
-      <!-- {
-        company.baseFacts?.[year]?.employees && (
+      }
+      {
+        latestEconomy?.economy?.employees && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Antal anställda ({year})</h3>
+            <h3>
+              Antal anställda ({getFormattedReportingPeriod(latestEconomy)})
+            </h3>
             <p class="text-sm text-orange-250">
-              {company.baseFacts[year].employees.toLocaleString('sv-SE', {
+              {latestEconomy.economy.employees.toLocaleString('sv-SE', {
                 maximumFractionDigits: 0,
               })}
             </p>
           </div>
         )
-      } -->
+      }
 
+      <!-- TODO: Show the source for each datapoint instead of once per company page -->
       <!-- {
         reportURL && (
           <span>
@@ -84,18 +92,19 @@ const reportingPeriod = company.reportingPeriods[0]
     </Card>
 
     {
-      reportingPeriod?.emissions?.calculatedTotalEmissions && (
+      latestEmissions?.emissions?.calculatedTotalEmissions && (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
             <h3 class="flex items-center gap-1">
-              Totala utsläpp {year} {/* TODO: add verified in metadata */}
+              Totala utsläpp {getFormattedReportingPeriod(latestEmissions)}{' '}
+              {/* TODO: add verified in metadata */}
               {false && <VerifiedBadge />}
             </h3>
             <span class="text-muted">(ton CO₂e)</span>
           </div>
 
-          <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-            {reportingPeriod.emissions.calculatedTotalEmissions.toLocaleString(
+          <p class="font-mono text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
+            {latestEmissions.emissions.calculatedTotalEmissions.toLocaleString(
               'sv-SE',
               {
                 maximumFractionDigits: 0,

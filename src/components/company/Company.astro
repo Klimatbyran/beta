@@ -2,7 +2,7 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import {
   type CompanyData,
-  getLatestYearWithEmissionsData,
+  getLatestReportingPeriodWithEmissions,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
@@ -19,8 +19,7 @@ interface Props {
 
 const { company, companies } = Astro.props
 
-const year = getLatestYearWithEmissionsData(company)
-const emissions = company.reportingPeriods[0]
+const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
 ---
 
 <div class="bg-blue-150 py-1.5 text-xs text-black sm:text-sm">
@@ -34,12 +33,14 @@ const emissions = company.reportingPeriods[0]
   </div>
 </div>
 
+<!-- IDEA: Let each component decide and use the most recent data, and remove the need for prop drilling -->
+
 <article class="mx-auto max-w-screen-lg xs:px-4">
   {
-    emissions ? (
+    reportingPeriod ? (
       <>
         <div class="mt-8 grid gap-8">
-          <CompanyFacts {company} {year} />
+          <CompanyFacts {company} />
 
           {/* <CompanyEmissions {company} {year} /> */}
 
@@ -57,7 +58,7 @@ const emissions = company.reportingPeriods[0]
         <h1 class="text-4xl font-bold leading-none tracking-tight">
           {company.name}
         </h1>
-        <p class="py-4">Utsläppsdata saknas för år {year}.</p>
+        <p class="py-4">Utsläppsdata saknas.</p>
 
         <div class="grid w-full place-items-center">
           <OtherCompanies client:load {companies} />

@@ -40,14 +40,14 @@ export enum SourceComment {
 
 export type User = {
   email: Email
-  name: Name
+  name: UserName
 }
 
 export enum Email {
   HejKlimatkollenSE = 'hej@klimatkollen.se',
 }
 
-export enum Name {
+export enum UserName {
   Klimatkollen = 'Klimatkollen',
 }
 
@@ -83,12 +83,20 @@ export type ReportingPeriod = {
 export type Economy = {
   turnover: number | null
   employees: number | null
-  unit: EconomyUnit
+  currency: Currency | null
   metadata: Metadata
 }
 
-export enum EconomyUnit {
+export type Currency = {
+  name: CurrencyName
+}
+
+export enum CurrencyName {
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Isk = 'ISK',
   Sek = 'SEK',
+  Usd = 'USD',
 }
 
 export type Emissions = {
@@ -100,11 +108,11 @@ export type Emissions = {
 
 export type Scope1 = {
   total: number | null
-  unit: Scope1Unit
+  unit: Unit
   metadata: Metadata
 }
 
-export enum Scope1Unit {
+export enum Unit {
   TCO2E = 'tCO2e',
 }
 
@@ -112,7 +120,7 @@ export type Scope2 = {
   lb: number | null
   mb: number | null
   unknown: number | null
-  unit: Scope1Unit
+  unit: Unit
   metadata: Metadata
   calculatedTotalEmissions: number | null
 }
@@ -135,7 +143,7 @@ export type Scope3 = {
   c15_investments: number | null
   statedTotalEmissions: null
   other: number | null
-  unit: Scope1Unit
+  unit: Unit
   metadata: Metadata
   calculatedTotalEmissions: number
 }
@@ -144,8 +152,24 @@ export function getCompanyURL(company: CompanyData) {
   return `${slugifyURL(company.name)}-${company.wikidataId}`
 }
 
-export function getLatestYearWithEmissionsData(company: CompanyData) {
-  return (
-    new Date(company.reportingPeriods?.[0]?.startDate)?.getFullYear() || 2023
-  )
+export function getLatestReportingPeriodWithEmissions(company: CompanyData) {
+  return company.reportingPeriods.find(({ emissions }) => Boolean(emissions))
+}
+
+export function getLatestReportingPeriodWithEconomy(company: CompanyData) {
+  return company.reportingPeriods.find(({ economy }) => Boolean(economy))
+}
+
+export function getFormattedReportingPeriod({
+  startDate,
+  endDate,
+}: ReportingPeriod) {
+  const startYear = new Date(startDate).getFullYear()
+  const endYear = new Date(endDate).getFullYear()
+
+  if (startYear === endYear) {
+    return startYear
+  }
+
+  return `${startYear}/${endYear}`
 }
