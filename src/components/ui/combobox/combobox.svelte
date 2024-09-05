@@ -17,6 +17,7 @@
 
   let open = false
   let value = ''
+  let search = ''
 
   $: selectedValue = items.find((i) => i.value === value)?.label || buttonLabel
 
@@ -55,29 +56,33 @@
     style="width: {width}px"
   >
     <Command.Root loop>
-      <Command.Input {placeholder} />
+      <Command.Input {placeholder} bind:value={search} />
       <Command.Empty>{emptyMessage}</Command.Empty>
-      <Command.Group>
-        {#each items as item}
-          <Command.Item
-            value={item.value}
-            onSelect={(currentValue) => {
-              value = currentValue
-              closeAndFocusTrigger(ids.trigger)
-              onSelect?.(item)
-            }}
-            class="text-balance"
-          >
-            <Check
-              class={cn(
-                'mr-2 h-4 w-4',
-                value !== item.value && 'text-transparent',
-              )}
-            />
-            {item.label}
-          </Command.Item>
-        {/each}
-      </Command.Group>
+      <!-- HACK: Remove this when Svelte 5 is released and https://github.com/huntabyte/cmdk-sv/issues/92 is resolved -->
+      <!-- This workaround re-creates the block on each keystroke to prevent rendering errors. However, this is very slow -->
+      {#key search}
+        <Command.Group>
+          {#each items as item}
+            <Command.Item
+              value={item.value}
+              onSelect={(currentValue) => {
+                value = currentValue
+                closeAndFocusTrigger(ids.trigger)
+                onSelect?.(item)
+              }}
+              class="text-balance"
+            >
+              <Check
+                class={cn(
+                  'mr-2 h-4 w-4',
+                  value !== item.value && 'text-transparent',
+                )}
+              />
+              {item.label}
+            </Command.Item>
+          {/each}
+        </Command.Group>
+      {/key}
     </Command.Root>
   </Popover.Content>
 </Popover.Root>
