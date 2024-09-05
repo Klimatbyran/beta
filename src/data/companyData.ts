@@ -100,13 +100,14 @@ export enum CurrencyName {
 }
 
 export type Emissions = {
-  scope1?: Scope1
+  scope1?: BiogenicEmissions
   scope2?: Scope2
   scope3?: Scope3
+  biogenicEmissions?: BiogenicEmissions
   calculatedTotalEmissions: number | null
 }
 
-export type Scope1 = {
+export type BiogenicEmissions = {
   total: number | null
   unit: Unit
   metadata: Metadata

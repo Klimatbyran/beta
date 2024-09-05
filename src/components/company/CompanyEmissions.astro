@@ -17,12 +17,6 @@ const { company } = Astro.props
 const latestEmissions = getLatestReportingPeriodWithEmissions(company)
 const emissions = latestEmissions?.emissions
 
-// TODO: Include biogenic emissions
-// const totalBiogenicEmissions = {
-//   value: emissions.biogenic,
-//   verified: facitValue !== null,
-// }
-
 const scopeEmissionsList = emissions
   ? [
       {
@@ -51,12 +45,13 @@ const scopeEmissionsList = emissions
     ]
   : []
 
-// const biogenicEmissions = {
-//   title: 'Biogena utsläpp',
-//   description:
-//     'Biogena utsläpp är koldioxidutsläpp som uppstår från icke-fossila (sk. förnybara) källor, som tex förbränning av biobränslen eller biprodukter vid pappersmassatillverkning. Enligt GHG-protokollet redovisas dessa utsläpp separat från scope 1-3, eftersom de är aktiv del av kolets kretslopp.',
-//   ...totalBiogenicEmissions,
-// }
+const biogenicEmissions = {
+  title: 'Biogena utsläpp',
+  description:
+    'Biogena utsläpp är koldioxidutsläpp som uppstår från icke-fossila (sk. förnybara) källor, som tex förbränning av biobränslen eller biprodukter vid pappersmassatillverkning. Enligt GHG-protokollet redovisas dessa utsläpp separat från scope 1-3, eftersom de är aktiv del av kolets kretslopp.',
+  value: emissions?.biogenicEmissions?.total,
+  verified: false,
+}
 ---
 
 {
@@ -92,27 +87,25 @@ const scopeEmissionsList = emissions
 
       {/* <Scope3Emissions {company} {year} /> */}
 
-      {/* {
-        biogenicEmissions?.value ? (
-          <Card level={2}>
-            <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
-              <span class="flex items-center justify-start gap-1">
-                <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
-                {biogenicEmissions.verified && <VerifiedBadge />}
-              </span>
-              <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-            </h4>
-            <div class="flex items-center justify-between gap-4">
-              <p class="text-sm text-muted">{biogenicEmissions.description}</p>
-              <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
-                {biogenicEmissions.value.toLocaleString('sv-SE', {
-                  maximumFractionDigits: 0,
-                })}
-              </span>
-            </div>
-          </Card>
-        ) : null
-      } */}
+      {biogenicEmissions?.value ? (
+        <Card level={2}>
+          <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
+            <span class="flex items-center justify-start gap-1">
+              <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
+              {biogenicEmissions.verified && <VerifiedBadge />}
+            </span>
+            <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+          </h4>
+          <div class="flex items-center justify-between gap-4">
+            <p class="text-sm text-muted">{biogenicEmissions.description}</p>
+            <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
+              {biogenicEmissions.value.toLocaleString('sv-SE', {
+                maximumFractionDigits: 0,
+              })}
+            </span>
+          </div>
+        </Card>
+      ) : null}
     </Card>
   )
 }
