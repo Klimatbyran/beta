@@ -59,6 +59,7 @@ const biogenicEmissions = {
     <Card class="grid gap-8" level={1}>
       <h2 class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0">
         Rapporterade utsläpp {getFormattedReportingPeriod(latestEmissions)}
+        {/* TODO: Replace units with actual units from the API response, in all locations where ton CO₂e can be found.*/}
         <span class="pr-4 text-base text-muted xs:text-xl">(ton CO₂e)</span>
       </h2>
       {scopeEmissionsList.length ? (
