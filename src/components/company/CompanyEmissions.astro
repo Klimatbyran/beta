@@ -1,18 +1,21 @@
 ---
-import { type CompanyData } from '@/data/companyData'
+import {
+  getFormattedReportingPeriod,
+  getLatestReportingPeriodWithEmissions,
+  type CompanyData,
+} from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import VerifiedBadge from '../VerifiedBadge.astro'
 
 interface Props {
   company: CompanyData
-  year: number
 }
 
-const { company, year } = Astro.props
+const { company } = Astro.props
 
-// NOTE: Maybe get based on a specific year here instead
-const emissions = company.reportingPeriods[0].emissions
+const latestEmissions = getLatestReportingPeriodWithEmissions(company)
+const emissions = latestEmissions?.emissions
 
 // TODO: Include biogenic emissions
 // const totalBiogenicEmissions = {
@@ -26,7 +29,7 @@ const scopeEmissionsList = emissions
         title: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        value: emissions?.scope1.total,
+        value: emissions?.scope1?.total,
         verified: false,
       },
       {
@@ -42,7 +45,7 @@ const scopeEmissionsList = emissions
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        value: 0,
+        value: emissions?.scope3?.calculatedTotalEmissions,
         verified: false,
       },
     ]
@@ -56,60 +59,60 @@ const scopeEmissionsList = emissions
 // }
 ---
 
-<Card class="grid gap-8" level={1}>
-  <h2
-    class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0"
-  >
-    Rapporterade utsläpp {year}
-    <span class="pr-4 text-base text-muted xs:text-xl">(ton CO₂e)</span>
-  </h2>
-  {
-    scopeEmissionsList.length ? (
-      <div class="grid gap-4">
-        {scopeEmissionsList.map((emission) =>
-          Number.isFinite(emission.value) ? (
-            <div class="flex items-center justify-between">
-              <div>
-                <h4 class="flex items-center gap-1 font-medium">
-                  {emission.title} {emission.verified && <VerifiedBadge />}
-                </h4>
-                {emission.description && (
-                  <p class="text-sm text-muted">{emission.description}</p>
-                )}
+{
+  latestEmissions && emissions && (
+    <Card class="grid gap-8" level={1}>
+      <h2 class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0">
+        Rapporterade utsläpp {getFormattedReportingPeriod(latestEmissions)}
+        <span class="pr-4 text-base text-muted xs:text-xl">(ton CO₂e)</span>
+      </h2>
+      {scopeEmissionsList.length ? (
+        <div class="grid gap-4">
+          {scopeEmissionsList.map((emission) =>
+            Number.isFinite(emission.value) ? (
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="flex items-center gap-1 font-medium">
+                    {emission.title} {emission.verified && <VerifiedBadge />}
+                  </h4>
+                  {emission.description && (
+                    <p class="text-sm text-muted">{emission.description}</p>
+                  )}
+                </div>
+                <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
+                  {(emission.value as number).toLocaleString('sv-SE', {
+                    maximumFractionDigits: 0,
+                  })}
+                </span>
               </div>
-              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
-                {(emission.value as number).toLocaleString('sv-SE', {
+            ) : null,
+          )}
+        </div>
+      ) : null}
+
+      {/* <Scope3Emissions {company} {year} /> */}
+
+      {/* {
+        biogenicEmissions?.value ? (
+          <Card level={2}>
+            <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
+              <span class="flex items-center justify-start gap-1">
+                <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
+                {biogenicEmissions.verified && <VerifiedBadge />}
+              </span>
+              <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+            </h4>
+            <div class="flex items-center justify-between gap-4">
+              <p class="text-sm text-muted">{biogenicEmissions.description}</p>
+              <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
+                {biogenicEmissions.value.toLocaleString('sv-SE', {
                   maximumFractionDigits: 0,
                 })}
               </span>
             </div>
-          ) : null,
-        )}
-      </div>
-    ) : null
-  }
-
-  <Scope3Emissions {company} {year} />
-
-  <!-- {
-    biogenicEmissions?.value ? (
-      <Card level={2}>
-        <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
-          <span class="flex items-center justify-start gap-1">
-            <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
-            {biogenicEmissions.verified && <VerifiedBadge />}
-          </span>
-          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-        </h4>
-        <div class="flex items-center justify-between gap-4">
-          <p class="text-sm text-muted">{biogenicEmissions.description}</p>
-          <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
-            {biogenicEmissions.value.toLocaleString('sv-SE', {
-              maximumFractionDigits: 0,
-            })}
-          </span>
-        </div>
-      </Card>
-    ) : null
-  } -->
-</Card>
+          </Card>
+        ) : null
+      } */}
+    </Card>
+  )
+}
