@@ -36,11 +36,11 @@ const latestEconomy = getLatestReportingPeriodWithEconomy(company)
   <div class="grid gap-4 pt-4 md:grid-cols-2">
     <Card class="flex flex-col justify-between gap-2" level={2}>
       {
-        company.industryGics?.sv?.subIndustryName && (
+        company.industry?.industryGics?.sv?.subIndustryName && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Bransch</h3>
             <p class="text-sm text-muted">
-              {company.industryGics?.sv?.subIndustryName}
+              {company.industry?.industryGics?.sv?.subIndustryName}
             </p>
           </div>
         )

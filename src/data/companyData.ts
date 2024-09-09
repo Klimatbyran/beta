@@ -5,7 +5,7 @@ export type CompanyData = {
   name: string
   description: string
   reportingPeriods: ReportingPeriod[]
-  industryGics?: IndustryGics
+  industry?: Industry
   goals: Goal[]
   initiatives: Initiative[]
 }
@@ -19,48 +19,56 @@ export type Goal = {
 }
 
 export type Metadata = {
-  comment: MetadataComment
+  comment: string
   updatedAt: Date
-  user: User
+  updater: Updater
+  verifier: null
   source: Source
-}
-
-export enum MetadataComment {
-  InitialImport = 'Initial import',
 }
 
 export type Source = {
   url: string
-  comment: SourceComment
+  comment: string
 }
 
-export enum SourceComment {
-  GarboImport = 'Garbo import',
+export type Updater = {
+  name: string
 }
 
-export type User = {
-  email: Email
-  name: UserName
+export enum CurrencyName {
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Isk = 'ISK',
+  Sek = 'SEK',
+  Usd = 'USD',
 }
 
-export enum Email {
-  HejKlimatkollenSE = 'hej@klimatkollen.se',
+export enum EmissionUnit {
+  TCO2E = 'tCO2e',
 }
 
-export enum UserName {
-  Klimatkollen = 'Klimatkollen',
+export type Currency = {
+  name: CurrencyName
+}
+
+export type Industry = {
+  industryGics: IndustryGics
+  metadata: Metadata
 }
 
 export type IndustryGics = {
-  sv: En
-  en: En
+  sectorCode: string
+  groupCode: string
+  industryCode: string
+  subIndustryCode: string
+  sv: IndustryGicsStrings
+  en: IndustryGicsStrings
 }
 
-export type En = {
+export type IndustryGicsStrings = {
   sectorName: string
   groupName: string
   industryName: string
-  subIndustryCode: string
   subIndustryName: string
   subIndustryDescription: string
 }
@@ -87,41 +95,25 @@ export type Economy = {
   metadata: Metadata
 }
 
-export type Currency = {
-  name: CurrencyName
-}
-
-export enum CurrencyName {
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Isk = 'ISK',
-  Sek = 'SEK',
-  Usd = 'USD',
-}
-
 export type Emissions = {
-  scope1?: BiogenicEmissions
+  scope1?: Scope1
   scope2?: Scope2
   scope3?: Scope3
-  biogenicEmissions?: BiogenicEmissions
+  biogenicEmissions?: Scope1 | null
   calculatedTotalEmissions: number | null
 }
 
-export type BiogenicEmissions = {
+export type Scope1 = {
   total: number | null
-  unit: Unit
+  unit: EmissionUnit
   metadata: Metadata
-}
-
-export enum Unit {
-  TCO2E = 'tCO2e',
 }
 
 export type Scope2 = {
   lb: number | null
   mb: number | null
   unknown: number | null
-  unit: Unit
+  unit: EmissionUnit
   metadata: Metadata
   calculatedTotalEmissions: number | null
 }
@@ -142,9 +134,9 @@ export type Scope3 = {
   c13_downstreamLeasedAssets: number | null
   c14_franchises: number | null
   c15_investments: number | null
-  statedTotalEmissions: null
+  statedTotalEmissions: Scope1 | null
   other: number | null
-  unit: Unit
+  unit: EmissionUnit
   metadata: Metadata
   calculatedTotalEmissions: number
 }
