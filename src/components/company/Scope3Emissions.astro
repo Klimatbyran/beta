@@ -38,94 +38,93 @@ type CategoryDefinition = {
 
 type ReportedCategoryDefinition = CategoryDefinition & {
   value: number | null
-  category: string
   verified: boolean
 }
 
 export const categoryDefinitions = {
-  c1_purchasedGoods: {
+  '1_purchasedGoods': {
     title: '1. Inköpta varor och tjänster',
     description:
       'Utsläpp från produktion av varor och tjänster som köps av organisationen.',
     Icon: Fa6SolidGifts,
   },
-  c2_capitalGoods: {
+  '2_capitalGoods': {
     title: '2. Kapitalvaror',
     description:
       'Utsläpp från produktion av kapitalvaror som köps av organisationen.',
     Icon: MingcuteWashMachineLine,
   },
-  c3_fuelAndEnergyRelatedActivities: {
+  '3_fuelAndEnergyRelatedActivities': {
     title: '3. Bränsle- och energirelaterade aktiviteter',
     description:
       'Utsläpp från produktion av bränslen och energi som köps av organisationen, inklusive transport och distribution, som inte inkluderas i scope 2.',
     Icon: IconParkOutlineSolarEnergyOne,
   },
-  c4_upstreamTransportationAndDistribution: {
+  '4_upstreamTransportationAndDistribution': {
     title: '4. Uppströms transport och distribution',
     description:
       'Utsläpp från transport och distribution av inköpta varor mellan leverantörer och/eller inom organisationen.',
     Icon: IconParkOutlineTransport,
   },
-  c5_wasteGeneratedInOperations: {
+  '5_wasteGeneratedInOperations': {
     title: '5. Avfall genererat i verksamheten',
     description:
       'Utsläpp från behandling av avfall som genereras av organisationen.',
     Icon: MakiWasteBasket,
   },
-  c6_businessTravel: {
+  '6_businessTravel': {
     title: '6. Tjänsteresor',
     description:
       'Utsläpp från resor i tjänsten med fordon som inte ägs av organisationen.',
     Icon: ZondiconsTravelTrain,
   },
-  c7_employeeCommuting: {
+  '7_employeeCommuting': {
     title: '7. Pendlingsresor',
     description:
       'Utsläpp från anställdas resor mellan hemmet och arbetsplatsen.',
     Icon: MaterialSymbolsCommuteOutline,
   },
-  c8_upstreamLeasedAssets: {
+  '8_upstreamLeasedAssets': {
     title: '8. Uppströms leasade tillgångar',
     description:
       'Utsläpp från verksamhet i leasade tillgångar som inte inkluderas i scope 1 och 2.',
     Icon: IconParkOutlineWashingMachineOne,
   },
-  c9_downstreamTransportationAndDistribution: {
+  '9_downstreamTransportationAndDistribution': {
     title: '9. Nedströms transport och distribution',
     description:
       'Utsläpp från transport och distribution av sålda varor mellan organisationen och kund.',
     Icon: IconParkOutlineTransporter,
   },
-  c10_processingOfSoldProducts: {
+  '10_processingOfSoldProducts': {
     title: '10. Bearbetning av sålda produkter',
     description: 'Utsläpp från vidareförädling av sålda insatsvaror.',
     Icon: IconParkOutlineGateMachine,
   },
-  c11_useOfSoldProducts: {
+  '11_useOfSoldProducts': {
     title: '11. Användning av sålda produkter',
     description: 'Utsläpp från användning av sålda produkter av kunden.',
     Icon: MaterialSymbolsPersonPlayOutlineRounded,
   },
-  c12_endOfLifeTreatmentOfSoldProducts: {
+  '12_endOfLifeTreatmentOfSoldProducts': {
     title: '12. Slutbehandling av sålda produkter',
     description:
       'Utsläpp från avfallshantering av sålda produkter vid slutet av livscykeln.',
     Icon: IonTrashBin,
   },
-  c13_downstreamLeasedAssets: {
+  '13_downstreamLeasedAssets': {
     title: '13. Nedströms leasade tillgångar',
     description:
       'Utsläpp från verksamhet i nedströms leasade tillgångar som inte inkluderas i scope 1 och 2.',
     Icon: ClarityBuildingSolid,
   },
-  c14_franchises: {
+  '14_franchises': {
     title: '14. Franchiser',
     description:
       'Utsläpp från franchisetagares verksamhet som inte inkluderas i scope 1 och 2.',
     Icon: BiHouses,
   },
-  c15_investments: {
+  '15_investments': {
     title: '15. Investeringar',
     description:
       'Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp.',
@@ -134,15 +133,20 @@ export const categoryDefinitions = {
 }
 
 function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
-  return Object.entries(categoryDefinitions).map(([category, definition]) => {
-    const value = scope3[category as keyof typeof categoryDefinitions] ?? null
+  return Object.entries(categoryDefinitions).map(([key, definition]) => {
+    const categoryId = parseInt(key.split('_')[0])
+    const category = scope3.scope3Categories?.find(
+      ({ category }) => category === categoryId,
+    )
+    const value = category?.total ?? null
+    const verified = Boolean(category?.metadata?.verifier?.name)
 
     return {
       ...definition,
-      category,
       value,
-      // TODO: replace all verified: false and use metadata for each separate scope 3 category to determine if it is verified or not
-      verified: false,
+      verified,
+      // TODO: render metadata with a shared component to provide more context for each datapoint.
+      // This should be updated for all datapoints,and replace `verified: boolean`.
     }
   })
 }

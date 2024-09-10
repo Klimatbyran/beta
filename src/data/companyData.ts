@@ -155,7 +155,7 @@ export type Scope3 = {
   statedTotalEmissions: StatedTotalEmissions
   metadata: Metadata
   calculatedTotalEmissions: number
-  scope3categories: Scope3Category[]
+  scope3Categories?: Scope3Category[]
 }
 
 export function getCompanyURL(company: CompanyData) {
