@@ -21,8 +21,8 @@ export type Goal = {
 export type Metadata = {
   comment: string
   updatedAt: Date
-  updater: Updater
-  verifier: null
+  updater: User
+  verifier?: User | null
   source: Source
 }
 
@@ -31,7 +31,7 @@ export type Source = {
   comment: string
 }
 
-export type Updater = {
+export type User = {
   name: string
 }
 
@@ -100,7 +100,14 @@ export type Emissions = {
   scope2?: Scope2
   scope3?: Scope3
   biogenicEmissions?: Scope1 | null
-  calculatedTotalEmissions: number | null
+  calculatedTotalEmissions?: number | null
+  statedTotalEmissions?: StatedTotalEmissions | null
+}
+
+export type StatedTotalEmissions = {
+  total?: number | null
+  unit: EmissionUnit
+  metadata: Metadata
 }
 
 export type Scope1 = {
@@ -115,30 +122,40 @@ export type Scope2 = {
   unknown: number | null
   unit: EmissionUnit
   metadata: Metadata
-  calculatedTotalEmissions: number | null
+  calculatedTotalEmissions?: number | null
+}
+
+export enum Scope3CategoryNumber {
+  purchasedGoods = 1,
+  capitalGoods = 2,
+  fuelAndEnergyRelatedActivities = 3,
+  upstreamTransportationAndDistribution = 4,
+  wasteGeneratedInOperations = 5,
+  businessTravel = 6,
+  employeeCommuting = 7,
+  upstreamLeasedAssets = 8,
+  downstreamTransportationAndDistribution = 9,
+  processingOfSoldProducts = 10,
+  useOfSoldProducts = 11,
+  endOfLifeTreatmentOfSoldProducts = 12,
+  downstreamLeasedAssets = 13,
+  franchises = 14,
+  investments = 15,
+  other = 16,
+}
+
+export type Scope3Category = {
+  category: Scope3CategoryNumber
+  total?: number | null
+  metadata: Metadata
+  unit: EmissionUnit
 }
 
 export type Scope3 = {
-  c1_purchasedGoods: number | null
-  c2_capitalGoods: number | null
-  c3_fuelAndEnergyRelatedActivities: number | null
-  c4_upstreamTransportationAndDistribution: number | null
-  c5_wasteGeneratedInOperations: number | null
-  c6_businessTravel: number | null
-  c7_employeeCommuting: number | null
-  c8_upstreamLeasedAssets: number | null
-  c9_downstreamTransportationAndDistribution: number | null
-  c10_processingOfSoldProducts: number | null
-  c11_useOfSoldProducts: number | null
-  c12_endOfLifeTreatmentOfSoldProducts: number | null
-  c13_downstreamLeasedAssets: number | null
-  c14_franchises: number | null
-  c15_investments: number | null
-  statedTotalEmissions: Scope1 | null
-  other: number | null
-  unit: EmissionUnit
+  statedTotalEmissions: StatedTotalEmissions
   metadata: Metadata
   calculatedTotalEmissions: number
+  scope3categories: Scope3Category[]
 }
 
 export function getCompanyURL(company: CompanyData) {
