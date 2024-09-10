@@ -2,7 +2,14 @@
   import { Combobox, type Item } from '../ui/combobox'
   import { getCompanyURL, type CompanyData } from '@/data/companyData'
 
-  export let companies: CompanyData[]
+  type Props = {
+    companies: CompanyData[]
+  }
+  let { companies }: Props = $props()
+
+  const sorted = $derived(
+    companies.sort((a, b) => a.name.localeCompare(b.name)),
+  )
 
   function onSelect(item: Item<string>) {
     window.location.assign(item.data)
@@ -10,7 +17,7 @@
 </script>
 
 <Combobox
-  items={companies.map((c) => ({
+  items={sorted.map((c) => ({
     label: c.name,
     value: c.name,
     data: `/foretag/${getCompanyURL(c)}`,
