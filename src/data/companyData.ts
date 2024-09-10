@@ -86,12 +86,24 @@ export type ReportingPeriod = {
   endDate: Date
   economy: Economy
   emissions: Emissions
+  metadata: Metadata
 }
 
 export type Economy = {
-  turnover: number | null
-  employees: number | null
+  turnover: Turnover | null
+  employees: Employees | null
+  metadata: Metadata
+}
+
+export type Turnover = {
+  value: number | null
   currency: Currency | null
+  metadata: Metadata
+}
+
+export type Employees = {
+  value: number | null
+  unit: string | null
   metadata: Metadata
 }
 
