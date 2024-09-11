@@ -21,14 +21,9 @@ export type Goal = {
 export type Metadata = {
   comment: string
   updatedAt: Date
-  updater: User
-  verifier?: User | null
-  source: Source
-}
-
-export type Source = {
-  url: string
-  comment: string
+  user: User
+  verifiedBy?: User | null
+  source: string
 }
 
 export type User = {

@@ -139,7 +139,7 @@ function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
       ({ category }) => category === categoryId,
     )
     const value = category?.total ?? null
-    const verified = Boolean(category?.metadata?.verifier?.name)
+    const verified = Boolean(category?.metadata?.verifiedBy?.name)
 
     return {
       ...definition,
