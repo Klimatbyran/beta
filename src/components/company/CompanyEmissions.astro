@@ -23,23 +23,25 @@ const scopeEmissionsList = emissions
         title: 'Egna utsläpp (scope 1)',
         description:
           'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        value: emissions?.scope1?.total,
-        verified: false,
+        value: emissions.scope1?.total,
+        verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
       },
       {
         title: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
         value:
-          emissions?.scope2?.mb ??
-          emissions?.scope2?.lb ??
-          emissions?.scope2?.unknown,
-        verified: false,
+          emissions.scope2?.mb ??
+          emissions.scope2?.lb ??
+          emissions.scope2?.unknown,
+        verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
       },
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
         value: emissions?.scope3?.calculatedTotalEmissions,
+        // TODO: Should we use calculatedTotalEmissions or statedTotalEmissions?
+        // TODO: How to handle verified?
         verified: false,
       },
     ]
