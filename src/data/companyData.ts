@@ -1,5 +1,7 @@
 import { slugifyURL } from '@/lib/slugifyURL'
 
+// TODO: Update types once we have the garbo data
+
 export type CompanyData = {
   wikidataId: string
   name: string
