@@ -79,6 +79,7 @@ export type Initiative = {
 export type ReportingPeriod = {
   startDate: Date
   endDate: Date
+  reportURL: string | null
   economy: Economy
   emissions: Emissions
   metadata: Metadata

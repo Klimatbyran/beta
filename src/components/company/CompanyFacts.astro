@@ -17,12 +17,9 @@ const { company } = Astro.props
 const latestEmissions = getLatestReportingPeriodWithEmissions(company)
 const latestEconomy = getLatestReportingPeriodWithEconomy(company)
 
-// TODO: get reportURL from the source, and show this for every datapoint instead
+// TODO: show the source for every datapoint
 // IDEA: Maybe use a common component to click a datapoint to open metadata about it, such as the source
-// const reportURL =
-//   company.facit?.url ||
-//   getWikidataReportURL(company.wikidata, year) ||
-//   company.url
+const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
 ---
 
 <Card class="text-sm" level={1}>
@@ -76,8 +73,8 @@ const latestEconomy = getLatestReportingPeriodWithEconomy(company)
         )
       }
 
-      <!-- TODO: Show the source for each datapoint instead of once per company page -->
-      <!-- {
+      <!-- TODO: This shows the report URL for the given period. However, we also want to show the source for each datapoint -->
+      {
         reportURL && (
           <span>
             Läs{' '}
@@ -89,7 +86,7 @@ const latestEconomy = getLatestReportingPeriodWithEconomy(company)
             </a>
           </span>
         )
-      } -->
+      }
     </Card>
 
     {
