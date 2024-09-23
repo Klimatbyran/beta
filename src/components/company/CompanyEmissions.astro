@@ -39,10 +39,10 @@ const scopeEmissionsList = emissions
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        value: emissions?.scope3?.calculatedTotalEmissions,
-        // TODO: Should we use calculatedTotalEmissions or statedTotalEmissions?
-        // TODO: How to handle verified?
-        verified: false,
+        value: emissions.scope3?.statedTotalEmissions.total,
+        verified: Boolean(
+          emissions.scope3?.statedTotalEmissions.metadata.verifiedBy,
+        ),
       },
     ]
   : []

@@ -90,19 +90,21 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
     </Card>
 
     {
-      latestEmissions?.emissions?.calculatedTotalEmissions && (
+      latestEmissions?.emissions?.statedTotalEmissions?.total && (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
             <h3 class="flex items-center gap-1">
               Totala utsläpp {getFormattedReportingPeriod(latestEmissions)}{' '}
-              {/* TODO: add verified in metadata */}
-              {false && <VerifiedBadge />}
+              {Boolean(
+                latestEmissions.emissions.statedTotalEmissions.metadata
+                  .verifiedBy,
+              ) && <VerifiedBadge />}
             </h3>
             <span class="text-muted">(ton CO₂e)</span>
           </div>
 
           <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-            {latestEmissions.emissions.calculatedTotalEmissions.toLocaleString(
+            {latestEmissions.emissions.statedTotalEmissions.total.toLocaleString(
               'sv-SE',
               {
                 maximumFractionDigits: 0,
