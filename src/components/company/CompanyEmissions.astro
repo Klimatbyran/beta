@@ -52,7 +52,7 @@ const biogenicEmissions = {
   description:
     'Biogena utsläpp är koldioxidutsläpp som uppstår från icke-fossila (sk. förnybara) källor, som tex förbränning av biobränslen eller biprodukter vid pappersmassatillverkning. Enligt GHG-protokollet redovisas dessa utsläpp separat från scope 1-3, eftersom de är aktiv del av kolets kretslopp.',
   value: emissions?.biogenicEmissions?.total,
-  verified: false,
+  verified: Boolean(emissions?.biogenicEmissions?.metadata?.verifiedBy),
 }
 ---
 
