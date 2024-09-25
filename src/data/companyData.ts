@@ -1,11 +1,11 @@
 import { slugifyURL } from '@/lib/slugifyURL'
 
-// TODO: Update types once we have the garbo data
+// NOTE: Types generated with https://app.quicktype.io/ based on the raw JSON response from `GET /companies` and modified to fix errors and simplify.
 
 export type CompanyData = {
   wikidataId: string
   name: string
-  description: string
+  description: string | null
   reportingPeriods: ReportingPeriod[]
   industry?: Industry
   goals: Goal[]
@@ -14,38 +14,23 @@ export type CompanyData = {
 
 export type Goal = {
   description: string
-  year: null | string
-  baseYear: null | string
+  year: string | null
+  baseYear: string | null
   target: number | null
   metadata: Metadata
 }
 
 export type Metadata = {
-  comment: string
+  comment: string | null
+  source: string | null
   updatedAt: Date
   user: User
-  verifiedBy?: User | null
-  source: string
+  verifiedBy: User | null
+  dataOrigin: string | null
 }
 
 export type User = {
   name: string
-}
-
-export enum CurrencyName {
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Isk = 'ISK',
-  Sek = 'SEK',
-  Usd = 'USD',
-}
-
-export enum EmissionUnit {
-  TCO2E = 'tCO2e',
-}
-
-export type Currency = {
-  name: CurrencyName
 }
 
 export type Industry = {
@@ -73,8 +58,8 @@ export type IndustryGicsStrings = {
 export type Initiative = {
   title: string
   description: string
-  year: null | string
-  scope: null | string
+  year: string | null
+  scope: string | null
   metadata: Metadata
 }
 
@@ -82,21 +67,13 @@ export type ReportingPeriod = {
   startDate: Date
   endDate: Date
   reportURL: string | null
-  economy: Economy
-  emissions: Emissions
-  metadata: Metadata
+  economy: Economy | null
+  emissions: Emissions | null
 }
 
 export type Economy = {
   turnover: Turnover | null
   employees: Employees | null
-  metadata: Metadata
-}
-
-export type Turnover = {
-  value: number | null
-  currency: Currency | null
-  metadata: Metadata
 }
 
 export type Employees = {
@@ -105,24 +82,36 @@ export type Employees = {
   metadata: Metadata
 }
 
+export type Turnover = {
+  value: number | null
+  currency: string | null
+  metadata: Metadata
+}
+
 export type Emissions = {
-  scope1?: Scope1
-  scope2?: Scope2
-  scope3?: Scope3
-  biogenicEmissions?: Scope1 | null
-  calculatedTotalEmissions?: number | null
-  statedTotalEmissions?: StatedTotalEmissions | null
+  scope1?: Scope1 | null
+  scope2?: Scope2 | null
+  scope3?: Scope3 | null
+  biogenicEmissions?: BiogenicEmissions | null
+  statedTotalEmissions?: BiogenicEmissions | null
+  calculatedTotalEmissions: number | null
 }
 
 export type StatedTotalEmissions = {
   total?: number | null
-  unit: EmissionUnit
+  unit: string
   metadata: Metadata
 }
 
 export type Scope1 = {
   total: number | null
-  unit: EmissionUnit
+  unit: string
+  metadata: Metadata
+}
+
+export type BiogenicEmissions = {
+  total: number | null
+  unit: string
   metadata: Metadata
 }
 
@@ -130,9 +119,9 @@ export type Scope2 = {
   lb: number | null
   mb: number | null
   unknown: number | null
-  unit: EmissionUnit
+  unit: string
   metadata: Metadata
-  calculatedTotalEmissions?: number | null
+  calculatedTotalEmissions: number
 }
 
 export enum Scope3CategoryNumber {
@@ -158,14 +147,14 @@ export type Scope3Category = {
   category: Scope3CategoryNumber
   total?: number | null
   metadata: Metadata
-  unit: EmissionUnit
+  unit: string
 }
 
 export type Scope3 = {
-  statedTotalEmissions: StatedTotalEmissions
+  statedTotalEmissions: StatedTotalEmissions | null
+  scope3Categories: Scope3Category[]
   metadata: Metadata
   calculatedTotalEmissions: number
-  scope3Categories?: Scope3Category[]
 }
 
 export function getCompanyURL(company: CompanyData) {
