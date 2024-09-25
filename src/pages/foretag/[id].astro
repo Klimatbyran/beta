@@ -12,7 +12,7 @@ const { id = '' } = Astro.params
 // Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
 
-const company = await getCompany(wikidataId)
+const company = wikidataId.startsWith('Q') ? await getCompany(wikidataId) : null
 
 const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
 
