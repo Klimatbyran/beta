@@ -20,7 +20,7 @@ const company = companies.find(
 
 const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
 
-const title = `${company?.companyName ? `${company?.companyName} | ` : ''}${baseTitle}`
+const title = `${company?.name ? `${company.name} | ` : ''}${baseTitle}`
 ---
 
 <Layout {title}>

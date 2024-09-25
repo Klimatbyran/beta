@@ -1,11 +1,4 @@
 ---
-import {
-  getCompanyName,
-  getWikidataEmissionsYear,
-  type CompanyData,
-  type EmissionsScope,
-  type Scope3Category,
-} from '@/data/companyData'
 import Fa6SolidGifts from 'icons:astro/fa6-solid/gifts'
 import MingcuteWashMachineLine from 'icons:astro/mingcute/wash-machine-line'
 import IconParkOutlineSolarEnergyOne from 'icons:astro/icon-park-outline/solar-energy-one'
@@ -21,15 +14,21 @@ import IonTrashBin from 'icons:astro/ion/trash-bin'
 import ClarityBuildingSolid from 'icons:astro/clarity/building-solid'
 import BiHouses from 'icons:astro/bi/houses'
 import StreamlineInvestmentSelection from 'icons:astro/streamline/investment-selection'
+
+import {
+  type CompanyData,
+  type Emissions,
+  type Scope3,
+} from '@/data/companyData'
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 
 interface Props {
   company: CompanyData
-  year: number
+  emissions: Emissions
 }
 
-const { company, year } = Astro.props
+const { company, emissions } = Astro.props
 
 type CategoryDefinition = {
   title: string
@@ -39,11 +38,10 @@ type CategoryDefinition = {
 
 type ReportedCategoryDefinition = CategoryDefinition & {
   value: number | null
-  category: Scope3Category
   verified: boolean
 }
 
-export const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
+export const categoryDefinitions = {
   '1_purchasedGoods': {
     title: '1. Inköpta varor och tjänster',
     description:
@@ -134,53 +132,32 @@ export const categoryDefinitions: Record<Scope3Category, CategoryDefinition> = {
   },
 }
 
-function getReportedCategories(
-  scope3Categories: EmissionsScope['categories'],
-): ReportedCategoryDefinition[] {
-  return Object.entries(categoryDefinitions).map(([category, definition]) => {
-    const facitValue =
-      company.facit?.emissions?.[year]?.scope3?.categories?.[
-        category as Scope3Category
-      ] ?? null
-
-    const wikiValue =
-      getWikidataEmissionsYear(company.wikidata, year)?.scope3?.categories?.[
-        category as Scope3Category
-      ] ?? null
-
-    const value = scope3Categories?.[category as Scope3Category] ?? null
+function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
+  return Object.entries(categoryDefinitions).map(([key, definition]) => {
+    const categoryId = parseInt(key.split('_')[0])
+    const category = scope3.scope3Categories?.find(
+      ({ category }) => category === categoryId,
+    )
+    const value = category?.total ?? null
+    const verified = Boolean(category?.metadata?.verifiedBy)
 
     return {
       ...definition,
-      category: category as Scope3Category,
-      value: facitValue ?? wikiValue ?? value,
-      verified: facitValue !== null,
+      value,
+      verified,
+      // TODO: render metadata with a shared component to provide more context for each datapoint.
+      // This should be updated for all datapoints,and replace `verified: boolean`.
     }
   })
 }
 
-const companyName = getCompanyName(company)
-const scope3Categories = company.emissions[year].scope3.categories
-
-const reportedCategories = getReportedCategories(scope3Categories)
+const reportedCategories = emissions.scope3
+  ? getReportedCategories(emissions.scope3)
+  : []
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const upstream = reportedCategories.slice(0, 8)
 const downstream = reportedCategories.slice(8)
-
-/**
- * Get all categories that don't align with the GHG protocol
- */
-function getNonStandardCategories(categories?: Record<string, any> | null) {
-  return Object.keys(categories ?? {}).filter(
-    (category) =>
-      !categoryDefinitions[category as Scope3Category] &&
-      category !== '16_other',
-  )
-}
-
-const nonStandardCategoriesCount =
-  getNonStandardCategories(scope3Categories).length
 ---
 
 <Card class="grid gap-8" level={2}>
@@ -188,21 +165,13 @@ const nonStandardCategoriesCount =
     <h3
       class="text-balance pb-2 text-xl tracking-tight sm:leading-none lg:text-2xl"
     >
-      {companyName} rapporterar
+      {company.name} rapporterar
       <span class="text-nowrap">
         <span class="text-orange-250">{reportedCount}</span> / 15
       </span>
       kategorier:
     </h3>
-    {
-      Boolean(nonStandardCategoriesCount) && (
-        <p class="text-sm text-muted">
-          Utöver det anges
-          {`${nonStandardCategoriesCount} kategori${nonStandardCategoriesCount > 1 ? 'er' : ''} `}
-          som inte följer GHG-protokollet.
-        </p>
-      )
-    }
+
     <p class="text-sm text-muted">
       Företag bör rapportera i alla kategorier som är relevanta för
       verksamheten.
@@ -249,6 +218,7 @@ const nonStandardCategoriesCount =
             })}
           />
         ))}
+        {/* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */}
       </div>
     ) : null
   }

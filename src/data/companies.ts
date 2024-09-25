@@ -4,18 +4,12 @@ import type { CompanyData } from './companyData'
  * Conditionally load cached local JSON file instead of fetching from the API
  */
 export async function getCompanies() {
-  let data: CompanyData[]
+  const URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/api/companies'
+      : 'https://api.klimatkollen.se/api/companies'
 
-  if (process.env.NODE_ENV === 'development') {
-    data = (await import('@/data/test.json'))
-      .default as unknown as CompanyData[]
-  } else {
-    data = (await fetch('https://api.klimatkollen.se/api/companies').then(
-      (res) => res.json(),
-    )) as CompanyData[]
-  }
-
-  return data
+  return (await fetch(URL).then((res) => res.json())) as CompanyData[]
 }
 
 // /**

@@ -1,216 +1,195 @@
 import { slugifyURL } from '@/lib/slugifyURL'
 
-export interface IndustryGics {
-  name: string
-  sector: {
-    code: string
-    name: string
-  }
-  group: {
-    code: string
-    name: string
-  }
-  industry: {
-    code: string
-    name: string
-  }
-  subIndustry: {
-    code: string
-    name: string
-  }
-}
+// TODO: Update types once we have the garbo data
 
-export interface IndustryNace {
-  section: {
-    code: string
-    name: string
-  }
-  division: {
-    code: string
-    name: string
-  }
-}
-
-export interface EmissionsScope {
-  emissions: number | null
-  verified: string
-  unit: string
-  biogenic?: number
-  mb?: number
-  lb?: number
-  categories?: {
-    '1_purchasedGoods': number | null
-    '2_capitalGoods': number | null
-    '3_fuelAndEnergyRelatedActivities': number | null
-    '4_upstreamTransportationAndDistribution': number | null
-    '5_wasteGeneratedInOperations': number | null
-    '6_businessTravel': number | null
-    '7_employeeCommuting': number | null
-    '8_upstreamLeasedAssets': number | null
-    '9_downstreamTransportationAndDistribution': number | null
-    '10_processingOfSoldProducts': number | null
-    '11_useOfSoldProducts': number | null
-    '12_endOfLifeTreatmentOfSoldProducts': number | null
-    '13_downstreamLeasedAssets': number | null
-    '14_franchises': number | null
-    '15_investments': number | null
-    '16_other': number | null
-  }
-}
-
-export type Scope3Category = keyof Omit<
-  Exclude<EmissionsScope['categories'], undefined>,
-  '16_other'
->
-
-export interface Emissions {
-  [year: string]: {
-    year: string
-    scope1: EmissionsScope
-    scope2: EmissionsScope
-    scope3: EmissionsScope
-    totalBiogenic?: number | null
-  }
-}
-
-export interface BaseFacts {
-  [year: string]: {
-    turnover: number
-    employees: number
-    unit: string
-  }
-}
-
-export interface Factors {
-  product: string
-  description: string
-  value: number
-  unit: string
-}
-
-export interface Contact {
-  name: string
-  role: string
-  email: string
-  phone: string
-}
-
-export interface Goal {
-  description: string
-  year: number
-  reductionPercent: number
-  baseYear: string
-}
-
-export interface Initiative {
-  title: string
-  description: string
-  year: number
-  reductionPercent: number
-  scope: string
-}
-
-export type WikidataEmissionsEntry = {
-  year: string
-  scope1: EmissionsScope
-  scope2: EmissionsScope
-  scope3: EmissionsScope
-  reference: string
-  // TODO: Update backend to get biogenic emissions from wikidata
-  // biogenic?: number
-}
-
-export type WikidataEmissions =
-  | {
-      [year: string]: WikidataEmissionsEntry
-    }
-  | WikidataEmissionsEntry[]
-
-export interface Wikidata {
-  node: string
-  url: string
-  logo: string
-  label: string
-  description: string
-  emissions: WikidataEmissions
-}
-
-/**
- * Gregorian calendar months, where 1 is January and 12 is December
- */
-export type FiscalYear = {
-  startMonth: number
-  endMonth: number
-}
-
-// TODO: EmissionScope actually doesn't include `verified` for facit.
-// Update the type for EmissionScope and omit the verified field, but only when used as part of Facit.
-export type Facit = {
-  companyName: string
-  url: string
-  emissions: Emissions
-}
-
-export interface CompanyData {
-  companyName: string
-  description: string
+export type CompanyData = {
   wikidataId: string
-  industryGics?: IndustryGics | null
-  industryNace?: IndustryNace | null
-  baseYear: string
-  url: string
-  emissions: Emissions
-  baseFacts?: BaseFacts
-  factors: Factors[]
-  contacts: Contact[]
+  name: string
+  description: string
+  reportingPeriods: ReportingPeriod[]
+  industry?: Industry
   goals: Goal[]
   initiatives: Initiative[]
-  reliability: string
-  /**
-   * NOTE: Data in the `wikidata` property is completely unreliable as long as its processed by GPT-4o.
-   * We need to solve https://github.com/Klimatbyran/garbo/issues/169 before we can trust this again.
-   */
-  wikidata?: Wikidata
-  facit?: Facit
-  needsReview: boolean
-  publicComment: string
-  reviewComment: string
-  fiscalYear?: FiscalYear
 }
 
-export function getCompanyName(company: CompanyData) {
-  return (
-    company.facit?.companyName || company.wikidata?.label || company.companyName
-  )
+export type Goal = {
+  description: string
+  year: null | string
+  baseYear: null | string
+  target: number | null
+  metadata: Metadata
+}
+
+export type Metadata = {
+  comment: string
+  updatedAt: Date
+  user: User
+  verifiedBy?: User | null
+  source: string
+}
+
+export type User = {
+  name: string
+}
+
+export enum CurrencyName {
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Isk = 'ISK',
+  Sek = 'SEK',
+  Usd = 'USD',
+}
+
+export enum EmissionUnit {
+  TCO2E = 'tCO2e',
+}
+
+export type Currency = {
+  name: CurrencyName
+}
+
+export type Industry = {
+  industryGics: IndustryGics
+  metadata: Metadata
+}
+
+export type IndustryGics = {
+  sectorCode: string
+  groupCode: string
+  industryCode: string
+  subIndustryCode: string
+  sv: IndustryGicsStrings
+  en: IndustryGicsStrings
+}
+
+export type IndustryGicsStrings = {
+  sectorName: string
+  groupName: string
+  industryName: string
+  subIndustryName: string
+  subIndustryDescription: string
+}
+
+export type Initiative = {
+  title: string
+  description: string
+  year: null | string
+  scope: null | string
+  metadata: Metadata
+}
+
+export type ReportingPeriod = {
+  startDate: Date
+  endDate: Date
+  reportURL: string | null
+  economy: Economy
+  emissions: Emissions
+  metadata: Metadata
+}
+
+export type Economy = {
+  turnover: Turnover | null
+  employees: Employees | null
+  metadata: Metadata
+}
+
+export type Turnover = {
+  value: number | null
+  currency: Currency | null
+  metadata: Metadata
+}
+
+export type Employees = {
+  value: number | null
+  unit: string | null
+  metadata: Metadata
+}
+
+export type Emissions = {
+  scope1?: Scope1
+  scope2?: Scope2
+  scope3?: Scope3
+  biogenicEmissions?: Scope1 | null
+  calculatedTotalEmissions?: number | null
+  statedTotalEmissions?: StatedTotalEmissions | null
+}
+
+export type StatedTotalEmissions = {
+  total?: number | null
+  unit: EmissionUnit
+  metadata: Metadata
+}
+
+export type Scope1 = {
+  total: number | null
+  unit: EmissionUnit
+  metadata: Metadata
+}
+
+export type Scope2 = {
+  lb: number | null
+  mb: number | null
+  unknown: number | null
+  unit: EmissionUnit
+  metadata: Metadata
+  calculatedTotalEmissions?: number | null
+}
+
+export enum Scope3CategoryNumber {
+  purchasedGoods = 1,
+  capitalGoods = 2,
+  fuelAndEnergyRelatedActivities = 3,
+  upstreamTransportationAndDistribution = 4,
+  wasteGeneratedInOperations = 5,
+  businessTravel = 6,
+  employeeCommuting = 7,
+  upstreamLeasedAssets = 8,
+  downstreamTransportationAndDistribution = 9,
+  processingOfSoldProducts = 10,
+  useOfSoldProducts = 11,
+  endOfLifeTreatmentOfSoldProducts = 12,
+  downstreamLeasedAssets = 13,
+  franchises = 14,
+  investments = 15,
+  other = 16,
+}
+
+export type Scope3Category = {
+  category: Scope3CategoryNumber
+  total?: number | null
+  metadata: Metadata
+  unit: EmissionUnit
+}
+
+export type Scope3 = {
+  statedTotalEmissions: StatedTotalEmissions
+  metadata: Metadata
+  calculatedTotalEmissions: number
+  scope3Categories?: Scope3Category[]
 }
 
 export function getCompanyURL(company: CompanyData) {
-  return `${slugifyURL(company.companyName)}-${company.wikidataId}`
+  return `${slugifyURL(company.name)}-${company.wikidataId}`
 }
 
-export function getLatestYearWithEmissionsData(
-  company: CompanyData,
-  maxYear = new Date().getUTCFullYear() - 1,
-) {
-  let year = maxYear
+export function getLatestReportingPeriodWithEmissions(company: CompanyData) {
+  return company.reportingPeriods.find(({ emissions }) => Boolean(emissions))
+}
 
-  for (year; year >= maxYear - 5; year--) {
-    if (company.emissions[year]) {
-      return year
-    }
+export function getLatestReportingPeriodWithEconomy(company: CompanyData) {
+  return company.reportingPeriods.find(({ economy }) => Boolean(economy))
+}
+
+export function getFormattedReportingPeriod({
+  startDate,
+  endDate,
+}: ReportingPeriod) {
+  const startYear = new Date(startDate).getFullYear()
+  const endYear = new Date(endDate).getFullYear()
+
+  if (startYear === endYear) {
+    return startYear
   }
 
-  return maxYear
-}
-
-export function getWikidataEmissionsYear(
-  wikidata: CompanyData['wikidata'],
-  year: number | string,
-) {
-  const formattedYear = String(year)
-  const wantedYear = Array.isArray(wikidata?.emissions)
-    ? wikidata.emissions.findLast((entry) => entry.year === formattedYear)
-    : wikidata?.emissions?.[formattedYear]
-
-  return wantedYear
+  return `${startYear}/${endYear}`
 }
