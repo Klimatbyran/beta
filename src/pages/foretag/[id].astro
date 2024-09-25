@@ -2,7 +2,7 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import { getCompanies } from '@/data/companies'
+import { getCompany } from '@/data/companies'
 import Company from '@/components/company/Company.astro'
 import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
@@ -12,11 +12,7 @@ const { id = '' } = Astro.params
 // Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
 
-const companies = await getCompanies()
-
-const company = companies.find(
-  (company) => company.wikidataId.toLowerCase() === wikidataId.toLowerCase(),
-)
+const company = await getCompany(wikidataId)
 
 const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
 
@@ -26,7 +22,7 @@ const title = `${company?.name ? `${company.name} | ` : ''}${baseTitle}`
 <Layout {title}>
   {
     company ? (
-      <Company {company} {companies} />
+      <Company {company} />
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <p class="py-4">
@@ -35,7 +31,7 @@ const title = `${company?.name ? `${company.name} | ` : ''}${baseTitle}`
         </p>
 
         <div class="grid w-full place-items-center">
-          <OtherCompanies client:load {companies} />
+          <OtherCompanies client:load />
 
           <a
             class={buttonVariants({

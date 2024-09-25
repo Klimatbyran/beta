@@ -1,11 +1,10 @@
 <script lang="ts">
   import { Combobox, type Item } from '../ui/combobox'
   import { getCompanyURL, type CompanyData } from '@/data/companyData'
+  import { request } from '@/lib/request'
+  import { onMount } from 'svelte'
 
-  type Props = {
-    companies: CompanyData[]
-  }
-  let { companies }: Props = $props()
+  let companies = $state<CompanyData[]>([])
 
   const sorted = $derived(
     companies.sort((a, b) => a.name.localeCompare(b.name)),
@@ -14,6 +13,10 @@
   function onSelect(item: Item<string>) {
     window.location.assign(item.data)
   }
+
+  onMount(async () => {
+    companies = await request('/companies')
+  })
 </script>
 
 <Combobox

@@ -14,10 +14,9 @@ import LucideBadgeCheck from 'icons:astro/lucide/badge-check'
 
 interface Props {
   company: CompanyData
-  companies: CompanyData[]
 }
 
-const { company, companies } = Astro.props
+const { company } = Astro.props
 
 const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
 ---
@@ -49,7 +48,7 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
           <CompanyInitiatives initiatives={company.initiatives} />
 
           <div class="grid place-content-center py-16">
-            <OtherCompanies client:idle {companies} />
+            <OtherCompanies client:idle />
           </div>
         </div>
       </>
@@ -61,7 +60,7 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
         <p class="py-4">Utsläppsdata saknas.</p>
 
         <div class="grid w-full place-items-center">
-          <OtherCompanies client:load {companies} />
+          <OtherCompanies client:load />
 
           <a
             class={buttonVariants({
