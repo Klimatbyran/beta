@@ -48,7 +48,7 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@v4
         with:
-          progress: false
+          show-progress: true # TODO: Remove this after debugging
 
       - id: imagename
         uses: ASzc/change-string-case-action@v2
