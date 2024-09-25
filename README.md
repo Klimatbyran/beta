@@ -29,9 +29,10 @@ We're using [shadcn](https://www.shadcn-svelte.com/) for our components. [Learn 
 Do you have an idea for a feature? Jump into the code or head to our [Discord server](https://discord.gg/N5P64QPQ6v) discuss your thoughts. You can also submit an [issue](https://github.com/Klimatbyran/beta/issues) explaining your suggestion.
 
 ### How to Contribute
-* **Discuss** your idea on our Discord.
-* **Submit an issue** if you can't find an existing one.
-* **Pick up an issue** from our [open issues](https://github.com/Klimatbyran/beta/issues) (and leave a comment to avoid double work).
+
+- **Discuss** your idea on our Discord.
+- **Submit an issue** if you can't find an existing one.
+- **Pick up an issue** from our [open issues](https://github.com/Klimatbyran/beta/issues) (and leave a comment to avoid double work).
 
 ## 📠 Contact
 
@@ -41,7 +42,7 @@ Join our [Discord server](https://discord.gg/N5P64QPQ6v) or send an email to [he
 
 This work wouldn't have been possible without the support from Google.org.
 
-We'd also like to thank our current and former partners
+We'd also like to thank our current and former partners:
 
 Postkodstiftelsen, ClimateView, Klimatklubben.se, Researcher's Desk, Exponential Roadmap, WWF, We Don't Have Time, Våra Barns Klimat, Argand, StormGeo.
 
