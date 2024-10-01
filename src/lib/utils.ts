@@ -60,3 +60,7 @@ export function flyAndScale(
     easing: cubicOut,
   }
 }
+
+export function isNumber(value: any): value is number {
+  return Number.isFinite(value)
+}

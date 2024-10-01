@@ -7,6 +7,7 @@ import {
 } from '@/data/companyData'
 import { Card } from '../ui/card'
 import VerifiedBadge from '../VerifiedBadge.astro'
+import { isNumber } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -44,7 +45,7 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
       }
 
       {
-        latestEconomy?.economy?.turnover?.value && (
+        isNumber(latestEconomy?.economy?.turnover?.value) && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Omsättning ({getFormattedReportingPeriod(latestEconomy)})</h3>
             <p class="text-sm text-orange-250">
@@ -58,7 +59,7 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
         )
       }
       {
-        latestEconomy?.economy?.employees?.value && (
+        isNumber(latestEconomy?.economy?.employees?.value) && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>
               Antal anställda ({getFormattedReportingPeriod(latestEconomy)})
@@ -73,7 +74,6 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
         )
       }
 
-      <!-- TODO: This shows the report URL for the given period. However, we also want to show the source for each datapoint -->
       {
         reportURL && (
           <span>
@@ -90,7 +90,7 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
     </Card>
 
     {
-      latestEmissions?.emissions?.statedTotalEmissions?.total && (
+      isNumber(latestEmissions?.emissions?.statedTotalEmissions?.total) && (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
             <h3 class="flex items-center gap-1">

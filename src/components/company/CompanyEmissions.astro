@@ -57,7 +57,7 @@ const biogenicEmissions = {
 ---
 
 {
-  latestEmissions && emissions && (
+  emissions && (
     <Card class="grid gap-8" level={1}>
       <h2 class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0">
         Rapporterade utsläpp {getFormattedReportingPeriod(latestEmissions)}
@@ -66,31 +66,29 @@ const biogenicEmissions = {
       </h2>
       {scopeEmissionsList.length ? (
         <div class="grid gap-4">
-          {scopeEmissionsList.map((emission) =>
-            Number.isFinite(emission.value) ? (
-              <div class="flex items-center justify-between">
-                <div>
-                  <h4 class="flex items-center gap-1 font-medium">
-                    {emission.title} {emission.verified && <VerifiedBadge />}
-                  </h4>
-                  {emission.description && (
-                    <p class="text-sm text-muted">{emission.description}</p>
-                  )}
-                </div>
-                <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
-                  {(emission.value as number).toLocaleString('sv-SE', {
-                    maximumFractionDigits: 0,
-                  })}
-                </span>
+          {scopeEmissionsList.map((emission) => (
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="flex items-center gap-1 font-medium">
+                  {emission.title} {emission.verified && <VerifiedBadge />}
+                </h4>
+                {emission.description && (
+                  <p class="text-sm text-muted">{emission.description}</p>
+                )}
               </div>
-            ) : null,
-          )}
+              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
+                {emission.value?.toLocaleString('sv-SE', {
+                  maximumFractionDigits: 0,
+                }) ?? '-'}
+              </span>
+            </div>
+          ))}
         </div>
       ) : null}
 
       <Scope3Emissions {company} {emissions} />
 
-      {biogenicEmissions?.value ? (
+      {emissions && (
         <Card level={2}>
           <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
             <span class="flex items-center justify-start gap-1">
@@ -102,13 +100,13 @@ const biogenicEmissions = {
           <div class="flex items-center justify-between gap-4">
             <p class="text-sm text-muted">{biogenicEmissions.description}</p>
             <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
-              {biogenicEmissions.value.toLocaleString('sv-SE', {
+              {biogenicEmissions.value?.toLocaleString('sv-SE', {
                 maximumFractionDigits: 0,
-              })}
+              }) ?? '-'}
             </span>
           </div>
         </Card>
-      ) : null}
+      )}
     </Card>
   )
 }

@@ -32,8 +32,6 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
   </div>
 </div>
 
-<!-- IDEA: Let each component decide and use the most recent data, and remove the need for prop drilling -->
-
 <article class="mx-auto max-w-screen-lg xs:px-4">
   {
     reportingPeriod ? (
@@ -57,7 +55,7 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
         <h1 class="text-4xl font-bold leading-none tracking-tight">
           {company.name}
         </h1>
-        <p class="py-4">Utsläppsdata saknas.</p>
+        <p class="py-4">Rapporteringsperioden saknas.</p>
 
         <div class="grid w-full place-items-center">
           <OtherCompanies client:load />
