@@ -152,7 +152,7 @@ export type Scope3Category = {
 
 export type Scope3 = {
   statedTotalEmissions: StatedTotalEmissions | null
-  scope3Categories: Scope3Category[]
+  categories: Scope3Category[]
   metadata: Metadata
   calculatedTotalEmissions: number
 }
