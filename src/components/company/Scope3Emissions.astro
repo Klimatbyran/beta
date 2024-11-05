@@ -135,7 +135,7 @@ export const categoryDefinitions = {
 function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).map(([key, definition]) => {
     const categoryId = parseInt(key.split('_')[0])
-    const category = scope3.scope3Categories?.find(
+    const category = scope3.categories?.find(
       ({ category }) => category === categoryId,
     )
     const value = category?.total ?? null
