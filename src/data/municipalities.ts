@@ -13,15 +13,19 @@ import type {
 import jsonData from './municipalityData.json'
 
 export class MunicipalityDataService {
-  public getMunicipality(name: string): Municipality {
+  public getMunicipality(name: string): Municipality | undefined {
     const data = jsonData.find(
       (m: any) => m.kommun.toLowerCase() === name.toLowerCase(),
     )
     if (!data) {
-      throw new Error(`Municipality with name "${name}" not found`)
+      return
     }
 
     return this.processMunicipalityData(data)
+  }
+
+  public getAllMunicipalityNames(): string[] {
+    return jsonData.map((m: any) => m.kommun)
   }
 
   private processMunicipalityData(data: any): Municipality {

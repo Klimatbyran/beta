@@ -2,8 +2,8 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import Company from '@/components/company/Company.astro'
-import OtherCompanies from '@/components/company/OtherCompanies.svelte'
+import Municipality from '@/components/municipality/Municipality.astro'
+import OtherMunicipalities from '@/components/municipality/OtherMunicipalities.svelte'
 import { buttonVariants } from '@/components/ui/button'
 import { MunicipalityDataService } from '@/data/municipalities'
 
@@ -15,30 +15,28 @@ const title = `Klimatkollen - få koll på ${municipalityName}s utsläpp`
 ---
 
 <Layout {title}>
-  {municipalityName}
   {
     municipality ? (
-      // <Company {municipality} />
-      <p>hej</p>
+      <Municipality {municipality} />
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <p class="py-4">
-          Det finns ingen kommun {municipalityName}, men titta gärna på de andra
-          i listan nedanför!
+          Det finns ingen kommun som heter {municipalityName}, men titta gärna
+          på de andra i listan nedanför!
         </p>
 
         <div class="grid w-full place-items-center">
-          <OtherCompanies client:load />
+          <OtherMunicipalities client:load />
 
           <a
             class={buttonVariants({
               variant: 'default',
               class: 'mt-8 gap-1 pl-2',
             })}
-            href="https://klimatkollen.se/foretag/utslappen/lista"
+            href="https://www.klimatkollen.se/geografiskt/utslappen/karta"
           >
             <LucideChevronLeft class="h-5 w-5" />
-            Tillbaka till alla företag
+            Tillbaka till alla kommuner
           </a>
         </div>
       </div>

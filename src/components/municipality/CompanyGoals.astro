@@ -1,0 +1,34 @@
+---
+import LucideGoal from 'icons:astro/lucide/goal'
+import { Card } from '../ui/card'
+import type { CompanyData } from '@/data/companyData'
+
+interface Props {
+  goals: CompanyData['goals']
+}
+
+const { goals } = Astro.props
+---
+
+{
+  goals && goals.length ? (
+    <Card class="grid gap-8" level={1}>
+      <h2 class="pt-4 text-3xl leading-none tracking-tight md:pt-0">Mål</h2>
+      <ul class="grid gap-2">
+        {goals.map(({ description, year }) => (
+          <li class="flex items-center gap-4">
+            <div class="flex aspect-square h-10 w-10 items-center justify-center self-start rounded-md bg-gray-800">
+              <LucideGoal class="h-5 w-5 text-blue-250" />
+            </div>
+            <div>
+              {description && <p class="font-medium">{description}</p>}
+              {Boolean(year) && (
+                <p class="pt-1 text-sm text-muted">Fram till {year}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  ) : null
+}
