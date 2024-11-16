@@ -62,30 +62,18 @@ const { municipality } = Astro.props
       }
     </Card>
 
-    <!-- {
-      isNumber(latestEmissions?.emissions?.calculatedTotalEmissions) && (
+    {
+      municipality.BudgetRunsOut && (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
-            <h3 class="flex items-center gap-1">
-              Totala utsläpp {getFormattedReportingPeriod(latestEmissions)}{' '}
-              {/* {Boolean(
-                latestEmissions.emissions.calculatedTotalEmissions.metadata
-                  .verifiedBy,
-              ) && <VerifiedBadge />} */}
-            </h3>
-            <span class="text-muted">(ton CO₂e)</span>
+            <h3 class="flex items-center gap-1">Koldioxidbudgeten tar slut </h3>
           </div>
 
-          <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-            {latestEmissions.emissions.calculatedTotalEmissions.toLocaleString(
-              'sv-SE',
-              {
-                maximumFractionDigits: 0,
-              },
-            )}
+          <p class="text-3xl leading-none tracking-tight text-red-500 sm:text-4xl md:text-5xl lg:text-6xl">
+            {municipality.BudgetRunsOut}
           </p>
         </Card>
       )
-    } -->
+    }
   </div>
 </Card>
