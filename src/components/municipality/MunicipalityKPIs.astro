@@ -15,6 +15,11 @@ const climateKPIs = [
     value: municipality.TotalConsumptionEmission.toFixed(1) + ' ton',
   },
   {
+    title: 'Klimatkrav i upphandlingar',
+    description: 'Ställer kommunen klimatkrav i sina upphandlingar?',
+    value: municipality.ProcurementLink ? 'Ja' : 'Nej',
+  },
+  {
     title: 'Elbilarna',
     description: 'Förändringstakt andel laddbara bilar',
     value:
@@ -28,7 +33,7 @@ const climateKPIs = [
   {
     title: 'Cyklarna',
     description: 'Antal meter cykelväg per invånare',
-    value: municipality.BicycleMetrePerCapita.toFixed(1) + ' meter',
+    value: municipality.BicycleMetrePerCapita.toFixed() + ' meter',
   },
 ]
 ---
