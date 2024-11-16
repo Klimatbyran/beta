@@ -20,27 +20,29 @@ const { municipality } = Astro.props
   <div class="grid gap-4 pt-4 md:grid-cols-2">
     <Card class="flex flex-col justify-between gap-2" level={2}>
       {
-        municipality.BudgetRunsOut && (
-          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Koldioxidbudget tar slut</h3>
-            <p class="text-sm text-red-500">{municipality.BudgetRunsOut}</p>
-          </div>
-        )
-      }
-
-      {
-        municipality.HitNetZero && (
-          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Når nettonollutsläpp</h3>
-            <p class="text-sm text-orange-250">{municipality.HitNetZero}</p>
-          </div>
-        )
-      }
-      {
         municipality.Population && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Utsläppsminskning för att klara Parisavtalet</h3>
             <p class="text-sm text-muted">{municipality.Population}</p>
+          </div>
+        )
+      }
+      {
+        municipality.PoliticalRule && (
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+            <h3>Här styr</h3>
+            <p class="text-sm text-muted">{municipality.PoliticalRule}</p>
+          </div>
+        )
+      }
+      {
+        municipality.TotalConsumptionEmission && (
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+            <h3>Kommunens konsumtionsutsläpp</h3>
+            <p class="text-sm text-orange-500">
+              {municipality.TotalConsumptionEmission.toFixed(1)}
+            </p>
+            <p class="text-sm text-muted">ton CO2/person/år</p>
           </div>
         )
       }
