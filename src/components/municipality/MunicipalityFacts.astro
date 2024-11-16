@@ -18,6 +18,19 @@ const { municipality } = Astro.props
   <p class="text-muted">{municipality.County}</p>
 
   <div class="grid gap-4 pt-4 md:grid-cols-2">
+    {
+      municipality.BudgetRunsOut && (
+        <Card level={2} class="flex flex-col justify-between gap-4">
+          <div class="flex items-start justify-between">
+            <h3 class="flex items-center gap-1">Koldioxidbudgeten tar slut </h3>
+          </div>
+
+          <p class="text-3xl leading-none tracking-tight text-red-500 sm:text-4xl md:text-5xl lg:text-6xl">
+            {municipality.BudgetRunsOut}
+          </p>
+        </Card>
+      )
+    }
     <Card class="flex flex-col justify-between gap-2" level={2}>
       {
         municipality.Population && (
@@ -32,17 +45,6 @@ const { municipality } = Astro.props
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Här styr</h3>
             <p class="text-sm text-muted">{municipality.PoliticalRule}</p>
-          </div>
-        )
-      }
-      {
-        municipality.TotalConsumptionEmission && (
-          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Kommunens konsumtionsutsläpp</h3>
-            <p class="text-sm text-orange-500">
-              {municipality.TotalConsumptionEmission.toFixed(1)}
-            </p>
-            <p class="text-sm text-muted">ton CO2/person/år</p>
           </div>
         )
       }
@@ -63,19 +65,5 @@ const { municipality } = Astro.props
         )
       }
     </Card>
-
-    {
-      municipality.BudgetRunsOut && (
-        <Card level={2} class="flex flex-col justify-between gap-4">
-          <div class="flex items-start justify-between">
-            <h3 class="flex items-center gap-1">Koldioxidbudgeten tar slut </h3>
-          </div>
-
-          <p class="text-3xl leading-none tracking-tight text-red-500 sm:text-4xl md:text-5xl lg:text-6xl">
-            {municipality.BudgetRunsOut}
-          </p>
-        </Card>
-      )
-    }
   </div>
 </Card>

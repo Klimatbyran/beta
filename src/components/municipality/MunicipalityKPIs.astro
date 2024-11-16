@@ -1,0 +1,69 @@
+---
+import { type Municipality } from '@/data/municipalityTypes'
+import { Card } from '../ui/card'
+
+interface Props {
+  municipality: Municipality
+}
+
+const { municipality } = Astro.props
+
+const climateKPIs = [
+  {
+    title: 'Hushållens konsumtionsutsläpp',
+    description: 'CO₂e per person och år',
+    value: municipality.TotalConsumptionEmission.toFixed(1) + ' ton',
+  },
+  {
+    title: 'Elbilarna',
+    description: 'Förändringstakt andel laddbara bilar',
+    value:
+      municipality.ElectricCarChangePercent.toFixed(1) + '  procentenheter',
+  },
+  {
+    title: 'Laddarna',
+    description: 'Antal elbilar per laddare',
+    value: municipality.ElectricVehiclePerChargePoints.toFixed(1),
+  },
+  {
+    title: 'Cyklarna',
+    description: 'Antal meter cykelväg per invånare',
+    value: municipality.BicycleMetrePerCapita.toFixed(1) + ' meter',
+  },
+]
+---
+
+{
+  municipality && (
+    <Card class="grid gap-8" level={1}>
+      <div>
+        <h2 class="pt-4 text-lg 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0">
+          Omställningen
+        </h2>
+        <p class="text-muted">
+          Här visas nyckeltal för hur det går med klimatomställningen i
+          kommunerna.
+        </p>
+      </div>
+      {climateKPIs.length ? (
+        <div class="grid gap-4">
+          {climateKPIs.map((kpi) => (
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="flex items-center gap-1 font-medium">{kpi.title}</h4>
+                {kpi.description && (
+                  <p class="text-sm text-muted">{kpi.description}</p>
+                )}
+              </div>
+              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
+                {kpi.value?.toLocaleString('sv-SE', {
+                  maximumFractionDigits: 0,
+                }) ?? '-'}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </Card>
+  )
+}
