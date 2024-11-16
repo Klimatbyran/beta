@@ -1,13 +1,8 @@
 ---
-import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import { type Municipality } from '@/data/municipalityTypes'
 import { buttonVariants } from '../ui/button'
-import CompanyFacts from './CompanyFacts.astro'
-import CompanyEmissions from './CompanyEmissions.astro'
-import CompanyGoals from './CompanyGoals.astro'
-import CompanyInitiatives from './CompanyInitiatives.astro'
-import OtherCompanies from './OtherCompanies.svelte'
-import LucideBadgeCheck from 'icons:astro/lucide/badge-check'
+import OtherMunicipalities from './OtherMunicipalities.svelte'
+import MunicipalityFacts from './MunicipalityFacts.astro'
 
 interface Props {
   municipality: Municipality
@@ -17,45 +12,19 @@ const { municipality } = Astro.props
 ---
 
 <article class="mx-auto max-w-screen-lg xs:px-4">
-  <!-- {
-    reportingPeriod ? (
-      <>
-        <div class="mt-8 grid gap-8">
-          <CompanyFacts {company} />
+  <>
+    <div class="mt-8 grid gap-8">
+      <MunicipalityFacts {municipality} />
 
-          <CompanyEmissions {company} />
+      <!-- <CompanyEmissions {company} />
 
-          <CompanyGoals goals={company.goals} />
+      <CompanyGoals goals={company.goals} />
 
-          <CompanyInitiatives initiatives={company.initiatives} />
+      <CompanyInitiatives initiatives={company.initiatives} /> -->
 
-          <div class="grid place-content-center py-16">
-            <OtherCompanies client:idle />
-          </div>
-        </div>
-      </>
-    ) : (
-      <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
-        <h1 class="text-4xl font-bold leading-none tracking-tight">
-          {company.name}
-        </h1>
-        <p class="py-4">Rapporteringsperioden saknas.</p>
-
-        <div class="grid w-full place-items-center">
-          <OtherCompanies client:load />
-
-          <a
-            class={buttonVariants({
-              variant: 'default',
-              class: 'mt-8 gap-1 pl-2',
-            })}
-            href="https://klimatkollen.se/foretag/utslappen/lista"
-          >
-            <LucideChevronLeft class="h-5 w-5" />
-            Tillbaka till alla företag
-          </a>
-        </div>
+      <div class="grid place-content-center py-16">
+        <OtherMunicipalities client:idle />
       </div>
-    ) -->
-  <!-- } -->
+    </div>
+  </>
 </article>

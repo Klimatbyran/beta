@@ -79,6 +79,7 @@ export class MunicipalityDataService {
 
     return {
       Name: data.kommun,
+      County: data.län,
       HistoricalEmission: emission,
       ApproximatedHistoricalEmission: approximatedEmission,
       EmissionTrend: trend,
