@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { municipality } = Astro.props
+const climatePlan = municipality?.ClimatePlan
+const climatePlanLink = climatePlan?.Link
 ---
 
 <Card class="text-sm" level={1}>
@@ -48,9 +50,22 @@ const { municipality } = Astro.props
           </div>
         )
       }
+      {
+        municipality && (
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+            <h3>Kommunens klimatplan</h3>
+
+            {climatePlan.YearAdapted !== 'Saknar plan' ? (
+              <p class="text-sm text-orange-250">{climatePlan.YearAdapted}</p>
+            ) : (
+              <p class="text-sm text-muted">Saknar plan</p>
+            )}
+          </div>
+        )
+      }
 
       {
-        municipality.ClimatePlan.Link ? (
+        municipality.ClimatePlan.Link !== 'Saknar plan' ? (
           <span>
             Läs{' '}
             <a
