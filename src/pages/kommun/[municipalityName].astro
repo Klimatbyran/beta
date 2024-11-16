@@ -1,0 +1,47 @@
+---
+import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
+
+import Layout from '@/layouts/Layout.astro'
+import Company from '@/components/company/Company.astro'
+import OtherCompanies from '@/components/company/OtherCompanies.svelte'
+import { buttonVariants } from '@/components/ui/button'
+import { MunicipalityDataService } from '@/data/municipalities'
+
+const { municipalityName = '' } = Astro.params
+const dataService = new MunicipalityDataService()
+const municipality = await dataService.getMunicipality(municipalityName)
+
+const title = `Klimatkollen - få koll på ${municipalityName}s utsläpp`
+---
+
+<Layout {title}>
+  {municipalityName}
+  {
+    municipality ? (
+      // <Company {municipality} />
+      <p>hej</p>
+    ) : (
+      <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
+        <p class="py-4">
+          Det finns ingen kommun {municipalityName}, men titta gärna på de andra
+          i listan nedanför!
+        </p>
+
+        <div class="grid w-full place-items-center">
+          <OtherCompanies client:load />
+
+          <a
+            class={buttonVariants({
+              variant: 'default',
+              class: 'mt-8 gap-1 pl-2',
+            })}
+            href="https://klimatkollen.se/foretag/utslappen/lista"
+          >
+            <LucideChevronLeft class="h-5 w-5" />
+            Tillbaka till alla företag
+          </a>
+        </div>
+      </div>
+    )
+  }
+</Layout>
