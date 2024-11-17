@@ -11,14 +11,6 @@ const { municipality } = Astro.props
 const climatePlan = municipality?.ClimatePlan
 const climatePlanLink = climatePlan?.Link
 
-const data = [
-  { date: '2007-04-23T00:00:00.000Z', close: 93.24 },
-  { date: '2007-04-24T00:00:00.000Z', close: 95.35 },
-  { date: '2007-04-25T00:00:00.000Z', close: 98.84 },
-  { date: '2007-04-26T00:00:00.000Z', close: 99.92 },
-  { date: '2007-04-29T00:00:00.000Z', close: 99.8 },
-]
-
 const historicalEmissions = municipality.HistoricalEmission.EmissionPerYear.map(
   (e) => ({
     year: e.Year,
