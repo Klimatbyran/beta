@@ -1,29 +1,39 @@
 <script>
-  import * as d3 from "d3";
+  import * as d3 from "d3"
 
-  export let historicalEmissions;
+  export let historicalEmissions
+  export let approximatedEmissions
+  export let trendEmissions
+  export let budgetEmissions
 
-  export let width = 928;
-  export let height = 500;
-  export let marginTop = 20;
-  export let marginRight = 30;
-  export let marginBottom = 30;
-  export let marginLeft = 40;
+  export let width = 928
+  export let height = 500
+  export let marginTop = 20
+  export let marginRight = 30
+  export let marginBottom = 30
+  export let marginLeft = 40
 
   const xScale = d3.scaleUtc(
-    d3.extent(historicalEmissions, (d) => new Date(d.year, 0, 1)),
+    d3.extent(
+      [
+        ...historicalEmissions,
+        ...approximatedEmissions,
+        ...trendEmissions,
+        ...budgetEmissions,
+      ].map((d) => new Date(d.year, 0, 1))
+    ),
     [marginLeft, width - marginRight]
-  );
+  )
 
   const yScale = d3.scaleLinear(
     [0, d3.max(historicalEmissions, (d) => d.emission/1000)],
     [height - marginBottom, marginTop]
-  );
+  )
 
   const line = d3
     .line()
     .x((d) => xScale(new Date(d.year, 0, 1)))
-    .y((d) => yScale(d.emission/1000));
+    .y((d) => yScale(d.emission/1000))
 </script>
 
 <svg
@@ -56,10 +66,13 @@
       </text>
     {/each}
 
-    <text fill="currentColor" text-anchor="start" x={-marginLeft} y={15}>
+    <text fill="currentColor" text-anchor="start" x={-marginLeft} y={12}>
       Tusen ton CO₂
     </text>
   </g>
 
-  <path fill="none" stroke="steelblue" stroke-width="1.5" d={line(historicalEmissions)} />
+  <path fill="none" stroke="orange" stroke-width="2" d={line(historicalEmissions)} />
+  <path fill="none" stroke="orange" stroke-dasharray="4,4" stroke-width="2" d={line(approximatedEmissions)} />
+  <path fill="none" stroke="red" stroke-width="2" d={line(trendEmissions)} />
+  <path fill="none" stroke="steelblue" stroke-width="2" d={line(budgetEmissions)} />
 </svg>

@@ -8,8 +8,6 @@ interface Props {
 }
 
 const { municipality } = Astro.props
-const climatePlan = municipality?.ClimatePlan
-const climatePlanLink = climatePlan?.Link
 
 const historicalEmissions = municipality.HistoricalEmission.EmissionPerYear.map(
   (e) => ({
@@ -17,8 +15,6 @@ const historicalEmissions = municipality.HistoricalEmission.EmissionPerYear.map(
     emission: e.CO2Equivalent,
   }),
 )
-
-console.log(historicalEmissions)
 
 const approximatedEmissions =
   municipality.ApproximatedHistoricalEmission.EmissionPerYear.map((e) => ({
@@ -45,6 +41,11 @@ const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
   </h5>
 
   <div class="grid gap-4 pt-4">
-    <MunicipalityGraph {historicalEmissions} />
+    <MunicipalityGraph
+      {historicalEmissions}
+      {approximatedEmissions}
+      {trendEmissions}
+      {budgetEmissions}
+    />
   </div>
 </Card>
