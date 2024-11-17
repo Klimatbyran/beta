@@ -40,14 +40,13 @@
   {width}
   {height}
   viewBox="0 0 {width} {height}"
-  style:max-width="100%"
-  style:height="auto"
+  class="w-full h-auto"
 >
   <g transform="translate(0,{height - marginBottom})">
-    <line stroke="currentColor" x1={marginLeft - 6} x2={width} />
+    <line class="stroke-current" x1={marginLeft - 6} x2={width} />
 
     {#each xScale.ticks() as tick}
-      <text fill="currentColor" text-anchor="middle" x={xScale(tick)} y={22}>
+      <text class="fill-white" text-anchor="middle" x={xScale(tick)} y={22}>
         {tick.getFullYear()}
       </text>
     {/each}
@@ -56,23 +55,44 @@
   <g transform="translate({marginLeft},0)">
     {#each yScale.ticks() as tick}
       <text
-        fill="currentColor"
+        class="fill-white"
         text-anchor="end"
         dominant-baseline="middle"
-        x={-9}
+        x={-8}
         y={yScale(tick)}
       >
         {tick}
       </text>
     {/each}
 
-    <text fill="currentColor" text-anchor="start" x={-marginLeft} y={12}>
+    <text class="text-lg font-semibold fill-white" text-anchor="start" x={-marginLeft} y={14}>
       Tusen ton CO₂
     </text>
   </g>
 
-  <path fill="none" stroke="orange" stroke-width="2" d={line(historicalEmissions)} />
-  <path fill="none" stroke="orange" stroke-dasharray="4,4" stroke-width="2" d={line(approximatedEmissions)} />
-  <path fill="none" stroke="red" stroke-width="2" d={line(trendEmissions)} />
-  <path fill="none" stroke="steelblue" stroke-width="2" d={line(budgetEmissions)} />
+  <path
+    class="stroke-orange-500"
+    fill="none"
+    stroke-width="2"
+    d={line(historicalEmissions)}
+  />
+  <path
+    class="stroke-orange-500"
+    stroke-dasharray="4,4"
+    fill="none"
+    stroke-width="2"
+    d={line(approximatedEmissions)}
+  />
+  <path
+    class="stroke-red-500"
+    fill="none"
+    stroke-width="2"
+    d={line(trendEmissions)}
+  />
+  <path
+    class="stroke-blue-500"
+    fill="none"
+    stroke-width="2"
+    d={line(budgetEmissions)}
+  />
 </svg>
