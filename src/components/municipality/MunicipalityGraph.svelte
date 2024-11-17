@@ -11,7 +11,7 @@
   export let marginLeft = 40;
 
   const xScale = d3.scaleUtc(
-    d3.extent(historicalEmissions, (d) => d.year),
+    d3.extent(historicalEmissions, (d) => new Date(d.year, 0, 1)),
     [marginLeft, width - marginRight]
   );
 
@@ -22,7 +22,7 @@
 
   const line = d3
     .line()
-    .x((d) => xScale(d.year))
+    .x((d) => xScale(new Date(d.year, 0, 1)))
     .y((d) => yScale(d.emission));
 </script>
 
