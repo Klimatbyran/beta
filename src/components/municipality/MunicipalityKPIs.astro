@@ -60,9 +60,7 @@ const climateKPIs = [
                 )}
               </div>
               <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
-                {kpi.value?.toLocaleString('sv-SE', {
-                  maximumFractionDigits: 0,
-                }) ?? '-'}
+                {kpi.value ? kpi.value : '-'}
               </span>
             </div>
           ))}

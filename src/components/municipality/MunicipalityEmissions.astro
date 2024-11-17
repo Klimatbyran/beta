@@ -1,0 +1,58 @@
+---
+import { type Municipality } from '@/data/municipalityTypes'
+import { Card } from '../ui/card'
+import MunicipalityGraph from './MunicipalityGraph.svelte'
+
+interface Props {
+  municipality: Municipality
+}
+
+const { municipality } = Astro.props
+const climatePlan = municipality?.ClimatePlan
+const climatePlanLink = climatePlan?.Link
+
+const data = [
+  { date: '2007-04-23T00:00:00.000Z', close: 93.24 },
+  { date: '2007-04-24T00:00:00.000Z', close: 95.35 },
+  { date: '2007-04-25T00:00:00.000Z', close: 98.84 },
+  { date: '2007-04-26T00:00:00.000Z', close: 99.92 },
+  { date: '2007-04-29T00:00:00.000Z', close: 99.8 },
+]
+
+const historicalEmissions = municipality.HistoricalEmission.EmissionPerYear.map(
+  (e) => ({
+    year: e.Year,
+    emission: e.CO2Equivalent,
+  }),
+)
+
+console.log(historicalEmissions)
+
+const approximatedEmissions =
+  municipality.ApproximatedHistoricalEmission.EmissionPerYear.map((e) => ({
+    year: e.Year,
+    emission: e.CO2Equivalent,
+  }))
+
+const trendEmissions = municipality.EmissionTrend.TrendPerYear.map((e) => ({
+  year: e.Year,
+  emission: e.CO2Equivalent,
+}))
+
+const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
+  year: e.Year,
+  emission: e.CO2Equivalent,
+}))
+---
+
+<Card class="text-sm" level={1}>
+  <h5
+    class="text-l text-balance pb-4 pt-4 leading-none tracking-tight md:pt-0 lg:text-xl"
+  >
+    Kommunens utsläpp
+  </h5>
+
+  <div class="grid gap-4 pt-4">
+    <MunicipalityGraph {historicalEmissions} />
+  </div>
+</Card>

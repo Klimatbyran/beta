@@ -1,9 +1,9 @@
 ---
 import { type Municipality } from '@/data/municipalityTypes'
-import { buttonVariants } from '../ui/button'
 import OtherMunicipalities from './OtherMunicipalities.svelte'
 import MunicipalityFacts from './MunicipalityFacts.astro'
 import MunicipalityKPIs from './MunicipalityKPIs.astro'
+import MunicipalityEmissions from './MunicipalityEmissions.astro'
 
 interface Props {
   municipality: Municipality
@@ -19,9 +19,7 @@ const { municipality } = Astro.props
 
       <MunicipalityKPIs {municipality} />
 
-      <!-- <CompanyGoals goals={company.goals} />
-
-      <CompanyInitiatives initiatives={company.initiatives} /> -->
+      <MunicipalityEmissions {municipality} />
 
       <div class="grid place-content-center py-16">
         <OtherMunicipalities client:idle />
