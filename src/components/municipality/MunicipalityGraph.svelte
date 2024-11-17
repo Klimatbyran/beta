@@ -16,14 +16,14 @@
   );
 
   const yScale = d3.scaleLinear(
-    [0, d3.max(historicalEmissions, (d) => d.emission)],
+    [0, d3.max(historicalEmissions, (d) => d.emission/1000)],
     [height - marginBottom, marginTop]
   );
 
   const line = d3
     .line()
     .x((d) => xScale(new Date(d.year, 0, 1)))
-    .y((d) => yScale(d.emission));
+    .y((d) => yScale(d.emission/1000));
 </script>
 
 <svg
