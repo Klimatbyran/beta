@@ -1,98 +1,107 @@
-<script>
-  import * as d3 from "d3"
+<script lang="ts">
+  import { Chart, registerables } from 'chart.js'
+  import { onMount } from 'svelte'
 
-  export let historicalEmissions
-  export let approximatedEmissions
-  export let trendEmissions
-  export let budgetEmissions
+  Chart.register(...registerables)
 
-  export let width = 1000
-  export let height = 500
-  export let marginTop = 20
-  export let marginRight = 30
-  export let marginBottom = 30
-  export let marginLeft = 40
+  export let historicalEmissions = []
+  export let approximatedEmissions = []
+  export let trendEmissions = []
+  export let budgetEmissions = []
 
-  const xScale = d3.scaleUtc(
-    d3.extent(
-      [
-        ...historicalEmissions,
-        ...approximatedEmissions,
-        ...trendEmissions,
-        ...budgetEmissions,
-      ].map((d) => new Date(d.year, 0, 1))
-    ),
-    [marginLeft, width - marginRight]
-  )
+  let lineChartElement: HTMLCanvasElement
 
-  const yScale = d3.scaleLinear(
-    [0, d3.max(historicalEmissions, (d) => d.emission/1000)],
-    [height - marginBottom, marginTop]
-  )
+  const allYears = [
+    ...new Set([
+      ...historicalEmissions.map(({ year }) => year),
+      ...approximatedEmissions.map(({ year }) => year),
+      ...trendEmissions.map(({ year }) => year),
+      ...budgetEmissions.map(({ year }) => year),
+    ]),
+  ].sort((a, b) => a - b)
 
-  const line = d3
-    .line()
-    .x((d) => xScale(new Date(d.year, 0, 1)))
-    .y((d) => yScale(d.emission/1000))
+  const getDataForYear = (data, year) => {
+    const record = data.find((item) => item.year === year)
+    return record ? record.emission : null // Return null if the year is not present
+  }
+
+  const chartData = {
+    labels: allYears,
+    datasets: [
+      {
+        label: 'Historical Emissions',
+        data: allYears.map((year) => getDataForYear(historicalEmissions, year)),
+        borderColor: 'hsl(43 100% 52%)',
+        backgroundColor: 'hsl(43 100% 52% / 40%)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.1,
+      },
+      {
+        label: 'Approximated Emissions',
+        data: allYears.map((year) =>
+          getDataForYear(approximatedEmissions, year),
+        ),
+        borderColor: 'hsl(220 100% 50%)',
+        backgroundColor: 'hsl(220 100% 50% / 40%)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        fill: true,
+        tension: 0.1,
+      },
+      {
+        label: 'Trend Emissions',
+        data: allYears.map((year) => getDataForYear(trendEmissions, year)),
+        borderColor: 'hsl(10 80% 50%)',
+        backgroundColor: 'hsl(10 80% 50% / 40%)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.1,
+      },
+      {
+        label: 'Budget Emissions',
+        data: allYears.map((year) => getDataForYear(budgetEmissions, year)),
+        borderColor: 'hsl(120 50% 50%)',
+        backgroundColor: 'hsl(120 50% 50% / 40%)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.1,
+      },
+    ],
+  }
+
+  onMount(() => {
+    if (!lineChartElement) {
+      console.error('Canvas element not bound correctly')
+      return
+    }
+    new Chart(lineChartElement, {
+      type: 'line',
+      data: chartData,
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+        scales: {
+          x: {
+            min: Math.min(...allYears),
+            max: Math.max(...allYears),
+          },
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Tusen ton CO₂',
+            },
+          },
+        },
+      },
+    })
+  })
 </script>
 
-<svg
-  {width}
-  {height}
-  viewBox="0 0 {width} {height}"
-  class="w-full h-auto"
->
-  <g transform="translate(0,{height - marginBottom})">
-    <line class="stroke-current" x1={marginLeft - 6} x2={width} />
-
-    {#each [...xScale.ticks(d3.utcYear.every(10)), new Date(2050, 0, 1)] as tick (tick)}
-      <text class="text-2xl md:text-sm fill-white" text-anchor="middle" x={xScale(tick)} y={22}>
-        {tick.getFullYear()}
-      </text>
-    {/each}
-  </g>
-
-  <g transform="translate({marginLeft},0)">
-    {#each yScale.ticks() as tick}
-      <text
-        class="text-2xl md:text-sm fill-white"
-        text-anchor="end"
-        dominant-baseline="middle"
-        x={-8}
-        y={yScale(tick)}
-      >
-        {tick}
-      </text>
-    {/each}
-
-    <text class="text-3xl md:text-lg font-semibold fill-white" text-anchor="start" x={-marginLeft} y={14}>
-      Tusen ton CO₂
-    </text>
-  </g>
-
-  <path
-    class="stroke-orange-500"
-    fill="none"
-    stroke-width="3"
-    d={line(historicalEmissions)}
-  />
-  <path
-    class="stroke-orange-500"
-    stroke-dasharray="4,4"
-    fill="none"
-    stroke-width="3"
-    d={line(approximatedEmissions)}
-  />
-  <path
-    class="stroke-red-500"
-    fill="none"
-    stroke-width="3"
-    d={line(trendEmissions)}
-  />
-  <path
-    class="stroke-blue-500"
-    fill="none"
-    stroke-width="3"
-    d={line(budgetEmissions)}
-  />
-</svg>
+<main>
+  <canvas bind:this={lineChartElement}></canvas>
+</main>

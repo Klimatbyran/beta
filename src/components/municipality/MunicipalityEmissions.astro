@@ -9,6 +9,9 @@ interface Props {
 
 const { municipality } = Astro.props
 
+console.log('hejsan')
+console.log(municipality)
+
 const historicalEmissions = municipality.HistoricalEmission.EmissionPerYear.map(
   (e) => ({
     year: e.Year,
@@ -42,6 +45,7 @@ const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
 
   <div class="grid gap-4 pt-4">
     <MunicipalityGraph
+      client:load
       {historicalEmissions}
       {approximatedEmissions}
       {trendEmissions}
