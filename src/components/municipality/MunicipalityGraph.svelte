@@ -29,40 +29,40 @@
     labels: allYears,
     datasets: [
       {
-        label: 'Historical Emissions',
+        label: 'Historiskt',
         data: allYears.map((year) => getDataForYear(historicalEmissions, year)),
         borderColor: 'rgba(244, 143, 42)',
-        backgroundColor: 'rgba(244, 143, 42, 0.2)',
+        backgroundColor: 'rgba(244, 143, 42, 0.4)',
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
       },
       {
-        label: 'Approximated Emissions',
+        label: 'Approximerat',
         data: allYears.map((year) =>
           getDataForYear(approximatedEmissions, year),
         ),
         borderColor: 'rgba(244, 143, 42)',
-        backgroundColor: 'rgba(244, 143, 42, 0.2)',
+        backgroundColor: 'rgba(244, 143, 42, 0.4)',
         borderDash: [5, 5],
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
       },
       {
-        label: 'Trend Emissions',
-        data: allYears.map((year) => getDataForYear(trendEmissions, year)),
-        borderColor: 'rgba(247, 60, 85)',
-        backgroundColor: 'rgba(247, 60, 85, 0.2)',
+        label: 'Budget',
+        data: allYears.map((year) => getDataForYear(budgetEmissions, year)),
+        borderColor: 'rgba(89, 160, 225)',
+        backgroundColor: 'rgba(89, 160, 225, 0.5)',
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
       },
       {
-        label: 'Budget Emissions',
-        data: allYears.map((year) => getDataForYear(budgetEmissions, year)),
-        borderColor: 'rgba(89, 160, 225)',
-        backgroundColor: 'rgba(89, 160, 225, 0.4)',
+        label: 'Trend',
+        data: allYears.map((year) => getDataForYear(trendEmissions, year)),
+        borderColor: 'rgba(247, 60, 85)',
+        backgroundColor: 'rgba(247, 60, 85, 0.4)',
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
@@ -96,9 +96,8 @@
               text: 'Tusen ton CO₂',
             },
             ticks: {
-              // Modify tick values to divide by 1000
               callback: function (value) {
-                return value / 1000 // Divide y-values by 1000
+                return value / 1000
               },
             },
           },
