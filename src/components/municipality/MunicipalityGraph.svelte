@@ -22,7 +22,7 @@
 
   const getDataForYear = (data, year) => {
     const record = data.find((item) => item.year === year)
-    return record ? record.emission : null // Return null if the year is not present
+    return record ? record.emission : null
   }
 
   const chartData = {
@@ -31,41 +31,41 @@
       {
         label: 'Historical Emissions',
         data: allYears.map((year) => getDataForYear(historicalEmissions, year)),
-        borderColor: 'hsl(43 100% 52%)',
-        backgroundColor: 'hsl(43 100% 52% / 40%)',
+        borderColor: 'rgba(244, 143, 42)',
+        backgroundColor: 'rgba(244, 143, 42, 0.2)',
         borderWidth: 2,
         fill: true,
-        tension: 0.1,
+        pointRadius: 0,
       },
       {
         label: 'Approximated Emissions',
         data: allYears.map((year) =>
           getDataForYear(approximatedEmissions, year),
         ),
-        borderColor: 'hsl(220 100% 50%)',
-        backgroundColor: 'hsl(220 100% 50% / 40%)',
+        borderColor: 'rgba(244, 143, 42)',
+        backgroundColor: 'rgba(244, 143, 42, 0.2)',
         borderDash: [5, 5],
         borderWidth: 2,
         fill: true,
-        tension: 0.1,
+        pointRadius: 0,
       },
       {
         label: 'Trend Emissions',
         data: allYears.map((year) => getDataForYear(trendEmissions, year)),
-        borderColor: 'hsl(10 80% 50%)',
-        backgroundColor: 'hsl(10 80% 50% / 40%)',
+        borderColor: 'rgba(247, 60, 85)',
+        backgroundColor: 'rgba(247, 60, 85, 0.2)',
         borderWidth: 2,
         fill: true,
-        tension: 0.1,
+        pointRadius: 0,
       },
       {
         label: 'Budget Emissions',
         data: allYears.map((year) => getDataForYear(budgetEmissions, year)),
-        borderColor: 'hsl(120 50% 50%)',
-        backgroundColor: 'hsl(120 50% 50% / 40%)',
+        borderColor: 'rgba(89, 160, 225)',
+        backgroundColor: 'rgba(89, 160, 225, 0.4)',
         borderWidth: 2,
         fill: true,
-        tension: 0.1,
+        pointRadius: 0,
       },
     ],
   }
@@ -94,6 +94,12 @@
             title: {
               display: true,
               text: 'Tusen ton CO₂',
+            },
+            ticks: {
+              // Modify tick values to divide by 1000
+              callback: function (value) {
+                return value / 1000 // Divide y-values by 1000
+              },
             },
           },
         },
