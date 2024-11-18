@@ -78,6 +78,7 @@
         plugins: {
           legend: {
             display: true,
+            position: 'bottom',
           },
         },
         scales: {
