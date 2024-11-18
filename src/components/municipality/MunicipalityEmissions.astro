@@ -25,6 +25,19 @@ const approximatedEmissions =
     emission: e.CO2Equivalent,
   }))
 
+const combinedPastEmissions = [
+  ...historicalEmissions.map((e) => ({
+    year: e.year,
+    emission: e.emission,
+    source: 'historical',
+  })),
+  ...approximatedEmissions.map((e) => ({
+    year: e.year,
+    emission: e.emission,
+    source: 'approximated',
+  })),
+]
+
 const trendEmissions = municipality.EmissionTrend.TrendPerYear.map((e) => ({
   year: e.Year,
   emission: e.CO2Equivalent,
@@ -46,8 +59,7 @@ const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
   <div class="grid gap-4 pt-4">
     <MunicipalityGraph
       client:load
-      {historicalEmissions}
-      {approximatedEmissions}
+      {combinedPastEmissions}
       {trendEmissions}
       {budgetEmissions}
     />

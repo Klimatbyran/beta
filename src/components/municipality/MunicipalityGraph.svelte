@@ -4,8 +4,7 @@
 
   Chart.register(...registerables)
 
-  export let historicalEmissions = []
-  export let approximatedEmissions = []
+  export let combinedPastEmissions = []
   export let trendEmissions = []
   export let budgetEmissions = []
 
@@ -13,8 +12,7 @@
 
   const allYears = [
     ...new Set([
-      ...historicalEmissions.map(({ year }) => year),
-      ...approximatedEmissions.map(({ year }) => year),
+      ...combinedPastEmissions.map(({ year }) => year),
       ...trendEmissions.map(({ year }) => year),
       ...budgetEmissions.map(({ year }) => year),
     ]),
@@ -30,21 +28,11 @@
     datasets: [
       {
         label: 'Historiskt',
-        data: allYears.map((year) => getDataForYear(historicalEmissions, year)),
-        borderColor: 'rgba(244, 143, 42)',
-        backgroundColor: 'rgba(244, 143, 42, 0.4)',
-        borderWidth: 2,
-        fill: true,
-        pointRadius: 0,
-      },
-      {
-        label: 'Approximerat',
         data: allYears.map((year) =>
-          getDataForYear(approximatedEmissions, year),
+          getDataForYear(combinedPastEmissions, year),
         ),
         borderColor: 'rgba(244, 143, 42)',
         backgroundColor: 'rgba(244, 143, 42, 0.4)',
-        borderDash: [5, 5],
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
@@ -53,7 +41,7 @@
         label: 'Budget',
         data: allYears.map((year) => getDataForYear(budgetEmissions, year)),
         borderColor: 'rgba(89, 160, 225)',
-        backgroundColor: 'rgba(89, 160, 225, 0.5)',
+        backgroundColor: 'rgba(89, 160, 225, 0.7)',
         borderWidth: 2,
         fill: true,
         pointRadius: 0,
