@@ -23,6 +23,14 @@
     return record ? record.emission : null
   }
 
+  const allData = [
+    ...combinedPastEmissions,
+    ...trendEmissions,
+    ...budgetEmissions,
+  ]
+  const rawMax = Math.max(...allData.map(({ emission }) => emission))
+  const globalMax = Math.ceil(rawMax / 1000) * 1000
+
   const chartData = {
     labels: allYears,
     datasets: [
@@ -78,7 +86,8 @@
             max: Math.max(...allYears),
           },
           y: {
-            beginAtZero: true,
+            min: 0,
+            max: globalMax,
             title: {
               display: true,
               text: 'Tusen ton CO₂',
