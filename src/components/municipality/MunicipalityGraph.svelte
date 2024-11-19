@@ -83,8 +83,17 @@
         },
         scales: {
           x: {
-            min: Math.min(...allYears),
-            max: Math.max(...allYears),
+            type: 'linear',
+            title: {
+              display: true,
+              text: 'År',
+            },
+            ticks: {
+              stepSize: 10,
+              callback: function (value) {
+                return value
+              },
+            },
           },
           y: {
             min: 0,
