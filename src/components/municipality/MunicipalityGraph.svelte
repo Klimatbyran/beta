@@ -80,6 +80,28 @@
             display: true,
             position: 'bottom',
           },
+          tooltip: {
+            enabled: true,
+            displayColors: false,
+            callbacks: {
+              title: () => '',
+              label: function (tooltipData) {
+                const emissions =
+                  tooltipData.dataset.data[tooltipData.dataIndex]
+                const formattedEmissions = (emissions / 1000).toFixed(0)
+
+                return `${formattedEmissions}`
+              },
+            },
+          },
+        },
+        interaction: {
+          mode: 'nearest',
+          intersect: false,
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: false,
         },
         scales: {
           x: {
@@ -111,6 +133,8 @@
         },
       },
     })
+
+    lineChartElement.style.cursor = 'pointer'
   })
 </script>
 
