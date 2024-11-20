@@ -11,6 +11,7 @@ import type {
   ApproximatedEmission,
 } from './municipalityTypes'
 import jsonData from './municipalityData.json'
+import { PoliticalRuleService } from './politicalRuleSerivce'
 
 export class MunicipalityDataService {
   public getMunicipality(name: string): Municipality | undefined {
@@ -77,9 +78,16 @@ export class MunicipalityDataService {
       Comment: data.climatePlanComment,
     }
 
+    const politicalRuleService = new PoliticalRuleService()
+    const politicalRule: string[] = politicalRuleService.getPoliticalRule(
+      data.kommun,
+    )
+    const formattedPoliticalRule = politicalRule.join(', ')
+
     return {
       Name: data.kommun,
       County: data.län,
+      PoliticalRule: formattedPoliticalRule,
       HistoricalEmission: emission,
       ApproximatedHistoricalEmission: approximatedEmission,
       EmissionTrend: trend,
