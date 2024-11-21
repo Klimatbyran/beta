@@ -1,0 +1,206 @@
+/* header.css */
+.bg-black {
+  background-color: black; /* Ensures the background is black */
+}
+
+.text-white {
+  color: white; /* Ensures the text is white */
+}
+
+.min-h-screen {
+  min-block-size: 100vh; /* Full height for background */
+}
+
+.p-4 {
+  padding: 1rem; /* Adds padding around the content */
+}
+
+.relative {
+  position: relative;
+}
+
+.mb-8 {
+  margin-block-end: 2rem; /* Adds spacing below the text */
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-bold {
+  font-weight: bold; /* Makes the text bold */
+}
+
+.mt-2 {
+  margin-block-start: 0.5rem; /* Space between h1 and paragraph */
+}
+
+/* Center and align content */
+.bg-black {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block-start: 3rem; /* Adds spacing below the header */
+}
+
+.content-container {
+  text-align: center;
+  max-inline-size: 900px;
+  padding: 1rem;
+  margin-block-end: 2rem;
+}
+
+h1 {
+  font-size: 1.875rem; /* Approx 30px */
+  font-weight: bold;
+  margin-block-end: 0.5rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ccc;
+  margin-block-start: 0.5rem;
+}
+
+.accordion {
+  inline-size: 100%;
+  max-inline-size: 790px;
+  padding: 1rem;
+  margin-block-end: 2rem;
+}
+.accordion-item {
+  padding: 1rem 0;
+}
+
+.accordion-item h2 {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.accordion-item p {
+  color: #ccc;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 0.5rem 0;
+}
+
+/* Content container styling for alignment */
+.content-container {
+  max-inline-size: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: start;
+}
+
+/* Title styling */
+.intro-title {
+  font-family: 'DM Sans Variable', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin-block-end: 16px;
+  padding: 0;
+  color: white;
+  line-height: 40px;
+}
+
+/* Intro text styling */
+.intro-text {
+  font-family: 'DM Sans Variable', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin-block-start: 8px;
+  margin-block-end: 8px;
+  color: white;
+  line-height: 1.6;
+}
+
+/* Accordion styling */
+.accordion {
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+}
+
+/* For mobile phones: */
+[class*='col-'] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {
+    width: 8.33%;
+  }
+  .col-s-2 {
+    width: 16.66%;
+  }
+  .col-s-3 {
+    width: 25%;
+  }
+  .col-s-4 {
+    width: 33.33%;
+  }
+  .col-s-5 {
+    width: 41.66%;
+  }
+  .col-s-6 {
+    width: 50%;
+  }
+  .col-s-7 {
+    width: 58.33%;
+  }
+  .col-s-8 {
+    width: 66.66%;
+  }
+  .col-s-9 {
+    width: 75%;
+  }
+  .col-s-10 {
+    width: 83.33%;
+  }
+  .col-s-11 {
+    width: 91.66%;
+  }
+  .col-s-12 {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {
+    width: 8.33%;
+  }
+  .col-2 {
+    width: 16.66%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-4 {
+    width: 33.33%;
+  }
+  .col-5 {
+    width: 41.66%;
+  }
+  .col-6 {
+    width: 50%;
+  }
+  .col-7 {
+    width: 58.33%;
+  }
+  .col-8 {
+    width: 66.66%;
+  }
+  .col-9 {
+    width: 75%;
+  }
+  .col-10 {
+    width: 83.33%;
+  }
+  .col-11 {
+    width: 91.66%;
+  }
+  .col-12 {
+    width: 100%;
+  }
+}

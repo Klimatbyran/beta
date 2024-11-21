@@ -1,7 +1,20 @@
 ---
 import Layout from '@/layouts/Layout.astro'
+import Accordion from '@/components/ui/collapsible/accordion.svelte'
+import '../css/om-oss.css'
 
 const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
 ---
 
-<Layout {title}> hej </Layout>
+<Layout {title}>
+  <div class="bg-black text-white mt-12 min-h-screen p-4">
+    <div class="content-container">
+      <h1 class="intro-title">Om oss</h1>
+      <p class="intro-text">
+        Klimatkollen är en medborgarplattform som tillgängliggör klimatdata.
+        Klicka på rubrikerna för att läsa mer.
+      </p>
+      <Accordion client:load />
+    </div>
+  </div>
+</Layout>

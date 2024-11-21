@@ -1,43 +1,106 @@
 ---
-import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
+import '../css/header.css'
 
-// const navItems = [
-//   {
-//     href: 'https://www.klimatkollen.se/kallor-och-metod',
-//     label: 'Källor och metod',
-//   },
-//   { href: 'https://www.klimatkollen.se/om-oss', label: 'Om oss' },
-//   { href: 'https://klimatkollen.teamtailor.com/', label: 'Jobb' },
-//   { href: 'https://www.klimatkollen.se/in-english', label: 'In English' },
-// ]
-
+// Defining the base URL first
 const baseURL = import.meta.env.DEV
-  ? 'http://localhost:3000'
+  ? 'http://localhost:4321'
   : 'https://klimatkollen.se'
+
+// Defining navigation items after baseURL
+const navItems = [
+  {
+    href: `https://www.klimatkollen.se/kallor-och-metod`,
+    label: 'Källor och metod',
+  },
+  { href: `${baseURL}/om-oss`, label: 'Om oss' },
+  { href: `https://klimatkollen.teamtailor.com/`, label: 'Jobb' },
+  { href: `https://www.klimatkollen.se/in-english`, label: 'In English' },
+  //{ href: `${baseURL}/menu`, label: 'Meny' },
+]
 ---
 
-<header class="sticky top-0 z-50 w-full bg-black">
+<header class="header-container">
   <div
-    class="container relative flex h-12 max-w-screen-2xl items-center justify-between"
+    class="container relative flex h-12 max-w-screen-2xl items-center justify-between px-4"
   >
-    <div class="absolute left-0 z-30 flex h-full items-center pl-4">
-      <a
-        href={`${baseURL}/foretag/utslappen/lista`}
-        class="-ml-2 p-2 text-white"
-        title="Gå tillbaka"
-        aria-label="Gå tillbaka"
-      >
-        <LucideChevronLeft class="h-6 w-6" />
-      </a>
-    </div>
-    <div class="absolute inset-0 z-20 flex items-center justify-center">
-      <a class="flex items-center pt-1" href={baseURL}>
+    <!-- Center: Logo -->
+    <div
+      class="header-logo absolute inset-0 z-20 flex items-center justify-center"
+    >
+      <a href={baseURL} class="flex items-center">
         <img
           src="/klimatkollen_logo.svg"
           alt="Klimatkollen logga"
-          width={150}
+          width="150"
+          class="pt-1"
         />
       </a>
     </div>
+
+    <!-- Right: Navigation Links -->
+    <nav class="nav-list">
+      {
+        navItems.map((item) => (
+          <a href={item.href} class="nav-link">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Mobile Hamburger Menu -->
+    <div class="hamburger-menu">
+      <button type="button" class="hamburger-button">
+        <img src="/icons/menu.svg" alt="Menu Icon" width="32" height="32" />
+      </button>
+    </div>
   </div>
+
+  <!-- Fullscreen Menu -->
+  <div class="fullscreen-menu hidden">
+    <div class="separator"></div>
+
+    <button class="close-menu">
+      <div class="close-icon-wrapper">
+        <img
+          src="/icons/close.svg"
+          alt="Close Icon"
+          width="32"
+          height="32"
+          class="close-icon"
+        />
+      </div>
+    </button>
+
+    <nav>
+      {
+        navItems.map((item) => (
+          <a href={item.href} class="hamburger-link">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburgerButton = document.querySelector('.hamburger-button')
+      const fullscreenMenu = document.querySelector('.fullscreen-menu')
+      const closeButton = document.querySelector('.close-menu')
+
+      if (hamburgerButton && fullscreenMenu) {
+        hamburgerButton.addEventListener('click', () => {
+          fullscreenMenu.classList.remove('hidden')
+          fullscreenMenu.classList.add('open')
+        })
+      }
+
+      if (closeButton && fullscreenMenu) {
+        closeButton.addEventListener('click', () => {
+          fullscreenMenu.classList.add('hidden')
+          fullscreenMenu.classList.remove('open')
+        })
+      }
+    })
+  </script>
 </header>
