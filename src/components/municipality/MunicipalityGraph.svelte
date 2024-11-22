@@ -75,6 +75,7 @@
       type: 'line',
       data: chartData,
       options: {
+        responsive: true,
         plugins: {
           legend: {
             display: true,
@@ -111,7 +112,6 @@
               text: 'År',
             },
             ticks: {
-              stepSize: 10,
               callback: function (value) {
                 return value
               },
