@@ -22,10 +22,7 @@ const climatePlanLink = climatePlan?.Link
     {
       municipality.BudgetRunsOut && (
         <Card level={2} class="flex flex-col justify-between gap-4">
-          <div class="flex items-start justify-between">
-            <h3 class="flex items-center gap-1">Koldioxidbudgeten tar slut </h3>
-          </div>
-
+          <h3 class="flex items-center gap-1">Koldioxidbudgeten tar slut </h3>
           <p class="text-3xl leading-none tracking-tight text-red-500 sm:text-4xl md:text-5xl lg:text-6xl">
             {municipality.BudgetRunsOut}
           </p>
@@ -37,7 +34,7 @@ const climatePlanLink = climatePlan?.Link
         municipality.County && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Län</h3>
-            <p class="text-sm text-muted">{municipality.County}</p>
+            <p class="text-sm text-orange-250">{municipality.County}</p>
           </div>
         )
       }
@@ -45,15 +42,7 @@ const climatePlanLink = climatePlan?.Link
         municipality.Population && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Utsläppsminskning för att klara Parisavtalet</h3>
-            <p class="text-sm text-muted">{municipality.Population}</p>
-          </div>
-        )
-      }
-      {
-        municipality.PoliticalRule && (
-          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Här styr</h3>
-            <p class="text-sm text-muted">{municipality.PoliticalRule}</p>
+            <p class="text-sm text-orange-250">{municipality.Population}</p>
           </div>
         )
       }
@@ -65,7 +54,14 @@ const climatePlanLink = climatePlan?.Link
           </div>
         )
       }
-
+      {
+        municipality.PoliticalRule && (
+          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+            <h3>Här styr</h3>
+            <p class="text-sm text-orange-250">{municipality.PoliticalRule}</p>
+          </div>
+        )
+      }
       {
         municipality.ClimatePlan.Link !== 'Saknar plan' ? (
           <span>

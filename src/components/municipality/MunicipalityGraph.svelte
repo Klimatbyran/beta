@@ -1,12 +1,46 @@
 <script lang="ts">
+  import type { EmissionPerYear, Municipality } from '@/data/municipalityTypes'
   import { Chart, registerables } from 'chart.js'
   import { onMount } from 'svelte'
 
+  export let municipality: Municipality
+
   Chart.register(...registerables)
 
-  export let combinedPastEmissions = []
-  export let trendEmissions = []
-  export let budgetEmissions = []
+  const historicalEmissions =
+    municipality.HistoricalEmission.EmissionPerYear.map((e) => ({
+      year: e.Year,
+      emission: e.CO2Equivalent,
+    }))
+
+  const approximatedEmissions =
+    municipality.ApproximatedHistoricalEmission.EmissionPerYear.map((e) => ({
+      year: e.Year,
+      emission: e.CO2Equivalent,
+    }))
+
+  const combinedPastEmissions = [
+    ...historicalEmissions.map((e) => ({
+      year: e.year,
+      emission: e.emission,
+      source: 'historical',
+    })),
+    ...approximatedEmissions.map((e) => ({
+      year: e.year,
+      emission: e.emission,
+      source: 'approximated',
+    })),
+  ]
+
+  const trendEmissions = municipality.EmissionTrend.TrendPerYear.map((e) => ({
+    year: e.Year,
+    emission: e.CO2Equivalent,
+  }))
+
+  const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
+    year: e.Year,
+    emission: e.CO2Equivalent,
+  }))
 
   let lineChartElement: HTMLCanvasElement
 
@@ -14,11 +48,10 @@
     ...new Set([
       ...combinedPastEmissions.map(({ year }) => year),
       ...trendEmissions.map(({ year }) => year),
-      ...budgetEmissions.map(({ year }) => year),
     ]),
-  ].sort((a, b) => a - b)
+  ]
 
-  const getDataForYear = (data, year) => {
+  const getDataForYear = (data: any[], year: number) => {
     const record = data.find((item) => item.year === year)
     return record ? record.emission : null
   }
@@ -89,7 +122,7 @@
               label: function (tooltipData) {
                 const emissions =
                   tooltipData.dataset.data[tooltipData.dataIndex]
-                const formattedEmissions = (emissions / 1000).toFixed(0)
+                const formattedEmissions = (Number(emissions) / 1000).toFixed(0)
 
                 return `${formattedEmissions}`
               },
@@ -125,8 +158,9 @@
               text: 'Tusen ton CO₂',
             },
             ticks: {
-              callback: function (value) {
-                return value / 1000
+              callback: function (emissions) {
+                const kiloTonEmissions = Number(emissions) / 1000
+                return kiloTonEmissions
               },
             },
           },

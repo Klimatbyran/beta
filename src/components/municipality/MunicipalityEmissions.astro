@@ -3,50 +3,7 @@ import { type Municipality } from '@/data/municipalityTypes'
 import { Card } from '../ui/card'
 import MunicipalityGraph from './MunicipalityGraph.svelte'
 
-interface Props {
-  municipality: Municipality
-}
-
 const { municipality } = Astro.props
-
-console.log('hejsan')
-console.log(municipality)
-
-const historicalEmissions = municipality.HistoricalEmission.EmissionPerYear.map(
-  (e) => ({
-    year: e.Year,
-    emission: e.CO2Equivalent,
-  }),
-)
-
-const approximatedEmissions =
-  municipality.ApproximatedHistoricalEmission.EmissionPerYear.map((e) => ({
-    year: e.Year,
-    emission: e.CO2Equivalent,
-  }))
-
-const combinedPastEmissions = [
-  ...historicalEmissions.map((e) => ({
-    year: e.year,
-    emission: e.emission,
-    source: 'historical',
-  })),
-  ...approximatedEmissions.map((e) => ({
-    year: e.year,
-    emission: e.emission,
-    source: 'approximated',
-  })),
-]
-
-const trendEmissions = municipality.EmissionTrend.TrendPerYear.map((e) => ({
-  year: e.Year,
-  emission: e.CO2Equivalent,
-}))
-
-const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
-  year: e.Year,
-  emission: e.CO2Equivalent,
-}))
 ---
 
 <Card class="text-sm" level={1}>
@@ -57,11 +14,6 @@ const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
   </h5>
 
   <div class="grid gap-4 pt-4">
-    <MunicipalityGraph
-      client:load
-      {combinedPastEmissions}
-      {trendEmissions}
-      {budgetEmissions}
-    />
+    <MunicipalityGraph client:load {municipality} />
   </div>
 </Card>

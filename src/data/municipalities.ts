@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as fs from 'fs'
-import * as path from 'path'
 import type {
   Municipality,
   EmissionPerYear,
@@ -12,23 +9,7 @@ import type {
 } from './municipalityTypes'
 import jsonData from './municipalityData.json'
 import { PoliticalRuleService } from './politicalRuleSerivce'
-
 export class MunicipalityDataService {
-  public getMunicipality(name: string): Municipality | undefined {
-    const data = jsonData.find(
-      (m: any) => m.kommun.toLowerCase() === name.toLowerCase(),
-    )
-    if (!data) {
-      return
-    }
-
-    return this.processMunicipalityData(data)
-  }
-
-  public getAllMunicipalityNames(): string[] {
-    return jsonData.map((m: any) => m.kommun)
-  }
-
   private processMunicipalityData(data: any): Municipality {
     const emissions = Object.entries(data.emissions).map(
       ([year, emission]) =>
@@ -40,7 +21,6 @@ export class MunicipalityDataService {
 
     const emission: Emission = {
       EmissionPerYear: emissions,
-      LargestEmissionSectors: [], // Process this if available
       HistoricalEmissionChangePercent: data.historicalEmissionChangePercent,
     }
 
@@ -104,5 +84,20 @@ export class MunicipalityDataService {
       ProcurementScore: data.procurementScore,
       ProcurementLink: data.procurementLink,
     } as Municipality
+  }
+
+  public getMunicipality(name: string): Municipality | undefined {
+    const data = jsonData.find(
+      (m: any) => m.kommun.toLowerCase() === name.toLowerCase(),
+    )
+    if (!data) {
+      return
+    }
+
+    return this.processMunicipalityData(data)
+  }
+
+  public getAllMunicipalityNames(): string[] {
+    return jsonData.map((m: any) => m.kommun)
   }
 }
