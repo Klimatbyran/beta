@@ -1,16 +1,15 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import Accordion from '@/components/ui/collapsible/accordion.svelte'
-import '../css/om-oss.css'
 
 const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
 ---
 
 <Layout {title}>
   <div class="bg-black text-white mt-12 min-h-screen p-4">
-    <div class="content-container">
-      <h1 class="intro-title">Om oss</h1>
-      <p class="intro-text">
+    <div class="about-us-content-container">
+      <h1 class="about-us-intro-title">Om oss</h1>
+      <p class="about-us-intro-text">
         Klimatkollen är en medborgarplattform som tillgängliggör klimatdata.
         Klicka på rubrikerna för att läsa mer.
       </p>
@@ -18,3 +17,123 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
     </div>
   </div>
 </Layout>
+
+<style>
+  .bg-black {
+    background-color: black; /* Ensures the background is black */
+  }
+
+  .text-white {
+    color: white; /* Ensures the text is white */
+  }
+
+  .min-h-screen {
+    min-block-size: 100vh; /* Full height for background */
+  }
+
+  .p-4 {
+    padding: 1rem; /* Adds padding around the content */
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .mb-8 {
+    margin-block-end: 2rem; /* Adds spacing below the text */
+  }
+
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+
+  .font-bold {
+    font-weight: bold; /* Makes the text bold */
+  }
+
+  .mt-2 {
+    margin-block-start: 0.5rem; /* Space between h1 and paragraph */
+  }
+
+  /* Center and align content */
+  .bg-black {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block-start: 3rem; /* Adds spacing below the header */
+  }
+
+  h1 {
+    font-size: 1.875rem; /* Approx 30px */
+    font-weight: bold;
+    margin-block-end: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc;
+    margin-block-start: 0.5rem;
+    margin-block-end: 2rem;
+  }
+
+  .accordion {
+    inline-size: 100%;
+    max-inline-size: 790px;
+    padding: 1rem;
+    margin-block-end: 2rem;
+  }
+  :global(.accordion-item) {
+    padding: 1rem 0;
+    margin-block-end: 0.5rem 0px;
+  }
+
+  .accordion-item h2 {
+    font-size: 1.25rem;
+    color: #fff;
+  }
+
+  .accordion-item p {
+    color: #ccc;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    padding: 0.5rem 0;
+  }
+
+  /* Content container styling for alignment */
+  .about-us-content-container {
+    max-inline-size: 830px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: start;
+    inline-size: 100%;
+  }
+
+  /* Title styling */
+  .about-us-intro-title {
+    font-family: 'DM Sans Variable', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-block-end: 16px;
+    padding: 0;
+    color: white;
+    line-height: 40px;
+  }
+
+  /* Intro text styling */
+  .about-us-intro-text {
+    font-family: 'DM Sans Variable', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-block-start: 8px;
+    margin-block-end: 1em;
+    color: white;
+    line-height: 1.6;
+  }
+
+  /* Accordion styling */
+  .accordion {
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+  }
+</style>

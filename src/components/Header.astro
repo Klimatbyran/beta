@@ -1,6 +1,4 @@
 ---
-import '../css/header.css'
-
 // Defining the base URL first
 const baseURL = import.meta.env.DEV
   ? 'http://localhost:4321'
@@ -104,3 +102,293 @@ const navItems = [
     })
   </script>
 </header>
+
+<style>
+  /* header.css */
+  /* Styles for navigation links */
+  .nav-list {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Hover underline effect */
+  .nav-link {
+    position: relative;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-link::after {
+    content: '';
+    display: block;
+    block-size: 2px;
+    background-color: white;
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: -2px;
+    inline-size: 100%;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Variables */
+  :root {
+    --header-padding: 0.5rem;
+    --btn-size: 2rem;
+    --black-bg: #000;
+    --white-color: #fff;
+    --gray-border: #aaa;
+  }
+
+  /* Header container styling */
+  .header-container {
+    position: fixed;
+    inset-block-start: 0;
+    inline-size: 100%;
+    z-index: 50;
+    margin-block-end: 5px;
+    background-color: var(--black-bg);
+    opacity: 1;
+    flex-shrink: 0;
+    height: 70px;
+    padding-block-end: 5px;
+    margin: 0;
+  }
+
+  /* Logo styling */
+  .header-logo {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    block-size: var(--btn-size);
+    padding-block-start: 4px;
+    z-index: 10000;
+    height: auto;
+  }
+
+  /* Navigation list styling for desktop */
+  .nav-list {
+    display: none;
+    list-style: none;
+    margin-inline-start: auto;
+    block-size: var(--btn-size);
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .nav-list {
+      display: flex;
+    }
+  }
+
+  /* Individual navigation items */
+  .nav-item {
+    font-size: 1rem;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: var(--white-color);
+  }
+
+  /* Hamburger menu styling for mobile */
+  .hamburger-menu {
+    display: block;
+    margin-inline-start: auto;
+    block-size: var(--btn-size);
+    position: relative;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    /* Same breakpoint for desktop */
+    .hamburger-menu {
+      display: none;
+    }
+  }
+
+  /* Fullscreen menu styling for mobile */
+  .fullscreen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 9999; /* Ensure it stays on top */
+    padding: 2rem 1rem 0 1rem;
+  }
+
+  /* Make sure logo and nav links remain visible */
+  .fullscreen-menu > *:not(.header-logo):not(nav):not(.close-menu) {
+    display: none; /* Hide everything except logo, nav, close-menu */
+  }
+
+  /* Logo styling inside fullscreen menu */
+  .fullscreen-menu .header-logo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000; /* Ensure logo stays on top */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Separator line */
+  .separator {
+    margin-top: 1rem;
+    border-top: 1px solid white;
+    width: 100%;
+  }
+
+  .fullscreen-menu.hidden {
+    transform: translateX(-100%);
+  }
+
+  .fullscreen-menu nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-block-start: 2rem;
+    z-index: 999;
+  }
+  /* Navigation links in the fullscreen menu */
+  .fullscreen-menu .nav-link {
+    font-size: 1.2rem;
+    padding: 0.8rem 0;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+  }
+
+  /* Initial underline effect using ::before */
+  .fullscreen-menu .nav-link::before {
+    content: '';
+    display: block;
+    block-size: 2px;
+    background-color: white;
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: -2px;
+    inline-size: 100%;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  /* Hover underline effect using ::after */
+  .fullscreen-menu .nav-link::after {
+    content: '';
+    display: block;
+    block-size: 2px;
+    background-color: white;
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: -2px;
+    inline-size: 100%;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  /* Hover effect to show the dynamic underline and hide the initial one */
+  .fullscreen-menu .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .fullscreen-menu .nav-link:hover::before {
+    display: none;
+  }
+
+  /* Adjustments when the menu is opened */
+  .fullscreen-menu.open .nav-link::after {
+    transform: scaleX(1);
+  }
+
+  .fullscreen-menu.open .nav-link::before {
+    display: none;
+  }
+
+  .hamburger-link {
+    color: var(--white-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+
+  .hamburger-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Close button */
+  .close-menu {
+    position: fixed;
+    inset-block-start: var(--header-padding);
+    inset-inline-end: var(--header-padding);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--white-color);
+    z-index: 1001;
+  }
+
+  /* Separator line in full-screen menu */
+  .separator {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    z-index: 100;
+  }
+
+  @media (max-width: 768px) {
+    .separator {
+      top: 60px;
+    }
+  }
+
+  .fullscreen-menu .separator {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    display: none;
+  }
+
+  .fullscreen-menu:not(.hidden) .separator {
+    display: block;
+  }
+  /* Full-screen menu items */
+  .hamburger-item {
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    list-style-type: none;
+  }
+
+  /* Expanded nav list (fallback behavior) */
+  .nav-list.expanded {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset-block-start: 50px;
+    inset-inline-end: 10px;
+    background-color: #333;
+    padding: 1rem;
+    z-index: 100;
+  }
+</style>
