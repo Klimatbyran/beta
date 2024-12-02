@@ -21,11 +21,10 @@ const navItems = [
   <div
     class="container relative flex h-12 max-w-screen-2xl items-center justify-between px-4"
   >
-    <!-- Center: Logo -->
     <div
       class="header-logo absolute inset-0 z-20 flex items-center justify-center"
     >
-      <a href={baseURL} class="flex items-center">
+      <a href="https://klimatkollen.se" class="flex items-center">
         <img
           src="/klimatkollen_logo.svg"
           alt="Klimatkollen logga"
@@ -35,7 +34,6 @@ const navItems = [
       </a>
     </div>
 
-    <!-- Right: Navigation Links -->
     <nav class="nav-list">
       {
         navItems.map((item) => (
@@ -112,7 +110,6 @@ const navItems = [
     align-items: center;
   }
 
-  /* Hover underline effect */
   .nav-link {
     position: relative;
     color: white;
@@ -145,7 +142,6 @@ const navItems = [
     --gray-border: #aaa;
   }
 
-  /* Header container styling */
   .header-container {
     position: fixed;
     inset-block-start: 0;
@@ -155,12 +151,11 @@ const navItems = [
     background-color: var(--black-bg);
     opacity: 1;
     flex-shrink: 0;
-    height: 70px;
+    block-size: 70px;
     padding-block-end: 5px;
     margin: 0;
   }
 
-  /* Logo styling */
   .header-logo {
     position: absolute;
     inset-block-start: 50%;
@@ -173,7 +168,6 @@ const navItems = [
     height: auto;
   }
 
-  /* Navigation list styling for desktop */
   .nav-list {
     display: none;
     list-style: none;
@@ -189,7 +183,6 @@ const navItems = [
     }
   }
 
-  /* Individual navigation items */
   .nav-item {
     font-size: 1rem;
   }
@@ -199,7 +192,6 @@ const navItems = [
     color: var(--white-color);
   }
 
-  /* Hamburger menu styling for mobile */
   .hamburger-menu {
     display: block;
     margin-inline-start: auto;
@@ -208,13 +200,11 @@ const navItems = [
   }
 
   @media only screen and (min-width: 1024px) {
-    /* Same breakpoint for desktop */
     .hamburger-menu {
       display: none;
     }
   }
 
-  /* Fullscreen menu styling for mobile */
   .fullscreen-menu {
     position: fixed;
     top: 0;
@@ -225,11 +215,10 @@ const navItems = [
     color: white;
     display: flex;
     flex-direction: column;
-    z-index: 9999; /* Ensure it stays on top */
+    z-index: 9999; /* Ensures it stays on top */
     padding: 2rem 1rem 0 1rem;
   }
 
-  /* Make sure logo and nav links remain visible */
   .fullscreen-menu > *:not(.header-logo):not(nav):not(.close-menu) {
     display: none; /* Hide everything except logo, nav, close-menu */
   }

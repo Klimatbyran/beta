@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro'
-import Accordion from '@/components/ui/collapsible/accordion.svelte'
+import Accordion from '@/components/ui/accordion/accordion.svelte'
 
 const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
 ---
@@ -20,19 +20,19 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
 
 <style>
   .bg-black {
-    background-color: black; /* Ensures the background is black */
+    background-color: black;
   }
 
   .text-white {
-    color: white; /* Ensures the text is white */
+    color: white;
   }
 
   .min-h-screen {
-    min-block-size: 100vh; /* Full height for background */
+    min-block-size: 100vh;
   }
 
   .p-4 {
-    padding: 1rem; /* Adds padding around the content */
+    padding: 1rem;
   }
 
   .relative {
@@ -40,7 +40,7 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
   }
 
   .mb-8 {
-    margin-block-end: 2rem; /* Adds spacing below the text */
+    margin-block-end: 2rem;
   }
 
   .text-2xl {
@@ -48,23 +48,22 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
   }
 
   .font-bold {
-    font-weight: bold; /* Makes the text bold */
+    font-weight: bold;
   }
 
   .mt-2 {
-    margin-block-start: 0.5rem; /* Space between h1 and paragraph */
+    margin-block-start: 0.5rem;
   }
 
-  /* Center and align content */
   .bg-black {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-block-start: 3rem; /* Adds spacing below the header */
+    padding-block-start: 3rem;
   }
 
   h1 {
-    font-size: 1.875rem; /* Approx 30px */
+    font-size: 1.875rem;
     font-weight: bold;
     margin-block-end: 0.5rem;
   }
@@ -100,7 +99,6 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
     padding: 0.5rem 0;
   }
 
-  /* Content container styling for alignment */
   .about-us-content-container {
     max-inline-size: 830px;
     margin: 0 auto;
@@ -109,7 +107,6 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
     inline-size: 100%;
   }
 
-  /* Title styling */
   .about-us-intro-title {
     font-family: 'DM Sans Variable', sans-serif;
     font-size: 32px;
@@ -120,7 +117,6 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
     line-height: 40px;
   }
 
-  /* Intro text styling */
   .about-us-intro-text {
     font-family: 'DM Sans Variable', sans-serif;
     font-size: 16px;
@@ -131,9 +127,8 @@ const title = 'Om oss | Klimatkollen - få koll på företagens utsläpp'
     line-height: 1.6;
   }
 
-  /* Accordion styling */
   .accordion {
-    margin: 0; /* Removes default margin */
-    padding: 0; /* Removes default padding */
+    margin: 0;
+    padding: 0;
   }
 </style>
