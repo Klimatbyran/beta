@@ -6,7 +6,7 @@ interface Props {
   Icon?: astroHTML.JSX.Element
   title: string
   description: string
-  value?: string | null
+  value?: number | string | null
   verified?: boolean | null
 }
 
@@ -45,6 +45,11 @@ const hasValue = isNumber(value)
     class={cn(
       'rounded-full px-4 py-2 text-sm font-bold bg-gray-800',
       !hasValue && 'text-muted',
-    )}>{value ?? '-'}</span
+    )}
+    >{
+      value?.toLocaleString('sv-SE', {
+        maximumFractionDigits: 0,
+      }) ?? '-'
+    }</span
   >
 </div>
