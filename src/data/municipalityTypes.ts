@@ -47,6 +47,7 @@ export type Municipality = {
   ApproximatedHistoricalEmission: ApproximatedEmission
   EmissionTrend: Trend
   NeededEmissionChangePercent: number
+  HistoricalEmissionChangePercent: number
   HitNetZero: number | string
   BudgetRunsOut: string
   ElectricCars: number

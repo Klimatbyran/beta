@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { EmissionPerYear, Municipality } from '@/data/municipalityTypes'
+  import type { Municipality } from '@/data/municipalityTypes'
   import { Chart, registerables } from 'chart.js'
   import { onMount } from 'svelte'
 
@@ -7,42 +7,25 @@
 
   Chart.register(...registerables)
 
-  const historicalEmissions =
-    municipality.HistoricalEmission.EmissionPerYear.map((e) => ({
-      year: e.Year,
-      emission: e.CO2Equivalent,
-    }))
+  let lineChartElement: HTMLCanvasElement
 
-  const approximatedEmissions =
-    municipality.ApproximatedHistoricalEmission.EmissionPerYear.map((e) => ({
-      year: e.Year,
-      emission: e.CO2Equivalent,
+  const extractEmissions = (data: { Year: number; CO2Equivalent: number }[]) =>
+    data.map(({ Year, CO2Equivalent }) => ({
+      year: Year,
+      emission: CO2Equivalent,
     }))
 
   const combinedPastEmissions = [
-    ...historicalEmissions.map((e) => ({
-      year: e.year,
-      emission: e.emission,
-      source: 'historical',
-    })),
-    ...approximatedEmissions.map((e) => ({
-      year: e.year,
-      emission: e.emission,
-      source: 'approximated',
-    })),
+    ...extractEmissions(municipality.HistoricalEmission.EmissionPerYear),
+    ...extractEmissions(
+      municipality.ApproximatedHistoricalEmission.EmissionPerYear,
+    ),
   ]
 
-  const trendEmissions = municipality.EmissionTrend.TrendPerYear.map((e) => ({
-    year: e.Year,
-    emission: e.CO2Equivalent,
-  }))
-
-  const budgetEmissions = municipality.Budget.BudgetPerYear.map((e) => ({
-    year: e.Year,
-    emission: e.CO2Equivalent,
-  }))
-
-  let lineChartElement: HTMLCanvasElement
+  const trendEmissions = extractEmissions(
+    municipality.EmissionTrend.TrendPerYear,
+  )
+  const budgetEmissions = extractEmissions(municipality.Budget.BudgetPerYear)
 
   const allYears = [
     ...new Set([
@@ -51,16 +34,12 @@
     ]),
   ]
 
-  const getDataForYear = (data: any[], year: number) => {
-    const record = data.find((item) => item.year === year)
-    return record ? record.emission : null
-  }
+  const getEmissionsByYear = (
+    data: { year: number; emission: number }[],
+    year: number,
+  ) => data.find((entry) => entry.year === year)?.emission || null
 
-  const allData = [
-    ...combinedPastEmissions,
-    ...trendEmissions,
-    ...budgetEmissions,
-  ]
+  const allData = [...combinedPastEmissions, ...trendEmissions]
   const rawMax = Math.max(...allData.map(({ emission }) => emission))
   const globalMax = Math.ceil(rawMax / 1000) * 1000
 
@@ -70,7 +49,7 @@
       {
         label: 'Historiskt',
         data: allYears.map((year) =>
-          getDataForYear(combinedPastEmissions, year),
+          getEmissionsByYear(combinedPastEmissions, year),
         ),
         borderColor: 'rgba(244, 143, 42)',
         backgroundColor: 'rgba(244, 143, 42, 0.4)',
@@ -80,7 +59,7 @@
       },
       {
         label: 'Budget',
-        data: allYears.map((year) => getDataForYear(budgetEmissions, year)),
+        data: allYears.map((year) => getEmissionsByYear(budgetEmissions, year)),
         borderColor: 'rgba(89, 160, 225)',
         backgroundColor: 'rgba(89, 160, 225, 0.7)',
         borderWidth: 2,
@@ -89,7 +68,7 @@
       },
       {
         label: 'Trend',
-        data: allYears.map((year) => getDataForYear(trendEmissions, year)),
+        data: allYears.map((year) => getEmissionsByYear(trendEmissions, year)),
         borderColor: 'rgba(247, 60, 85)',
         backgroundColor: 'rgba(247, 60, 85, 0.4)',
         borderWidth: 2,
@@ -104,11 +83,12 @@
       console.error('Canvas element not bound correctly')
       return
     }
+
     new Chart(lineChartElement, {
       type: 'line',
       data: chartData,
       options: {
-        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: true,
@@ -123,7 +103,6 @@
                 const emissions =
                   tooltipData.dataset.data[tooltipData.dataIndex]
                 const formattedEmissions = (Number(emissions) / 1000).toFixed(0)
-
                 return `${formattedEmissions}`
               },
             },
@@ -153,15 +132,9 @@
           y: {
             min: 0,
             max: globalMax,
-            title: {
-              display: true,
-              text: 'Tusen ton CO₂',
-            },
+            title: { display: true, text: 'Tusen ton CO₂' },
             ticks: {
-              callback: function (emissions) {
-                const kiloTonEmissions = Number(emissions) / 1000
-                return kiloTonEmissions
-              },
+              callback: (value) => (Number(value) / 1000).toFixed(0),
             },
           },
         },
@@ -173,5 +146,7 @@
 </script>
 
 <main>
-  <canvas bind:this={lineChartElement}></canvas>
+  <div class="relative h-[30vh] w-[90vw] max-w-[1000px]">
+    <canvas bind:this={lineChartElement}></canvas>
+  </div>
 </main>

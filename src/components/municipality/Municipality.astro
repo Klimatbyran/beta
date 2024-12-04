@@ -14,7 +14,8 @@ interface Props {
 const { municipality } = Astro.props
 
 const neededEmissionChangePercent = -municipality.NeededEmissionChangePercent
-const actualEmissionChangePercent = undefined
+const historicalEmissionChangePercent =
+  municipality.HistoricalEmissionChangePercent
 ---
 
 <article class="mx-auto max-w-screen-lg xs:px-4">
@@ -22,14 +23,14 @@ const actualEmissionChangePercent = undefined
     <div class="mt-8 grid gap-8">
       <MunicipalityFacts {municipality} />
 
-      <MunicipalityKPIs {municipality} />
+      <MunicipalityEmissions {municipality} />
 
       <MunicipalityEmissionChanges
         {neededEmissionChangePercent}
-        {actualEmissionChangePercent}
+        {historicalEmissionChangePercent}
       />
 
-      <MunicipalityEmissions {municipality} />
+      <MunicipalityKPIs {municipality} />
 
       <div class="grid place-content-center py-16">
         <OtherMunicipalities client:idle />

@@ -73,6 +73,7 @@ export class MunicipalityDataService {
       EmissionTrend: trend,
       Budget: budget,
       NeededEmissionChangePercent: data.neededEmissionChangePercent,
+      HistoricalEmissionChangePercent: data.historicalEmissionChangePercent,
       HitNetZero: data.hitNetZero,
       BudgetRunsOut: data.budgetRunsOut,
       ElectricCarChangePercent: data.electricCarChangePercent,

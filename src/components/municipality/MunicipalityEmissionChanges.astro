@@ -1,13 +1,8 @@
 ---
-import { type Municipality } from '@/data/municipalityTypes'
 import { Card } from '../ui/card'
 
-interface Props {
-  neededEmissionChangePercent: number
-  actualEmissionChangePercent: number
-}
-
-const { neededEmissionChangePercent, actualEmissionChangePercent } = Astro.props
+const { neededEmissionChangePercent, historicalEmissionChangePercent } =
+  Astro.props
 ---
 
 <div class="grid gap-4 pt-1 md:grid-cols-2">
@@ -19,7 +14,6 @@ const { neededEmissionChangePercent, actualEmissionChangePercent } = Astro.props
             Utsläppsförändring per år för att klara Parisavtalet
           </h3>
         </div>
-
         <p class="text-3xl leading-none tracking-tight text-green-500 sm:text-4xl md:text-5xl lg:text-6xl">
           {neededEmissionChangePercent.toFixed(1)}%
         </p>
@@ -27,16 +21,15 @@ const { neededEmissionChangePercent, actualEmissionChangePercent } = Astro.props
     )
   }
   {
-    actualEmissionChangePercent && (
+    historicalEmissionChangePercent && (
       <Card level={2} class="flex flex-col justify-between gap-4">
         <div class="flex items-start justify-between">
           <h3 class="flex items-center gap-1">
             Faktisk utsläppsförändring sedan 2015
           </h3>
         </div>
-
         <p class="text-3xl leading-none tracking-tight text-red-500 sm:text-4xl md:text-5xl lg:text-6xl">
-          {actualEmissionChangePercent}
+          {historicalEmissionChangePercent.toFixed(1)}%
         </p>
       </Card>
     )
