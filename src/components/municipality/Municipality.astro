@@ -1,0 +1,40 @@
+---
+import { type Municipality } from '@/data/municipalityTypes'
+import OtherMunicipalities from './OtherMunicipalities.svelte'
+import MunicipalityFacts from './MunicipalityFacts.astro'
+import MunicipalityKPIs from './MunicipalityKPIs.astro'
+import MunicipalityEmissions from './MunicipalityEmissions.astro'
+import MunicipalityEmissionChanges from './MunicipalityEmissionChanges.astro'
+import { undefined } from 'astro:schema'
+
+interface Props {
+  municipality: Municipality
+}
+
+const { municipality } = Astro.props
+
+const neededEmissionChangePercent = -municipality.NeededEmissionChangePercent
+const historicalEmissionChangePercent =
+  municipality.HistoricalEmissionChangePercent
+---
+
+<article class="mx-auto max-w-screen-lg xs:px-4">
+  <>
+    <div class="mt-8 grid gap-8">
+      <MunicipalityFacts {municipality} />
+
+      <MunicipalityEmissions {municipality} />
+
+      <MunicipalityEmissionChanges
+        {neededEmissionChangePercent}
+        {historicalEmissionChangePercent}
+      />
+
+      <MunicipalityKPIs {municipality} />
+
+      <div class="grid place-content-center py-16">
+        <OtherMunicipalities client:idle />
+      </div>
+    </div>
+  </>
+</article>

@@ -7,7 +7,10 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "plugins": [{ "name": "@astrojs/ts-plugin" }]
+    "plugins": [{ "name": "@astrojs/ts-plugin" }],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "exclude": ["dist"]
 }
