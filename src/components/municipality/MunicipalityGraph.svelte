@@ -146,7 +146,7 @@
 </script>
 
 <main>
-  <div class="relative h-[30vh] w-[90vw] max-w-[1000px]">
+  <div class="relative h-[30vh] w-[85vw] max-w-[850px]">
     <canvas bind:this={lineChartElement}></canvas>
   </div>
 </main>
