@@ -7,7 +7,8 @@
   let companies = $state<CompanyData[]>([])
 
   const sorted = $derived(
-    companies.sort((a, b) => a.name.localeCompare(b.name)),
+    // Make a copy of the array to avoid mutating state
+    companies.slice().sort((a, b) => a.name.localeCompare(b.name)),
   )
 
   function onSelect(item: Item<string>) {
