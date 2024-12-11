@@ -26,10 +26,19 @@
 <Dialog.Root bind:open>
   <Dialog.Content>
     <Dialog.Header>
-      <Dialog.Title>Spara ändringar</Dialog.Title>
-      <Dialog.Description>
-        Lägg till en kommentar och eventuell källfil för dina ändringar.
-      </Dialog.Description>
+      <div class="flex items-center gap-3">
+        <img 
+          src="/placeholder-user.jpg" 
+          alt="Användarens profilbild"
+          class="h-10 w-10 rounded-full object-cover"
+        />
+        <div>
+          <Dialog.Title>Spara ändringar</Dialog.Title>
+          <Dialog.Description>
+            Lägg till en kommentar och eventuell källfil för dina ändringar.
+          </Dialog.Description>
+        </div>
+      </div>
     </Dialog.Header>
 
     <form class="grid gap-4" on:submit|preventDefault={handleSubmit}>
