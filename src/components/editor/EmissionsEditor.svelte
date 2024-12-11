@@ -100,7 +100,10 @@
     <div class="grid gap-6">
       <!-- Scope 1 -->
       <div class="grid gap-4">
-        <h3 class="text-xl font-medium">Scope 1</h3>
+        <div>
+          <h3 class="text-xl font-medium">Scope 1</h3>
+          <p class="text-sm text-muted">Direkta utsläpp från egna eller kontrollerade källor, t.ex. egna fordon och fastigheter.</p>
+        </div>
         <label class="grid gap-2">
           <span>Totala utsläpp (ton CO₂e)</span>
           <input
@@ -114,7 +117,10 @@
 
       <!-- Scope 2 -->
       <div class="grid gap-4">
-        <h3 class="text-xl font-medium">Scope 2</h3>
+        <div>
+          <h3 class="text-xl font-medium">Scope 2</h3>
+          <p class="text-sm text-muted">Indirekta utsläpp från inköpt el, värme och kyla.</p>
+        </div>
         <label class="grid gap-2">
           <span>Location-based (ton CO₂e)</span>
           <input
@@ -137,24 +143,87 @@
 
       <!-- Scope 3 -->
       <div class="grid gap-4">
-        <h3 class="text-xl font-medium">Scope 3</h3>
+        <div>
+          <h3 class="text-xl font-medium">Scope 3</h3>
+          <p class="text-sm text-muted">Övriga indirekta utsläpp i värdekedjan, både uppströms och nedströms.</p>
+        </div>
         {#if emissions.scope3?.categories}
-          <div class="grid gap-3 sm:grid-cols-2">
-            {#each emissions.scope3.categories as category}
-              <label class="grid gap-1.5">
-                <span class="text-sm">
-                  {category.category}. {getCategoryName(category.category)} (ton CO₂e)
-                </span>
-                <input
-                  type="number" 
-                  value={category.total ?? ''}
-                  on:input={(e) => {
-                    category.total = e.currentTarget.valueAsNumber
-                  }}
-                  class="rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
-                />
-              </label>
-            {/each}
+          <div class="grid gap-8 sm:grid-cols-2">
+            <!-- Upstream (1-8) -->
+            <div class="grid gap-4">
+              <h4 class="text-lg font-medium">Uppströms (1-8)</h4>
+              {#each Array.from({ length: 8 }, (_, i) => i + 1) as categoryNumber}
+                {@const category = emissions.scope3.categories.find(c => c.category === categoryNumber)}
+                <label class="grid gap-1.5">
+                  <span class="text-sm">
+                    {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
+                  </span>
+                  <input
+                    type="number" 
+                    value={category?.total ?? ''}
+                    on:input={(e) => {
+                      const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
+                      if (existingIndex >= 0) {
+                        emissions.scope3.categories[existingIndex].total = e.currentTarget.valueAsNumber
+                      } else {
+                        emissions.scope3.categories.push({
+                          category: categoryNumber,
+                          total: e.currentTarget.valueAsNumber,
+                          unit: 'ton CO₂e',
+                          metadata: {
+                            comment: null,
+                            source: null,
+                            updatedAt: new Date(),
+                            user: { name: '' },
+                            verifiedBy: null,
+                            dataOrigin: null
+                          }
+                        })
+                      }
+                    }}
+                    class="rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
+                  />
+                </label>
+              {/each}
+            </div>
+
+            <!-- Downstream (9-15) -->
+            <div class="grid gap-4">
+              <h4 class="text-lg font-medium">Nedströms (9-15)</h4>
+              {#each Array.from({ length: 7 }, (_, i) => i + 9) as categoryNumber}
+                {@const category = emissions.scope3.categories.find(c => c.category === categoryNumber)}
+                <label class="grid gap-1.5">
+                  <span class="text-sm">
+                    {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
+                  </span>
+                  <input
+                    type="number" 
+                    value={category?.total ?? ''}
+                    on:input={(e) => {
+                      const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
+                      if (existingIndex >= 0) {
+                        emissions.scope3.categories[existingIndex].total = e.currentTarget.valueAsNumber
+                      } else {
+                        emissions.scope3.categories.push({
+                          category: categoryNumber,
+                          total: e.currentTarget.valueAsNumber,
+                          unit: 'ton CO₂e',
+                          metadata: {
+                            comment: null,
+                            source: null,
+                            updatedAt: new Date(),
+                            user: { name: '' },
+                            verifiedBy: null,
+                            dataOrigin: null
+                          }
+                        })
+                      }
+                    }}
+                    class="rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
+                  />
+                </label>
+              {/each}
+            </div>
           </div>
         {/if}
       </div>
