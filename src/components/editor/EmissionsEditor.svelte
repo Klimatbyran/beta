@@ -1,8 +1,47 @@
 <script lang="ts">
   import { Card } from '../ui/card'
-  import type { CompanyData } from '@/data/companyData'
+  import type { CompanyData, Scope3CategoryNumber } from '@/data/companyData'
 
   export let company: CompanyData
+
+  function getCategoryName(category: Scope3CategoryNumber): string {
+    switch (category) {
+      case Scope3CategoryNumber.purchasedGoods:
+        return 'Inköpta varor och tjänster'
+      case Scope3CategoryNumber.capitalGoods:
+        return 'Kapitalvaror'
+      case Scope3CategoryNumber.fuelAndEnergyRelatedActivities:
+        return 'Bränsle- och energirelaterade aktiviteter'
+      case Scope3CategoryNumber.upstreamTransportationAndDistribution:
+        return 'Uppströms transport och distribution'
+      case Scope3CategoryNumber.wasteGeneratedInOperations:
+        return 'Avfall genererat i verksamheten'
+      case Scope3CategoryNumber.businessTravel:
+        return 'Tjänsteresor'
+      case Scope3CategoryNumber.employeeCommuting:
+        return 'Pendlingsresor'
+      case Scope3CategoryNumber.upstreamLeasedAssets:
+        return 'Uppströms leasade tillgångar'
+      case Scope3CategoryNumber.downstreamTransportationAndDistribution:
+        return 'Nedströms transport och distribution'
+      case Scope3CategoryNumber.processingOfSoldProducts:
+        return 'Bearbetning av sålda produkter'
+      case Scope3CategoryNumber.useOfSoldProducts:
+        return 'Användning av sålda produkter'
+      case Scope3CategoryNumber.endOfLifeTreatmentOfSoldProducts:
+        return 'Slutbehandling av sålda produkter'
+      case Scope3CategoryNumber.downstreamLeasedAssets:
+        return 'Nedströms leasade tillgångar'
+      case Scope3CategoryNumber.franchises:
+        return 'Franchiser'
+      case Scope3CategoryNumber.investments:
+        return 'Investeringar'
+      case Scope3CategoryNumber.other:
+        return 'Övrigt'
+      default:
+        return 'Okänd kategori'
+    }
+  }
 
   // Get the latest reporting period with emissions
   $: latestPeriod = company.reportingPeriods.find(period => period.emissions)
@@ -61,19 +100,23 @@
       <div class="grid gap-4">
         <h3 class="text-xl font-medium">Scope 3</h3>
         {#if emissions.scope3?.categories}
-          {#each emissions.scope3.categories as category}
-            <label class="grid gap-2">
-              <span>Kategori {category.category} (ton CO₂e)</span>
-              <input
-                type="number" 
-                value={category.total ?? ''}
-                on:input={(e) => {
-                  category.total = e.currentTarget.valueAsNumber
-                }}
-                class="rounded-md bg-gray-700 px-4 py-2"
-              />
-            </label>
-          {/each}
+          <div class="grid gap-3 sm:grid-cols-2">
+            {#each emissions.scope3.categories as category}
+              <label class="grid gap-1.5">
+                <span class="text-sm">
+                  {category.category}. {getCategoryName(category.category)} (ton CO₂e)
+                </span>
+                <input
+                  type="number" 
+                  value={category.total ?? ''}
+                  on:input={(e) => {
+                    category.total = e.currentTarget.valueAsNumber
+                  }}
+                  class="rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
+                />
+              </label>
+            {/each}
+          </div>
         {/if}
       </div>
 
