@@ -11,7 +11,11 @@
   $: emissions = latestPeriod?.emissions
   $: scope1Total = emissions?.scope1?.total ?? 0
   $: scope2Total = emissions?.scope2?.calculatedTotalEmissions ?? 0
-  $: scope3Total = emissions?.scope3?.calculatedTotalEmissions ?? 0
+  $: scope3Total = emissions?.scope3?.categories?.reduce((sum, category) => 
+    sum + (category.total ?? 0), 0) ?? 0
+  $: if (emissions?.scope3) {
+    emissions.scope3.calculatedTotalEmissions = scope3Total
+  }
   $: biogenicTotal = emissions?.biogenicEmissions?.total ?? 0
   $: totalEmissions = scope1Total + scope2Total + scope3Total
 
