@@ -17,23 +17,37 @@ const { company } = Astro.props
 const latestEmissions = getLatestReportingPeriodWithEmissions(company)
 const emissions = latestEmissions?.emissions
 
+// verifierad separat
+// verifierad kombinerad
+// overifierad separat
+// overifierad
+const showCombinedScope1And2 = emissions?.scope1And2?.verified
+
 const scopeEmissionsList = emissions
   ? [
-      {
-        title: 'Egna utsläpp (scope 1)',
-        description:
-          'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        value: emissions.scope1?.total,
-        verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
-      },
+      showCombinedScope1And2
+        ? {
+            title: 'Egna utsläpp (scope 1 plus 2)',
+            description:
+              'Utsläpp från egna eller kontrollerade källor samt från energi som konsumeras av organisationen."',
+            value: emissions.scope3?.calculatedTotalEmissions,
+            verified: Boolean(emissions.scope1And2?.metadata?.verifiedBy),
+          }
+        : {
+            title: 'Egna utsläpp (scope 1)',
+            description:
+              'Utsläpp från egna källor eller kontrollerade av organisationen.',
+            value: emissions?.scope1?.total,
+            verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
+          },
       {
         title: 'Indirekta (scope 2)',
         description:
           'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
         value:
-          emissions.scope2?.mb ??
-          emissions.scope2?.lb ??
-          emissions.scope2?.unknown,
+          emissions?.scope2?.mb ??
+          emissions?.scope2?.lb ??
+          emissions?.scope2?.unknown,
         verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
       },
       {
