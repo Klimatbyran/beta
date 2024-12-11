@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Card } from '../ui/card'
-  import type { CompanyData, Scope3CategoryNumber } from '@/data/companyData'
+  import type { CompanyData } from '@/data/companyData'
+  import { Scope3CategoryNumber } from '@/data/companyData'
 
   export let company: CompanyData
 
