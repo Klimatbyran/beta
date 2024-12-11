@@ -52,12 +52,15 @@
       <div class="grid gap-4">
         <h3 class="text-xl font-medium">Scope 3</h3>
         {#if emissions.scope3?.categories}
-          {#each emissions.scope3.categories as category, i}
+          {#each emissions.scope3.categories as category}
             <label class="grid gap-2">
               <span>Kategori {category.category} (ton CO₂e)</span>
               <input
-                type="number"
-                bind:value={emissions.scope3.categories[i].total}
+                type="number" 
+                value={category.total ?? ''}
+                on:input={(e) => {
+                  category.total = e.currentTarget.valueAsNumber
+                }}
                 class="rounded-md bg-gray-700 px-4 py-2"
               />
             </label>
