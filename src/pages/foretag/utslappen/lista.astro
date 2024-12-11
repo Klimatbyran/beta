@@ -1,0 +1,10 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import CompanyList from '@/components/company/CompanyList.svelte'
+
+const title = 'Företagslista | Klimatkollen'
+---
+
+<Layout {title}>
+  <CompanyList client:load />
+</Layout>
