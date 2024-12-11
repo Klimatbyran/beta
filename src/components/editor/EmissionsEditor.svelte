@@ -7,6 +7,12 @@
   // Get the latest reporting period with emissions
   $: latestPeriod = company.reportingPeriods.find(period => period.emissions)
   $: emissions = latestPeriod?.emissions
+
+  function handleNumberInput(e: Event, setter: (value: number | null) => void) {
+    const input = e.target as HTMLInputElement
+    const value = input.value === '' ? null : Number(input.value)
+    setter(value)
+  }
 </script>
 
 <Card level={1}>
@@ -21,7 +27,8 @@
           <span>Totala utsläpp (ton CO₂e)</span>
           <input
             type="number"
-            bind:value={emissions.scope1.total}
+            value={emissions.scope1.total ?? ''}
+            on:input={(e) => handleNumberInput(e, (val) => emissions.scope1.total = val)}
             class="rounded-md bg-gray-700 px-4 py-2"
           />
         </label>
@@ -34,7 +41,8 @@
           <span>Location-based (ton CO₂e)</span>
           <input
             type="number"
-            bind:value={emissions.scope2.lb}
+            value={emissions.scope2.lb ?? ''}
+            on:input={(e) => handleNumberInput(e, (val) => emissions.scope2.lb = val)}
             class="rounded-md bg-gray-700 px-4 py-2"
           />
         </label>
@@ -42,7 +50,8 @@
           <span>Market-based (ton CO₂e)</span>
           <input
             type="number"
-            bind:value={emissions.scope2.mb}
+            value={emissions.scope2.mb ?? ''}
+            on:input={(e) => handleNumberInput(e, (val) => emissions.scope2.mb = val)}
             class="rounded-md bg-gray-700 px-4 py-2"
           />
         </label>
@@ -75,7 +84,12 @@
           <span>Totala biogena utsläpp (ton CO₂e)</span>
           <input
             type="number"
-            bind:value={emissions.biogenicEmissions?.total}
+            value={emissions.biogenicEmissions?.total ?? ''}
+            on:input={(e) => handleNumberInput(e, (val) => {
+              if (emissions.biogenicEmissions) {
+                emissions.biogenicEmissions.total = val
+              }
+            })}
             class="rounded-md bg-gray-700 px-4 py-2"
           />
         </label>
