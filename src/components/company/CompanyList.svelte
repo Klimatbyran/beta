@@ -2,12 +2,14 @@
   import { Combobox, type Item } from '../ui/combobox'
   import { Card } from '../ui/card'
   import { getCompanyURL, type CompanyData } from '@/data/companyData'
-  import { request } from '@/lib/request'
+  import { getCompanies } from '@/data/companies'
   import { onMount } from 'svelte'
 
   let companies = $state<CompanyData[]>([])
   let searchQuery = $state('')
   let selectedIndustry = $state<string | null>(null)
+  let loading = $state(true)
+  let error = $state<string | null>(null)
 
   const industries = $derived(
     Array.from(
@@ -38,7 +40,13 @@
   }
 
   onMount(async () => {
-    companies = await request('/companies')
+    try {
+      companies = await getCompanies()
+    } catch (e) {
+      error = e instanceof Error ? e.message : 'Ett fel uppstod vid hämtning av företag'
+    } finally {
+      loading = false
+    }
   })
 </script>
 
@@ -71,22 +79,36 @@
       />
     </div>
 
-    <div class="grid gap-4">
-      {#each filteredCompanies as company}
-        <a
-          href={`/foretag/${getCompanyURL(company)}`}
-          class="flex items-center justify-between rounded-lg bg-gray-700 p-4 transition-colors hover:bg-gray-600"
-        >
-          <div>
-            <h3 class="font-medium">{company.name}</h3>
-            {#if company.industry}
-              <p class="text-sm text-muted">
-                {company.industry.industryGics.sv.industryName}
-              </p>
-            {/if}
-          </div>
-        </a>
-      {/each}
-    </div>
+    {#if loading}
+      <div class="py-8 text-center text-muted">
+        Laddar företag...
+      </div>
+    {:else if error}
+      <div class="py-8 text-center text-red-500">
+        {error}
+      </div>
+    {:else if filteredCompanies.length === 0}
+      <div class="py-8 text-center text-muted">
+        Inga företag hittades
+      </div>
+    {:else}
+      <div class="grid gap-4">
+        {#each filteredCompanies as company}
+          <a
+            href={`/foretag/${getCompanyURL(company)}`}
+            class="flex items-center justify-between rounded-lg bg-gray-700 p-4 transition-colors hover:bg-gray-600"
+          >
+            <div>
+              <h3 class="font-medium">{company.name}</h3>
+              {#if company.industry}
+                <p class="text-sm text-muted">
+                  {company.industry.industryGics.sv.industryName}
+                </p>
+              {/if}
+            </div>
+          </a>
+        {/each}
+      </div>
+    {/if}
   </Card>
 </div>
