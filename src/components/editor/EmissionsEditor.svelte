@@ -2,8 +2,18 @@
   import { Card } from '../ui/card'
   import type { CompanyData } from '@/data/companyData'
   import { Scope3CategoryNumber } from '@/data/companyData'
+  import { isNumber } from '@/lib/utils'
 
   export let company: CompanyData
+
+  // Reactive calculation of total emissions
+  $: latestPeriod = company.reportingPeriods.find(period => period.emissions)
+  $: emissions = latestPeriod?.emissions
+  $: scope1Total = emissions?.scope1?.total ?? 0
+  $: scope2Total = emissions?.scope2?.calculatedTotalEmissions ?? 0
+  $: scope3Total = emissions?.scope3?.calculatedTotalEmissions ?? 0
+  $: biogenicTotal = emissions?.biogenicEmissions?.total ?? 0
+  $: totalEmissions = scope1Total + scope2Total + scope3Total
 
   function getCategoryName(category: Scope3CategoryNumber): string {
     switch (category) {
@@ -54,6 +64,37 @@
     setter(value)
   }
 </script>
+
+<div class="sticky top-12 z-10">
+  <Card level={1} class="mb-4 bg-gray-800 p-6">
+    <div class="grid gap-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-medium">Totala utsläpp</h3>
+        <span class="text-2xl font-bold text-orange-250">
+          {totalEmissions.toLocaleString('sv-SE')} <span class="text-base text-muted">ton CO₂e</span>
+        </span>
+      </div>
+      <div class="grid gap-2 text-sm">
+        <div class="flex justify-between">
+          <span>Scope 1</span>
+          <span class="font-medium">{scope1Total.toLocaleString('sv-SE')}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Scope 2</span>
+          <span class="font-medium">{scope2Total.toLocaleString('sv-SE')}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Scope 3</span>
+          <span class="font-medium">{scope3Total.toLocaleString('sv-SE')}</span>
+        </div>
+        <div class="flex justify-between border-t border-gray-700 pt-2">
+          <span>Biogena utsläpp</span>
+          <span class="font-medium">{biogenicTotal.toLocaleString('sv-SE')}</span>
+        </div>
+      </div>
+    </div>
+  </Card>
+</div>
 
 <Card level={1} class="bg-gray-900 p-8">
   <h2 class="mb-8 text-3xl font-medium tracking-tight">Utsläpp</h2>
