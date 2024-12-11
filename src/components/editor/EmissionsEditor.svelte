@@ -15,8 +15,8 @@
   }
 </script>
 
-<Card level={1}>
-  <h2 class="mb-6 text-2xl font-semibold">Utsläpp</h2>
+<Card level={1} class="bg-gray-900 p-8">
+  <h2 class="mb-8 text-3xl font-medium tracking-tight">Utsläpp</h2>
 
   {#if latestPeriod}
     <div class="grid gap-6">
@@ -29,7 +29,7 @@
             type="number"
             value={emissions.scope1.total ?? ''}
             on:input={(e) => handleNumberInput(e, (val) => emissions.scope1.total = val)}
-            class="rounded-md bg-gray-700 px-4 py-2"
+            class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
           />
         </label>
       </div>

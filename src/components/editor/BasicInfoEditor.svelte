@@ -5,43 +5,43 @@
   export let company: CompanyData
 </script>
 
-<Card level={1}>
-  <h2 class="mb-6 text-2xl font-semibold">Grundinformation</h2>
+<Card level={1} class="bg-gray-900 p-8">
+  <h2 class="mb-8 text-3xl font-medium tracking-tight">Grundinformation</h2>
 
-  <div class="grid gap-4">
-    <label class="grid gap-2">
-      <span>Namn</span>
+  <div class="grid gap-6">
+    <label class="grid gap-3">
+      <span class="text-sm text-gray-300">Namn</span>
       <input
         type="text"
         bind:value={company.name}
-        class="rounded-md bg-gray-700 px-4 py-2"
+        class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
       />
     </label>
 
-    <label class="grid gap-2">
-      <span>Beskrivning</span>
+    <label class="grid gap-3">
+      <span class="text-sm text-gray-300">Beskrivning</span>
       <textarea
         bind:value={company.description}
         rows="3"
-        class="rounded-md bg-gray-700 px-4 py-2"
+        class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
       />
     </label>
 
-    <label class="grid gap-2">
-      <span>URL</span>
+    <label class="grid gap-3">
+      <span class="text-sm text-gray-300">URL</span>
       <input
         type="url"
         bind:value={company.url}
-        class="rounded-md bg-gray-700 px-4 py-2"
+        class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
       />
     </label>
 
-    <label class="grid gap-2">
-      <span>Intern kommentar</span>
+    <label class="grid gap-3">
+      <span class="text-sm text-gray-300">Intern kommentar</span>
       <textarea
         bind:value={company.internalComment}
         rows="2"
-        class="rounded-md bg-gray-700 px-4 py-2"
+        class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
       />
     </label>
   </div>
