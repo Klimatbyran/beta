@@ -11,7 +11,6 @@ const { id = '' } = Astro.params
 
 // Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
-
 const company = wikidataId.startsWith('Q') ? await getCompany(wikidataId) : null
 
 const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
@@ -38,7 +37,7 @@ const title = `${company?.name ? `${company.name} | ` : ''}${baseTitle}`
               variant: 'default',
               class: 'mt-8 gap-1 pl-2',
             })}
-            href="https://klimatkollen.se/foretag/utslappen/lista"
+            href="/foretag/utslappen/lista"
           >
             <LucideChevronLeft class="h-5 w-5" />
             Tillbaka till alla företag
