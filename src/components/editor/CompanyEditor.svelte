@@ -12,12 +12,27 @@
   let saving = false
   let error: string | null = null
 
-  async function handleSave() {
+  import SaveDialog from './SaveDialog.svelte'
+  
+  let showSaveDialog = false
+
+  async function handleSave(event: CustomEvent<FormData>) {
+    const formData = event.detail
+    formData.append('company', JSON.stringify(company))
+    
     saving = true
     error = null
     try {
-      // TODO: Implement save logic
-      console.log('Saving company:', company)
+      const response = await fetch('/api/companies', {
+        method: 'POST',
+        body: formData,
+      })
+      
+      if (!response.ok) {
+        throw new Error('Kunde inte spara ändringar')
+      }
+      
+      showSaveDialog = false
     } catch (err) {
       error = err instanceof Error ? err.message : 'Ett fel uppstod'
     } finally {
@@ -42,8 +57,14 @@
         <p class="text-red-500">{error}</p>
       {/if}
     </div>
-    <Button on:click={handleSave} disabled={saving}>
-      {saving ? 'Sparar...' : 'Spara ändringar'}
+    <Button on:click={() => showSaveDialog = true} disabled={saving}>
+      Spara ändringar
     </Button>
+
+    <SaveDialog 
+      bind:open={showSaveDialog}
+      bind:saving
+      on:save={handleSave}
+    />
   </Card>
 </div>
