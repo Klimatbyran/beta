@@ -21,19 +21,18 @@
     ).sort()
   )
 
-  const filteredCompanies = $derived(
-    companies
+  const filteredCompanies = $derived(() => {
+    console.log('Filtrerar företag, total:', companies.length) // Debug logging
+    return companies
       .filter((company) => {
-        if (selectedIndustry) {
-          return company.industry?.industryGics.sv.industryName === selectedIndustry
+        if (!company?.name) return false
+        if (selectedIndustry && company.industry?.industryGics?.sv?.industryName !== selectedIndustry) {
+          return false
         }
-        return true
+        return company.name.toLowerCase().includes(searchQuery.toLowerCase())
       })
-      .filter((company) =>
-        company.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
       .sort((a, b) => a.name.localeCompare(b.name))
-  )
+  })
 
   function onSelectIndustry(item: Item<string>) {
     selectedIndustry = item.value === 'all' ? null : item.value
@@ -41,8 +40,14 @@
 
   onMount(async () => {
     try {
-      companies = await getCompanies()
+      const data = await getCompanies()
+      if (!data || !Array.isArray(data)) {
+        throw new Error('Ogiltig data från API')
+      }
+      companies = data
+      console.log('Hämtade företag:', companies.length) // Debug logging
     } catch (e) {
+      console.error('Fel vid hämtning av företag:', e) // Debug logging
       error = e instanceof Error ? e.message : 'Ett fel uppstod vid hämtning av företag'
     } finally {
       loading = false
