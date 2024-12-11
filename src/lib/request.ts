@@ -20,6 +20,7 @@ export async function request(
     config.body = JSON.stringify(body)
   }
 
+  console.log('Making request to', `${BASE_URL}${endpoint}`)
   return fetch(`${BASE_URL}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
       return response.json()
