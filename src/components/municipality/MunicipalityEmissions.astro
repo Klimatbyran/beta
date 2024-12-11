@@ -1,9 +1,13 @@
 ---
-import { type Municipality } from '@/data/municipalityTypes'
 import { Card } from '../ui/card'
+import MunicipalityEmissionChanges from './MunicipalityEmissionChanges.astro'
 import MunicipalityGraph from './MunicipalityGraph.svelte'
 
 const { municipality } = Astro.props
+
+const neededEmissionChangePercent = -municipality.NeededEmissionChangePercent
+const historicalEmissionChangePercent =
+  municipality.HistoricalEmissionChangePercent
 ---
 
 <Card class="text-sm" level={1}>
@@ -13,7 +17,12 @@ const { municipality } = Astro.props
     Kommunens utsläpp
   </h5>
 
-  <div class="grid gap-4 pt-4">
+  <div class="mb-8 grid gap-4 pt-4">
     <MunicipalityGraph client:load {municipality} />
   </div>
+
+  <MunicipalityEmissionChanges
+    {neededEmissionChangePercent}
+    {historicalEmissionChangePercent}
+  />
 </Card>

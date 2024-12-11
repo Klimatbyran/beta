@@ -4,18 +4,12 @@ import OtherMunicipalities from './OtherMunicipalities.svelte'
 import MunicipalityFacts from './MunicipalityFacts.astro'
 import MunicipalityKPIs from './MunicipalityKPIs.astro'
 import MunicipalityEmissions from './MunicipalityEmissions.astro'
-import MunicipalityEmissionChanges from './MunicipalityEmissionChanges.astro'
-import { undefined } from 'astro:schema'
 
 interface Props {
   municipality: Municipality
 }
 
 const { municipality } = Astro.props
-
-const neededEmissionChangePercent = -municipality.NeededEmissionChangePercent
-const historicalEmissionChangePercent =
-  municipality.HistoricalEmissionChangePercent
 ---
 
 <article class="mx-auto max-w-screen-lg xs:px-4">
@@ -24,11 +18,6 @@ const historicalEmissionChangePercent =
       <MunicipalityFacts {municipality} />
 
       <MunicipalityEmissions {municipality} />
-
-      <MunicipalityEmissionChanges
-        {neededEmissionChangePercent}
-        {historicalEmissionChangePercent}
-      />
 
       <MunicipalityKPIs {municipality} />
 
