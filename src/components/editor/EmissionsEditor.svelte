@@ -54,9 +54,6 @@
     }
   }
 
-  // Get the latest reporting period with emissions
-  $: latestPeriod = company.reportingPeriods.find(period => period.emissions)
-  $: emissions = latestPeriod?.emissions
 
   function handleNumberInput(e: Event, setter: (value: number | null) => void) {
     const input = e.target as HTMLInputElement
