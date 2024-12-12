@@ -1,0 +1,32 @@
+<script lang="ts">
+  export let value: number | null = null
+  export let isReported: boolean = false
+  export let disabled: boolean = false
+  export let onChange: (value: number | null) => void
+  export let onReportedChange: (reported: boolean) => void
+
+  function handleInput(e: Event) {
+    const input = e.target as HTMLInputElement
+    const newValue = input.value === '' ? null : Number(input.value)
+    onChange(newValue)
+  }
+</script>
+
+<div class="flex gap-2 items-center">
+  <input
+    type="number"
+    value={value ?? ''}
+    on:input={handleInput}
+    class="flex-1 rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
+    {disabled}
+  />
+  <label class="flex items-center gap-2">
+    <input
+      type="checkbox"
+      checked={isReported}
+      on:change={(e) => onReportedChange(e.currentTarget.checked)}
+      class="h-4 w-4 rounded border-gray-300"
+    />
+    <span class="text-sm">Rapporterat</span>
+  </label>
+</div>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Card } from '../ui/card'
   import type { CompanyData } from '@/data/companyData'
+  import EmissionsValue from './EmissionsValue.svelte'
   import { Scope3CategoryNumber } from '@/data/companyData'
   import { isNumber } from '@/lib/utils'
 
@@ -110,23 +111,12 @@
         </div>
         <div class="grid gap-2">
           <span>Totala utsläpp (ton CO₂e)</span>
-          <div class="flex gap-2 items-center">
-            <input
-              type="number"
-              value={emissions.scope1.total ?? ''}
-              on:input={(e) => handleNumberInput(e, (val) => emissions.scope1.total = val)}
-              class="flex-1 rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
-              disabled={!emissions.scope1.isReported}
-            />
-            <label class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                bind:checked={emissions.scope1.isReported}
-                class="h-4 w-4 rounded border-gray-300"
-              />
-              <span class="text-sm">Rapporterat</span>
-            </label>
-          </div>
+          <EmissionsValue
+            value={emissions.scope1.total}
+            isReported={emissions.scope1.isReported}
+            onChange={(val) => emissions.scope1.total = val}
+            onReportedChange={(reported) => emissions.scope1.isReported = reported}
+          />
         </div>
       </div>
 
