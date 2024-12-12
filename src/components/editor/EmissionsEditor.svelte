@@ -210,7 +210,6 @@
                           })
                         }
                       }}
-                      disabled={!category?.isReported}
                       class="flex-1 rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
                     />
                     <label class="flex items-center gap-2">
