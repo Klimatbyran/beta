@@ -10,16 +10,22 @@ export async function getCompany(wikidataId: string): Promise<CompanyData> {
 }
 
 export async function saveBasicInfo(wikidataId: string, data: Partial<CompanyData>): Promise<void> {
+  if (!wikidataId) {
+    throw new Error('wikidataId är obligatoriskt')
+  }
+  if (!data.name) {
+    throw new Error('name är obligatoriskt')
+  }
+
   await request(`/companies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      data: {
-        wikidataId,
-        ...data
-      }
+      wikidataId,
+      name: data.name,
+      ...data
     })
   })
 }
