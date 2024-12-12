@@ -31,7 +31,7 @@ export async function getCompany(wikidataId: string): Promise<CompanyData> {
 
 export async function saveBasicInfo(wikidataId: string, data: Partial<CompanyData>): Promise<void> {
   try {
-    await request(`/companies`, {
+    await request(`/companies/${wikidataId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
