@@ -108,15 +108,26 @@
           <h3 class="text-xl font-medium">Scope 1</h3>
           <p class="text-sm text-muted">Direkta utsläpp från egna eller kontrollerade källor, t.ex. egna fordon och fastigheter.</p>
         </div>
-        <label class="grid gap-2">
+        <div class="grid gap-2">
           <span>Totala utsläpp (ton CO₂e)</span>
-          <input
-            type="number"
-            value={emissions.scope1.total ?? ''}
-            on:input={(e) => handleNumberInput(e, (val) => emissions.scope1.total = val)}
-            class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
-          />
-        </label>
+          <div class="flex gap-2 items-center">
+            <input
+              type="number"
+              value={emissions.scope1.total ?? ''}
+              on:input={(e) => handleNumberInput(e, (val) => emissions.scope1.total = val)}
+              class="flex-1 rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
+              disabled={!emissions.scope1.isReported}
+            />
+            <label class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                bind:checked={emissions.scope1.isReported}
+                class="h-4 w-4 rounded border-gray-300"
+              />
+              <span class="text-sm">Rapporterat</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- Scope 2 -->
@@ -125,24 +136,46 @@
           <h3 class="text-xl font-medium">Scope 2</h3>
           <p class="text-sm text-muted">Indirekta utsläpp från inköpt el, värme och kyla.</p>
         </div>
-        <label class="grid gap-2">
+        <div class="grid gap-2">
           <span>Location-based (ton CO₂e)</span>
-          <input
-            type="number"
-            value={emissions.scope2.lb ?? ''}
-            on:input={(e) => handleNumberInput(e, (val) => emissions.scope2.lb = val)}
-            class="rounded-md bg-gray-700 px-4 py-2"
-          />
-        </label>
-        <label class="grid gap-2">
+          <div class="flex gap-2 items-center">
+            <input
+              type="number"
+              value={emissions.scope2.lb ?? ''}
+              on:input={(e) => handleNumberInput(e, (val) => emissions.scope2.lb = val)}
+              class="flex-1 rounded-md bg-gray-700 px-4 py-2"
+              disabled={!emissions.scope2.isLbReported}
+            />
+            <label class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                bind:checked={emissions.scope2.isLbReported}
+                class="h-4 w-4 rounded border-gray-300"
+              />
+              <span class="text-sm">Rapporterat</span>
+            </label>
+          </div>
+        </div>
+        <div class="grid gap-2">
           <span>Market-based (ton CO₂e)</span>
-          <input
-            type="number"
-            value={emissions.scope2.mb ?? ''}
-            on:input={(e) => handleNumberInput(e, (val) => emissions.scope2.mb = val)}
-            class="rounded-md bg-gray-700 px-4 py-2"
-          />
-        </label>
+          <div class="flex gap-2 items-center">
+            <input
+              type="number"
+              value={emissions.scope2.mb ?? ''}
+              on:input={(e) => handleNumberInput(e, (val) => emissions.scope2.mb = val)}
+              class="flex-1 rounded-md bg-gray-700 px-4 py-2"
+              disabled={!emissions.scope2.isMbReported}
+            />
+            <label class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                bind:checked={emissions.scope2.isMbReported}
+                class="h-4 w-4 rounded border-gray-300"
+              />
+              <span class="text-sm">Rapporterat</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- Scope 3 -->
@@ -162,31 +195,64 @@
                   <span class="text-sm">
                     {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
                   </span>
-                  <input
-                    type="number" 
-                    value={category?.total ?? ''}
-                    on:input={(e) => {
-                      const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
-                      if (existingIndex >= 0) {
-                        emissions.scope3.categories[existingIndex].total = e.currentTarget.valueAsNumber
-                      } else {
-                        emissions.scope3.categories.push({
-                          category: categoryNumber,
-                          total: e.currentTarget.valueAsNumber,
-                          unit: 'ton CO₂e',
-                          metadata: {
-                            comment: null,
-                            source: null,
-                            updatedAt: new Date(),
-                            user: { name: '' },
-                            verifiedBy: null,
-                            dataOrigin: null
+                  <div class="flex gap-2 items-center">
+                    <input
+                      type="number" 
+                      value={category?.total ?? ''}
+                      on:input={(e) => {
+                        const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
+                        if (existingIndex >= 0) {
+                          emissions.scope3.categories[existingIndex].total = e.currentTarget.valueAsNumber
+                        } else {
+                          emissions.scope3.categories.push({
+                            category: categoryNumber,
+                            total: e.currentTarget.valueAsNumber,
+                            isReported: true,
+                            unit: 'ton CO₂e',
+                            metadata: {
+                              comment: null,
+                              source: null,
+                              updatedAt: new Date(),
+                              user: { name: '' },
+                              verifiedBy: null,
+                              dataOrigin: null
+                            }
+                          })
+                        }
+                      }}
+                      disabled={!category?.isReported}
+                      class="flex-1 rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
+                    />
+                    <label class="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={category?.isReported ?? false}
+                        on:change={(e) => {
+                          const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
+                          if (existingIndex >= 0) {
+                            emissions.scope3.categories[existingIndex].isReported = e.currentTarget.checked
+                          } else if (e.currentTarget.checked) {
+                            emissions.scope3.categories.push({
+                              category: categoryNumber,
+                              total: null,
+                              isReported: true,
+                              unit: 'ton CO₂e',
+                              metadata: {
+                                comment: null,
+                                source: null,
+                                updatedAt: new Date(),
+                                user: { name: '' },
+                                verifiedBy: null,
+                                dataOrigin: null
+                              }
+                            })
                           }
-                        })
-                      }
-                    }}
-                    class="rounded-xl bg-gray-800 px-4 py-2 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
-                  />
+                        }}
+                        class="h-4 w-4 rounded border-gray-300"
+                      />
+                      <span class="text-sm">Rapporterat</span>
+                    </label>
+                  </div>
                 </label>
               {/each}
             </div>
