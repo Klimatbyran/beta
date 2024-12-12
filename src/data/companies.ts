@@ -23,9 +23,11 @@ export async function saveBasicInfo(wikidataId: string, data: Partial<CompanyDat
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      wikidataId,
-      name: data.name,
-      ...data
+      data: {
+        wikidataId,
+        name: data.name,
+        ...data
+      }
     })
   })
 }
