@@ -1,6 +1,6 @@
 <script lang="ts">
   export let value: number | null = null
-  export let isReported: boolean = false
+  export let isReported: boolean = value !== null
   export let disabled: boolean = false
   export let onChange: (value: number | null) => void
   export let onReportedChange: (reported: boolean) => void
