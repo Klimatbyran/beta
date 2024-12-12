@@ -10,6 +10,8 @@
     const newValue = input.value === '' ? null : Number(input.value)
     if (newValue === null) {
       onReportedChange(false)
+    } else {
+      onReportedChange(true)
     }
     onChange(newValue)
   }
