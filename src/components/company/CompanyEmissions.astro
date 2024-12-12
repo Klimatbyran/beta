@@ -17,39 +17,59 @@ const { company } = Astro.props
 const latestEmissions = getLatestReportingPeriodWithEmissions(company)
 const emissions = latestEmissions?.emissions
 
-// verifierad separat
-// verifierad kombinerad
-// overifierad separat
-// overifierad
-const showCombinedScope1And2 = emissions?.scope1And2?.verified
+const scope1 = emissions?.scope1
+const scope2 = emissions?.scope2
+const scope1And2 = emissions?.scope1And2
+
+const hasVerifiedScope1 = scope1?.metadata?.verifiedBy !== null
+const hasVerifiedScope2 = scope2?.metadata?.verifiedBy !== null
+const hasVerifiedScope1And2 = scope1And2?.metadata?.verifiedBy !== null
+
+const hasScope1 = scope1?.total !== null
+const scope2Emissions = scope2?.mb ?? scope2?.lb ?? scope2?.unknown
+const hasScope2 = scope2Emissions !== null
+const hasScope1And2 = scope1And2?.total
+
+let showSeparateScope1And2 = false
+
+if (hasVerifiedScope1 || hasVerifiedScope2) {
+  showSeparateScope1And2 = true
+} else if (hasVerifiedScope1And2) {
+  showSeparateScope1And2 = false
+} else if (hasScope1 || hasScope2) {
+  showSeparateScope1And2 = true
+} else if (!hasVerifiedScope1And2) {
+  showSeparateScope1And2 = false
+} else if (!hasScope1 && !hasScope2 && !hasScope1And2) {
+  showSeparateScope1And2 = true
+}
 
 const scopeEmissionsList = emissions
   ? [
-      showCombinedScope1And2
-        ? {
+      showSeparateScope1And2
+        ? [
+            {
+              title: 'Egna utsläpp (scope 1)',
+              description:
+                'Utsläpp från egna källor eller kontrollerade av organisationen.',
+              value: scope1?.total,
+              verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
+            },
+            {
+              title: 'Indirekta (scope 2)',
+              description:
+                'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
+              value: scope2Emissions,
+              verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
+            },
+          ]
+        : {
             title: 'Egna utsläpp (scope 1 plus 2)',
             description:
-              'Utsläpp från egna eller kontrollerade källor samt från energi som konsumeras av organisationen."',
-            value: emissions.scope3?.calculatedTotalEmissions,
-            verified: Boolean(emissions.scope1And2?.metadata?.verifiedBy),
-          }
-        : {
-            title: 'Egna utsläpp (scope 1)',
-            description:
-              'Utsläpp från egna källor eller kontrollerade av organisationen.',
-            value: emissions?.scope1?.total,
-            verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
+              'Utsläpp från egna eller kontrollerade källor samt från energi som konsumeras av organisationen.',
+            value: scope1And2?.total,
+            verified: Boolean(scope1And2?.metadata?.verifiedBy),
           },
-      {
-        title: 'Indirekta (scope 2)',
-        description:
-          'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-        value:
-          emissions?.scope2?.mb ??
-          emissions?.scope2?.lb ??
-          emissions?.scope2?.unknown,
-        verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
-      },
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
@@ -58,7 +78,7 @@ const scopeEmissionsList = emissions
         //   emissions.scope3?.calculatedTotalEmissions?.metadata?.verifiedBy,
         // ),
       },
-    ]
+    ].flat()
   : []
 
 const biogenicEmissions = {
