@@ -10,7 +10,7 @@
   export let company: CompanyData
 
   let saving = false
-  let error: string | null = null
+  let error: string | ValidationError | null = null
 
   import SaveDialog from './SaveDialog.svelte'
   
@@ -51,7 +51,14 @@
       
       showSaveDialog = false
     } catch (err) {
-      error = err instanceof Error ? err.message : 'Ett fel uppstod vid sparande'
+      if (err instanceof Error) {
+        const validationError = err.cause as ValidationError
+        error = validationError?.error === 'Validation failed' 
+          ? validationError 
+          : err.message
+      } else {
+        error = 'Ett fel uppstod vid sparande'
+      }
     } finally {
       saving = false
     }
@@ -71,7 +78,21 @@
   <Card level={1} class="flex items-center justify-between">
     <div>
       {#if error}
-        <p class="text-red-500">{error}</p>
+        {#if typeof error === 'string'}
+          <p class="text-red-500">{error}</p>
+        {:else}
+          <div class="text-red-500">
+            <p>{error.error}</p>
+            <ul class="mt-2 list-disc pl-4">
+              {#each error.details as detail}
+                <li>
+                  <span class="font-medium">{detail.field}:</span> {detail.message}
+                </li>
+              {/each}
+            </ul>
+            <p class="mt-2 text-sm">{error.help}</p>
+          </div>
+        {/if}
       {/if}
     </div>
     <Button on:click={() => showSaveDialog = true} disabled={saving}>

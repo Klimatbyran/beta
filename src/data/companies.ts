@@ -1,6 +1,26 @@
 import { request } from '@/lib/request'
 import type { CompanyData, Goal, Initiative } from './companyData'
 
+export type ValidationError = {
+  error: string
+  details: Array<{
+    field: string
+    message: string
+    code: string
+  }>
+  help: string
+}
+
+function isValidationError(error: unknown): error is ValidationError {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'error' in error &&
+    'details' in error &&
+    'help' in error
+  )
+}
+
 export async function getCompanies(): Promise<CompanyData[]> {
   return request('/companies')
 }
@@ -10,26 +30,26 @@ export async function getCompany(wikidataId: string): Promise<CompanyData> {
 }
 
 export async function saveBasicInfo(wikidataId: string, data: Partial<CompanyData>): Promise<void> {
-  if (!wikidataId) {
-    throw new Error('wikidataId är obligatoriskt')
-  }
-  if (!data.name) {
-    throw new Error('name är obligatoriskt')
-  }
-
-  await request(`/companies`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      data: {
-        wikidataId,
-        name: data.name,
-        ...data
-      }
+  try {
+    await request(`/companies`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data: {
+          wikidataId,
+          name: data.name,
+          ...data
+        }
+      })
     })
-  })
+  } catch (error) {
+    if (isValidationError(error)) {
+      throw error
+    }
+    throw new Error('Ett fel uppstod vid sparande av grundinformation')
+  }
 }
 
 export async function saveEmissions(wikidataId: string, periodId: string, emissions: CompanyData['reportingPeriods'][0]['emissions']): Promise<void> {
