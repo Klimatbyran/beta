@@ -1,7 +1,7 @@
 <script lang="ts">
   export let value: number | null = null
   export let isReported: boolean = value !== null
-  export let disabled: boolean = false
+  export let disabled: boolean = false // Kept for API compatibility but not used
   export let onChange: (value: number | null) => void
   export let onReportedChange: (reported: boolean) => void
 
@@ -31,7 +31,6 @@
     value={value ?? ''}
     on:input={handleInput}
     class="flex-1 rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
-    {disabled}
   />
   <label class="flex items-center gap-2">
     <input
