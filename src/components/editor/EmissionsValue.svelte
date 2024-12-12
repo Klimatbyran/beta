@@ -8,7 +8,18 @@
   function handleInput(e: Event) {
     const input = e.target as HTMLInputElement
     const newValue = input.value === '' ? null : Number(input.value)
+    if (newValue === null) {
+      onReportedChange(false)
+    }
     onChange(newValue)
+  }
+
+  function handleReportedChange(e: Event) {
+    const checked = (e.target as HTMLInputElement).checked
+    onReportedChange(checked)
+    if (!checked) {
+      onChange(null)
+    }
   }
 </script>
 
@@ -24,7 +35,7 @@
     <input
       type="checkbox"
       checked={isReported}
-      on:change={(e) => onReportedChange(e.currentTarget.checked)}
+      on:change={handleReportedChange}
       class="h-4 w-4 rounded border-gray-300"
     />
     <span class="text-sm">Rapporterat</span>
