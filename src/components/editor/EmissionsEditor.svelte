@@ -165,7 +165,7 @@
                   </span>
                   <EmissionsValue
                     value={category?.total ?? null}
-                    isReported={category?.isReported ?? false}
+                    isReported={category?.isReported ?? isNumber(category?.total)}
                     onChange={(val) => {
                       const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
                       if (existingIndex >= 0) {
@@ -224,7 +224,7 @@
                   </span>
                   <EmissionsValue
                     value={category?.total ?? null}
-                    isReported={category?.isReported ?? false}
+                    isReported={category?.isReported ?? isNumber(category?.total)}
                     onChange={(val) => {
                       const existingIndex = emissions.scope3.categories.findIndex(c => c.category === categoryNumber)
                       if (existingIndex >= 0) {
