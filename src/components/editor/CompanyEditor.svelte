@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button } from '../ui/button'
   import { Card } from '../ui/card'
+  import { toast } from 'sonner'
   import type { CompanyData } from '@/data/companyData'
   import BasicInfoEditor from './BasicInfoEditor.svelte'
   import EmissionsEditor from './EmissionsEditor.svelte'
@@ -50,6 +51,7 @@
       }
       
       showSaveDialog = false
+      toast.success('Ändringarna har sparats')
     } catch (err) {
       if (err instanceof Error) {
         const validationError = err.cause as ValidationError
