@@ -17,12 +17,14 @@ const navItems = [
 ]
 ---
 
-<header class="header-container">
+<header
+  class="bg-black h-18 fixed top-0 z-20 m-0 mb-1.5 w-full flex-shrink-0 pb-1.5 opacity-100"
+>
   <div
-    class="container relative flex h-12 max-w-screen-2xl items-center justify-between px-4"
+    class="relative flex h-12 max-w-screen-2xl items-center justify-between px-4"
   >
     <div
-      class="header-logo absolute inset-0 z-20 flex items-center justify-center"
+      class="absolute left-1/2 top-1/2 z-[30] flex h-8 -translate-x-1/2 -translate-y-1/2 pt-1"
     >
       <a href="https://klimatkollen.se" class="flex items-center">
         <img
@@ -34,7 +36,9 @@ const navItems = [
       </a>
     </div>
 
-    <nav class="nav-list">
+    <nav
+      class="ml-auto hidden h-[var(--btn-size)] list-none items-center gap-6 lg:flex"
+    >
       {
         navItems.map((item) => (
           <a href={item.href} class="nav-link">
@@ -45,21 +49,33 @@ const navItems = [
     </nav>
 
     <!-- Mobile Hamburger Menu -->
-    <div class="hamburger-menu">
+    <div class="relative ml-auto block h-8 lg:hidden">
       <button type="button" class="hamburger-button">
         <img src="/icons/menu.svg" alt="Menu Icon" width="32" height="32" />
       </button>
     </div>
   </div>
 
-  <!-- Fullscreen Menu -->
-  <div class="fullscreen-menu hidden">
+  <!-- Fullscreen Menu
+     I removed as many custom CSS classes as possible to switch to Tailwind, 
+     but these two were more challenging. They involve interactivity 
+     (e.g., toggling visibility) and require JS logic to handle dynamic 
+     behavior based on screen size and state. -->
+
+  <div
+    class="fullscreen-menu bg-black text-white fixed left-0 top-0 z-[9999] flex hidden h-full w-full flex-col p-8 pl-4 pt-0"
+  >
+    <!-- Using only Tailwind classes requires adding JavaScript logic to toggle the visibility of the separator line based on screen modes or menu state. 
+  We can either:
+  1. Remove the separator entirely if it's not needed, or
+  2. Keep the current implementation with custom CSS, which already handles the conditional visibility. -->
+
     <div class="separator"></div>
 
     <button class="close-menu">
       <div class="close-icon-wrapper">
         <img
-          src="/icons/close.svg"
+          src="/icons/close_round.svg"
           alt="Close Icon"
           width="32"
           height="32"
@@ -78,85 +94,59 @@ const navItems = [
       }
     </nav>
   </div>
+
+  <!-- Importing and using Svelte's built in hamburger menus required Svelte version 5, 
+   so instead I simplified the toggle logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const hamburgerButton = document.querySelector('.hamburger-button')
       const fullscreenMenu = document.querySelector('.fullscreen-menu')
-      const closeButton = document.querySelector('.close-menu')
+      fullscreenMenu?.classList.add('hidden')
 
-      if (hamburgerButton && fullscreenMenu) {
-        hamburgerButton.addEventListener('click', () => {
-          fullscreenMenu.classList.remove('hidden')
-          fullscreenMenu.classList.add('open')
-        })
-      }
-
-      if (closeButton && fullscreenMenu) {
-        closeButton.addEventListener('click', () => {
-          fullscreenMenu.classList.add('hidden')
-          fullscreenMenu.classList.remove('open')
-        })
-      }
+      document
+        .querySelectorAll('.hamburger-button, .close-menu')
+        .forEach((button) =>
+          button?.addEventListener('click', () =>
+            fullscreenMenu?.classList.toggle('hidden'),
+          ),
+        )
     })
   </script>
-</header>
 
-<style>
-  /* header.css */
-  /* Styles for navigation links */
-  .nav-list {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
+  <style>
+    /* header.css */
+    .nav-link {
+      position: relative;
+      color: white;
+      text-decoration: none;
+    }
 
-  .nav-link {
-    position: relative;
-    color: white;
-    text-decoration: none;
-  }
+    .nav-link::after {
+      content: '';
+      display: block;
+      block-size: 2px;
+      background-color: white;
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-end: -2px;
+      inline-size: 100%;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
 
-  .nav-link::after {
-    content: '';
-    display: block;
-    block-size: 2px;
-    background-color: white;
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-end: -2px;
-    inline-size: 100%;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
 
-  .nav-link:hover::after {
-    transform: scaleX(1);
-  }
+    /* Variables */
+    :root {
+      --header-padding: 0.5rem;
+      --btn-size: 2rem;
+      --black-bg: #000;
+      --white-color: #fff;
+      --gray-border: #aaa;
+    }
 
-  /* Variables */
-  :root {
-    --header-padding: 0.5rem;
-    --btn-size: 2rem;
-    --black-bg: #000;
-    --white-color: #fff;
-    --gray-border: #aaa;
-  }
-
-  .header-container {
-    position: fixed;
-    inset-block-start: 0;
-    inline-size: 100%;
-    z-index: 50;
-    margin-block-end: 5px;
-    background-color: var(--black-bg);
-    opacity: 1;
-    flex-shrink: 0;
-    block-size: 70px;
-    padding-block-end: 5px;
-    margin: 0;
-  }
-
-  .header-logo {
+    /* .header-logo {
     position: absolute;
     inset-block-start: 50%;
     inset-inline-start: 50%;
@@ -166,9 +156,9 @@ const navItems = [
     padding-block-start: 4px;
     z-index: 10000;
     height: auto;
-  }
+  } */
 
-  .nav-list {
+    /* .nav-list {
     display: none;
     list-style: none;
     margin-inline-start: auto;
@@ -181,18 +171,18 @@ const navItems = [
     .nav-list {
       display: flex;
     }
-  }
+  } */
 
-  .nav-item {
-    font-size: 1rem;
-  }
+    .nav-item {
+      font-size: 1rem;
+    }
 
-  .nav-link {
-    text-decoration: none;
-    color: var(--white-color);
-  }
+    .nav-link {
+      text-decoration: none;
+      color: var(--white-color);
+    }
 
-  .hamburger-menu {
+    /* .hamburger-menu {
     display: block;
     margin-inline-start: auto;
     block-size: var(--btn-size);
@@ -203,57 +193,46 @@ const navItems = [
     .hamburger-menu {
       display: none;
     }
-  }
+  } */
 
-  .fullscreen-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 1);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    z-index: 9999; /* Ensures it stays on top */
-    padding: 2rem 1rem 0 1rem;
-  }
+    .fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 1);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      z-index: 25;
+      padding: 2rem 1rem 0 1rem;
+    }
 
-  .fullscreen-menu > *:not(.header-logo):not(nav):not(.close-menu) {
-    display: none; /* Hide everything except logo, nav, close-menu */
-  }
-
-  /* Logo styling inside fullscreen menu */
-  .fullscreen-menu .header-logo {
+    /* Logo styling inside fullscreen menu */
+    /* .fullscreen-menu .header-logo {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    z-index: 1000; /* Ensure logo stays on top */
+    z-index: 1000;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
+  } */
 
-  /* Separator line */
-  .separator {
-    margin-top: 1rem;
-    border-top: 1px solid white;
-    width: 100%;
-  }
+    .fullscreen-menu.hidden {
+      transform: translateX(-100%);
+    }
 
-  .fullscreen-menu.hidden {
-    transform: translateX(-100%);
-  }
-
-  .fullscreen-menu nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-block-start: 2rem;
-    z-index: 999;
-  }
-  /* Navigation links in the fullscreen menu */
-  .fullscreen-menu .nav-link {
+    .fullscreen-menu nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-block-start: 2rem;
+      z-index: 20;
+    }
+    /* Navigation links in the fullscreen menu */
+    /* .fullscreen-menu .nav-link {
     font-size: 1.2rem;
     padding: 0.8rem 0;
     color: white;
@@ -263,121 +242,110 @@ const navItems = [
     position: relative;
     display: inline-block;
     transition: color 0.3s ease;
-  }
+  } */
 
-  /* Initial underline effect using ::before */
-  .fullscreen-menu .nav-link::before {
-    content: '';
-    display: block;
-    block-size: 2px;
-    background-color: white;
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-end: -2px;
-    inline-size: 100%;
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-  }
-
-  /* Hover underline effect using ::after */
-  .fullscreen-menu .nav-link::after {
-    content: '';
-    display: block;
-    block-size: 2px;
-    background-color: white;
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-end: -2px;
-    inline-size: 100%;
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-  }
-
-  /* Hover effect to show the dynamic underline and hide the initial one */
-  .fullscreen-menu .nav-link:hover::after {
-    transform: scaleX(1);
-  }
-
-  .fullscreen-menu .nav-link:hover::before {
-    display: none;
-  }
-
-  /* Adjustments when the menu is opened */
-  .fullscreen-menu.open .nav-link::after {
-    transform: scaleX(1);
-  }
-
-  .fullscreen-menu.open .nav-link::before {
-    display: none;
-  }
-
-  .hamburger-link {
-    color: var(--white-color);
-    text-decoration: none;
-    font-size: 1.2rem;
-  }
-
-  .hamburger-link:hover {
-    text-decoration: underline;
-  }
-
-  /* Close button */
-  .close-menu {
-    position: fixed;
-    inset-block-start: var(--header-padding);
-    inset-inline-end: var(--header-padding);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--white-color);
-    z-index: 1001;
-  }
-
-  /* Separator line in full-screen menu */
-  .separator {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: white;
-    z-index: 100;
-  }
-
-  @media (max-width: 768px) {
-    .separator {
-      top: 60px;
+    /* Initial underline effect using ::before */
+    .fullscreen-menu .nav-link::before {
+      content: '';
+      display: block;
+      block-size: 2px;
+      background-color: white;
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-end: -2px;
+      inline-size: 100%;
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
     }
-  }
 
-  .fullscreen-menu .separator {
-    position: relative;
-    top: 0;
-    width: 100%;
-    height: 2px;
-    background-color: white;
-    display: none;
-  }
+    /* Hover underline effect using ::after */
+    .fullscreen-menu .nav-link::after {
+      content: '';
+      display: block;
+      block-size: 2px;
+      background-color: white;
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-end: -2px;
+      inline-size: 100%;
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
 
-  .fullscreen-menu:not(.hidden) .separator {
-    display: block;
-  }
-  /* Full-screen menu items */
-  .hamburger-item {
-    padding: 1rem 0;
-    font-size: 1.5rem;
-    list-style-type: none;
-  }
+    /* Hover effect to show the dynamic underline and hide the initial one */
+    .fullscreen-menu .nav-link:hover::after {
+      transform: scaleX(1);
+    }
 
-  /* Expanded nav list (fallback behavior) */
-  .nav-list.expanded {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    inset-block-start: 50px;
-    inset-inline-end: 10px;
-    background-color: #333;
-    padding: 1rem;
-    z-index: 100;
-  }
-</style>
+    .fullscreen-menu .nav-link:hover::before {
+      display: none;
+    }
+
+    /* Adjustments when the menu is opened */
+    .fullscreen-menu.open .nav-link::after {
+      transform: scaleX(1);
+    }
+
+    .fullscreen-menu.open .nav-link::before {
+      display: none;
+    }
+
+    .hamburger-link {
+      color: var(--white-color);
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .hamburger-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Close button */
+    .close-menu {
+      position: fixed;
+      inset-block-start: var(--header-padding);
+      inset-inline-end: var(--header-padding);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--white-color);
+      z-index: 30;
+    }
+
+    /* Separator line in full-screen menu */
+    .separator {
+      z-index: 10;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .separator {
+        top: 60px;
+      }
+    }
+
+    .fullscreen-menu .separator {
+      position: relative;
+      top: 0;
+      width: 100%;
+      height: 2px;
+      background-color: grey;
+      display: none;
+    }
+
+    .fullscreen-menu:not(.hidden) .separator {
+      display: block;
+    }
+    /* Full-screen menu items */
+    .hamburger-item {
+      padding: 1rem 0;
+      font-size: 1.5rem;
+      list-style-type: none;
+    }
+
+    /* Default font size */
+    .fullscreen-menu .hamburger-link {
+      font-size: 1.5rem;
+    }
+  </style>
+</header>
