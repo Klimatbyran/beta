@@ -132,10 +132,12 @@ export const categoryDefinitions = {
   },
 }
 
-function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
+function getReportedCategories(
+  scope3?: Scope3 | null,
+): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).map(([key, definition]) => {
     const categoryId = parseInt(key.split('_')[0])
-    const category = scope3.categories?.find(
+    const category = scope3?.categories?.find(
       ({ category }) => category === categoryId,
     )
     const value = category?.total ?? null
@@ -151,9 +153,7 @@ function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
   })
 }
 
-const reportedCategories = emissions.scope3
-  ? getReportedCategories(emissions.scope3)
-  : []
+const reportedCategories = getReportedCategories(emissions.scope3)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const upstream = reportedCategories.slice(0, 8)
