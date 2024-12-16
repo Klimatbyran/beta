@@ -1,0 +1,46 @@
+export const team = [
+  {
+    src: '/team/frida.jpg',
+    alt: 'Frida',
+    name: 'Frida Berry Eklund, medgrundare till Klimatkollen',
+    text: 'Senior kommunikationsspecialist och medgrundare av flera klimatinitiativ, inklusive den internationella plattformen Our Kids’ Climate. Författare och talare, samt EU-klimatpaktsambassadör och Al Gore-utbildad Climate Reality Leader.',
+    linkedin: 'https://www.linkedin.com/in/fridaberryeklund/',
+    twitter: 'https://twitter.com/klimatfrida',
+  },
+  {
+    src: '/team/ola.jpg',
+    alt: 'Ola',
+    name: 'Ola Spännar, medgrundare till Klimatkollen',
+    text: 'Senior specialist inom kommunikation, opinion och marknadsföring. Tidigare kommunikationschef på Centerpartiet, programansvarig på Berghs School of Communication och kundansvarig på Forsman & Bodenfors.',
+    linkedin: 'https://www.linkedin.com/in/ospannar/',
+    twitter: 'https://twitter.com/olaspannar',
+  },
+  {
+    src: '/team/elvira.jpg',
+    alt: 'Elvira',
+    name: 'Elvira Boman, Tech Lead',
+    text: 'Tech Lead på Klimatkollen och fullstackutvecklare. Omfattande erfarenhet av grön och cirkulär teknik från flera prisbelönta startups, däribland Deedster. Konsultchef på IT-bolaget Precisit.',
+    linkedin: 'https://www.linkedin.com/in/elviraboman/',
+  },
+  {
+    src: '/team/samuel.png',
+    alt: 'Samuel',
+    name: 'Samuel Plumppu, Frontend Lead',
+    text: 'Fullstackutvecklare med passion för open source och att skapa digitala lösningar som ger värde till människor och samhälle. Har tidigare arbetat med startups och ideella organisationer i tidiga skeden, bland annat på We Don’t Have Time.',
+    linkedin: 'https://www.linkedin.com/in/samuelplumppu/',
+  },
+  {
+    src: '/team/alex.jpg',
+    alt: 'Alexandra',
+    name: 'Alexandra Palmqvist, Dataanalytiker',
+    text: 'Hållbarhetsstrateg och expert på klimatdata, med passion för planeten och att överbrygga gapet mellan vetenskap och data över till konkreta strategier för hållbar utveckling. Har tidigare arbetat på GoClimate, Normative och Mission anew.',
+    linkedin: 'https://www.linkedin.com/in/alexandra-palmquist-46969946/',
+  },
+  {
+    src: '/team/christian.jpg',
+    alt: 'Christian',
+    name: 'Christian Landgren, AI Lead',
+    text: 'Prisbelönt utvecklare, digital entreprenör och en av Sveriges mest inflytelserika personer inom tech. Grundare av digitala innovationsbyrån Iteam och medgrundare av Öppna skolplattformen. Talare inom AI och digital innovation och rådgivare till Sveriges innovationsminister.',
+    linkedin: 'https://www.linkedin.com/in/christianlandgren/',
+  },
+]
