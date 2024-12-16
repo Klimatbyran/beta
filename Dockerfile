@@ -1,7 +1,7 @@
 FROM node:lts AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci --omit=dev
 COPY . .
 RUN npm run telemetry
 ENV PORT=8080
