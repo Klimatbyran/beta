@@ -4,9 +4,9 @@ import {
   getLatestReportingPeriodWithEconomy,
   getFormattedReportingPeriod,
   type CompanyData,
+  type Emissions,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
-import VerifiedBadge from '../VerifiedBadge.astro'
 import { isNumber } from '@/lib/utils'
 
 interface Props {
@@ -21,6 +21,21 @@ const latestEconomy = getLatestReportingPeriodWithEconomy(company)
 // TODO: show the source for every datapoint
 // IDEA: Maybe use a common component to click a datapoint to open metadata about it, such as the source
 const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
+
+function getTotalEmissions(emissions: Emissions) {
+  const calculated = emissions.calculatedTotalEmissions
+  const stated = emissions.statedTotalEmissions
+
+  if (isNumber(calculated)) {
+    if (calculated === 0 && isNumber(stated?.total)) return stated.total
+    return calculated
+  }
+  return null
+}
+
+const totalEmissions = latestEmissions?.emissions
+  ? getTotalEmissions(latestEmissions.emissions)
+  : null
 ---
 
 <Card class="text-sm" level={1}>
@@ -105,12 +120,11 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
           </div>
 
           <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-            {latestEmissions.emissions.calculatedTotalEmissions.toLocaleString(
-              'sv-SE',
-              {
-                maximumFractionDigits: 0,
-              },
-            )}
+            {totalEmissions
+              ? totalEmissions.toLocaleString('sv-SE', {
+                  maximumFractionDigits: 0,
+                })
+              : '-'}
           </p>
         </Card>
       )
