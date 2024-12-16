@@ -3,10 +3,12 @@ import {
   getFormattedReportingPeriod,
   getLatestReportingPeriodWithEmissions,
   type CompanyData,
+  type Scope3,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import VerifiedBadge from '../VerifiedBadge.astro'
+import { cn, isNumber } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -39,6 +41,19 @@ if (!hasScope1 && !hasScope2 && !hasScope1And2) {
   showSeparateScope1And2 = true
 }
 
+function getScope3Total({
+  calculatedTotalEmissions,
+  statedTotalEmissions,
+  categories,
+}: Scope3) {
+  if (categories.length && calculatedTotalEmissions > 0) {
+    return calculatedTotalEmissions
+  } else if (isNumber(statedTotalEmissions?.total)) {
+    return statedTotalEmissions.total
+  }
+  return null
+}
+
 const scopeEmissionsList = emissions
   ? [
       showSeparateScope1And2
@@ -68,7 +83,7 @@ const scopeEmissionsList = emissions
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        value: emissions.scope3?.calculatedTotalEmissions,
+        value: emissions.scope3 ? getScope3Total(emissions.scope3) : null,
         // verified: Boolean(
         //   emissions.scope3?.calculatedTotalEmissions?.metadata?.verifiedBy,
         // ),
@@ -105,7 +120,12 @@ const biogenicEmissions = {
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
-              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
+              <span
+                class={cn(
+                  'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
+                  !isNumber(emission.value) && 'text-muted',
+                )}
+              >
                 {emission.value?.toLocaleString('sv-SE', {
                   maximumFractionDigits: 0,
                 }) ?? '-'}
