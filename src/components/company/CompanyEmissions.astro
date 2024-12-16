@@ -8,7 +8,7 @@ import {
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import VerifiedBadge from '../VerifiedBadge.astro'
-import { isNumber } from '@/lib/utils'
+import { cn, isNumber } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -120,7 +120,12 @@ const biogenicEmissions = {
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
-              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
+              <span
+                class={cn(
+                  'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
+                  !isNumber(emission.value) && 'text-muted',
+                )}
+              >
                 {emission.value?.toLocaleString('sv-SE', {
                   maximumFractionDigits: 0,
                 }) ?? '-'}
