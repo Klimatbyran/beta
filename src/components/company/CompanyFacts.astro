@@ -7,7 +7,7 @@ import {
   type Emissions,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
-import { isNumber } from '@/lib/utils'
+import { cn, isNumber } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -27,8 +27,18 @@ function getTotalEmissions(emissions: Emissions) {
   const stated = emissions.statedTotalEmissions
 
   if (isNumber(calculated)) {
-    if (calculated === 0 && isNumber(stated?.total)) return stated.total
-    return calculated
+    if (calculated > 0) return calculated
+    if (calculated === 0) {
+      if (
+        emissions.scope1 ||
+        emissions.scope1And2 ||
+        emissions.scope2 ||
+        emissions.scope3
+      ) {
+        if (isNumber(stated?.total)) return stated.total
+        return calculated
+      }
+    }
   }
   return null
 }
@@ -106,7 +116,7 @@ const totalEmissions = latestEmissions?.emissions
 
     <!-- TODO: Handle both statedTotalEmissions (what the companies report) and calculatedTotalEmissions -->
     {
-      isNumber(latestEmissions?.emissions?.calculatedTotalEmissions) && (
+      latestEmissions?.emissions && (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
             <h3 class="flex items-center gap-1">
@@ -119,7 +129,12 @@ const totalEmissions = latestEmissions?.emissions
             <span class="text-muted">(ton CO₂e)</span>
           </div>
 
-          <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
+          <p
+            class={cn(
+              'text-3xl leading-none tracking-tight sm:text-4xl md:text-5xl lg:text-6xl',
+              isNumber(totalEmissions) ? 'text-orange-250' : 'text-muted',
+            )}
+          >
             {totalEmissions
               ? totalEmissions.toLocaleString('sv-SE', {
                   maximumFractionDigits: 0,
