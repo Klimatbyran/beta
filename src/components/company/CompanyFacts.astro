@@ -33,7 +33,8 @@ function getTotalEmissions(emissions: Emissions) {
         emissions.scope1 ||
         emissions.scope1And2 ||
         emissions.scope2 ||
-        emissions.scope3
+        emissions.scope3?.categories?.length ||
+        isNumber(emissions.scope3?.statedTotalEmissions?.total)
       ) {
         if (isNumber(stated?.total)) return stated.total
         return calculated
