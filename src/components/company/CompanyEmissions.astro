@@ -148,7 +148,12 @@ const biogenicEmissions = {
           </h4>
           <div class="flex items-center justify-between gap-4">
             <p class="text-sm text-muted">{biogenicEmissions.description}</p>
-            <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
+            <span
+              class={cn(
+                'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
+                !isNumber(biogenicEmissions.value) && 'text-muted',
+              )}
+            >
               {biogenicEmissions.value?.toLocaleString('sv-SE', {
                 maximumFractionDigits: 0,
               }) ?? '-'}
