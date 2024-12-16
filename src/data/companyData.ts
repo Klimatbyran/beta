@@ -94,7 +94,7 @@ export type Emissions = {
   scope1And2?: CombinedScope1And2 | null
   scope3?: Scope3 | null
   biogenicEmissions?: BiogenicEmissions | null
-  statedTotalEmissions?: BiogenicEmissions | null
+  statedTotalEmissions?: StatedTotalEmissions | null
   calculatedTotalEmissions: number | null
 }
 
