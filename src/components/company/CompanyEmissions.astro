@@ -3,10 +3,12 @@ import {
   getFormattedReportingPeriod,
   getLatestReportingPeriodWithEmissions,
   type CompanyData,
+  type Scope3,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import VerifiedBadge from '../VerifiedBadge.astro'
+import { cn, isNumber } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -17,34 +19,76 @@ const { company } = Astro.props
 const latestEmissions = getLatestReportingPeriodWithEmissions(company)
 const emissions = latestEmissions?.emissions
 
+const scope1 = emissions?.scope1
+const scope2 = emissions?.scope2
+const scope1And2 = emissions?.scope1And2
+
+const hasVerifiedScope1 = !!scope1?.metadata?.verifiedBy
+const hasVerifiedScope2 = !!scope2?.metadata?.verifiedBy
+const hasVerifiedScope1And2 = !!scope1And2?.metadata?.verifiedBy
+
+const hasScope1 = !!scope1?.total
+const scope2Emissions = scope2?.mb ?? scope2?.lb ?? scope2?.unknown
+const hasScope2 = !!scope2Emissions
+const hasScope1And2 = !!scope1And2?.total
+
+let showSeparateScope1And2 =
+  hasVerifiedScope1 ||
+  hasVerifiedScope2 ||
+  (!hasVerifiedScope1And2 && (hasScope1 || hasScope2))
+
+if (!hasScope1 && !hasScope2 && !hasScope1And2) {
+  showSeparateScope1And2 = true
+}
+
+function getScope3Total({
+  calculatedTotalEmissions,
+  statedTotalEmissions,
+  categories,
+}: Scope3) {
+  if (categories.length && calculatedTotalEmissions > 0) {
+    return calculatedTotalEmissions
+  } else if (isNumber(statedTotalEmissions?.total)) {
+    return statedTotalEmissions.total
+  }
+  return null
+}
+
 const scopeEmissionsList = emissions
   ? [
-      {
-        title: 'Egna utsläpp (scope 1)',
-        description:
-          'Utsläpp från egna källor eller kontrollerade av organisationen.',
-        value: emissions.scope1?.total,
-        verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
-      },
-      {
-        title: 'Indirekta (scope 2)',
-        description:
-          'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-        value:
-          emissions.scope2?.mb ??
-          emissions.scope2?.lb ??
-          emissions.scope2?.unknown,
-        verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
-      },
+      showSeparateScope1And2
+        ? [
+            {
+              title: 'Egna utsläpp (scope 1)',
+              description:
+                'Utsläpp från egna källor eller kontrollerade av organisationen.',
+              value: scope1?.total,
+              verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
+            },
+            {
+              title: 'Indirekta (scope 2)',
+              description:
+                'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
+              value: scope2Emissions,
+              verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
+            },
+          ]
+        : {
+            title: 'Egna utsläpp (scope 1 plus 2)',
+            description:
+              'Utsläpp från egna eller kontrollerade källor samt från energi som konsumeras av organisationen.',
+            value: scope1And2?.total,
+            verified: Boolean(scope1And2?.metadata?.verifiedBy),
+          },
       {
         title: 'Värdekedjan (scope 3)',
         description: 'Indirekta utsläpp från organisationens värdekedja.',
-        value: emissions.scope3?.calculatedTotalEmissions,
+        value: emissions.scope3 ? getScope3Total(emissions.scope3) : null,
         // verified: Boolean(
         //   emissions.scope3?.calculatedTotalEmissions?.metadata?.verifiedBy,
         // ),
       },
-    ]
+    ].flat()
   : []
 
 const biogenicEmissions = {
@@ -76,7 +120,12 @@ const biogenicEmissions = {
                   <p class="text-sm text-muted">{emission.description}</p>
                 )}
               </div>
-              <span class="rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base">
+              <span
+                class={cn(
+                  'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
+                  !isNumber(emission.value) && 'text-muted',
+                )}
+              >
                 {emission.value?.toLocaleString('sv-SE', {
                   maximumFractionDigits: 0,
                 }) ?? '-'}
@@ -99,7 +148,12 @@ const biogenicEmissions = {
           </h4>
           <div class="flex items-center justify-between gap-4">
             <p class="text-sm text-muted">{biogenicEmissions.description}</p>
-            <span class="self-start rounded-full bg-gray-800 px-4 py-2 font-bold">
+            <span
+              class={cn(
+                'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
+                !isNumber(biogenicEmissions.value) && 'text-muted',
+              )}
+            >
               {biogenicEmissions.value?.toLocaleString('sv-SE', {
                 maximumFractionDigits: 0,
               }) ?? '-'}
