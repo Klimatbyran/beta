@@ -6,6 +6,7 @@ import {
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
+import CompanyHistoricalEmissions from './CompanyHistoricalEmissions.svelte'
 import CompanyEmissions from './CompanyEmissions.astro'
 import CompanyGoals from './CompanyGoals.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
@@ -38,6 +39,8 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
       <>
         <div class="mt-8 grid gap-8">
           <CompanyFacts {company} />
+
+          <CompanyHistoricalEmissions {company} client:load />
 
           <CompanyEmissions {company} />
 
