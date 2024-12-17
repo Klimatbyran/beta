@@ -28,6 +28,8 @@ function getTotalEmissions(emissions: Emissions) {
 
   if (isNumber(calculated)) {
     if (calculated > 0) return calculated
+    if (isNumber(stated?.total) && Boolean(stated?.metadata?.verifiedBy))
+      return stated.total
     if (calculated === 0) {
       if (
         emissions.scope1 ||
