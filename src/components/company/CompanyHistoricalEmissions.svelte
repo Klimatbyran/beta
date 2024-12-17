@@ -13,25 +13,44 @@
   const extractEmissionsData = (reportingPeriods: ReportingPeriod[]) => {
     return reportingPeriods.map((period) => ({
       year: new Date(period.startDate).getFullYear(),
-      emission: period?.emissions?.statedTotalEmissions?.total || 0,
+      scope1: period?.emissions?.scope1?.total || 0,
+      scope2: period?.emissions?.scope2?.mb || 0,
+      scope3: period?.emissions?.scope3?.statedTotalEmissions?.total || 0,
     }))
   }
 
   const emissionsData = extractEmissionsData(company.reportingPeriods)
   const years = emissionsData.map((item) => item.year)
-  const emissions = emissionsData.map((item) => item.emission)
+  const scope1Data = emissionsData.map((item) => item.scope1)
+  const scope2Data = emissionsData.map((item) => item.scope2)
+  const scope3Data = emissionsData.map((item) => item.scope3)
 
   const chartData = {
     labels: years,
     datasets: [
       {
-        label: 'Totala utsläpp',
-        data: emissions,
-        borderColor: 'rgba(244, 143, 42)',
-        backgroundColor: 'rgba(244, 143, 42, 0.4)',
-        borderWidth: 2,
-        fill: true,
-        pointRadius: 0,
+        label: 'Scope 1',
+        data: scope1Data,
+        borderColor: '#AAE506',
+        backgroundColor: '#AAE50699',
+        borderWidth: 1,
+        stack: 'stacked',
+      },
+      {
+        label: 'Scope 2',
+        data: scope2Data,
+        borderColor: '#59A0E1',
+        backgroundColor: '#59A0E199',
+        borderWidth: 1,
+        stack: 'stacked',
+      },
+      {
+        label: 'Scope 3',
+        data: scope3Data,
+        borderColor: '#F0759A',
+        backgroundColor: '#F0759A99',
+        borderWidth: 1,
+        stack: 'stacked',
       },
     ],
   }
@@ -61,7 +80,7 @@
                 const emissions =
                   tooltipData.dataset.data[tooltipData.dataIndex]
                 const formattedEmissions = (Number(emissions) / 1000).toFixed(0)
-                return `${formattedEmissions}`
+                return `${formattedEmissions} ktCO₂`
               },
             },
           },
@@ -91,6 +110,7 @@
           y: {
             beginAtZero: true,
             title: { display: true, text: 'Tusen ton CO₂' },
+            stacked: true,
             ticks: {
               callback: (value) => (Number(value) / 1000).toFixed(0),
             },
