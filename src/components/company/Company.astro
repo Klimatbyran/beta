@@ -3,6 +3,7 @@ import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import {
   type CompanyData,
   getLatestReportingPeriodWithEmissions,
+  getLatestReportingPeriodWithEconomy,
 } from '@/data/companyData'
 import { buttonVariants } from '../ui/button'
 import CompanyFacts from './CompanyFacts.astro'
@@ -18,7 +19,8 @@ interface Props {
 
 const { company } = Astro.props
 
-const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
+const reportingPeriodEmissions = getLatestReportingPeriodWithEmissions(company)
+const reportingPeriodEconomy = getLatestReportingPeriodWithEconomy(company)
 ---
 
 <div class="bg-blue-150 py-1.5 text-xs text-black sm:text-sm">
@@ -34,23 +36,7 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
 
 <article class="mx-auto max-w-screen-lg xs:px-4">
   {
-    reportingPeriod ? (
-      <>
-        <div class="mt-8 grid gap-8">
-          <CompanyFacts {company} />
-
-          <CompanyEmissions {company} />
-
-          <CompanyGoals goals={company.goals} />
-
-          <CompanyInitiatives initiatives={company.initiatives} />
-
-          <div class="grid place-content-center py-16">
-            <OtherCompanies client:idle />
-          </div>
-        </div>
-      </>
-    ) : (
+    !reportingPeriodEmissions && !reportingPeriodEconomy ? (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
         <h1 class="text-4xl font-bold leading-none tracking-tight">
           {company.name}
@@ -72,6 +58,22 @@ const reportingPeriod = getLatestReportingPeriodWithEmissions(company)
           </a>
         </div>
       </div>
+    ) : (
+      <>
+        <div class="mt-8 grid gap-8">
+          <CompanyFacts {company} />
+
+          <CompanyEmissions {company} />
+
+          <CompanyGoals goals={company.goals} />
+
+          <CompanyInitiatives initiatives={company.initiatives} />
+
+          <div class="grid place-content-center py-16">
+            <OtherCompanies client:idle />
+          </div>
+        </div>
+      </>
     )
   }
 </article>
