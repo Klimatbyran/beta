@@ -21,6 +21,7 @@ const emissions = latestEmissions?.emissions
 
 const scope1 = emissions?.scope1
 const scope2 = emissions?.scope2
+const scope3 = emissions?.scope3
 const scope1And2 = emissions?.scope1And2
 
 const hasVerifiedScope1 = !!scope1?.metadata?.verifiedBy
@@ -54,42 +55,40 @@ function getScope3Total({
   return null
 }
 
-const scopeEmissionsList = emissions
-  ? [
-      showSeparateScope1And2
-        ? [
-            {
-              title: 'Egna utsläpp (scope 1)',
-              description:
-                'Utsläpp från egna källor eller kontrollerade av organisationen.',
-              value: scope1?.total,
-              verified: Boolean(emissions.scope1?.metadata?.verifiedBy),
-            },
-            {
-              title: 'Indirekta (scope 2)',
-              description:
-                'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
-              value: scope2Emissions,
-              verified: Boolean(emissions.scope2?.metadata?.verifiedBy),
-            },
-          ]
-        : {
-            title: 'Egna utsläpp (scope 1 plus 2)',
-            description:
-              'Utsläpp från egna eller kontrollerade källor samt från energi som konsumeras av organisationen.',
-            value: scope1And2?.total,
-            verified: Boolean(scope1And2?.metadata?.verifiedBy),
-          },
-      {
-        title: 'Värdekedjan (scope 3)',
-        description: 'Indirekta utsläpp från organisationens värdekedja.',
-        value: emissions.scope3 ? getScope3Total(emissions.scope3) : null,
-        // verified: Boolean(
-        //   emissions.scope3?.calculatedTotalEmissions?.metadata?.verifiedBy,
-        // ),
+const scopeEmissionsList = [
+  showSeparateScope1And2
+    ? [
+        {
+          title: 'Egna utsläpp (scope 1)',
+          description:
+            'Utsläpp från egna källor eller kontrollerade av organisationen.',
+          value: scope1?.total,
+          verified: Boolean(scope1?.metadata?.verifiedBy),
+        },
+        {
+          title: 'Indirekta (scope 2)',
+          description:
+            'Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.',
+          value: scope2Emissions,
+          verified: Boolean(scope2?.metadata?.verifiedBy),
+        },
+      ]
+    : {
+        title: 'Egna utsläpp (scope 1 plus 2)',
+        description:
+          'Utsläpp från egna eller kontrollerade källor samt från energi som konsumeras av organisationen.',
+        value: scope1And2?.total,
+        verified: Boolean(scope1And2?.metadata?.verifiedBy),
       },
-    ].flat()
-  : []
+  {
+    title: 'Värdekedjan (scope 3)',
+    description: 'Indirekta utsläpp från organisationens värdekedja.',
+    value: scope3 ? getScope3Total(scope3) : null,
+    // verified: Boolean(
+    //   emissions.scope3?.calculatedTotalEmissions?.metadata?.verifiedBy,
+    // ),
+  },
+].flat()
 
 const biogenicEmissions = {
   title: 'Biogena utsläpp',
@@ -101,10 +100,13 @@ const biogenicEmissions = {
 ---
 
 {
-  emissions && (
+  (
     <Card class="grid gap-8" level={1}>
       <h2 class="flex items-center justify-between pt-4 text-lg leading-none tracking-tight 2xs:text-xl xs:text-2xl sm:text-3xl md:pt-0">
-        Rapporterade utsläpp {getFormattedReportingPeriod(latestEmissions)}
+        Rapporterade utsläpp{' '}
+        {latestEmissions
+          ? getFormattedReportingPeriod(latestEmissions)
+          : 'saknas'}
         {/* TODO: Replace units with actual units from the API response, in all locations where ton CO₂e can be found.*/}
         <span class="pr-4 text-base text-muted xs:text-xl">(ton CO₂e)</span>
       </h2>
@@ -137,30 +139,28 @@ const biogenicEmissions = {
 
       <Scope3Emissions {company} {emissions} />
 
-      {emissions && (
-        <Card level={2}>
-          <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
-            <span class="flex items-center justify-start gap-1">
-              <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
-              {biogenicEmissions.verified && <VerifiedBadge />}
-            </span>
-            <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-          </h4>
-          <div class="flex items-center justify-between gap-4">
-            <p class="text-sm text-muted">{biogenicEmissions.description}</p>
-            <span
-              class={cn(
-                'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
-                !isNumber(biogenicEmissions.value) && 'text-muted',
-              )}
-            >
-              {biogenicEmissions.value?.toLocaleString('sv-SE', {
-                maximumFractionDigits: 0,
-              }) ?? '-'}
-            </span>
-          </div>
-        </Card>
-      )}
+      <Card level={2}>
+        <h4 class="flex items-center justify-between pb-4 text-lg 2xs:text-xl xs:text-2xl">
+          <span class="flex items-center justify-start gap-1">
+            <span class="flex flex-grow-0">{biogenicEmissions.title}</span>
+            {biogenicEmissions.verified && <VerifiedBadge />}
+          </span>
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        <div class="flex items-center justify-between gap-4">
+          <p class="text-sm text-muted">{biogenicEmissions.description}</p>
+          <span
+            class={cn(
+              'rounded-full bg-gray-800 px-4 py-2 font-bold md:text-base',
+              !isNumber(biogenicEmissions.value) && 'text-muted',
+            )}
+          >
+            {biogenicEmissions.value?.toLocaleString('sv-SE', {
+              maximumFractionDigits: 0,
+            }) ?? '-'}
+          </span>
+        </div>
+      </Card>
     </Card>
   )
 }
