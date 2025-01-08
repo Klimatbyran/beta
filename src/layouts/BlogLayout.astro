@@ -14,35 +14,20 @@ const { title, author, date, description } = Astro.props
 <Layout title={title}>
   <article class="mx-auto max-w-2xl px-4 py-16">
     <header class="mb-12">
-      <h1 class="mb-3 text-4xl font-extrabold tracking-tight lg:text-5xl">{title}</h1>
-      <p class="text-xl text-gray-400 leading-relaxed">{description}</p>
-      <div class="mt-6 flex gap-2 text-sm text-gray-500 font-medium">
+      <h1 class="mb-3 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        {title}
+      </h1>
+      <p class="text-xl leading-relaxed text-gray-200">{description}</p>
+      <div class="mt-6 flex gap-2 text-sm font-medium text-gray-300">
         <span>{author}</span>
         <span>•</span>
-        <time datetime={date}>{new Date(date).toLocaleDateString('sv-SE')}</time>
+        <time datetime={date}>{new Date(date).toLocaleDateString('sv-SE')}</time
+        >
       </div>
     </header>
-    <div class="prose prose-invert prose-lg max-w-none 
-      prose-headings:font-bold 
-      prose-h1:text-4xl prose-h1:mt-12 
-      prose-h2:text-3xl prose-h2:mt-10 
-      prose-h3:text-2xl prose-h3:mt-8 
-      prose-h4:text-xl prose-h4:mt-6
-      prose-ul:list-disc prose-ul:pl-6 prose-ul:my-6
-      prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6
-      prose-li:my-2
-      prose-p:my-6
-      prose-blockquote:border-l-4 prose-blockquote:border-gray-700 prose-blockquote:pl-4 prose-blockquote:my-6
-      prose-code:bg-gray-800 prose-code:rounded prose-code:px-1.5 prose-code:py-0.5
-      prose-pre:bg-gray-800 prose-pre:p-4 prose-pre:rounded-lg
-      prose-img:rounded-lg prose-img:my-8
-      prose-hr:border-gray-700 prose-hr:my-8
-      prose-table:border-collapse prose-table:my-8
-      prose-th:border prose-th:border-gray-700 prose-th:p-2 prose-th:bg-gray-800
-      prose-td:border prose-td:border-gray-700 prose-td:p-2
-      prose-strong:font-bold
-      prose-em:italic
-      prose-a:text-blue-400 prose-a:hover:underline">
+    <div
+      class="prose prose-invert prose-lg prose-headings:font-bold prose-h1:text-4xl prose-h1:mt-12 prose-h2:text-3xl prose-h2:mt-10 prose-h3:text-2xl prose-h3:mt-8 prose-h4:text-xl prose-h4:mt-6 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-6 prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6 prose-li:my-2 prose-p:my-6 prose-blockquote:border-l-4 prose-blockquote:border-gray-700 prose-blockquote:pl-4 prose-blockquote:my-6 prose-code:bg-gray-800 prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-pre:bg-gray-800 prose-pre:p-4 prose-pre:rounded-lg prose-img:rounded-lg prose-img:my-8 prose-hr:border-gray-700 prose-hr:my-8 prose-table:border-collapse prose-table:my-8 prose-th:border prose-th:border-gray-700 prose-th:p-2 prose-th:bg-gray-800 prose-td:border prose-td:border-gray-700 prose-td:p-2 prose-strong:font-bold prose-em:italic prose-a:text-blue-400 prose-a:hover:underline max-w-none"
+    >
       <slot />
     </div>
   </article>
