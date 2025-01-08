@@ -1,11 +1,9 @@
 ---
-title: "Välkommen till Klimatkollen"
-description: "Läs om hur vi hjälper företag att bli mer transparenta med sina klimatdata"
-author: "Klimatkollen"
-date: "2025-01-08"
+title: 'Välkommen till Klimatkollen'
+description: 'Läs om hur vi hjälper företag att bli mer transparenta med sina klimatdata'
+author: 'Klimatkollen'
+date: '2025-01-08'
 ---
-
-# Välkommen till Klimatkollen
 
 Vi är glada att kunna presentera vår nya blogg där vi kommer att dela med oss av:
 
