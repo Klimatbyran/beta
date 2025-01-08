@@ -1,7 +1,7 @@
 ---
 title: 'Välkommen till Klimatkollen'
 description: 'Läs om hur vi hjälper företag att bli mer transparenta med sina klimatdata'
-author: 'Klimatkollen'
+author: 'Anna Andersson'
 date: '2025-01-08'
 ---
 
