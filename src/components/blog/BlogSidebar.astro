@@ -11,7 +11,7 @@ const { currentSlug } = Astro.props
   <h2 class="text-xl font-medium mb-4">Tidigare inlägg</h2>
   <ul class="space-y-4">
     {posts.map((post) => (
-      <li class={currentSlug === post.slug ? 'text-primary' : 'text-gray-400 hover:text-primary'}>
+      <li class={currentSlug === post.slug ? 'text-primary' : 'text-gray-300 hover:text-primary'}>
         <a href={`/blog/${post.slug}`} class="block">
           <h3 class="font-medium mb-1">{post.data.title}</h3>
           <time datetime={post.data.date} class="text-sm">
