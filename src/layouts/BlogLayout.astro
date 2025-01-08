@@ -12,17 +12,17 @@ const { title, author, date, description } = Astro.props
 ---
 
 <Layout title={title}>
-  <article class="mx-auto max-w-3xl px-4 py-12">
-    <header class="mb-8">
-      <h1 class="mb-2 text-4xl font-bold">{title}</h1>
-      <p class="text-lg text-gray-400">{description}</p>
-      <div class="mt-4 flex gap-2 text-sm text-gray-500">
+  <article class="mx-auto max-w-2xl px-4 py-16">
+    <header class="mb-12">
+      <h1 class="mb-3 text-4xl font-extrabold tracking-tight lg:text-5xl">{title}</h1>
+      <p class="text-xl text-gray-400 leading-relaxed">{description}</p>
+      <div class="mt-6 flex gap-2 text-sm text-gray-500 font-medium">
         <span>{author}</span>
         <span>•</span>
         <time datetime={date}>{new Date(date).toLocaleDateString('sv-SE')}</time>
       </div>
     </header>
-    <div class="prose prose-invert max-w-none">
+    <div class="prose prose-invert prose-lg max-w-none">
       <slot />
     </div>
   </article>
