@@ -9,8 +9,10 @@
     const input = e.target as HTMLInputElement
     const newValue = input.value === '' ? null : Number(input.value)
     if (newValue === null) {
+      isReported = false
       onReportedChange(false)
     } else {
+      isReported = true
       onReportedChange(true)
     }
     onChange(newValue)
@@ -32,13 +34,12 @@
     on:input={handleInput}
     class="flex-1 rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
   />
-  <label class="flex items-center gap-2">
+  <label class="flex items-center gap-2" title="Har rapporterat">
     <input
       type="checkbox"
       checked={isReported}
       on:change={handleReportedChange}
       class="h-4 w-4 rounded border-gray-300"
     />
-    <span class="text-sm">Rapporterat</span>
   </label>
 </div>

@@ -43,7 +43,8 @@
     "@iconify-json/mingcute": "^1.2.1",
     "@iconify-json/streamline": "^1.2.1",
     "@iconify-json/zondicons": "^1.2.1",
-    "unplugin-icons": "^0.21.0"
+    "unplugin-icons": "^0.21.0",
+    "sonner": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",

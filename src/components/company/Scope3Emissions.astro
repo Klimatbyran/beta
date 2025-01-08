@@ -178,46 +178,44 @@ const downstream = reportedCategories.slice(8)
     </p>
   </div>
 
-  <div class="grid gap-2 text-sm">
-    <h4
-      class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight"
-    >
-      Uppströms
-      <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-    </h4>
-    {
-      upstream.map(({ Icon, title, description, value, verified }) => (
-        <Scope3EmissionsCategory
-          {Icon}
-          {title}
-          {description}
-          {verified}
-          {value}
-        />
-      ))
-    }
-  </div>
+  {
+    upstream.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Uppströms
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {upstream.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            {value}
+          />
+        ))}
+      </div>
+    ) : null
+  }
 
-  <div class="grid gap-2 text-sm">
-    <h4
-      class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight"
-    >
-      Nedströms
-      <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-    </h4>
-    {
-      downstream.map(({ Icon, title, description, value, verified }) => (
-        <Scope3EmissionsCategory
-          {Icon}
-          {title}
-          {description}
-          {verified}
-          {value}
-        />
-      ))
-    }
-    {
-      /* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */
-    }
-  </div>
+  {
+    downstream.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Nedströms
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {downstream.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            {value}
+          />
+        ))}
+        {/* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */}
+      </div>
+    ) : null
+  }
 </Card>
