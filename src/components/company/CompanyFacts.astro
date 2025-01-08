@@ -119,11 +119,14 @@ const totalEmissions = latestEmissions?.emissions
 
     <!-- TODO: Handle both statedTotalEmissions (what the companies report) and calculatedTotalEmissions -->
     {
-      latestEmissions?.emissions && (
+      (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
             <h3 class="flex items-center gap-1">
-              Totala utsläpp {getFormattedReportingPeriod(latestEmissions)}{' '}
+              Totala utsläpp{' '}
+              {latestEmissions
+                ? getFormattedReportingPeriod(latestEmissions)
+                : 'saknas'}
               {/* {Boolean(
                 latestEmissions.emissions.calculatedTotalEmissions.metadata
                   .verifiedBy,
