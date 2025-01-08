@@ -1,7 +1,7 @@
 ---
-title: 'Välkommen till Klimatkollen'
+title: 'Vår metod'
 description: 'Läs om hur vi hjälper företag att bli mer transparenta med sina klimatdata'
-author: 'Alexandra Palmqvist'
+author: 'Christian Landgren'
 date: '2025-01-08'
 ---
 
