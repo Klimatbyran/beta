@@ -176,26 +176,41 @@ export function getLatestReportingPeriodWithEconomy(company: CompanyData) {
   return company.reportingPeriods.find(({ economy }) => Boolean(economy))
 }
 
-export function hasVerifiedScope3(emissions: Emissions | null | undefined): boolean {
+export function hasVerifiedScope3(
+  emissions: Emissions | null | undefined,
+): boolean {
+  // Early return for invalid/missing scope 3 emissions OR if neither statedTotalEmissions nor categories are present
   if (
-    !emissions ||
-    !emissions.scope3 ||
-    !emissions.scope3.categories ||
-    // If all categories are null, then it's marked as not verified
-    !emissions.scope3.categories.some(
-      (category) => category.total !== null && category.total !== undefined
-    )
+    !emissions?.scope3 ||
+    (!emissions.scope3.categories && !emissions.scope3.statedTotalEmissions)
   ) {
-    return false;
+    return false
   }
 
-  return emissions.scope3.categories.every((category) => {
-    return (
-      category.total !== null &&
-      category.total !== undefined &&
-      category.metadata.verifiedBy !== null
-    );
-  });
+  const categories = emissions.scope3.categories ?? []
+  const statedTotalEmissions = emissions.scope3.statedTotalEmissions
+
+  const hasReportedCategories = categories.some(
+    (category) => category.total != null,
+  )
+  const isStatedTotalEmissionsVerified =
+    statedTotalEmissions?.total != null &&
+    statedTotalEmissions?.metadata.verifiedBy != null
+
+  // If all categories are null and statedTotalEmissions is invalid or unverified then scope 3 is unverified
+  if (!hasReportedCategories && !isStatedTotalEmissionsVerified) {
+    return false
+  }
+
+  // If all categories are null BUT statedTotalEmissions is verified then scope 3 is verified
+  if (!hasReportedCategories && isStatedTotalEmissionsVerified) {
+    return true
+  }
+
+  // Check if all reported categories are verified
+  return categories
+    .filter((category) => category.total != null)
+    .every((category) => category.metadata.verifiedBy != null)
 }
 
 export function getFormattedReportingPeriod({
