@@ -176,6 +176,28 @@ export function getLatestReportingPeriodWithEconomy(company: CompanyData) {
   return company.reportingPeriods.find(({ economy }) => Boolean(economy))
 }
 
+export function hasVerifiedScope3(emissions: Emissions | null | undefined): boolean {
+  if (
+    !emissions ||
+    !emissions.scope3 ||
+    !emissions.scope3.categories ||
+    // If all categories are null, then it's marked as not verified
+    !emissions.scope3.categories.some(
+      (category) => category.total !== null && category.total !== undefined
+    )
+  ) {
+    return false;
+  }
+
+  return emissions.scope3.categories.every((category) => {
+    return (
+      category.total !== null &&
+      category.total !== undefined &&
+      category.metadata.verifiedBy !== null
+    );
+  });
+}
+
 export function getFormattedReportingPeriod({
   startDate,
   endDate,
