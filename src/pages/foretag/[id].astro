@@ -6,13 +6,33 @@ import { getCompany } from '@/data/companies'
 import Company from '@/components/company/Company.astro'
 import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
+import Toast from '@/components/ToastNotification.svelte';
 
 const { id = '' } = Astro.params
 
 // Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
 
-const company = wikidataId.startsWith('Q') ? await getCompany(wikidataId) : null
+let showToast = false
+let toastMessage = ''
+let company = null
+
+// if the wikidataId is a valid wikidataId, fetch the company
+if (wikidataId.startsWith('Q')) {
+  try {
+    company = await getCompany(wikidataId);
+  } catch (error) {
+    // if error is thrown, we should redirect to company list page but we need to migrate that to beta before we can set up the redirect
+    console.error('Redirecting due to company not found:', error);
+    showToast = true;
+    toastMessage =
+      'Vi hittade inget företag med den länken, men testa gärna att söka här nedanför!';
+  }
+} else {
+  console.error('Redirecting due to invalid wikidataId:', wikidataId);
+  showToast = true;
+  toastMessage = 'Vi hittade inget företag med den länken';
+}
 
 const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
 
@@ -25,11 +45,8 @@ const title = `${company?.name ? `${company.name} | ` : ''}${baseTitle}`
       <Company {company} />
     ) : (
       <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
-        <p class="py-4">
-          Vi hittade inget företag med den länken, men testa gärna att söka här
-          nedanför!
-        </p>
-
+        {/* show toast if company not found */}
+        <Toast message={toastMessage} show={showToast} client:load /> 
         <div class="grid w-full place-items-center">
           <OtherCompanies client:load />
 
