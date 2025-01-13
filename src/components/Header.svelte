@@ -1,16 +1,15 @@
 <script>
-  const baseURL = import.meta.env.DEV
-    ? 'http://localhost:3000'
-    : 'https://klimatkollen.se'
+  import { Hamburger } from 'svelte-hamburgers'
+  let open = false
 
   const navItems = [
     {
-      href: `https://www.klimatkollen.se/kallor-och-metod`,
+      href: 'https://www.klimatkollen.se/kallor-och-metod',
       label: 'Källor och metod',
     },
-    { href: `https://www.klimatkollen.se/om-oss`, label: 'Om oss' },
-    { href: `https://klimatkollen.teamtailor.com/`, label: 'Jobb' },
-    { href: `https://www.klimatkollen.se/in-english`, label: 'In English' },
+    { href: 'https://www.klimatkollen.se/om-oss', label: 'Om oss' },
+    { href: 'https://klimatkollen.teamtailor.com/', label: 'Jobb' },
+    { href: 'https://www.klimatkollen.se/in-english', label: 'In English' },
   ]
 </script>
 
@@ -18,8 +17,9 @@
   class="bg-black h-18 top-0 mb-1.5 w-full flex-shrink-0 pb-1.5 opacity-100 relative z-[2]"
 >
   <div class="relative flex h-12 items-center justify-between px-4">
+    <!-- Logo -->
     <div
-      class="absolute left-1/2 top-1/2 z-[10] flex h-8 -translate-x-1/2 -translate-y-1/2"
+      class="absolute left-1/2 top-1/2 z-[60] flex h-8 -translate-x-1/2 -translate-y-1/2"
     >
       <a
         href="https://klimatkollen.se"
@@ -44,5 +44,37 @@
         </a>
       {/each}
     </nav>
+    <!-- Hamburger Button (Mobile) -->
+    <div class="relative ml-auto block h-8 lg:hidden z-40">
+      <Hamburger
+        bind:open
+        type="spin"
+        --color="white"
+        aria-label="Toggle menu"
+      />
+    </div>
   </div>
+
+  <!-- Fullscreen Menu Overlay (Mobile View) -->
+  {#if open}
+    <!-- Background Overlay to hide content -->
+    <div class="fixed inset-0 bg-black bg-opacity-75"></div>
+
+    <!-- Fullscreen Menu (Nav Links) -->
+    <div
+      class="fullscreen-menu bg-black text-white fixed left-0 top-0 flex h-full w-full flex-col pl-4 pt-4"
+    >
+      <!-- Divider Line -->
+      <hr class="mt-[48px] mb-4 h-1 bg-gray-350 border-0 w-full" />
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-col gap-5">
+        {#each navItems as item}
+          <a href={item.href} class=" text-[1.5rem] hover:underline">
+            {item.label}
+          </a>
+        {/each}
+      </nav>
+    </div>
+  {/if}
 </header>
