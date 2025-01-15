@@ -27,6 +27,11 @@ export default defineConfig({
     mode: 'standalone',
   }),
   devToolbar: { enabled: false },
+  markdown: {
+    shikiConfig: {
+      theme: 'one-dark-pro',
+    },
+  },
   // NOTE: Temporary redirect (HTTP 302) to reduce risk of broken links once we implement these URLs as part of the Astro site.
   redirects:
     process.env.NODE_ENV === 'development'

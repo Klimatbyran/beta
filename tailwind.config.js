@@ -1,4 +1,5 @@
 import { fontFamily, screens } from 'tailwindcss/defaultTheme'
+import typography from '@tailwindcss/typography'
 import { white, black, transparent, current } from 'tailwindcss/colors'
 
 const colors = {
@@ -116,6 +117,7 @@ const colors = {
 
 /** @type {import('tailwindcss').Config} */
 const config = {
+  plugins: [typography],
   darkMode: ['class'],
   content: ['./src/**/*.{astro,svelte,ts,tsx,js,md,mdx,html}'],
   safelist: ['dark'],
