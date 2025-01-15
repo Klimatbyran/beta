@@ -25,7 +25,7 @@ import { Card } from '../ui/card'
 
 interface Props {
   company: CompanyData
-  emissions: Emissions
+  emissions?: Emissions | null
 }
 
 const { company, emissions } = Astro.props
@@ -132,10 +132,12 @@ export const categoryDefinitions = {
   },
 }
 
-function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
+function getReportedCategories(
+  scope3?: Scope3 | null,
+): ReportedCategoryDefinition[] {
   return Object.entries(categoryDefinitions).map(([key, definition]) => {
     const categoryId = parseInt(key.split('_')[0])
-    const category = scope3.categories?.find(
+    const category = scope3?.categories?.find(
       ({ category }) => category === categoryId,
     )
     const value = category?.total ?? null
@@ -151,9 +153,7 @@ function getReportedCategories(scope3: Scope3): ReportedCategoryDefinition[] {
   })
 }
 
-const reportedCategories = emissions.scope3
-  ? getReportedCategories(emissions.scope3)
-  : []
+const reportedCategories = getReportedCategories(emissions?.scope3)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const upstream = reportedCategories.slice(0, 8)
@@ -173,53 +173,51 @@ const downstream = reportedCategories.slice(8)
     </h3>
 
     <p class="text-sm text-muted">
-      Företag bör rapportera i alla kategorier som är relevanta för
-      verksamheten.
+      Utsläppen i scope 3 delas upp i 15 kategorier. Företag bör rapportera i
+      alla kategorier som är relevanta för verksamheten.
     </p>
   </div>
 
-  {
-    upstream.length ? (
-      <div class="grid gap-2 text-sm">
-        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
-          Uppströms
-          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-        </h4>
-        {upstream.map(({ Icon, title, description, value, verified }) => (
-          <Scope3EmissionsCategory
-            {Icon}
-            {title}
-            {description}
-            {verified}
-            value={value?.toLocaleString('sv-SE', {
-              maximumFractionDigits: 0,
-            })}
-          />
-        ))}
-      </div>
-    ) : null
-  }
+  <div class="grid gap-2 text-sm">
+    <h4
+      class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight"
+    >
+      Uppströms
+      <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+    </h4>
+    {
+      upstream.map(({ Icon, title, description, value, verified }) => (
+        <Scope3EmissionsCategory
+          {Icon}
+          {title}
+          {description}
+          {verified}
+          {value}
+        />
+      ))
+    }
+  </div>
 
-  {
-    downstream.length ? (
-      <div class="grid gap-2 text-sm">
-        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
-          Nedströms
-          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-        </h4>
-        {downstream.map(({ Icon, title, description, value, verified }) => (
-          <Scope3EmissionsCategory
-            {Icon}
-            {title}
-            {description}
-            {verified}
-            value={value?.toLocaleString('sv-SE', {
-              maximumFractionDigits: 0,
-            })}
-          />
-        ))}
-        {/* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */}
-      </div>
-    ) : null
-  }
+  <div class="grid gap-2 text-sm">
+    <h4
+      class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight"
+    >
+      Nedströms
+      <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+    </h4>
+    {
+      downstream.map(({ Icon, title, description, value, verified }) => (
+        <Scope3EmissionsCategory
+          {Icon}
+          {title}
+          {description}
+          {verified}
+          {value}
+        />
+      ))
+    }
+    {
+      /* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */
+    }
+  </div>
 </Card>

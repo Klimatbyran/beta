@@ -91,9 +91,10 @@ export type Turnover = {
 export type Emissions = {
   scope1?: Scope1 | null
   scope2?: Scope2 | null
+  scope1And2?: CombinedScope1And2 | null
   scope3?: Scope3 | null
   biogenicEmissions?: BiogenicEmissions | null
-  statedTotalEmissions?: BiogenicEmissions | null
+  statedTotalEmissions?: StatedTotalEmissions | null
   calculatedTotalEmissions: number | null
 }
 
@@ -110,6 +111,12 @@ export type Scope1 = {
 }
 
 export type BiogenicEmissions = {
+  total: number | null
+  unit: string
+  metadata: Metadata
+}
+
+export type CombinedScope1And2 = {
   total: number | null
   unit: string
   metadata: Metadata

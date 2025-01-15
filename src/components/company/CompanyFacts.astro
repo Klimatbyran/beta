@@ -4,10 +4,10 @@ import {
   getLatestReportingPeriodWithEconomy,
   getFormattedReportingPeriod,
   type CompanyData,
+  type Emissions,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
-import VerifiedBadge from '../VerifiedBadge.astro'
-import { isNumber } from '@/lib/utils'
+import { cn, isNumber } from '@/lib/utils'
 
 interface Props {
   company: CompanyData
@@ -21,6 +21,34 @@ const latestEconomy = getLatestReportingPeriodWithEconomy(company)
 // TODO: show the source for every datapoint
 // IDEA: Maybe use a common component to click a datapoint to open metadata about it, such as the source
 const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
+
+function getTotalEmissions(emissions: Emissions) {
+  const calculated = emissions.calculatedTotalEmissions
+  const stated = emissions.statedTotalEmissions
+
+  if (isNumber(calculated)) {
+    if (calculated > 0) return calculated
+    if (isNumber(stated?.total) && Boolean(stated?.metadata?.verifiedBy))
+      return stated.total
+    if (calculated === 0) {
+      if (
+        emissions.scope1 ||
+        emissions.scope1And2 ||
+        emissions.scope2 ||
+        emissions.scope3?.categories?.length ||
+        isNumber(emissions.scope3?.statedTotalEmissions?.total)
+      ) {
+        if (isNumber(stated?.total)) return stated.total
+        return calculated
+      }
+    }
+  }
+  return null
+}
+
+const totalEmissions = latestEmissions?.emissions
+  ? getTotalEmissions(latestEmissions.emissions)
+  : null
 ---
 
 <Card class="text-sm" level={1}>
@@ -91,11 +119,14 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
 
     <!-- TODO: Handle both statedTotalEmissions (what the companies report) and calculatedTotalEmissions -->
     {
-      isNumber(latestEmissions?.emissions?.calculatedTotalEmissions) && (
+      (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <div class="flex items-start justify-between">
             <h3 class="flex items-center gap-1">
-              Totala utsläpp {getFormattedReportingPeriod(latestEmissions)}{' '}
+              Totala utsläpp{' '}
+              {latestEmissions
+                ? getFormattedReportingPeriod(latestEmissions)
+                : 'saknas'}
               {/* {Boolean(
                 latestEmissions.emissions.calculatedTotalEmissions.metadata
                   .verifiedBy,
@@ -104,13 +135,17 @@ const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
             <span class="text-muted">(ton CO₂e)</span>
           </div>
 
-          <p class="text-3xl leading-none tracking-tight text-orange-250 sm:text-4xl md:text-5xl lg:text-6xl">
-            {latestEmissions.emissions.calculatedTotalEmissions.toLocaleString(
-              'sv-SE',
-              {
-                maximumFractionDigits: 0,
-              },
+          <p
+            class={cn(
+              'text-3xl leading-none tracking-tight sm:text-4xl md:text-5xl lg:text-6xl',
+              isNumber(totalEmissions) ? 'text-orange-250' : 'text-muted',
             )}
+          >
+            {totalEmissions
+              ? totalEmissions.toLocaleString('sv-SE', {
+                  maximumFractionDigits: 0,
+                })
+              : '-'}
           </p>
         </Card>
       )
