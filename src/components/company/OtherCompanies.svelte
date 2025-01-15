@@ -3,16 +3,14 @@
   import { getCompanyURL, type CompanyData } from '@/data/companyData'
   import { request } from '@/lib/request'
   import { onMount } from 'svelte'
-  import { writable, derived } from 'svelte/store'
 
-  let companies = writable<CompanyData[]>([])
+  let companies = $state<CompanyData[]>([])
 
-  const sorted = derived(
+  const sorted = $derived(
     // Make a copy of the array to avoid mutating state
-    companies,
-    ($companies) =>
-      $companies.slice().sort((a, b) => a.name.localeCompare(b.name)),
+    companies.slice().sort((a, b) => a.name.localeCompare(b.name)),
   )
+
   function onSelect(item: Item<string>) {
     window.location.assign(item.data)
   }
@@ -23,7 +21,7 @@
 </script>
 
 <Combobox
-  items={$sorted.map((c) => ({
+  items={sorted.map((c) => ({
     label: c.name,
     value: c.name,
     data: `/foretag/${getCompanyURL(c)}`,
