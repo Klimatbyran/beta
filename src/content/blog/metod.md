@@ -26,5 +26,5 @@ Scope 3 är alltså svårt för att;
 * utsläppsfaktorer kan vara generiska och missvisande för enskilda fall
 * specifika utsläppsfaktorer från leverantörer kan vara svåra att tillgå (och vi behöver lita på att de är rätt)
 * utsläpp nedströms i värdekedjan baseras på antaganden, och kan inte exakt reflektera verkligheten
-* 
+
 Den goda nyheten är att många företag vill, och anstränger sig för, att detta ska bli bättre. Dels genom att förbättra interna processer för datainsamling, men också genom att efterfråga mer och bättre information från aktörer i värdekedjan. Samarbeten uppstår för att ta fram det som saknas, och det framgår att information i sig är ett affärsvärde, och när fler och fler kan tillhandahålla information, kan beslut fattas som tar klimatpåverkan i beaktning.
