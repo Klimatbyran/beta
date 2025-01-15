@@ -45,12 +45,14 @@
       {/each}
     </nav>
     <!-- Hamburger Button (Mobile) -->
-    <div class="relative ml-auto block h-8 lg:hidden z-40">
+    <div class="ml-auto block lg:hidden z-40">
       <Hamburger
         bind:open
         type="spin"
         --color="white"
         aria-label="Toggle menu"
+        --layer-height="1px"
+        --layer-width="22px"
       />
     </div>
   </div>
