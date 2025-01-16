@@ -8,6 +8,7 @@
       label: 'Källor och metod',
     },
     { href: 'https://www.klimatkollen.se/om-oss', label: 'Om oss' },
+    { href: '/blog', label: 'Insikter' },
     { href: 'https://klimatkollen.teamtailor.com/', label: 'Jobb' },
     { href: 'https://www.klimatkollen.se/in-english', label: 'In English' },
   ]
