@@ -1,0 +1,22 @@
+---
+interface Props {
+  author: string
+  date: string
+}
+
+const { author, date } = Astro.props
+---
+
+<div class="mt-16 flex items-center border-t border-gray-700 pt-8">
+  <img
+    src="/placeholder-user.jpg"
+    alt={`${author}'s profile picture`}
+    class="h-14 w-14 rounded-full"
+  />
+  <div class="ml-4">
+    <p class="text-lg font-medium">{author}</p>
+    <p class="text-sm text-gray-200">
+      Publicerad {new Date(date).toLocaleDateString('sv-SE')}
+    </p>
+  </div>
+</div>

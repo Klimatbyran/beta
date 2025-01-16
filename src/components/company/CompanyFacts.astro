@@ -3,11 +3,13 @@ import {
   getLatestReportingPeriodWithEmissions,
   getLatestReportingPeriodWithEconomy,
   getFormattedReportingPeriod,
+  hasVerifiedScope3,
   type CompanyData,
   type Emissions,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
 import { cn, isNumber } from '@/lib/utils'
+import VerifiedBadge from '../VerifiedBadge.astro'
 
 interface Props {
   company: CompanyData
@@ -49,6 +51,10 @@ function getTotalEmissions(emissions: Emissions) {
 const totalEmissions = latestEmissions?.emissions
   ? getTotalEmissions(latestEmissions.emissions)
   : null
+
+const hasVerifiedAllScopes =
+  !!latestEmissions?.emissions?.scope1And2?.metadata?.verifiedBy &&
+  hasVerifiedScope3(latestEmissions?.emissions)
 ---
 
 <Card class="text-sm" level={1}>
@@ -127,10 +133,7 @@ const totalEmissions = latestEmissions?.emissions
               {latestEmissions
                 ? getFormattedReportingPeriod(latestEmissions)
                 : 'saknas'}
-              {/* {Boolean(
-                latestEmissions.emissions.calculatedTotalEmissions.metadata
-                  .verifiedBy,
-              ) && <VerifiedBadge />} */}
+              {Boolean(hasVerifiedAllScopes) && <VerifiedBadge />}
             </h3>
             <span class="text-muted">(ton CO₂e)</span>
           </div>
