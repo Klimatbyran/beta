@@ -1,6 +1,6 @@
 # Kan AI hjälpa oss förstå företagens klimatdata? Del 1 - Översikt
 
-## Vi på Klimatbyrån har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!
+> Vi på Klimatbyrån har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!
 
 ## Vad är problemet med klimatdata?
 [Screenshot av några av de mest kluriga sidorna i företagens rapportering. ]
