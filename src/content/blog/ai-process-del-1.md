@@ -41,9 +41,7 @@ Jag kommer i senare inlägg förklara mer ingående vilka typer av problem vi ha
 
 Så här blir resultatet:
 
-[screenshot ABB]
-
-
+![image](https://github.com/user-attachments/assets/acaf8446-12f7-4e28-b1d9-76d1c820660b)
 
 ## Nästa fas: Jämförelse och visualisering
 Om vi tänker oss ett företag som har redovisat siffror 2023 men inte 2022- däremot har de redovisat scope1 för 2019 som är deras sk basår. Ska vi då gissa oss till utsläppen för år 2021 och 2022? 
