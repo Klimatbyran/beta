@@ -1,0 +1,39 @@
+---
+import ExpandableSection from '@/components/about/ExpandableSection.svelte'
+import Layout from '@/layouts/Layout.astro'
+import MissionSection from '@/components/about/sections/MissionSection.svelte'
+import TeamSection from '@/components/about/sections/TeamSection.svelte'
+import FundingSection from '@/components/about/sections/FundingSection.svelte'
+import ProjectsSection from '@/components/about/sections/ProjectSection.svelte'
+import BoardSection from '@/components/about/sections/BoardSection.svelte'
+
+const sections = [
+  { title: 'Vad är Klimatkollen?', key: 'mission', component: MissionSection },
+  { title: 'Vårt team', key: 'team', component: TeamSection },
+  { title: 'Vår styrelse', key: 'board', component: BoardSection },
+  { title: 'Så finansieras vi', key: 'funding', component: FundingSection },
+  { title: 'Tidigare projekt', key: 'project', component: ProjectsSection },
+]
+---
+
+<Layout title="Om oss">
+  <section class="text-center text-white">
+    <h1 class="mb-4 text-4xl font-bold">Om oss</h1>
+    <p class="mb-12 text-lg">
+      Klimatkollen är en medborgarplattform som tillgängliggör klimatdata.
+      Klicka på rubrikerna för att läsa mer.
+    </p>
+
+    <div>
+      {
+        sections.map((section) => (
+          <ExpandableSection
+            title={section.title}
+            section={section.key}
+            client:load
+          />
+        ))
+      }
+    </div>
+  </section>
+</Layout>
