@@ -35,7 +35,7 @@ Men det är ju lag på att redovisa sina utsläpp? Ja och därför ser deras red
 
 Nu ett år senare har vi lyckats lösa de flesta problem med att tolka PDF:erna och har nu en hel pipeline av AI frågor som ställs i rätt ordning för att hämta ut alla siffror i ett jämförbart format.
 
-[screenshot pipeline]
+![image](https://github.com/user-attachments/assets/81f9f1c9-2ad6-41fb-bab8-5dca1e6799de)
 
 Jag kommer i senare inlägg förklara mer ingående vilka typer av problem vi haft och hur vi har löst dessa. Men nu kan vi tänka att ovanstående process tar en PDF och spottar ur sig allt från årsomsättning, utsläpp i alla olika scope, antal anställda, industrikoder, letar reda på rätt sida för företaget och hämtar övrig fakta från Wikipedia och sedan sparar resultatet i vårt API.
 
