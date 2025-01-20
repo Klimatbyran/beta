@@ -17,6 +17,12 @@ interface Props {
   entry: CollectionEntry<'blog'>
 }
 
+if (Astro.request.url.startsWith('/people/')) {
+  return new Response(null, {
+    status: 200, // Allow static file to be served
+  });
+}
+
 const { entry } = Astro.props
 if (!entry) {
   return new Response(null, {
