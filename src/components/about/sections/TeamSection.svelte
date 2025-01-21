@@ -38,7 +38,7 @@
     {
       name: 'Samuel Plumppu',
       role: 'Utvecklare',
-      image: '/people/samuel.jpg',
+      image: '/people/samuel.png',
       description:
         'Fullstackutvecklare med passion för open source och att skapa digitala lösningar som ger värde till människor och samhälle. Har tidigare arbetat med startups och ideella organisationer i tidiga skeden, bland annat på We Don’t Have Time.',
     },
@@ -52,7 +52,7 @@
     {
       name: 'Hugo Björk',
       role: 'Utvecklare',
-      image: '/people/placeholer-user.jpg',
+      image: '/people/placeholder-user.jpg',
       description: ' ',
     },
   ]
@@ -67,7 +67,7 @@
         class="w-32 h-32 rounded-full mx-auto"
       />
       <h3 class="text-xl font-semibold mt-4">{member.name}</h3>
-      <p class="text-gray-600">{member.description}</p>
+      <p class="text-base leading-6 my-[11.2px]">{member.description}</p>
     </div>
   {/each}
 </div>

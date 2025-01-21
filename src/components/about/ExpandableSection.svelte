@@ -15,7 +15,7 @@
   import ProjectSection from './sections/ProjectSection.svelte';
 </script>
 
-<div class="border-b border-gray-700 py-4">
+<div class=" mx-auto flex max-w-screen-md flex-col items-start p-4">
   <button
     on:click={toggleOpen}
     class="flex justify-between items-center w-full text-left text-lg font-medium sm:text-xl"
