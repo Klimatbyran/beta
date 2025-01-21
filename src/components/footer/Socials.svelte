@@ -8,7 +8,7 @@
   export let items: SocialListItemProps[] = [
     { link: "https://x.com/klimatkollen", text: "X", icon: "/icons/some/x_white.svg" },
     { link: "https://www.linkedin.com/company/klimatkollen/", text: "LinkedIn", icon: "/icons/some/linkedin_white.svg" },
-    { link: "https://github.com/Klimatbyran/klimatkollen", text: "GitHub", icon: "/icons/some/github.svg" },
+    { link: "https://github.com/Klimatbyran/", text: "GitHub", icon: "/icons/some/github.svg" },
     { link: "https://discord.gg/FPX9yqYAmk", text: "Discord", icon: "/icons/some/discord.svg" },
     { link: "https://instagram.com/klimatkollen.se", text: "Instagram", icon: "/icons/some/Instagram_Glyph_Black.svg" },
     { link: "https://www.facebook.com/klimatkollen/", text: "Facebook", icon: "/icons/some/facebook.svg" }

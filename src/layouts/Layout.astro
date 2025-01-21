@@ -1,7 +1,7 @@
 ---
 import '@fontsource-variable/dm-sans'
 import '../../app/global.css'
-import Header from '@/components/Header.astro'
+import Header from '@/components/Header.svelte'
 import Footer from '@/components/footer/Footer.astro'
 import { Toaster } from 'sonner'
 
@@ -25,7 +25,7 @@ const { title, description } = Astro.props
     <title>{title}</title>
   </head>
   <body>
-    <Header />
+    <Header client:load />
     <main class="flex-grow">
       <slot />
     </main>
