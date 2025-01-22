@@ -2,23 +2,25 @@
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import { getCompany } from '@/data/companies'
 import Company from '@/components/company/Company.astro'
 import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
+import { client } from '@/lib/api/request'
 
 const { id = '' } = Astro.params
 
 // Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
-const company = wikidataId.startsWith('Q') ? await getCompany(wikidataId) : null
-
-const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
-
-const title = `${company?.name ? `${company.name} | ` : ''}${baseTitle}`
+const company = wikidataId.startsWith('Q')
+  ? await client
+      .GET('/companies/{wikidataId}', {
+        params: { path: { wikidataId } },
+      })
+      .then(({ data }) => data)
+  : null
 ---
 
-<Layout {title}>
+<Layout title={company?.name}>
   {
     company ? (
       <Company {company} />
