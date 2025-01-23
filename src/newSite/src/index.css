@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: black;
+  color: white;
+
+  /* Orange palette */
+  --orange-1: #FDE7CE;
+  --orange-2: #FDB768;
+  --orange-3: #F48F2A;
+  --orange-4: #B25F00;
+  --orange-5: #6B3700;
+
+  /* Blue palette */
+  --blue-1: #D4E7F7;
+  --blue-2: #99CFFF;
+  --blue-3: #59A0E1;
+  --blue-4: #206288;
+  --blue-5: #13364E;
+
+  /* Green palette */
+  --green-1: #F1FFCC;
+  --green-2: #D5FD63;
+  --green-3: #AAE506;
+  --green-4: #6C9105;
+  --green-5: #3D4B16;
+
+  /* Pink palette */
+  --pink-1: #FAE1E9;
+  --pink-2: #EEA0B7;
+  --pink-3: #F0759A;
+  --pink-4: #97455D;
+  --pink-5: #73263D;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-black text-white;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-light tracking-tight;
+  }
+}
+
+@layer components {
+  /* Command menu styling */
+  .cmd-menu {
+    @apply bg-black-2 border-none text-white;
+  }
+
+  .cmd-input {
+    @apply bg-black-1 border-none;
+  }
+
+  .cmd-item {
+    @apply text-grey hover:bg-black-1 hover:text-white;
+  }
+
+  /* Popover styling */
+  .popover-content {
+    @apply bg-black-2 border-none;
+  }
+
+  /* Select styling */
+  .select-trigger {
+    @apply bg-black-1 border-none text-white;
+  }
+
+  .select-content {
+    @apply bg-black-2 border-none;
+  }
+
+  .select-item {
+    @apply text-grey hover:bg-black-1 hover:text-white;
+  }
+
+  /* Dialog styling */
+  .dialog-content {
+    @apply bg-black-2 border-none;
+  }
+
+  /* Sheet styling */
+  .sheet-content {
+    @apply bg-black-2 border-none;
+  }
+
+  /* Dropdown menu styling */
+  .dropdown-content {
+    @apply bg-black-2 border-none;
+  }
+
+  .dropdown-item {
+    @apply text-grey hover:bg-black-1 hover:text-white;
+  }
+
+  /* Menubar styling */
+  .menubar {
+    @apply bg-transparent border-none;
+  }
+
+  .menubar-content {
+    @apply bg-black-2 border-none rounded-level-2 p-2;
+  }
+
+  .menubar-item {
+    @apply text-grey hover:bg-black-1 hover:text-white rounded-level-2 cursor-pointer;
+  }
+
+  .menubar-separator {
+    @apply bg-black-1;
+  }
+
+  .menubar-shortcut {
+    @apply text-grey;
+  }
+}
+
+/* Prose styling for blog content */
+.prose {
+  @apply text-grey;
+}
+
+.prose h2 {
+  @apply text-3xl font-light text-white mt-12 mb-6;
+}
+
+.prose h3 {
+  @apply text-2xl font-light text-white mt-8 mb-4;
+}
+
+.prose p {
+  @apply mb-4 text-lg leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc list-inside mb-6 space-y-2;
+}
+
+.prose li {
+  @apply text-lg;
+}
