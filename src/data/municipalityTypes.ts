@@ -43,9 +43,9 @@ export type Municipality = {
   Image: Image | null
   Budget: Budget
   HistoricalEmission: Emission
-  PoliticalRule: string
   ApproximatedHistoricalEmission: ApproximatedEmission
   EmissionTrend: Trend
+  PoliticalRule: string
   NeededEmissionChangePercent: number
   HistoricalEmissionChangePercent: number
   HitNetZero: number | string

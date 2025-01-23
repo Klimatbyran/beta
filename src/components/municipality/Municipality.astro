@@ -13,17 +13,15 @@ const { municipality } = Astro.props
 ---
 
 <article class="mx-auto max-w-screen-lg xs:px-4">
-  <>
-    <div class="mt-8 grid gap-8">
-      <MunicipalityFacts {municipality} />
+  <div class="mt-8 grid gap-8">
+    <MunicipalityFacts {municipality} />
 
-      <MunicipalityEmissions {municipality} />
+    <MunicipalityEmissions {municipality} />
 
-      <MunicipalityKPIs {municipality} />
+    <MunicipalityKPIs {municipality} />
 
-      <div class="grid place-content-center py-16">
-        <OtherMunicipalities client:idle />
-      </div>
+    <div class="grid place-content-center py-16">
+      <OtherMunicipalities client:idle />
     </div>
-  </>
+  </div>
 </article>

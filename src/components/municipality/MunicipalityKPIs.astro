@@ -11,8 +11,8 @@ const { municipality } = Astro.props
 const climateKPIs = [
   {
     title: 'Hushållens konsumtionsutsläpp',
-    description: 'CO₂e per person och år',
-    value: municipality.TotalConsumptionEmission.toFixed(1) + ' ton',
+    description: 'Ton CO₂e per person och år',
+    value: municipality.TotalConsumptionEmission.toFixed(1),
   },
   {
     title: 'Klimatkrav i upphandlingar',
@@ -21,9 +21,8 @@ const climateKPIs = [
   },
   {
     title: 'Elbilarna',
-    description: 'Förändringstakt andel laddbara bilar',
-    value:
-      municipality.ElectricCarChangePercent.toFixed(1) + '  procentenheter',
+    description: 'Förändringstakt andel laddbara bilar i procentenheter',
+    value: municipality.ElectricCarChangePercent.toFixed(1),
   },
   {
     title: 'Laddarna',
@@ -32,8 +31,8 @@ const climateKPIs = [
   },
   {
     title: 'Cyklarna',
-    description: 'Antal meter cykelväg per invånare',
-    value: municipality.BicycleMetrePerCapita.toFixed() + ' meter',
+    description: 'Antal meter cykelväg per invånare i meter',
+    value: municipality.BicycleMetrePerCapita.toFixed(1),
   },
 ]
 ---
