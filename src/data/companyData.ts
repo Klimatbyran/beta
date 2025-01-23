@@ -91,9 +91,10 @@ export type Turnover = {
 export type Emissions = {
   scope1?: Scope1 | null
   scope2?: Scope2 | null
+  scope1And2?: CombinedScope1And2 | null
   scope3?: Scope3 | null
   biogenicEmissions?: BiogenicEmissions | null
-  statedTotalEmissions?: BiogenicEmissions | null
+  statedTotalEmissions?: StatedTotalEmissions | null
   calculatedTotalEmissions: number | null
 }
 
@@ -110,6 +111,12 @@ export type Scope1 = {
 }
 
 export type BiogenicEmissions = {
+  total: number | null
+  unit: string
+  metadata: Metadata
+}
+
+export type CombinedScope1And2 = {
   total: number | null
   unit: string
   metadata: Metadata
@@ -167,6 +174,43 @@ export function getLatestReportingPeriodWithEmissions(company: CompanyData) {
 
 export function getLatestReportingPeriodWithEconomy(company: CompanyData) {
   return company.reportingPeriods.find(({ economy }) => Boolean(economy))
+}
+
+export function hasVerifiedScope3(
+  emissions: Emissions | null | undefined,
+): boolean {
+  // Early return for invalid/missing scope 3 emissions OR if neither statedTotalEmissions nor categories are present
+  if (
+    !emissions?.scope3 ||
+    (!emissions.scope3.categories && !emissions.scope3.statedTotalEmissions)
+  ) {
+    return false
+  }
+
+  const categories = emissions.scope3.categories ?? []
+  const statedTotalEmissions = emissions.scope3.statedTotalEmissions
+
+  const hasReportedCategories = categories.some(
+    (category) => category.total != null,
+  )
+  const isStatedTotalEmissionsVerified =
+    statedTotalEmissions?.total != null &&
+    statedTotalEmissions?.metadata.verifiedBy != null
+
+  // If all categories are null and statedTotalEmissions is invalid or unverified then scope 3 is unverified
+  if (!hasReportedCategories && !isStatedTotalEmissionsVerified) {
+    return false
+  }
+
+  // If all categories are null BUT statedTotalEmissions is verified then scope 3 is verified
+  if (!hasReportedCategories && isStatedTotalEmissionsVerified) {
+    return true
+  }
+
+  // Check if all reported categories are verified
+  return categories
+    .filter((category) => category.total != null)
+    .every((category) => category.metadata.verifiedBy != null)
 }
 
 export function getFormattedReportingPeriod({
