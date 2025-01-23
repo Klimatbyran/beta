@@ -1,8 +1,11 @@
 <script lang="ts">
   import { Card } from '../ui/card'
-  import type { CompanyData } from '@/data/companyData'
+  import type { CompanyDetails } from '@/lib/api/types'
 
-  export let company: CompanyData
+  export let company: CompanyDetails
+
+
+
 </script>
 
 <Card level={1} class="bg-gray-900 p-8">

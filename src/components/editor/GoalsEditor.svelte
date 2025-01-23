@@ -1,9 +1,9 @@
 <script lang="ts">
   import { Card } from '../ui/card'
   import { Button } from '../ui/button'
-  import type { CompanyData, Goal } from '@/data/companyData'
+  import type { CompanyDetails } from '@/lib/api/types'
 
-  export let company: CompanyData
+  export let company: CompanyDetails
 
   function addGoal() {
     company.goals = [

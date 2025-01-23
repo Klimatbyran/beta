@@ -1,19 +1,31 @@
 ---
+import { getEntry } from 'astro:content'
+
 import Layout from '@/layouts/Layout.astro'
-import { getCompany } from '@/data/companies'
+import { client } from '@/lib/api/request'
 import CompanyEditor from '@/components/editor/CompanyEditor.svelte'
 
 const { id = '' } = Astro.params
 const wikidataId = id.split('-').at(-1) ?? ''
-const company = wikidataId.startsWith('Q') ? await getCompany(wikidataId) : null
-const title = `Redigera ${company?.name ?? 'företag'} | Klimatkollen`
+
+const company = wikidataId.startsWith('Q')
+  ? await client
+      .GET('/companies/{wikidataId}', {
+        params: { path: { wikidataId } },
+      })
+      .then(({ data }) => data)
+  : null
+
+const scope3CategoryStrings = getEntry('contentStrings', 'scope3Categories')
+
+const title = `Redigera ${company ? company.name : 'företag'} | Klimatkollen`
 ---
 
 <Layout {title}>
   {
     company ? (
       <div class="container mx-auto max-w-4xl px-4 py-8">
-        <CompanyEditor client:load {company} />
+        <CompanyEditor client:load {company} {scope3CategoryStrings} />
       </div>
     ) : (
       <div class="container mx-auto max-w-4xl px-4 py-8">
