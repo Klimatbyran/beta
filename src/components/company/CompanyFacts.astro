@@ -4,15 +4,14 @@ import {
   getLatestReportingPeriodWithEconomy,
   getFormattedReportingPeriod,
   hasVerifiedScope3,
-  type CompanyData,
-  type Emissions,
 } from '@/data/companyData'
 import { Card } from '../ui/card'
 import { cn, isNumber } from '@/lib/utils'
 import VerifiedBadge from '../VerifiedBadge.astro'
+import type { CompanyDetails, Emissions } from '@/lib/api/types'
 
 interface Props {
-  company: CompanyData
+  company: CompanyDetails
 }
 
 const { company } = Astro.props
@@ -25,8 +24,8 @@ const latestEconomy = getLatestReportingPeriodWithEconomy(company)
 const reportURL = latestEmissions?.reportURL || latestEconomy?.reportURL
 
 function getTotalEmissions(emissions: Emissions) {
-  const calculated = emissions.calculatedTotalEmissions
-  const stated = emissions.statedTotalEmissions
+  const calculated = emissions?.calculatedTotalEmissions
+  const stated = emissions?.statedTotalEmissions
 
   if (isNumber(calculated)) {
     if (calculated > 0) return calculated
@@ -34,11 +33,11 @@ function getTotalEmissions(emissions: Emissions) {
       return stated.total
     if (calculated === 0) {
       if (
-        emissions.scope1 ||
-        emissions.scope1And2 ||
-        emissions.scope2 ||
-        emissions.scope3?.categories?.length ||
-        isNumber(emissions.scope3?.statedTotalEmissions?.total)
+        emissions?.scope1 ||
+        emissions?.scope1And2 ||
+        emissions?.scope2 ||
+        emissions?.scope3?.categories?.length ||
+        isNumber(emissions?.scope3?.statedTotalEmissions?.total)
       ) {
         if (isNumber(stated?.total)) return stated.total
         return calculated

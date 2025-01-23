@@ -1,3 +1,11 @@
+---
+title: 'Så kan AI hjälpa oss förstå företagens klimatdata. Del 1 – Översikt'
+description: 'Vi på Klimatbyrån har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!'
+author: 'Christian Landgren'
+authorImg: '/people/christian.jpg'
+date: '2025-01-20'
+---
+
 # Kan AI hjälpa oss förstå företagens klimatdata? Del 1 - Översikt
 
 > Vi på Klimatbyrån har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!

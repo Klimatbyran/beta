@@ -1,11 +1,12 @@
 <script lang="ts">
   import { Combobox, type Item } from '../ui/combobox'
   import { Card } from '../ui/card'
-  import { getCompanyURL, type CompanyData } from '@/data/companyData'
-  import { getCompanies } from '@/data/companies'
+  import { getCompanyURL } from '@/data/companyData'
   import { onMount } from 'svelte'
+  import {client} from '@/lib/api/request'
+  import type { CompanyDetails } from '@/lib/api/types'
 
-  let companies = $state<CompanyData[]>([])
+  let companies = $state<CompanyDetails[]>([])
   let searchQuery = $state('')
   let selectedIndustry = $state<string | null>(null)
   let loading = $state(true)
@@ -40,7 +41,8 @@
 
   onMount(async () => {
     try {
-      const data = await getCompanies()
+      const { data, error } = await client.GET('/companies/')
+    
       if (!data || !Array.isArray(data)) {
         throw new Error('Ogiltig data från API')
       }

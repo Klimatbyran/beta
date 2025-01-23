@@ -6,12 +6,18 @@ import Footer from '@/components/footer/Footer.astro'
 import { Toaster } from 'sonner'
 
 interface Props {
-  title: string
+  title?: string
   description?: string
 }
 
 // IDEA: Maybe add default meta tags
 const { title, description } = Astro.props
+
+const baseTitle = 'Klimatkollen - få koll på företagens utsläpp'
+
+const combinedTitle = `${title ? `${title} | ` : ''}${baseTitle}`
+
+
 ---
 
 <!doctype html>
@@ -22,7 +28,7 @@ const { title, description } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{combinedTitle}</title>
   </head>
   <body>
     <Header client:load />

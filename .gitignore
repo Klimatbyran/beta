@@ -3,6 +3,7 @@ dist/
 
 # generated types
 .astro/
+src/lib/api/openapi.json
 
 # dependencies
 node_modules/

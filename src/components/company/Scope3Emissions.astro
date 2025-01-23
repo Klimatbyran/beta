@@ -15,16 +15,15 @@ import ClarityBuildingSolid from 'icons:astro/clarity/building-solid'
 import BiHouses from 'icons:astro/bi/houses'
 import StreamlineInvestmentSelection from 'icons:astro/streamline/investment-selection'
 
-import {
-  type CompanyData,
-  type Emissions,
-  type Scope3,
-} from '@/data/companyData'
+
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
+import type { CompanyDetails } from '@/lib/api/types'
+import type { Emissions } from '@/lib/api/types'
+import type { Scope3 } from '@/lib/api/types'
 
 interface Props {
-  company: CompanyData
+  company: CompanyDetails
   emissions?: Emissions | null
 }
 

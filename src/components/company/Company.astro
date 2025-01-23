@@ -1,7 +1,6 @@
 ---
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 import {
-  type CompanyData,
   getLatestReportingPeriodWithEmissions,
   getLatestReportingPeriodWithEconomy,
 } from '@/data/companyData'
@@ -12,9 +11,10 @@ import CompanyGoals from './CompanyGoals.astro'
 import CompanyInitiatives from './CompanyInitiatives.astro'
 import OtherCompanies from './OtherCompanies.svelte'
 import LucideBadgeCheck from 'icons:astro/lucide/badge-check'
+import type { CompanyDetails } from '@/lib/api/types'
 
 interface Props {
-  company: CompanyData
+  company: CompanyDetails
 }
 
 const { company } = Astro.props
