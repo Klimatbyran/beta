@@ -3,11 +3,12 @@
   let open = false
 
   const navItems = [
+    { href: 'https://www.klimatkollen.se/om-oss', label: 'Om oss' },
+
     {
       href: 'https://www.klimatkollen.se/kallor-och-metod',
       label: 'Källor och metod',
     },
-    { href: 'https://www.klimatkollen.se/om-oss', label: 'Om oss' },
     { href: '/blog', label: 'Insikter' },
     { href: 'https://klimatkollen.teamtailor.com/', label: 'Jobb' },
     { href: 'https://www.klimatkollen.se/in-english', label: 'In English' },
@@ -17,11 +18,9 @@
 <header
   class="bg-black h-18 top-0 mb-1.5 w-full flex-shrink-0 pb-1.5 opacity-100 relative z-[2]"
 >
-  <div class="relative flex h-12 items-center justify-between px-4">
+  <div class="relative flex h-12 items-center justify-between px-4 mt-4">
     <!-- Logo -->
-    <div
-      class="absolute left-1/2 top-1/2 z-[60] flex h-8 -translate-x-1/2 -translate-y-1/2"
-    >
+    <div class="flex items-center h-8 z-[60]">
       <a
         href="https://klimatkollen.se"
         class="flex items-center"
@@ -39,7 +38,7 @@
       {#each navItems as item}
         <a
           href={item.href}
-          class="relative text-white after:content-[''] after:block after:h-[2px] after:bg-white after:absolute after:left-0 after:bottom-[-2px] after:w-full after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+          class="relative text-gray-200 text-sm after:content-[''] after:block after:h-[2px] after:bg-gray-200 after:absolute after:left-0 after:bottom-[-2px] after:w-full after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100 hover:text-gray-200"
         >
           {item.label}
         </a>
