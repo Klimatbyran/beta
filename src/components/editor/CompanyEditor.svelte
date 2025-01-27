@@ -5,15 +5,111 @@
   import BasicInfoEditor from './BasicInfoEditor.svelte'
   import EmissionsEditor from './EmissionsEditor.svelte'
   import GoalsEditor from './GoalsEditor.svelte'
+  import ReportingPeriodsEditor from './ReportingPeriodsEditor.svelte'
   import InitiativesEditor from './InitiativesEditor.svelte'
   import { client } from '@/lib/api/request'
-  import type { CompanyDetails } from '@/lib/api/types'
+  import type {
+    CompanyDetails,
+    UpdateReportingPeriods,
+    // UpdateGoals,
+    // UpdateInitiatives,
+    // UpdateIndustry,
+    // UpdateCompanyDetails,
+  } from '@/lib/api/types'
   import SaveDialog from './SaveDialog.svelte'
   import type { ValidationError } from '@/data/companies'
   import type { Scope3CategoryStrings } from '@/content/config'
 
-  export let company: CompanyDetails
-  export let scope3CategoryStrings: Scope3CategoryStrings
+  type Props = {
+    company: CompanyDetails
+    scope3CategoryStrings: Scope3CategoryStrings
+  }
+  let { company, scope3CategoryStrings }: Props = $props()
+
+  let updatedReportingPeriods = $state<
+    UpdateReportingPeriods['reportingPeriods']
+  >(
+    company.reportingPeriods.map((reportingPeriod) => {
+      const economy = reportingPeriod.economy
+      const emissions = reportingPeriod.emissions
+      return {
+        ...reportingPeriod,
+        reportURL: reportingPeriod.reportURL ?? undefined,
+        emissions: emissions
+          ? {
+              scope1: emissions.scope1
+                ? { total: emissions.scope1.total }
+                : undefined,
+              scope2: emissions.scope2
+                ? {
+                    mb: emissions.scope2.mb ?? undefined,
+                    lb: emissions.scope2.lb ?? undefined,
+                    unknown: emissions.scope2.unknown ?? undefined,
+                  }
+                : undefined,
+              scope3: emissions.scope3
+                ? {
+                    categories: emissions.scope3.categories.map(
+                      ({ total, category }) => ({ category, total }),
+                    ),
+                    statedTotalEmissions: emissions.scope3.statedTotalEmissions
+                      ? { total: emissions.scope3.statedTotalEmissions.total }
+                      : undefined,
+                  }
+                : undefined,
+              biogenic: emissions.biogenicEmissions
+                ? { total: emissions.biogenicEmissions.total }
+                : undefined,
+              statedTotalEmissions: emissions.statedTotalEmissions
+                ? { total: emissions.statedTotalEmissions.total }
+                : undefined,
+            }
+          : undefined,
+        economy: economy
+          ? {
+              employees: economy.employees
+                ? {
+                    value: economy.employees.value ?? 0,
+                    unit: economy.employees.unit ?? undefined,
+                  }
+                : undefined,
+              turnover: economy.turnover
+                ? {
+                    value: economy.turnover.value ?? undefined,
+                    currency: economy.turnover.currency ?? undefined,
+                  }
+                : undefined,
+            }
+          : undefined,
+      }
+    }),
+  )
+
+  // let updateGoals = $state<UpdateGoals['goals']>({
+  //   description: company.goals?.description ?? undefined,
+  //   year: company.goals?.year ?? undefined,
+  //   target: company.goals?.target ?? undefined,
+  //   baseYear: company.goals?.baseYear ?? undefined,
+  // })
+  // let updateInitiatives = $state<UpdateInitiatives>( {
+  //     return {
+  //       title: title ? title : undefined,
+  //       description: description ? description : undefined,
+  //       year: year ? year : undefined,
+  //       scope: scope ? scope : undefined,
+  //     }
+  //   }),
+  // let updateIndustry = $state<UpdateIndustry>(
+  //   company.industry((industry) => industry),
+  // )
+  // let updateCompanyDetails = $state<UpdateCompanyDetails>(
+  //   company.map((description, name) => {
+  //     return {
+  //       description: description ? description : undefined,
+  //       name: name ? name : undefined,
+  //     }
+  //   }),
+  // )
 
   let saving = false
   let error: string | ValidationError | null = null
@@ -25,8 +121,6 @@
     saving = true
     error = null
     try {
-      Object.fromEntries(formData.entries())
-
       // Spara grundinformation
       const { data: companyData, error } = await client.POST('/companies/', {
         body: {
@@ -52,23 +146,9 @@
       if (latestPeriod?.emissions) {
         const { data: emissionsData, error: emissionsError } =
           await client.POST('/companies/{wikidataId}/reporting-periods', {
-            path: { wikidataId: company.wikidataId },
+            params: { path: { wikidataId: company.wikidataId }, },
             body: {
-              reportingPeriods: {
-                startDate: latestPeriod.startDate,
-                endDate: latestPeriod.endDate,
-                reportURL: latestPeriod.reportURL,
-                emissions: {
-                  scope1: latestPeriod.emissions.scope1,
-                  scope2: latestPeriod.emissions.scope2,
-                  scope3: latestPeriod.emissions.scope3,
-                  biogenic: latestPeriod.emissions.biogenicEmissions,
-                  statedTotalEmissions:
-                    latestPeriod.emissions.statedTotalEmissions,
-                  scope1And2: latestPeriod.emissions.scope1And2,
-                },
-                economy: latestPeriod.economy,
-              },
+              reportingPeriods: updatedReportingPeriods,
             },
           })
 
@@ -78,53 +158,53 @@
         console.log('Saved emissions data') // Debug logging
       }
 
-      // Spara mål
-      const { data: goalsData, error: goalsError } = await client.POST(
-        '/companies/{wikidataId}/goals',
-        {
-          path: { wikidataId: company.wikidataId },
-          body: {
-            goals: {
-              description: company.goals.description,
-              year: company.goals.year,
-              target: company.goals.target,
-              baseYear: company.goals.baseYear,
-            },
-            metadata: {
-              comment: (formData.get('comment') as string) ?? undefined,
-              sourceFile: (formData.get('sourceFile') as string) ?? undefined,
-            },
-          },
-        },
-      )
+      // // Spara mål
+      // const { data: goalsData, error: goalsError } = await client.POST(
+      //   '/companies/{wikidataId}/goals',
+      //   {
+      //     path: { wikidataId: company.wikidataId },
+      //     body: {
+      //       goals: {
+      //         description: company.goals.description,
+      //         year: company.goals.year,
+      //         target: company.goals.target,
+      //         baseYear: company.goals.baseYear,
+      //       },
+      //       metadata: {
+      //         comment: (formData.get('comment') as string) ?? undefined,
+      //         sourceFile: (formData.get('sourceFile') as string) ?? undefined,
+      //       },
+      //     },
+      //   },
+      // )
 
-      if (!goalsData?.ok || !goalsData || goalsError) {
-        throw new Error('Ogiltig data från API')
-      }
-      console.log('Saved goals data') // Debug logging
+      // if (!goalsData?.ok || !goalsData || goalsError) {
+      //   throw new Error('Ogiltig data från API')
+      // }
+      // console.log('Saved goals data') // Debug logging
 
       // Spara initiativ
-      const { data: initiativeData, error: initiativeError } =
-        await client.POST('/companies/{wikidataId}/initiatives', {
-          path: { wikidataId: company.wikidataId },
-          body: {
-            initiatives: {
-              title: company.initiatives.title,
-              description: company.initiatives.description,
-              year: company.initiatives.year,
-              scope: company.initiatives.scope,
-            },
-            metadata: {
-              comment: (formData.get('comment') as string) ?? undefined,
-              sourceFile: (formData.get('sourceFile') as string) ?? undefined,
-            },
-          },
-        })
+      // const { data: initiativeData, error: initiativeError } =
+      //   await client.POST('/companies/{wikidataId}/initiatives', {
+      //     path: { wikidataId: company.wikidataId },
+      //     body: {
+      //       initiatives: {
+      //         title: company.initiatives.title,
+      //         description: company.initiatives.description,
+      //         year: company.initiatives.year,
+      //         scope: company.initiatives.scope,
+      //       },
+      //       metadata: {
+      //         comment: (formData.get('comment') as string) ?? undefined,
+      //         sourceFile: (formData.get('sourceFile') as string) ?? undefined,
+      //       },
+      //     },
+      //   })
 
-      if (!initiativeData?.ok || !initiativeData || initiativeError) {
-        throw new Error('Ogiltig data från API')
-      }
-      console.log('Saved initiative data') // Debug logging
+      // if (!initiativeData?.ok || !initiativeData || initiativeError) {
+      //   throw new Error('Ogiltig data från API')
+      // }
+      // console.log('Saved initiative data') // Debug logging
 
       // Lägg till metadata från formuläret
       if (formData.get('comment')) {
@@ -155,7 +235,7 @@
   </Card>
 
   <BasicInfoEditor bind:company />
-  <EmissionsEditor bind:company {scope3CategoryStrings} />
+  <ReportingPeriodsEditor bind:updatedReportingPeriods {scope3CategoryStrings} />
   <GoalsEditor bind:company />
   <InitiativesEditor bind:company />
 

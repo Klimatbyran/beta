@@ -22,6 +22,10 @@ type ResponseBody<T> = T extends { content: { 'application/json': infer Body } }
   ? Body
   : never
 
+type RequestBody<T> = T extends { content: { 'application/json': infer Body } }
+  ? Body
+  : never
+
 export type CompanyList = ResponseBody<
   paths['/companies/']['get']['responses']['200']
 >
@@ -41,3 +45,22 @@ export type Goals = NonNullable<CompanyDetails['goals']>
 export type Initiatives = NonNullable<CompanyDetails['initiatives']>
 export type Scope3 = NonNullable<Emissions['scope3']>
 
+export type UpdateReportingPeriods = RequestBody<
+  paths['/companies/{wikidataId}/reporting-periods']['post']['requestBody']
+>
+
+export type UpdateGoals = RequestBody<
+  paths['/companies/{wikidataId}/goals']['post']['requestBody']
+>
+
+export type UpdateIndustry = RequestBody<
+  paths['/companies/{wikidataId}/industry']['post']['requestBody']
+>
+
+export type UpdateInitiatives = RequestBody<
+  paths['/companies/{wikidataId}/initiatives']['post']['requestBody']
+>
+
+export type UpdateCompanyDetails = RequestBody<
+  paths['/companies/']['post']['requestBody']
+>

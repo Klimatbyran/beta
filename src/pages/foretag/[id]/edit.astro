@@ -1,9 +1,12 @@
 ---
 import { getEntry } from 'astro:content'
+import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
 import { client } from '@/lib/api/request'
 import CompanyEditor from '@/components/editor/CompanyEditor.svelte'
+import OtherCompanies from '@/components/company/OtherCompanies.svelte'
+import { buttonVariants } from '@/components/ui/button'
 
 const { id = '' } = Astro.params
 const wikidataId = id.split('-').at(-1) ?? ''
@@ -26,6 +29,20 @@ const title = `Redigera ${company ? company.name : 'företag'} | Klimatkollen`
     company ? (
       <div class="container mx-auto max-w-4xl px-4 py-8">
         <CompanyEditor client:load {company} {scope3CategoryStrings} />
+        <div class="grid w-full place-items-center">
+          <OtherCompanies client:load />
+
+          <a
+            class={buttonVariants({
+              variant: 'default',
+              class: 'mt-8 gap-1 pl-2',
+            })}
+            href="/foretag/utslappen/lista"
+          >
+            <LucideChevronLeft class="h-5 w-5" />
+            Tillbaka till alla företag
+          </a>
+        </div>
       </div>
     ) : (
       <div class="container mx-auto max-w-4xl px-4 py-8">
