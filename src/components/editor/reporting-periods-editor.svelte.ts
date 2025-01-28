@@ -1,5 +1,4 @@
 import type { CompanyDetails, UpdateReportingPeriods } from '@/lib/api/types'
-import { client } from '@/lib/api/request'
 
 type Scope3Category = {
   category: number
@@ -80,21 +79,33 @@ class ReportingPeriodsEditor {
   scope2 = $derived(this.emissions?.scope2)
   scope3 = $derived(this.emissions?.scope3)
 
-  scope2Total = $derived(
-    this.scope2?.mb ?? this.scope2?.lb ?? this.scope2?.unknown ?? 0,
-  )
+  statedTotalEmissions = $derived(this.emissions?.statedTotalEmissions)
 
-  scope3Total = $derived(
-    this.scope3?.categories?.length
-      ? Object.values(this.scope3.categories).reduce(
+  calculatedTotal = $derived.by(() => {
+    const emissions = this.reportingPeriods?.[this.selectedYear]?.emissions
+
+    const scope1Total = emissions?.scope1?.total ?? 0
+    const scope2Total =
+      emissions?.scope2?.mb ??
+      emissions?.scope2?.lb ??
+      emissions?.scope2?.unknown ??
+      0
+    const scope3Total = emissions?.scope3?.categories
+      ? Object.values(emissions?.scope3?.categories).reduce(
           (sum, category) => sum + category.total,
           0,
         )
-      : (this.scope3?.statedTotalEmissions?.total ?? 0),
-  )
+      : (emissions?.scope3?.statedTotalEmissions?.total ?? 0)
+
+    return {
+      scope1Total,
+      scope2Total,
+      scope3Total,
+      overallTotal: scope1Total + scope2Total + scope3Total,
+    }
+  })
 
   biogenic = $derived(this.emissions?.biogenic)
-  statedTotalEmissions = $derived(this.emissions?.statedTotalEmissions)
 
   economy = $derived(this.selectedPeriod?.economy)
   turnover = $derived(this.selectedPeriod?.economy?.turnover)

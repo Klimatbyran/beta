@@ -30,7 +30,7 @@ const title = `Redigera ${company ? company.name : 'företag'}`
 <Layout {title}>
   {
     company ? (
-      <div class="container mx-auto max-w-4xl px-4 py-8">
+      <div class="container mx-auto max-w-screen-lg px-4 py-8">
         <CompanyEditor client:load {company} {scope3CategoryStrings} />
         <div class="mt-16 grid w-full place-items-center">
           <OtherCompanies client:load />

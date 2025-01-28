@@ -15,11 +15,6 @@
       `${categoryNumber}` as keyof Scope3CategoryStrings
     ].title
   }
-      Object.entries(scope3CategoryStrings).find(([key]) =>
-        key.startsWith(`${categoryNumber}`),
-      )?.[1]?.title ?? 'Unknown category'
-    )
-  }
 </script>
 
 <Card level={2} class="mb-4 bg-gray-800 p-6">
@@ -28,7 +23,7 @@
       <div class="flex justify-between">
         <span>Scope 1</span>
         <span class="font-medium"
-          >{(editByReportingPeriod.scope1?.total ?? 0).toLocaleString(
+          >{editByReportingPeriod.calculatedTotal.scope1Total.toLocaleString(
             'sv-SE',
           )}</span
         >
@@ -36,16 +31,28 @@
       <div class="flex justify-between">
         <span>Scope 2</span>
         <span class="font-medium"
-          >{editByReportingPeriod.scope2Total.toLocaleString('sv-SE')}</span
+          >{editByReportingPeriod.calculatedTotal.scope2Total.toLocaleString(
+            'sv-SE',
+          )}</span
         >
       </div>
       <div class="flex justify-between">
         <span>Scope 3</span>
         <span class="font-medium"
-          >{editByReportingPeriod.scope3Total.toLocaleString('sv-SE')}</span
+          >{editByReportingPeriod.calculatedTotal.scope3Total.toLocaleString(
+            'sv-SE',
+          )}</span
         >
       </div>
       <div class="flex justify-between border-t border-gray-700 pt-2">
+        <span>Totalt scope 1 + 2 + 3</span>
+        <span class="font-medium"
+          >{editByReportingPeriod.calculatedTotal.overallTotal.toLocaleString(
+            'sv-SE',
+          )}</span
+        >
+      </div>
+      <div class="flex justify-between pt-8">
         <span>Biogena utsläpp</span>
         <span class="font-medium"
           >{(editByReportingPeriod.biogenic?.total ?? 0).toLocaleString(
@@ -201,7 +208,7 @@
       </div>
     {:else}
       <p class="text-muted">
-        Ingen rapporteringsperiod med utsläppsdata hittades.
+        Ingen utsläppsdata hittades för {editByReportingPeriod.selectedYear}.
       </p>
     {/if}
   </div></Card

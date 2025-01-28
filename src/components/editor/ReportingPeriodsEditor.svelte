@@ -11,15 +11,15 @@
   let { scope3CategoryStrings }: Props = $props()
 </script>
 
-<div class="sticky top-12 z-10">
-  <Card level={1} class="grid gap-8">
+<div class="sticky top-0 z-10">
+  <div class="grid gap-8 bg-gray-800 rounded-xl py-4 px-12">
     <div class="grid gap-2">
       <label for="reportingPeriods" class="block text-sm font-medium">
         Välj rapporteringsperiod
       </label>
       <select
         id="reportingPeriods"
-        class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 p-4 text-white"
+        class="mt-1 block w-full rounded-md border-gray-700 bg-gray-900 p-4 text-white"
         bind:value={editByReportingPeriod.selectedYear}
       >
         {#each editByReportingPeriod.reportingYears as year}
@@ -27,7 +27,7 @@
         {/each}
       </select>
     </div>
-  </Card>
+  </div>
 </div>
 <Card level={1} class="mb-4 bg-gray-800 p-6">
   {#if editByReportingPeriod.selectedPeriod}

@@ -66,7 +66,7 @@
       </div>
     {:else}
       <p class="text-muted">
-        Ingen rapporteringsperiod med ekonomidata hittades.
+        Ingen ekonomidata hittades för {editByReportingPeriod.selectedYear}.
       </p>
     {/if}
   </div>
