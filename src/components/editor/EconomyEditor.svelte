@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Card } from '../ui/card'
   import NumberInput from './NumberInput.svelte'
-  import { editByReportingPeriod } from './editor.svelte'
+  import { editByReportingPeriod } from './reporting-periods-editor.svelte'
   import TextInput from './TextInput.svelte'
 </script>
 

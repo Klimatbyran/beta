@@ -49,7 +49,7 @@ type ReportingPeriod = {
 
 type ReportingPeriodsEditorState = Record<string, ReportingPeriod>
 
-export class ReportingPeriodsEditor {
+class ReportingPeriodsEditor {
   /**
    * Editor state for updated reporting periods.
    */
@@ -69,9 +69,7 @@ export class ReportingPeriodsEditor {
    * Derived state for the selected period/year
    */
   selectedPeriod = $derived(
-    this.selectedYear
-      ? this.reportingPeriods?.[this.selectedYear]
-      : undefined,
+    this.selectedYear ? this.reportingPeriods?.[this.selectedYear] : undefined,
   )
 
   /**
@@ -105,7 +103,7 @@ export class ReportingPeriodsEditor {
   /**
    * Change which company to edit
    */
-  setCompany(company: CompanyDetails) {
+  init(company: CompanyDetails) {
     this.reportingPeriods = this.getEditableReportingPeriods(company)
     this.selectedYear = this.reportingYears.at(0) ?? ''
 
@@ -187,14 +185,20 @@ export class ReportingPeriodsEditor {
     this.reportingPeriods[this.selectedYear].emissions!.biogenic = { total }
   }
 
-  setTurnover({value, currency}: { value?: number, currency?: string}) {
+  setTurnover({ value, currency }: { value?: number; currency?: string }) {
     this.reportingPeriods[this.selectedYear].economy ??= {}
-    this.reportingPeriods[this.selectedYear].economy!.turnover = { value, currency }
+    this.reportingPeriods[this.selectedYear].economy!.turnover = {
+      value,
+      currency,
+    }
   }
 
-  setEmployees({value, unit}: { value?: number, unit?: string }) {
+  setEmployees({ value, unit }: { value?: number; unit?: string }) {
     this.reportingPeriods[this.selectedYear].economy ??= {}
-    this.reportingPeriods[this.selectedYear].economy!.employees = { value, unit}
+    this.reportingPeriods[this.selectedYear].economy!.employees = {
+      value,
+      unit,
+    }
   }
 
   /**
@@ -272,7 +276,7 @@ export class ReportingPeriodsEditor {
   /**
    * Convert the editor state into the expected format to be saved to the API
    */
-  getSavingFormat(): UpdateReportingPeriods['reportingPeriods'] {
+  getUpdatedReportingPeriods(): UpdateReportingPeriods['reportingPeriods'] {
     return Object.values(this.reportingPeriods).map((period) => ({
       ...period,
       emissions: period.emissions
@@ -293,22 +297,3 @@ export class ReportingPeriodsEditor {
 }
 
 export const editByReportingPeriod = new ReportingPeriodsEditor()
-
-// /**
-//  * Add API call to save reporting data changes below
-//  */
-// export async function saveReportingPeriods (
-//     data: emissionsData, error: emissionsError
-// ){
-//       await client.POST('/companies/{wikidataId}/reporting-periods', {
-//         params: { path: { wikidataId: company.wikidataId }, },
-//         body: {
-//           reportingPeriods: updatedReportingPeriods,
-//         },
-//       })
-
-//     if (!emissionsData?.ok || !emissionsData || emissionsError) {
-//       throw new Error('Ogiltig data från API')
-//     }
-//     console.log('Saved emissions data') // Debug logging
-//   }

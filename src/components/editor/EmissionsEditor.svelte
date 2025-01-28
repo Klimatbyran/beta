@@ -3,7 +3,7 @@
   import NumberInput from './NumberInput.svelte'
   import type { UpdateReportingPeriods } from '../../lib/api/types'
   import type { Scope3CategoryStrings } from '../../content/config'
-  import { editByReportingPeriod } from './editor.svelte'
+  import { editByReportingPeriod } from './reporting-periods-editor.svelte'
 
   type Props = {
     scope3CategoryStrings: Scope3CategoryStrings

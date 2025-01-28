@@ -2,7 +2,7 @@
   import { Card } from '../ui/card'
   import EmissionsEditor from './EmissionsEditor.svelte'
   import EconomyEditor from './EconomyEditor.svelte'
-  import { editByReportingPeriod } from './editor.svelte'
+  import { editByReportingPeriod } from './reporting-periods-editor.svelte'
   import type { Scope3CategoryStrings } from '@/content/config'
 
   type Props = {
@@ -19,7 +19,7 @@
       </label>
       <select
         id="reportingPeriods"
-        class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 p-2 text-white"
+        class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 p-4 text-white"
         bind:value={editByReportingPeriod.selectedYear}
       >
         {#each editByReportingPeriod.reportingYears as year}

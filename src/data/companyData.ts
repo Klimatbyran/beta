@@ -1,10 +1,10 @@
-import type { CompanyDetails, Emissions, ReportingPeriod} from '@/lib/api/types'
+import type { CompanyList, CompanyDetails, Emissions, ReportingPeriod} from '@/lib/api/types'
 import { slugifyURL } from '@/lib/slugifyURL'
 
 // NOTE: Types generated with https://app.quicktype.io/ based on the raw JSON response from `GET /companies` and modified to fix errors and simplify.
 
 
-export function getCompanyURL(company: CompanyDetails) {
+export function getCompanyURL(company: CompanyList[number]) {
   return `${slugifyURL(company.name)}-${company.wikidataId}`
 }
 

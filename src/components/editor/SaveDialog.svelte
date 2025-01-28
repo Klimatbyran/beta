@@ -7,7 +7,7 @@
 
   let comment = ''
   let fileInput: HTMLInputElement
-  
+
   function handleSubmit() {
     const formData = new FormData()
     formData.append('comment', comment)
@@ -27,8 +27,8 @@
   <Dialog.Content>
     <Dialog.Header>
       <div class="flex items-center gap-3">
-        <img 
-          src="/placeholder-user.jpg" 
+        <img
+          src="/placeholder-user.jpg"
           alt="Användarens profilbild"
           class="h-10 w-10 rounded-full object-cover"
         />
@@ -51,11 +51,13 @@
           class="rounded-md bg-gray-700 px-4 py-2"
           placeholder="Beskriv dina ändringar..."
           required
-        />
+        ></textarea>
       </div>
 
       <div class="grid gap-2">
-        <label for="source" class="text-sm font-medium">Källfil (valfritt)</label>
+        <label for="source" class="text-sm font-medium"
+          >Källfil (valfritt)</label
+        >
         <input
           id="source"
           type="file"
@@ -67,7 +69,8 @@
       </div>
 
       <Dialog.Footer>
-        <Button variant="outline" on:click={() => (open = false)}>Avbryt</Button>
+        <Button variant="outline" on:click={() => (open = false)}>Avbryt</Button
+        >
         <Button type="submit" disabled={saving}>
           {saving ? 'Sparar...' : 'Spara'}
         </Button>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {onMount} from 'svelte'
+  import { onMount } from 'svelte'
   import { Button } from '../ui/button'
   import { Card } from '../ui/card'
   import { toast } from 'sonner'
@@ -17,11 +17,9 @@
     // UpdateCompanyDetails,
   } from '@/lib/api/types'
   import SaveDialog from './SaveDialog.svelte'
-  import type { ValidationError } from '@/data/companies'
   import type { Scope3CategoryStrings } from '@/content/config'
-  import { editByReportingPeriod } from './editor.svelte'
-
-
+  import { editByReportingPeriod } from './reporting-periods-editor.svelte'
+  import { companyEditor } from './company-editor.svelte'
 
   type Props = {
     company: CompanyDetails
@@ -30,40 +28,27 @@
   let { company, scope3CategoryStrings }: Props = $props()
 
   onMount(() => {
-    editByReportingPeriod.setCompany(company)
+    editByReportingPeriod.init(company)
+    companyEditor.init(company)
   })
 
+  let saving = $state(false)
+  let error = $state<string | null>(null)
+  let showSaveDialog = $state(false)
 
-  // let updateGoals = $state<UpdateGoals['goals']>({
-  //   description: company.goals?.description ?? undefined,
-  //   year: company.goals?.year ?? undefined,
-  //   target: company.goals?.target ?? undefined,
-  //   baseYear: company.goals?.baseYear ?? undefined,
-  // })
-  // let updateInitiatives = $state<UpdateInitiatives>( {
-  //     return {
-  //       title: title ? title : undefined,
-  //       description: description ? description : undefined,
-  //       year: year ? year : undefined,
-  //       scope: scope ? scope : undefined,
-  //     }
-  //   }),
-  // let updateIndustry = $state<UpdateIndustry>(
-  //   company.industry((industry) => industry),
-  // )
-  // let updateCompanyDetails = $state<UpdateCompanyDetails>(
-  //   company.map((description, name) => {
-  //     return {
-  //       description: description ? description : undefined,
-  //       name: name ? name : undefined,
-  //     }
-  //   }),
-  // )
+  async function saveReportingPeriods(event: CustomEvent) {
+    const reportingPeriodsResponse = await client.POST(
+      '/companies/{wikidataId}/reporting-periods',
+      {
+        params: { path: { wikidataId: company.wikidataId } },
+        body: {
+          reportingPeriods: editByReportingPeriod.getUpdatedReportingPeriods(),
+        },
+      },
+    )
 
-  let saving = false
-  let error: string | ValidationError | null = null
-
-  let showSaveDialog = false
+    console.log('Saved reporting periods')
+  }
 
   async function handleSave(event: CustomEvent<FormData>) {
     const formData = event.detail
@@ -76,36 +61,30 @@
           wikidataId: company.wikidataId,
           name: company.name,
           description: company.description ? company.description : undefined,
-          url: (formData.get('url') as string) ?? undefined,
-          internalComment:
-            (formData.get('internalComment') as string) ?? undefined,
-          tags: (formData.get('tags') as unknown as string[]) ?? undefined,
+          // url: (formData.get('url') as string) ?? undefined,
+          // internalComment:
+          // (formData.get('internalComment') as string) ?? undefined,
+          // tags: (formData.get('tags') as unknown as string[]) ?? undefined,
         },
       })
 
       if (!companyData?.ok || !companyData || error) {
         throw new Error('Ogiltig data från API')
       }
-      console.log('Saved company details') // Debug logging
+      console.log('Saved company details')
 
-      // Spara utsläpp om det finns en period med utsläppsdata
-      const latestPeriod = company.reportingPeriods.find(
-        (period) => period.emissions,
+      const reportingPeriodsResponse = await client.POST(
+        '/companies/{wikidataId}/reporting-periods',
+        {
+          params: { path: { wikidataId: company.wikidataId } },
+          body: {
+            reportingPeriods:
+              editByReportingPeriod.getUpdatedReportingPeriods(),
+          },
+        },
       )
-      if (latestPeriod?.emissions) {
-        const { data: emissionsData, error: emissionsError } =
-          await client.POST('/companies/{wikidataId}/reporting-periods', {
-            params: { path: { wikidataId: company.wikidataId } },
-            body: {
-              reportingPeriods: editByReportingPeriod.getSavingFormat()
-            },
-          })
 
-        if (!emissionsData?.ok || !emissionsData || emissionsError) {
-          throw new Error('Ogiltig data från API')
-        }
-        console.log('Saved emissions data') // Debug logging
-      }
+      console.log('Saved reporting periods')
 
       // // Spara mål
       // const { data: goalsData, error: goalsError } = await client.POST(
@@ -163,15 +142,15 @@
       showSaveDialog = false
       toast.success('Ändringarna har sparats')
     } catch (err) {
-      if (err instanceof Error) {
-        const validationError = err.cause as ValidationError
-        error =
-          validationError?.error === 'Validation failed'
-            ? validationError
-            : err.message
-      } else {
-        error = 'Ett fel uppstod vid sparande'
-      }
+      // if (err instanceof Error) {
+      //   const validationError = err.cause as ValidationError
+      //   error =
+      //     validationError?.error === 'Validation failed'
+      //       ? validationError
+      //       : err.message
+      // } else {
+      error = 'Ett fel uppstod vid sparande'
+      // }
     } finally {
       saving = false
     }
@@ -179,31 +158,16 @@
 </script>
 
 <div class="grid gap-8">
-  <BasicInfoEditor bind:company />
-  <ReportingPeriodsEditor
-    {scope3CategoryStrings}
-  />
-  <GoalsEditor bind:company />
-  <InitiativesEditor bind:company />
+  <BasicInfoEditor />
+  <ReportingPeriodsEditor {scope3CategoryStrings} />
+  <!-- <GoalsEditor bind:company />
+  <InitiativesEditor bind:company /> -->
 
   <Card level={1} class="flex items-center justify-between">
     <div>
       {#if error}
         {#if typeof error === 'string'}
           <p class="text-red-500">{error}</p>
-        {:else}
-          <div class="text-red-500">
-            <p>{error.error}</p>
-            <ul class="mt-2 list-disc pl-4">
-              {#each error.details as detail}
-                <li>
-                  <span class="font-medium">{detail.field}:</span>
-                  {detail.message}
-                </li>
-              {/each}
-            </ul>
-            <p class="mt-2 text-sm">{error.help}</p>
-          </div>
         {/if}
       {/if}
     </div>
@@ -211,6 +175,10 @@
       Spara ändringar
     </Button>
 
-    <SaveDialog bind:open={showSaveDialog} bind:saving on:save={handleSave} />
+    <SaveDialog
+      bind:open={showSaveDialog}
+      bind:saving
+      on:save={saveReportingPeriods}
+    />
   </Card>
 </div>

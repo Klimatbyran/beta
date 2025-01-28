@@ -1,11 +1,11 @@
 <script lang="ts">
   import { Combobox, type Item } from '../ui/combobox'
   import { getCompanyURL } from '@/data/companyData'
-  import { request } from '@/lib/api/request'
-  import type { CompanyDetails } from '@/lib/api/types'
+  import { client } from '@/lib/api/request'
+  import type { CompanyList } from '@/lib/api/types'
   import { onMount } from 'svelte'
 
-  let companies = $state<CompanyDetails[]>([])
+  let companies = $state<CompanyList>([])
 
   const sorted = $derived(
     // Make a copy of the array to avoid mutating state
@@ -17,7 +17,12 @@
   }
 
   onMount(async () => {
-    companies = await request('/companies')
+    const res = await client.GET('/companies/')
+    if (res.data) {
+      companies = res.data
+    } else {
+      throw new Error(res.error)
+    }
   })
 </script>
 

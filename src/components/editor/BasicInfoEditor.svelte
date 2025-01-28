@@ -2,31 +2,29 @@
   import { Card } from '../ui/card'
   import TextInput from './TextInput.svelte'
   import type { CompanyDetails } from '@/lib/api/types'
-
-  type Props = {
-    company: CompanyDetails
-  }
-  let { company = $bindable() }: Props = $props()
+  import { companyEditor } from './company-editor.svelte'
 </script>
 
 <Card level={1} class="bg-gray-900 p-8">
-  <h2 class="mb-8 text-3xl font-medium tracking-tight">Redigera {company.name}</h2>
+  <h2 class="mb-8 text-3xl font-medium tracking-tight">
+    Redigera {companyEditor.name}
+  </h2>
 
   <div class="grid gap-6">
     <label class="grid gap-3">
       <span class="text-sm text-gray-300">Namn</span>
-      <!-- TODO: keep basic info state in one place and keep updates -->
-      <TextInput value={company.name} onchange={() => {}} />
+      <TextInput bind:value={companyEditor.name} />
     </label>
 
     <label class="grid gap-3">
       <span class="text-sm text-gray-300">Beskrivning</span>
-      <textarea
-        bind:value={company.description}
-        rows="6"
-        class="rounded-xl bg-gray-800 px-4 py-3 text-lg focus:border-blue-250 focus:outline-none focus:ring-2 focus:ring-blue-250/50"
-      ></textarea>
+      <TextInput multiline bind:value={companyEditor.description} />
     </label>
+
+    <!-- <label class="grid gap-3">
+      <span class="text-sm text-gray-300">Industri</span>
+      <TextInput bind:value={companyEditor.subIndustry} />
+    </label> -->
 
     <!--
     NOTE: url and internalComment are not returned by the regular GET /companies/:wikidataId endpoint
