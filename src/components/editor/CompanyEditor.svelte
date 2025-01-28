@@ -17,6 +17,7 @@
   import type { Scope3CategoryStrings } from '@/content/config'
   import { editByReportingPeriod } from './reporting-periods-editor.svelte'
   import { companyEditor } from './company-editor.svelte'
+  import ShowCompanyLink from './ShowCompanyLink.svelte'
 
   type Props = {
     company: CompanyDetails
@@ -185,9 +186,12 @@
       {/if}
     </div>
 
-    <Button on:click={() => (showSaveDialog = true)} disabled={saving}>
-      Spara ändringar
-    </Button>
+    <div class="flex gap-4 items-center">
+      <Button on:click={() => (showSaveDialog = true)} disabled={saving}>
+        Spara ändringar
+      </Button>
+      <ShowCompanyLink company={companyEditor} variant="outline" />
+    </div>
 
     <SaveDialog bind:open={showSaveDialog} onsubmit={saveReportingPeriods} />
   </Card>

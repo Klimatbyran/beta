@@ -1,10 +1,8 @@
 <script lang="ts">
   import { Card } from '../ui/card'
   import TextInput from './TextInput.svelte'
+  import ShowCompanyLink from './ShowCompanyLink.svelte'
   import { companyEditor } from './company-editor.svelte'
-  import { buttonVariants } from '../ui/button'
-  import { getCompanyURL } from '@/data/companyData'
-  import LucideExternalLink from 'icons:astro/lucide/external-link'
 </script>
 
 <Card level={1} class="bg-gray-900 p-8">
@@ -13,11 +11,7 @@
       Redigera {companyEditor.name}
     </h1>
 
-    <a
-      href={`/foretag/${getCompanyURL(companyEditor)}`}
-      class={buttonVariants({ variant: 'default', size: 'default' })}
-      ><LucideExternalLink class="mr-2 size-4" /> Visa</a
-    >
+    <ShowCompanyLink company={companyEditor} />
   </div>
 
   <div class="grid gap-6">
