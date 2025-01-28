@@ -1,14 +1,24 @@
 <script lang="ts">
   import { Card } from '../ui/card'
   import TextInput from './TextInput.svelte'
-  import type { CompanyDetails } from '@/lib/api/types'
   import { companyEditor } from './company-editor.svelte'
+  import { buttonVariants } from '../ui/button'
+  import { getCompanyURL } from '@/data/companyData'
+  import LucideExternalLink from 'icons:astro/lucide/external-link'
 </script>
 
 <Card level={1} class="bg-gray-900 p-8">
-  <h2 class="mb-8 text-3xl font-medium tracking-tight">
-    Redigera {companyEditor.name}
-  </h2>
+  <div class="grid grid-cols-[1fr_min-content] items-center mb-8">
+    <h1 class="text-balance text-3xl leading-none tracking-tight lg:text-4xl">
+      Redigera {companyEditor.name}
+    </h1>
+
+    <a
+      href={`/foretag/${getCompanyURL(companyEditor)}`}
+      class={buttonVariants({ variant: 'default', size: 'default' })}
+      ><LucideExternalLink class="mr-2 size-4" /> Visa</a
+    >
+  </div>
 
   <div class="grid gap-6">
     <label class="grid gap-3">

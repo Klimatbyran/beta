@@ -22,6 +22,7 @@ type CompanyEditorState = {
 class CompanyEditor {
   name = $state('')
   description = $state('')
+  wikidataId = $state('')
   //   subIndustry = $state<string>()
 
   /**
@@ -30,6 +31,7 @@ class CompanyEditor {
   init(company: CompanyDetails) {
     this.name = company.name
     this.description = company.description ?? ''
+    this.wikidataId = company.wikidataId
 
     // this.subIndustry = company.industry?.industryGics.subIndustryCode
   }

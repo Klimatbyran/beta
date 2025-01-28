@@ -9,6 +9,7 @@ import { Card } from '../ui/card'
 import { cn, isNumber } from '@/lib/utils'
 import VerifiedBadge from '../VerifiedBadge.astro'
 import type { CompanyDetails, Emissions } from '@/lib/api/types'
+import EditCompanyLink from './EditCompanyLink.svelte'
 
 interface Props {
   company: CompanyDetails
@@ -57,11 +58,14 @@ const hasVerifiedAllScopes =
 ---
 
 <Card class="text-sm" level={1}>
-  <h1
-    class="text-balance pb-4 pt-4 text-4xl leading-none tracking-tight md:pt-0 lg:text-5xl"
-  >
-    {company.name}
-  </h1>
+  <div class="grid grid-cols-[1fr_min-content] items-center pb-4 pt-4 md:pt-0">
+    <h1 class="text-balance text-4xl leading-none tracking-tight lg:text-5xl">
+      {company.name}
+    </h1>
+
+    <EditCompanyLink client:load {company} />
+  </div>
+
   <p class="text-muted">{company.description}</p>
 
   <div class="grid gap-4 pt-4 md:grid-cols-2">
