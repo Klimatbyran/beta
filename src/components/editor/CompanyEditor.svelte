@@ -179,10 +179,6 @@
 </script>
 
 <div class="grid gap-8">
-  <Card level={1}>
-    <h1 class="text-3xl font-bold">Redigera {company.name}</h1>
-  </Card>
-
   <BasicInfoEditor bind:company />
   <ReportingPeriodsEditor
     {scope3CategoryStrings}

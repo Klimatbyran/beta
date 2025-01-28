@@ -58,7 +58,7 @@
             bind:value={initiative.description}
             rows="3"
             class="rounded-md bg-gray-700 px-4 py-2"
-          />
+          ></textarea>
         </label>
 
         <div class="grid gap-4 sm:grid-cols-2">

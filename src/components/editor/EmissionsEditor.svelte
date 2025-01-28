@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Card } from '../ui/card'
-  import EmissionsValue from './EmissionsValue.svelte'
+  import NumberInput from './NumberInput.svelte'
   import type { UpdateReportingPeriods } from '../../lib/api/types'
   import type { Scope3CategoryStrings } from '../../content/config'
   import { editByReportingPeriod } from './editor.svelte'
@@ -23,48 +23,63 @@
 </script>
 
 <!-- <div class="sticky top-20 z-10"> -->
-  <Card level={2} class="mb-4 bg-gray-800 p-6">
-    <div class="grid gap-4">
-      <div class="grid gap-2 text-sm">
-        <div class="flex justify-between">
-          <span>Scope 1</span>
-          <span class="font-medium"
-            >{(editByReportingPeriod.scope1?.total ?? 0).toLocaleString(
-              'sv-SE',
-            )}</span
-          >
-        </div>
-        <div class="flex justify-between">
-          <span>Scope 2</span>
-          <span class="font-medium"
-            >{editByReportingPeriod.scope2Total.toLocaleString('sv-SE')}</span
-          >
-        </div>
-        <div class="flex justify-between">
-          <span>Scope 3</span>
-          <span class="font-medium"
-            >{editByReportingPeriod.scope3Total.toLocaleString('sv-SE')}</span
-          >
-        </div>
-        <div class="flex justify-between border-t border-gray-700 pt-2">
-          <span>Biogena utsläpp</span>
-          <span class="font-medium"
-            >{(editByReportingPeriod.biogenic?.total ?? 0).toLocaleString(
-              'sv-SE',
-            )}</span
-          >
-        </div>
+<Card level={2} class="mb-4 bg-gray-800 p-6">
+  <div class="grid gap-4">
+    <div class="grid gap-2 text-sm">
+      <div class="flex justify-between">
+        <span>Scope 1</span>
+        <span class="font-medium"
+          >{(editByReportingPeriod.scope1?.total ?? 0).toLocaleString(
+            'sv-SE',
+          )}</span
+        >
+      </div>
+      <div class="flex justify-between">
+        <span>Scope 2</span>
+        <span class="font-medium"
+          >{editByReportingPeriod.scope2Total.toLocaleString('sv-SE')}</span
+        >
+      </div>
+      <div class="flex justify-between">
+        <span>Scope 3</span>
+        <span class="font-medium"
+          >{editByReportingPeriod.scope3Total.toLocaleString('sv-SE')}</span
+        >
+      </div>
+      <div class="flex justify-between border-t border-gray-700 pt-2">
+        <span>Biogena utsläpp</span>
+        <span class="font-medium"
+          >{(editByReportingPeriod.biogenic?.total ?? 0).toLocaleString(
+            'sv-SE',
+          )}</span
+        >
       </div>
     </div>
-  </Card>
-<!-- </div> -->
+  </div>
+</Card>
 
 <Card level={2} class="bg-gray-900 p-8">
-  <h2 class="mb-8 text-3xl font-medium tracking-tight">Utsläpp</h2>
+  <h2 class="mb-8 text-3xl font-medium tracking-tight">
+    Utsläpp för {editByReportingPeriod.selectedYear}
+  </h2>
 
   <div class="grid gap-6">
     {#if editByReportingPeriod.selectedPeriod}
       <div class="grid gap-6">
+        <!-- Stated Total Emissions -->
+        <div class="grid gap-4">
+          <h3 class="text-xl font-medium">Totala utsläpp enligt rapporten</h3>
+          <label class="grid gap-2">
+            <span>Totala utsläpp för scope 1, 2 och 3 (ton CO₂e)</span>
+            <NumberInput
+              value={editByReportingPeriod.emissions?.statedTotalEmissions
+                ?.total}
+              onchange={(total) =>
+                editByReportingPeriod.setStatedTotalEmissions({ total })}
+            />
+          </label>
+        </div>
+
         <!-- Scope 1 -->
         <div class="grid gap-4">
           <div>
@@ -76,9 +91,9 @@
           </div>
           <div class="grid gap-2">
             <span>Totala utsläpp (ton CO₂e)</span>
-            <EmissionsValue
+            <NumberInput
               value={editByReportingPeriod.scope1?.total}
-              onChange={(total) => editByReportingPeriod.setScope1({ total })}
+              onchange={(total) => editByReportingPeriod.setScope1({ total })}
             />
           </div>
         </div>
@@ -93,23 +108,23 @@
           </div>
           <div class="grid gap s-2">
             <span>Market-based (ton CO₂e)</span>
-            <EmissionsValue
+            <NumberInput
               value={editByReportingPeriod.emissions?.scope2?.mb}
-              onChange={(mb) => editByReportingPeriod.setScope2({ mb })}
+              onchange={(mb) => editByReportingPeriod.setScope2({ mb })}
             />
           </div>
           <div class="grid gap-2">
             <span>Location-based (ton CO₂e)</span>
-            <EmissionsValue
+            <NumberInput
               value={editByReportingPeriod.emissions?.scope2?.lb}
-              onChange={(lb) => editByReportingPeriod.setScope2({ lb })}
+              onchange={(lb) => editByReportingPeriod.setScope2({ lb })}
             />
           </div>
           <div class="grid gap s-2">
             <span>Unknown (ton CO₂e)</span>
-            <EmissionsValue
+            <NumberInput
               value={editByReportingPeriod.emissions?.scope2?.unknown}
-              onChange={(unknown) =>
+              onchange={(unknown) =>
                 editByReportingPeriod.setScope2({ unknown })}
             />
           </div>
@@ -127,11 +142,11 @@
 
           <div class="grid gap s-2">
             <span>Totala scope 3-utsläpp enligt rapport (ton CO₂e)</span>
-            <EmissionsValue
+            <NumberInput
               value={editByReportingPeriod.emissions?.scope3
                 ?.statedTotalEmissions?.total}
-              onChange={(total) =>
-                editByReportingPeriod.setScope3StateTotal({ total })}
+              onchange={(total) =>
+                editByReportingPeriod.setScope3StatedTotalEmissions({ total })}
             />
           </div>
 
@@ -141,9 +156,11 @@
                 <span class="text-sm">
                   {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
                 </span>
-                <EmissionsValue
-                  value={editByReportingPeriod.scope3?.categories?.[categoryNumber]?.total}
-                  onChange={(total) =>
+                <NumberInput
+                  value={editByReportingPeriod.scope3?.categories?.[
+                    categoryNumber
+                  ]?.total}
+                  onchange={(total) =>
                     editByReportingPeriod.setScope3Category({
                       category: categoryNumber,
                       total,
@@ -161,7 +178,7 @@
             </div>
 
             <!-- Downstream (9-15) -->
-            <div class="grid gap-4">
+            <div class="grid gap-4 content-start">
               <h4 class="text-lg font-medium">Nedströms (9-15)</h4>
               {#each Array.from({ length: 7 }, (_, i) => i + 9) as categoryNumber}
                 {@render scope3Category(categoryNumber)}
@@ -174,15 +191,10 @@
         <div class="grid gap-4">
           <h3 class="text-xl font-medium">Biogena utsläpp</h3>
           <label class="grid gap-2">
-            <span>Totala biogena utsläpp (ton CO₂e)</span>
-            <EmissionsValue
-              value={editByReportingPeriod.emissions?.biogenic?.total ?? null}
-              onChange={(val) => {
-                console.log('TODO: handle update pls! :)')
-                // if (emissions.biogenic) {
-                //   emissions.biogenic.total = val
-                // }
-              }}
+            <span>Biogena utsläpp exklusive scope 1, 2 och 3 (ton CO₂e)</span>
+            <NumberInput
+              value={editByReportingPeriod.emissions?.biogenic?.total}
+              onchange={(total) => editByReportingPeriod.setBiogenic({ total })}
             />
           </label>
         </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Card } from '../ui/card'
   import EmissionsEditor from './EmissionsEditor.svelte'
+  import EconomyEditor from './EconomyEditor.svelte'
   import { editByReportingPeriod } from './editor.svelte'
   import type { Scope3CategoryStrings } from '@/content/config'
 
@@ -30,8 +31,10 @@
 </div>
 <Card level={1} class="mb-4 bg-gray-800 p-6">
   {#if editByReportingPeriod.selectedPeriod}
-    <EmissionsEditor {scope3CategoryStrings} />
-    <!-- TODO: Add EconomyEditor -->
+    <div class="grid gap-8">
+      <EmissionsEditor {scope3CategoryStrings} />
+      <EconomyEditor />
+    </div>
   {:else}
     <p class="text-muted">
       Ingen rapporteringsperiod med utsläppsdata hittades.

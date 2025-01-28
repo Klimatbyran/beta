@@ -70,7 +70,7 @@ export class ReportingPeriodsEditor {
    */
   selectedPeriod = $derived(
     this.selectedYear
-      ? this.reportingPeriods?.[this.selectedYear?.toString()]
+      ? this.reportingPeriods?.[this.selectedYear]
       : undefined,
   )
 
@@ -96,6 +96,11 @@ export class ReportingPeriodsEditor {
   )
 
   biogenic = $derived(this.emissions?.biogenic)
+  statedTotalEmissions = $derived(this.emissions?.statedTotalEmissions)
+
+  economy = $derived(this.selectedPeriod?.economy)
+  turnover = $derived(this.selectedPeriod?.economy?.turnover)
+  employees = $derived(this.selectedPeriod?.economy?.employees)
 
   /**
    * Change which company to edit
@@ -156,7 +161,7 @@ export class ReportingPeriodsEditor {
     ] = updated
   }
 
-  setScope3StateTotal(total: { total: number }) {
+  setScope3StatedTotalEmissions(total: { total: number }) {
     this.reportingPeriods[this.selectedYear].emissions ??= {}
     this.reportingPeriods[this.selectedYear].emissions!.scope3 ??= {}
 
@@ -168,6 +173,28 @@ export class ReportingPeriodsEditor {
         this.selectedYear
       ].emissions!.scope3!.statedTotalEmissions = total
     }
+  }
+
+  setStatedTotalEmissions({ total }: { total: number }) {
+    this.reportingPeriods[this.selectedYear].emissions ??= {}
+    this.reportingPeriods[this.selectedYear].emissions!.statedTotalEmissions = {
+      total,
+    }
+  }
+
+  setBiogenic({ total }: { total: number }) {
+    this.reportingPeriods[this.selectedYear].emissions ??= {}
+    this.reportingPeriods[this.selectedYear].emissions!.biogenic = { total }
+  }
+
+  setTurnover({value, currency}: { value?: number, currency?: string}) {
+    this.reportingPeriods[this.selectedYear].economy ??= {}
+    this.reportingPeriods[this.selectedYear].economy!.turnover = { value, currency }
+  }
+
+  setEmployees({value, unit}: { value?: number, unit?: string }) {
+    this.reportingPeriods[this.selectedYear].economy ??= {}
+    this.reportingPeriods[this.selectedYear].economy!.employees = { value, unit}
   }
 
   /**
