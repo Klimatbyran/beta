@@ -10,11 +10,11 @@
   }
   let { scope3CategoryStrings }: Props = $props()
 
-  /**
-   * find the category by number then pulling the title assuming it is found
-   */
-  function getCategoryName(categoryNumber: number): string {
-    return (
+  function getScope3CategoryTitle(categoryNumber: number): string {
+    return scope3CategoryStrings[
+      `${categoryNumber}` as keyof Scope3CategoryStrings
+    ].title
+  }
       Object.entries(scope3CategoryStrings).find(([key]) =>
         key.startsWith(`${categoryNumber}`),
       )?.[1]?.title ?? 'Unknown category'
@@ -22,7 +22,6 @@
   }
 </script>
 
-<!-- <div class="sticky top-20 z-10"> -->
 <Card level={2} class="mb-4 bg-gray-800 p-6">
   <div class="grid gap-4">
     <div class="grid gap-2 text-sm">
@@ -154,7 +153,8 @@
             {#snippet scope3Category(categoryNumber: number)}
               <label class="grid gap-1.5">
                 <span class="text-sm">
-                  {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
+                  {categoryNumber}. {getScope3CategoryTitle(categoryNumber)} (ton
+                  CO₂e)
                 </span>
                 <NumberInput
                   value={editByReportingPeriod.scope3?.categories?.[

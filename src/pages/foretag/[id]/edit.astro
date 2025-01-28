@@ -19,9 +19,12 @@ const company = wikidataId.startsWith('Q')
       .then(({ data }) => data)
   : null
 
-const scope3CategoryStrings = getEntry('contentStrings', 'scope3Categories')
+const scope3CategoryStrings = await getEntry(
+  'contentStrings',
+  'scope3Categories',
+)?.then((res) => res.data)
 
-const title = `Redigera ${company ? company.name : 'företag'} | Klimatkollen`
+const title = `Redigera ${company ? company.name : 'företag'}`
 ---
 
 <Layout {title}>
@@ -29,7 +32,7 @@ const title = `Redigera ${company ? company.name : 'företag'} | Klimatkollen`
     company ? (
       <div class="container mx-auto max-w-4xl px-4 py-8">
         <CompanyEditor client:load {company} {scope3CategoryStrings} />
-        <div class="grid w-full place-items-center">
+        <div class="mt-16 grid w-full place-items-center">
           <OtherCompanies client:load />
 
           <a

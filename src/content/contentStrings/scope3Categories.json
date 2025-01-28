@@ -1,62 +1,62 @@
 {
-  "1_purchasedGoods": {
-    "title": "1. Inköpta varor och tjänster",
+  "1": {
+    "title": "Inköpta varor och tjänster",
     "description": "Utsläpp från produktion av varor och tjänster som köps av organisationen."
   },
-  "2_capitalGoods": {
-    "title": "2. Kapitalvaror",
+  "2": {
+    "title": "Kapitalvaror",
     "description": "Utsläpp från produktion av kapitalvaror som köps av organisationen."
   },
-  "3_fuelAndEnergyRelatedActivities": {
-    "title": "3. Bränsle- och energirelaterade aktiviteter",
+  "3": {
+    "title": "Bränsle- och energirelaterade aktiviteter",
     "description": "Utsläpp från produktion av bränslen och energi som köps av organisationen, inklusive transport och distribution, som inte inkluderas i scope 2."
   },
-  "4_upstreamTransportationAndDistribution": {
-    "title": "4. Uppströms transport och distribution",
+  "4": {
+    "title": "Uppströms transport och distribution",
     "description": "Utsläpp från transport och distribution av inköpta varor mellan leverantörer och/eller inom organisationen."
   },
-  "5_wasteGeneratedInOperations": {
-    "title": "5. Avfall genererat i verksamheten",
+  "5": {
+    "title": "Avfall genererat i verksamheten",
     "description": "Utsläpp från behandling av avfall som genereras av organisationen."
   },
-  "6_businessTravel": {
-    "title": "6. Tjänsteresor",
+  "6": {
+    "title": "Tjänsteresor",
     "description": "Utsläpp från resor i tjänsten med fordon som inte ägs av organisationen."
   },
-  "7_employeeCommuting": {
-    "title": "7. Pendlingsresor",
+  "7": {
+    "title": "Pendlingsresor",
     "description": "Utsläpp från anställdas resor mellan hemmet och arbetsplatsen."
   },
-  "8_upstreamLeasedAssets": {
-    "title": "8. Uppströms leasade tillgångar",
+  "8": {
+    "title": "Uppströms leasade tillgångar",
     "description": "Utsläpp från verksamhet i leasade tillgångar som inte inkluderas i scope 1 och 2."
   },
-  "9_downstreamTransportationAndDistribution": {
-    "title": "9. Nedströms transport och distribution",
+  "9": {
+    "title": "Nedströms transport och distribution",
     "description": "Utsläpp från transport och distribution av sålda varor mellan organisationen och kund."
   },
-  "10_processingOfSoldProducts": {
-    "title": "10. Bearbetning av sålda produkter",
+  "10": {
+    "title": "Bearbetning av sålda produkter",
     "description": "Utsläpp från vidareförädling av sålda insatsvaror."
   },
-  "11_useOfSoldProducts": {
-    "title": "11. Användning av sålda produkter",
+  "11": {
+    "title": "Användning av sålda produkter",
     "description": "Utsläpp från användning av sålda produkter av kunden."
   },
-  "12_endOfLifeTreatmentOfSoldProducts": {
-    "title": "12. Slutbehandling av sålda produkter",
+  "12": {
+    "title": "Slutbehandling av sålda produkter",
     "description": "Utsläpp från avfallshantering av sålda produkter vid slutet av livscykeln."
   },
-  "13_downstreamLeasedAssets": {
-    "title": "13. Nedströms leasade tillgångar",
+  "13": {
+    "title": "Nedströms leasade tillgångar",
     "description": "Utsläpp från verksamhet i nedströms leasade tillgångar som inte inkluderas i scope 1 och 2."
   },
-  "14_franchises": {
-    "title": "14. Franchiser",
+  "14": {
+    "title": "Franchiser",
     "description": "Utsläpp från franchisetagares verksamhet som inte inkluderas i scope 1 och 2."
   },
-  "15_investments": {
-    "title": "15. Investeringar",
+  "15": {
+    "title": "Investeringar",
     "description": "Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp."
   }
 }
