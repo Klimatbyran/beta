@@ -2,51 +2,58 @@
   import * as Dialog from '@/components/ui/dialog'
   import { Button } from '../ui/button'
 
-  export let open = false
-  export let saving = false
-
-  let comment = ''
-  let fileInput: HTMLInputElement
-
-  function handleSubmit() {
-    const formData = new FormData()
-    formData.append('comment', comment)
-    if (fileInput?.files?.[0]) {
-      formData.append('source', fileInput.files[0])
-    }
-    saving = true
-    // Return the form data to parent
-    dispatch('save', formData)
+  type Props = {
+    open?: boolean
+    saving?: boolean
+    onsubmit?: (metadata: { comment: string; source: string }) => Promise<void>
   }
 
-  import { createEventDispatcher } from 'svelte'
-  const dispatch = createEventDispatcher()
+  let { open = $bindable(false), onsubmit }: Props = $props()
+  let saving = $state(false)
+
+  // TODO: Improve handling of the metadata.
+  // A big problem right now is that saving changes overwrites all previous metadata, even for data points that were not changed.
+  // This means we lose the metadata (including comment and source) for almost all data points, for all reporting periods.
+  // NOTE: This needs to be solved before we can deploy this to production
+  let metadata = $state({
+    comment: '',
+    source: '',
+  })
+
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault()
+
+    saving = true
+    await onsubmit?.(metadata)
+    saving = false
+  }
 </script>
 
 <Dialog.Root bind:open>
   <Dialog.Content>
     <Dialog.Header>
       <div class="flex items-center gap-3">
-        <img
+        <div class="rounded-full bg-gray-300 size-10"></div>
+        <!-- <img
           src="/placeholder-user.jpg"
           alt="Användarens profilbild"
           class="h-10 w-10 rounded-full object-cover"
-        />
+        /> -->
         <div>
           <Dialog.Title>Spara ändringar</Dialog.Title>
-          <Dialog.Description>
-            Lägg till en kommentar och eventuell källfil för dina ändringar.
+          <Dialog.Description class="pt-2">
+            Lägg till en kommentar och eventuell källa för dina ändringar.
           </Dialog.Description>
         </div>
       </div>
     </Dialog.Header>
 
-    <form class="grid gap-4" on:submit|preventDefault={handleSubmit}>
+    <form class="grid gap-4" onsubmit={handleSubmit}>
       <div class="grid gap-2">
         <label for="comment" class="text-sm font-medium">Kommentar</label>
         <textarea
           id="comment"
-          bind:value={comment}
+          bind:value={metadata.comment}
           rows="3"
           class="rounded-md bg-gray-700 px-4 py-2"
           placeholder="Beskriv dina ändringar..."
@@ -55,17 +62,14 @@
       </div>
 
       <div class="grid gap-2">
-        <label for="source" class="text-sm font-medium"
-          >Källfil (valfritt)</label
-        >
+        <label for="source" class="text-sm font-medium">Källa (valfritt)</label>
         <input
           id="source"
-          type="file"
-          bind:this={fileInput}
-          accept=".pdf,image/*"
+          type="text"
+          placeholder="T.ex. länk till rapporten"
+          bind:value={metadata.source}
           class="rounded-md bg-gray-700 px-4 py-2"
         />
-        <p class="text-xs text-muted">Accepterar PDF eller bilder</p>
       </div>
 
       <Dialog.Footer>

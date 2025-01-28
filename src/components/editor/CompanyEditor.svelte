@@ -4,13 +4,10 @@
   import { Card } from '../ui/card'
   import { toast } from 'sonner'
   import BasicInfoEditor from './BasicInfoEditor.svelte'
-  import GoalsEditor from './GoalsEditor.svelte'
   import ReportingPeriodsEditor from './ReportingPeriodsEditor.svelte'
-  import InitiativesEditor from './InitiativesEditor.svelte'
   import { client } from '@/lib/api/request'
   import type {
     CompanyDetails,
-    UpdateReportingPeriods,
     // UpdateGoals,
     // UpdateInitiatives,
     // UpdateIndustry,
@@ -33,27 +30,43 @@
   })
 
   let saving = $state(false)
-  let error = $state<string | null>(null)
+  let error = $state<string | undefined>()
   let showSaveDialog = $state(false)
 
-  async function saveReportingPeriods(event: CustomEvent) {
+  async function saveReportingPeriods(metadata: {
+    comment: string
+    source: string
+  }) {
+    saving = true
+    error = undefined
+
     const reportingPeriodsResponse = await client.POST(
       '/companies/{wikidataId}/reporting-periods',
       {
         params: { path: { wikidataId: company.wikidataId } },
         body: {
           reportingPeriods: editByReportingPeriod.getUpdatedReportingPeriods(),
+          metadata,
         },
       },
     )
 
-    console.log('Saved reporting periods')
+    saving = false
+    showSaveDialog = false
+
+    if (!reportingPeriodsResponse.response.ok) {
+      console.error(reportingPeriodsResponse.response)
+      error = reportingPeriodsResponse.response.statusText
+    } else {
+      error = reportingPeriodsResponse.error
+      console.log('Saved reporting periods')
+    }
   }
 
   async function handleSave(event: CustomEvent<FormData>) {
     const formData = event.detail
     saving = true
-    error = null
+    error = undefined
     try {
       // Spara grundinformation
       const { data: companyData, error } = await client.POST('/companies/', {
@@ -171,14 +184,11 @@
         {/if}
       {/if}
     </div>
+
     <Button on:click={() => (showSaveDialog = true)} disabled={saving}>
       Spara ändringar
     </Button>
 
-    <SaveDialog
-      bind:open={showSaveDialog}
-      bind:saving
-      on:save={saveReportingPeriods}
-    />
+    <SaveDialog bind:open={showSaveDialog} onsubmit={saveReportingPeriods} />
   </Card>
 </div>
