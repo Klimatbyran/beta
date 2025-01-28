@@ -97,7 +97,7 @@
           await client.POST('/companies/{wikidataId}/reporting-periods', {
             params: { path: { wikidataId: company.wikidataId } },
             body: {
-              reportingPeriods: editByReportingPeriod.reportingPeriods
+              reportingPeriods: editByReportingPeriod.getSavingFormat()
             },
           })
 

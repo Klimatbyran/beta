@@ -8,25 +8,27 @@
     scope3CategoryStrings: Scope3CategoryStrings
   }
   let { scope3CategoryStrings }: Props = $props()
-
-  $inspect(editByReportingPeriod.selectedYear)
 </script>
 
-<Card level={1} class="grid gap-8">
-  <div class="grid gap-2">
-    <label for="reportingPeriods" class="block text-sm font-medium">
-      Välj rapporteringsperiod
-    </label>
-    <select
-      id="reportingPeriods"
-      class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 p-2 text-white"
-      bind:value={editByReportingPeriod.selectedYear}
-    >
-      {#each editByReportingPeriod.reportingYears as year}
-        <option value={year}>{year}</option>
-      {/each}
-    </select>
-  </div>
+<div class="sticky top-12 z-10">
+  <Card level={1} class="grid gap-8">
+    <div class="grid gap-2">
+      <label for="reportingPeriods" class="block text-sm font-medium">
+        Välj rapporteringsperiod
+      </label>
+      <select
+        id="reportingPeriods"
+        class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 p-2 text-white"
+        bind:value={editByReportingPeriod.selectedYear}
+      >
+        {#each editByReportingPeriod.reportingYears as year}
+          <option value={year}>{year}</option>
+        {/each}
+      </select>
+    </div>
+  </Card>
+</div>
+<Card level={1} class="mb-4 bg-gray-800 p-6">
   {#if editByReportingPeriod.selectedPeriod}
     <EmissionsEditor {scope3CategoryStrings} />
     <!-- TODO: Add EconomyEditor -->
