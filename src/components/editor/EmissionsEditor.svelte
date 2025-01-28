@@ -3,25 +3,12 @@
   import EmissionsValue from './EmissionsValue.svelte'
   import type { UpdateReportingPeriods } from '../../lib/api/types'
   import type { Scope3CategoryStrings } from '../../content/config'
+  import { editByReportingPeriod } from './editor.svelte'
 
   type Props = {
-    selectedPeriod: UpdateReportingPeriods['reportingPeriods'][number]
     scope3CategoryStrings: Scope3CategoryStrings
-    updatedReportingPeriods:UpdateReportingPeriods['reportingPeriods']
   }
-  let { selectedPeriod = $bindable(), scope3CategoryStrings }: Props = $props()
-
-  const emissions = $derived(selectedPeriod?.emissions)
-  const scope1 = $derived(emissions?.scope1)
-  const scope2 = $derived(emissions?.scope2)
-  const scope3Total = $derived(
-    emissions?.scope3?.categories?.reduce(
-      (sum, category) => sum + (category.total ?? 0),
-      0,
-    ) ?? 0,
-  )
-
-  const biogenic = $derived(emissions?.biogenic)
+  let { scope3CategoryStrings }: Props = $props()
 
   /**
    * find the category by number then pulling the title assuming it is found
@@ -42,22 +29,29 @@
         <div class="flex justify-between">
           <span>Scope 1</span>
           <span class="font-medium"
-            >{scope1?.total.toLocaleString('sv-SE')}</span
+            >{(editByReportingPeriod.scope1?.total ?? 0).toLocaleString(
+              'sv-SE',
+            )}</span
           >
         </div>
         <div class="flex justify-between">
           <span>Scope 2</span>
-          <!-- NOTE: we need to handle calculatedTotalEmissions on the client - see how it was implemented for the API -->
-          <span class="font-medium">{scope2?.mb?.toLocaleString('sv-SE')}</span>
+          <span class="font-medium"
+            >{editByReportingPeriod.scope2Total.toLocaleString('sv-SE')}</span
+          >
         </div>
         <div class="flex justify-between">
           <span>Scope 3</span>
-          <span class="font-medium">{scope3Total.toLocaleString('sv-SE')}</span>
+          <span class="font-medium"
+            >{editByReportingPeriod.scope3Total.toLocaleString('sv-SE')}</span
+          >
         </div>
         <div class="flex justify-between border-t border-gray-700 pt-2">
           <span>Biogena utsläpp</span>
           <span class="font-medium"
-            >{biogenic?.total.toLocaleString('sv-SE')}</span
+            >{(editByReportingPeriod.biogenic?.total ?? 0).toLocaleString(
+              'sv-SE',
+            )}</span
           >
         </div>
       </div>
@@ -69,7 +63,7 @@
   <h2 class="mb-8 text-3xl font-medium tracking-tight">Utsläpp</h2>
 
   <div class="grid gap-6">
-    {#if selectedPeriod && emissions}
+    {#if editByReportingPeriod.selectedPeriod && editByReportingPeriod.emissions}
       <div class="grid gap-6">
         <!-- Scope 1 -->
         <div class="grid gap-4">
@@ -83,11 +77,12 @@
           <div class="grid gap-2">
             <span>Totala utsläpp (ton CO₂e)</span>
             <EmissionsValue
-              value={emissions?.scope1?.total}
+              value={editByReportingPeriod.scope1?.total}
               onChange={(val) => {
-                if (emissions?.scope1) {
-                  emissions.scope1.total = val
-                }
+                console.log('TODO: handle update pls! :)')
+                // if (editByReportingPeriod.scope1) {
+                //   editByReportingPeriod.scope1.total = val
+                // }
               }}
             />
           </div>
@@ -104,22 +99,24 @@
           <div class="grid gap-2">
             <span>Location-based (ton CO₂e)</span>
             <EmissionsValue
-              value={emissions?.scope2?.lb}
+              value={editByReportingPeriod.emissions?.scope2?.lb}
               onChange={(val) => {
-                if (emissions?.scope2) {
-                  emissions.scope2.lb = val
-                }
+                console.log('TODO: handle update pls! :)')
+                // if (editByReportingPeriod.emissions?.scope2) {
+                //   editByReportingPeriod.emissions.scope2.lb = val
+                // }
               }}
             />
           </div>
           <div class="grid gap-2">
             <span>Market-based (ton CO₂e)</span>
             <EmissionsValue
-              value={emissions.scope2?.mb}
+              value={editByReportingPeriod.emissions.scope2?.mb}
               onChange={(val) => {
-                if (emissions?.scope2) {
-                  emissions.scope2.mb = val
-                }
+                console.log('TODO: handle update pls! :)')
+                // if (editByReportingPeriod.emissions?.scope2) {
+                //   editByReportingPeriod.emissions.scope2.mb = val
+                // }
               }}
             />
           </div>
@@ -134,15 +131,16 @@
               nedströms.
             </p>
           </div>
-          {#if emissions.scope3?.categories}
+          {#if editByReportingPeriod.emissions.scope3?.categories}
             <div class="grid gap-8 sm:grid-cols-2">
               <!-- Upstream (1-8) -->
               <div class="grid gap-4">
                 <h4 class="text-lg font-medium">Uppströms (1-8)</h4>
                 {#each Array.from({ length: 8 }, (_, i) => i + 1) as categoryNumber}
-                  {@const category = emissions.scope3.categories.find(
-                    (c) => c.category === categoryNumber,
-                  )}
+                  {@const category =
+                    editByReportingPeriod.emissions.scope3.categories.find(
+                      (c) => c.category === categoryNumber,
+                    )}
                   <label class="grid gap-1.5">
                     <span class="text-sm">
                       {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
@@ -150,22 +148,23 @@
                     <EmissionsValue
                       value={category?.total ?? null}
                       onChange={(val) => {
-                        const existingIndex =
-                          emissions?.scope3?.categories?.findIndex(
-                            (c) => c.category === categoryNumber,
-                          )
-                        if (
-                          existingIndex !== undefined &&
-                          existingIndex >= 0 &&
-                          emissions.scope3?.categories?.[existingIndex]
-                        ) {
-                          emissions.scope3.categories[existingIndex].total = val
-                        } else if (val !== null) {
-                          emissions?.scope3?.categories?.push({
-                            category: categoryNumber,
-                            total: val,
-                          })
-                        }
+                        console.log('TODO: handle update pls! :)')
+                        // const existingIndex =
+                        // editByReportingPeriod.emissions?.scope3?.categories?.findIndex(
+                        //     (c) => c.category === categoryNumber,
+                        //   )
+                        // if (
+                        //   existingIndex !== undefined &&
+                        //   existingIndex >= 0 &&
+                        //   editByReportingPeriod.emissions?.scope3?.categories?.[existingIndex]
+                        // ) {
+                        //   editByReportingPeriod.emissions?.scope3.categories[existingIndex].total = val
+                        // } else if (val !== null) {
+                        //   editByReportingPeriod.emissions?.scope3?.categories?.push({
+                        //     category: categoryNumber,
+                        //     total: val,
+                        //   })
+                        // }
                       }}
                     />
                   </label>
@@ -176,9 +175,10 @@
               <div class="grid gap-4">
                 <h4 class="text-lg font-medium">Nedströms (9-15)</h4>
                 {#each Array.from({ length: 7 }, (_, i) => i + 9) as categoryNumber}
-                  {@const category = emissions.scope3.categories.find(
-                    (c) => c.category === categoryNumber,
-                  )}
+                  {@const category =
+                    editByReportingPeriod.emissions?.scope3.categories.find(
+                      (c) => c.category === categoryNumber,
+                    )}
                   <label class="grid gap-1.5">
                     <span class="text-sm">
                       {categoryNumber}. {getCategoryName(categoryNumber)} (ton CO₂e)
@@ -186,22 +186,23 @@
                     <EmissionsValue
                       value={category?.total ?? null}
                       onChange={(val) => {
-                        const existingIndex =
-                          emissions?.scope3?.categories?.findIndex(
-                            (c) => c.category === categoryNumber,
-                          )
-                        if (
-                          existingIndex !== undefined &&
-                          existingIndex >= 0 &&
-                          emissions.scope3?.categories?.[existingIndex]
-                        ) {
-                          emissions.scope3.categories[existingIndex].total = val
-                        } else if (val !== null) {
-                          emissions?.scope3?.categories?.push({
-                            category: categoryNumber,
-                            total: val,
-                          })
-                        }
+                        console.log('TODO: handle update pls! :)')
+                        // const existingIndex =
+                        // editByReportingPeriod.emissions?.scope3?.categories?.findIndex(
+                        //     (c) => c.category === categoryNumber,
+                        //   )
+                        // if (
+                        //   existingIndex !== undefined &&
+                        //   existingIndex >= 0 &&
+                        //   editByReportingPeriod.emissions?.scope3?.categories?.[existingIndex]
+                        // ) {
+                        //   editByReportingPeriod.emissions?.scope3?.categories?.[existingIndex]?.total = val
+                        // } else if (val !== null) {
+                        //   editByReportingPeriod.emissions?.scope3?.categories?.push({
+                        //     category: categoryNumber,
+                        //     total: val,
+                        //   })
+                        // }
                       }}
                     />
                   </label>
@@ -217,11 +218,12 @@
           <label class="grid gap-2">
             <span>Totala biogena utsläpp (ton CO₂e)</span>
             <EmissionsValue
-              value={emissions.biogenic?.total ?? null}
+              value={editByReportingPeriod.emissions?.biogenic?.total ?? null}
               onChange={(val) => {
-                if (emissions.biogenic) {
-                  emissions.biogenic.total = val
-                }
+                console.log('TODO: handle update pls! :)')
+                // if (emissions.biogenic) {
+                //   emissions.biogenic.total = val
+                // }
               }}
             />
           </label>

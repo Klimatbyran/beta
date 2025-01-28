@@ -1,9 +1,9 @@
 <script lang="ts">
+  import {onMount} from 'svelte'
   import { Button } from '../ui/button'
   import { Card } from '../ui/card'
   import { toast } from 'sonner'
   import BasicInfoEditor from './BasicInfoEditor.svelte'
-  import EmissionsEditor from './EmissionsEditor.svelte'
   import GoalsEditor from './GoalsEditor.svelte'
   import ReportingPeriodsEditor from './ReportingPeriodsEditor.svelte'
   import InitiativesEditor from './InitiativesEditor.svelte'
@@ -19,6 +19,9 @@
   import SaveDialog from './SaveDialog.svelte'
   import type { ValidationError } from '@/data/companies'
   import type { Scope3CategoryStrings } from '@/content/config'
+  import { editByReportingPeriod } from './editor.svelte'
+
+
 
   type Props = {
     company: CompanyDetails
@@ -26,64 +29,10 @@
   }
   let { company, scope3CategoryStrings }: Props = $props()
 
-  let updatedReportingPeriods = $state<
-    UpdateReportingPeriods['reportingPeriods']
-  >(
-    company.reportingPeriods.map((reportingPeriod) => {
-      const economy = reportingPeriod.economy
-      const emissions = reportingPeriod.emissions
-      return {
-        ...reportingPeriod,
-        reportURL: reportingPeriod.reportURL ?? undefined,
-        emissions: emissions
-          ? {
-              scope1: emissions.scope1
-                ? { total: emissions.scope1.total }
-                : undefined,
-              scope2: emissions.scope2
-                ? {
-                    mb: emissions.scope2.mb ?? undefined,
-                    lb: emissions.scope2.lb ?? undefined,
-                    unknown: emissions.scope2.unknown ?? undefined,
-                  }
-                : undefined,
-              scope3: emissions.scope3
-                ? {
-                    categories: emissions.scope3.categories.map(
-                      ({ total, category }) => ({ category, total }),
-                    ),
-                    statedTotalEmissions: emissions.scope3.statedTotalEmissions
-                      ? { total: emissions.scope3.statedTotalEmissions.total }
-                      : undefined,
-                  }
-                : undefined,
-              biogenic: emissions.biogenicEmissions
-                ? { total: emissions.biogenicEmissions.total }
-                : undefined,
-              statedTotalEmissions: emissions.statedTotalEmissions
-                ? { total: emissions.statedTotalEmissions.total }
-                : undefined,
-            }
-          : undefined,
-        economy: economy
-          ? {
-              employees: economy.employees
-                ? {
-                    value: economy.employees.value ?? 0,
-                    unit: economy.employees.unit ?? undefined,
-                  }
-                : undefined,
-              turnover: economy.turnover
-                ? {
-                    value: economy.turnover.value ?? undefined,
-                    currency: economy.turnover.currency ?? undefined,
-                  }
-                : undefined,
-            }
-          : undefined,
-      }
-    }),
-  )
+  onMount(() => {
+    editByReportingPeriod.setCompany(company)
+  })
+
 
   // let updateGoals = $state<UpdateGoals['goals']>({
   //   description: company.goals?.description ?? undefined,
@@ -146,9 +95,9 @@
       if (latestPeriod?.emissions) {
         const { data: emissionsData, error: emissionsError } =
           await client.POST('/companies/{wikidataId}/reporting-periods', {
-            params: { path: { wikidataId: company.wikidataId }, },
+            params: { path: { wikidataId: company.wikidataId } },
             body: {
-              reportingPeriods: updatedReportingPeriods,
+              reportingPeriods: editByReportingPeriod.reportingPeriods
             },
           })
 
@@ -235,7 +184,9 @@
   </Card>
 
   <BasicInfoEditor bind:company />
-  <ReportingPeriodsEditor bind:updatedReportingPeriods {scope3CategoryStrings} />
+  <ReportingPeriodsEditor
+    {scope3CategoryStrings}
+  />
   <GoalsEditor bind:company />
   <InitiativesEditor bind:company />
 
