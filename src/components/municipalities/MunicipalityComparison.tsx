@@ -103,15 +103,15 @@ export function MunicipalityComparison({
               className="flex items-center justify-between py-4 border-t border-black-1 hover:bg-black-1/80 transition-colors"
             >
               <div className="flex items-center gap-8">
-                <Text variant="large" className="text-blue-2 w-12">
+                <Text className="text-blue-2 w-12 text-4xl font-light">
                   {String(index + 1).padStart(2, '0')}
                 </Text>
-                <Text variant="large">{municipality.name}</Text>
+                <Text className="text-2xl font-light">{municipality.name}</Text>
               </div>
               <div className="flex items-center gap-4">
-                <Text variant="large" className="text-blue-2">
+                <Text className="text-2xl font-light text-blue-2">
                   {municipality.value.toFixed(1)}
-                  <span className="text-sm text-grey ml-1">{unit}</span>
+                  <span className="text-lg text-grey ml-1">{unit}</span>
                 </Text>
                 {municipality.change && (
                   <Text 
