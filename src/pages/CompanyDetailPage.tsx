@@ -5,6 +5,7 @@ import { CompanyOverview } from '@/components/companies/detail/CompanyOverview';
 import { CompanyHistory } from '@/components/companies/detail/CompanyHistory';
 import { CompanyScope3 } from '@/components/companies/detail/CompanyScope3';
 import { CompanySectorComparison } from '@/components/companies/detail/CompanySectorComparison';
+import { CompanyGoals } from '@/components/companies/detail/CompanyGoals';
 import { Text } from "@/components/ui/text";
 
 export function CompanyDetailPage() {
@@ -81,6 +82,8 @@ export function CompanyDetailPage() {
       />
 
       <CompanySectorComparison company={company} />
+      
+      {company.goals && <CompanyGoals goals={company.goals} />}
     </div>
   );
 }
