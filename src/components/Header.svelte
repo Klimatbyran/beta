@@ -16,29 +16,28 @@
 </script>
 
 <header
-  class="bg-black h-18 top-0 mb-1.5 w-full flex-shrink-0 pb-1.5 opacity-100 relative z-[2]"
+  class="bg-black h-18 top-0 mb-1.5 w-full flex-shrink-0 pb-1.5 opacity-100 relative z-[2] pt-3"
 >
   <div class="relative flex h-12 items-center justify-between px-4 mt-4">
     <!-- Logo -->
     <div class="flex items-center h-8 z-[60]">
       <a
         href="https://klimatkollen.se"
-        class="flex items-center"
+        class="flex items-center pl-4"
         aria-label="Go to Klimatkollen homepage"
       >
         <img
           src="/klimatkollen_logo.svg"
           alt="Klimatkollen logga"
           width="150"
-          class="pt-1"
         />
       </a>
     </div>
-    <nav class="ml-auto hidden lg:flex h-[2rem] items-center gap-6">
+    <nav class="ml-auto hidden lg:flex h-[2rem] items-center gap-6 pr-4">
       {#each navItems as item}
         <a
           href={item.href}
-          class="relative text-gray-200 text-sm after:content-[''] after:block after:h-[2px] after:bg-gray-200 after:absolute after:left-0 after:bottom-[-2px] after:w-full after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100 hover:text-gray-200"
+          class="relative text-gray-150 text-sm after:content-[''] after:block after:h-[2px] after:bg-gray-200 after:absolute after:left-0 after:bottom-[-2px] after:w-full after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100 hover:text-gray-200"
         >
           {item.label}
         </a>
@@ -67,7 +66,7 @@
       class="fullscreen-menu bg-black text-white fixed left-0 top-0 flex h-full w-full flex-col pl-4 pt-4"
     >
       <!-- Divider Line -->
-      <hr class="mt-[48px] mb-4 h-1 bg-gray-350 border-0 w-full" />
+      <hr class="mt-[58px] mb-4 border-t bg-gray-350 border-0 w-full" />
 
       <!-- Navigation Links -->
       <nav class="flex flex-col gap-5">
