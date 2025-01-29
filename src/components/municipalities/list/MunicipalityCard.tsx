@@ -26,7 +26,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
 
   return (
     <Link 
-      to={`/municipalities/${municipality.id}`}
+      to={`/municipalities/${municipality.name.toLowerCase().replace(/ /g, '-')}`}
       className="block bg-black-2 rounded-level-2 p-8 space-y-8 hover:bg-black-1/80 transition-colors"
       data-testid={`municipality-card-${municipality.id}`}
     >
