@@ -310,9 +310,9 @@ export function EmissionsHistory({
           <EmissionsBarChart 
             data={chartData.map(d => ({
               year: d.year,
-              scope1: d.scope1 || 0,
-              scope2: d.scope2 || 0,
-              scope3: d.scope3 || 0,
+              scope1: d.emissions?.scope1?.total || 0,
+              scope2: d.emissions?.scope2?.calculatedTotalEmissions || 0,
+              scope3: d.emissions?.scope3?.total || 0,
             }))}
           />
         ) : (
