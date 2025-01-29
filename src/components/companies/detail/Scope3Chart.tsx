@@ -80,7 +80,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
     percent,
     index,
   }: any) => {
-    const radius = outerRadius * 1.35
+    const radius = outerRadius * 1.15
     const x = cx + radius * Math.cos(-midAngle * RADIAN)
     const y = cy + radius * Math.sin(-midAngle * RADIAN)
     const anchor = x > cx ? 'start' : 'end'
@@ -101,15 +101,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
         dominantBaseline="central"
         fontSize={12}
       >
-        <tspan x={x} dy="-8">
-          {firstLine}
-        </tspan>
-        {secondLine && (
-          <tspan x={x} dy="16">
-            {secondLine}
-          </tspan>
-        )}
-        <tspan x={x} dy="16">
+        <tspan x={x} dy="0" fontSize="24" fontWeight="300">
           {percentage}%
         </tspan>
       </text>
@@ -178,10 +170,10 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
               data={chartData}
               cx="50%"
               cy="50%"
-              innerRadius={100}
-              outerRadius={200}
-              cornerRadius={8}
-              paddingAngle={2}
+              innerRadius={120}
+              outerRadius={240}
+              cornerRadius={0}
+              paddingAngle={0}
               dataKey="value"
               nameKey="name"
               label={renderCustomizedLabel}
