@@ -25,7 +25,7 @@ interface MunicipalityMetricsHistoryProps {
 }
 
 export function MunicipalityMetricsHistory({ municipality, className }: MunicipalityMetricsHistoryProps) {
-  const [view, setView] = useState<MetricView>('bicycle');
+  const [view, setView] = useState<MetricView>('emissions');
 
   // Mock historical data - replace with real data when available
   const historicalData = {
@@ -147,34 +147,66 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
             />
             <Tooltip content={<CustomTooltip />} />
             
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="white"
-              strokeWidth={2}
-              dot={{ r: 4, fill: 'white' }}
-              activeDot={{ r: 6, fill: 'white' }}
-            />
-
-            {/* Reference line for target */}
-            <Line
-              type="monotone"
-              dataKey={() => currentMetric.target}
-              stroke="#E2FF8D"
-              strokeWidth={2}
-              strokeDasharray="4 4"
-              dot={false}
-            />
-
-            {/* Reference line for national average/reference */}
-            <Line
-              type="monotone"
-              dataKey={() => currentMetric.reference}
-              stroke="#F0759A"
-              strokeWidth={2}
-              strokeDasharray="4 4"
-              dot={false}
-            />
+            {/* Main value line */}
+            {view === 'emissions' ? (
+              <>
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="white"
+                  strokeWidth={2}
+                  dot={{ r: 4, fill: 'white' }}
+                  activeDot={{ r: 6, fill: 'white' }}
+                />
+                {/* Trend line */}
+                <Line
+                  type="monotone"
+                  dataKey={() => currentMetric.reference}
+                  stroke="#F0759A"
+                  strokeWidth={2}
+                  strokeDasharray="4 4"
+                  dot={false}
+                />
+                {/* Paris agreement target */}
+                <Line
+                  type="monotone"
+                  dataKey={() => currentMetric.target}
+                  stroke="#E2FF8D"
+                  strokeWidth={2}
+                  strokeDasharray="4 4"
+                  dot={false}
+                />
+              </>
+            ) : (
+              <>
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="white"
+                  strokeWidth={2}
+                  dot={{ r: 4, fill: 'white' }}
+                  activeDot={{ r: 6, fill: 'white' }}
+                />
+                {/* Reference line for target */}
+                <Line
+                  type="monotone"
+                  dataKey={() => currentMetric.target}
+                  stroke="#E2FF8D"
+                  strokeWidth={2}
+                  strokeDasharray="4 4"
+                  dot={false}
+                />
+                {/* Reference line for national average */}
+                <Line
+                  type="monotone"
+                  dataKey={() => currentMetric.reference}
+                  stroke="#F0759A"
+                  strokeWidth={2}
+                  strokeDasharray="4 4"
+                  dot={false}
+                />
+              </>
+            )}
           </LineChart>
         </ResponsiveContainer>
       </div>
