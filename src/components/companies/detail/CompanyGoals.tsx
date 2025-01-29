@@ -28,7 +28,7 @@ export function CompanyGoals({ goals, className }: CompanyGoalsProps) {
     return (
       <div className={cn("bg-black-2 rounded-level-1 p-16", className)}>
         <div className="flex items-center gap-2 mb-12">
-          <Text variant="h3">Klimatmål</Text>
+          <Text variant="h2">Klimatmål</Text>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -50,9 +50,9 @@ export function CompanyGoals({ goals, className }: CompanyGoalsProps) {
               <Text variant="large">{goal.description}</Text>
               <div className="flex items-center gap-8">
                 {goal.year && (
-                  <div>
+                  <div className="ml-auto">
                     <Text variant="muted" className="mb-1">Målår</Text>
-                    <Text variant="large">{goal.year}</Text>
+                    <Text className="text-[32px] font-light text-[#E2FF8D]">{goal.year}</Text>
                   </div>
                 )}
                 {goal.baseYear && (
@@ -100,9 +100,9 @@ export function CompanyGoals({ goals, className }: CompanyGoalsProps) {
             <Text variant="large">{goal.description}</Text>
             <div className="grid grid-cols-3 gap-4">
               {goal.year && (
-                <div>
+                <div className="ml-auto">
                   <Text variant="muted" className="mb-1">Målår</Text>
-                  <Text variant="large">{goal.year}</Text>
+                  <Text className="text-[32px] font-light text-[#E2FF8D]">{goal.year}</Text>
                 </div>
               )}
               {goal.baseYear && (
