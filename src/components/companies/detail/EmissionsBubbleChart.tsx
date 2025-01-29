@@ -75,11 +75,11 @@ export function EmissionsBubbleChart({
     // Create the simulation
     const simulation = d3
       .forceSimulation(nodes as any)
-      .force('charge', d3.forceManyBody().strength(100))
+      .force('charge', d3.forceManyBody().strength(-200)) // Negative value creates repulsion
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
-        d3.forceCollide().radius((d) => Math.sqrt(d.value) / 10 + 2),
+        d3.forceCollide().radius((d) => Math.sqrt(d.value) / 8 + 30), // Increased padding
       )
       .on('tick', ticked)
 
