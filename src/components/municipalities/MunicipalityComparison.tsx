@@ -94,8 +94,8 @@ export function MunicipalityComparison({
 
       {/* Tab Content */}
       <div className="space-y-4">
-        {activeTab === 'cyklarna' && (
-          {municipalities.map((municipality, index) => (
+        {activeTab === 'cyklarna' && 
+          municipalities.map((municipality, index) => (
             <div
               key={municipality.id}
               className="flex items-center justify-between py-4 border-t border-black-1"
