@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Text } from "@/components/ui/text";
 import { cn, formatPercentage } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { EmissionsComparison } from './comparisons/EmissionsComparison';
+import { BudgetComparison } from './comparisons/BudgetComparison';
+import { BudgetTimeComparison } from './comparisons/BudgetTimeComparison';
 import {
   Tabs,
   TabsList,
@@ -136,26 +139,17 @@ export function MunicipalityComparison({
           ))
         }
 
-        {activeTab === 'historical' && municipalities.map((municipality, index) => (
-          <Link
-            key={municipality.id}
-            to={`/municipalities/${municipality.name.toLowerCase().replace(/ /g, '-')}`}
-            className="flex items-center justify-between py-4 border-t border-black-1 hover:bg-black-1/80 transition-colors"
-          >
-            <div className="flex items-center gap-8">
-              <Text className="text-blue-2 w-12 text-4xl font-light">
-                {String(index + 1).padStart(2, '0')}
-              </Text>
-              <Text className="text-2xl font-light">{municipality.name}</Text>
-            </div>
-            <div className="flex items-center gap-4">
-              <Text className="text-2xl font-light text-blue-2">
-                {municipality.value.toFixed(1)}
-                <span className="text-lg text-grey ml-1">ton CO₂e</span>
-              </Text>
-            </div>
-          </Link>
-        ))}
+        {activeTab === 'historical' && (
+          <EmissionsComparison municipalities={municipalities} />
+        )}
+
+        {activeTab === 'budget' && (
+          <BudgetComparison municipalities={municipalities} />
+        )}
+
+        {activeTab === 'budget_time' && (
+          <BudgetTimeComparison municipalities={municipalities} />
+        )}
 
         {(activeTab === 'budget' || 
           activeTab === 'budget_time' || 
