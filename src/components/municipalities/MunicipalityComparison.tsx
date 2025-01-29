@@ -126,8 +126,8 @@ export function MunicipalityComparison({
                 )}
               </div>
             </div>
-          ))}
-        )}
+          ))
+        }
 
         {activeTab === 'elbilarna' && (
           <div className="text-center py-12">
