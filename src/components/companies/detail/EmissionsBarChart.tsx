@@ -68,12 +68,12 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           wrapperStyle={{ paddingBottom: '20px' }}
         />
         <Bar
-          dataKey="scope1"
+          dataKey="scope3"
           stackId="emissions"
-          fill="var(--orange-3)"
-          name="Scope 1"
-          radius={[12, 12, 0, 0]}
-          background={{ fill: 'rgba(255, 255, 255, 0.05)', radius: [12, 12, 0, 0] }}
+          fill="var(--blue-2)"
+          name="Scope 3"
+          radius={[0, 0, 12, 12]}
+          background={{ fill: 'rgba(255, 255, 255, 0.05)', radius: [0, 0, 12, 12] }}
         />
         <Bar
           dataKey="scope2"
@@ -84,12 +84,12 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           background={{ fill: 'rgba(255, 255, 255, 0.05)' }}
         />
         <Bar
-          dataKey="scope3"
+          dataKey="scope1"
           stackId="emissions"
-          fill="var(--blue-2)"
-          name="Scope 3"
-          radius={[0, 0, 12, 12]}
-          background={{ fill: 'rgba(255, 255, 255, 0.05)', radius: [0, 0, 12, 12] }}
+          fill="var(--orange-3)"
+          name="Scope 1"
+          radius={[12, 12, 0, 0]}
+          background={{ fill: 'rgba(255, 255, 255, 0.05)', radius: [12, 12, 0, 0] }}
         />
       </BarChart>
     </ResponsiveContainer>
