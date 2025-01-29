@@ -121,12 +121,59 @@ export function Scope3Data({
         </TabsContent>
 
         <TabsContent value="data">
-          <EmissionsBreakdown
-            emissions={{ scope3: selectedEmissions.scope3 }}
-            year={selectedYear === 'latest' ? year : parseInt(selectedYear)}
-            className="bg-transparent p-0"
-            showOnlyScope3={true}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {selectedCategories.map((category) => {
+              const categoryId = category.category;
+              const color = getCategoryColor(categoryId);
+              const Icon = getCategoryIcon(categoryId);
+              
+              return (
+                <div
+                  key={categoryId}
+                  className="bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]"
+                  style={{
+                    background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`
+                  }}
+                >
+                  <div className="flex items-start justify-between mb-8">
+                    <div>
+                      <Text variant="large" style={{ color }}>
+                        Kategori {categoryId}
+                      </Text>
+                      <Text variant="h3" className="mt-2">
+                        {getCategoryName(categoryId)}
+                      </Text>
+                    </div>
+                    <div 
+                      className="w-12 h-12 rounded-full flex items-center justify-center"
+                      style={{
+                        backgroundColor: `${color}25`
+                      }}
+                    >
+                      <Icon className="w-6 h-6" style={{ color }} />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <Text className="text-grey">
+                      {getCategoryDescription(categoryId)}
+                    </Text>
+                    <div className="flex items-baseline gap-2">
+                      <Text className="text-[32px] font-light" style={{ color }}>
+                        {Math.round(category.total).toLocaleString()}
+                      </Text>
+                      <Text className="text-grey">
+                        {category.unit}
+                      </Text>
+                    </div>
+                    <Text variant="small" className="text-grey">
+                      {((category.total / selectedEmissions.scope3!.total) * 100).toFixed(1)}% av scope 3
+                    </Text>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </TabsContent>
 
         {isRealEstate && historicalData && (
