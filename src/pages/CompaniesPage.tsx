@@ -134,21 +134,22 @@ export function CompaniesPage() {
           onSortChange={setSortBy}
         />
 
-      {activeFilters.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {activeFilters.map((filter, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
-              className="bg-blue-5/30 text-blue-2"
-            >
-              {filter}
-            </Badge>
-          ))}
-        </div>
-      )}
+      <div className="space-y-6">
+        {activeFilters.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {activeFilters.map((filter, index) => (
+              <Badge
+                key={index}
+                variant="secondary"
+                className="bg-blue-5/30 text-blue-2"
+              >
+                {filter}
+              </Badge>
+            ))}
+          </div>
+        )}
 
-      {filteredCompanies.length === 0 ? (
+        {filteredCompanies.length === 0 ? (
         <div className="text-center py-12">
           <h3 className="text-xl font-light text-grey">Inga företag hittades</h3>
           <p className="text-grey mt-2">Försök med andra sökkriterier</p>
