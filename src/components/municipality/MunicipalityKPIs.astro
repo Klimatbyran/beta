@@ -1,5 +1,5 @@
 ---
-import { type Municipality } from '@/data/municipalityTypes'
+import { type Municipality } from '@/data/municipalityData'
 import { Card } from '../ui/card'
 
 interface Props {
@@ -12,27 +12,27 @@ const climateKPIs = [
   {
     title: 'Hushållens konsumtionsutsläpp',
     description: 'Ton CO₂e per person och år',
-    value: municipality.TotalConsumptionEmission.toFixed(1),
+    value: municipality.totalConsumptionEmission.toFixed(1),
   },
   {
     title: 'Klimatkrav i upphandlingar',
     description: 'Ställer kommunen klimatkrav i sina upphandlingar?',
-    value: municipality.ProcurementLink ? 'Ja' : 'Nej',
+    value: municipality.procurementLink ? 'Ja' : 'Nej',
   },
   {
     title: 'Elbilarna',
     description: 'Förändringstakt andel laddbara bilar i procentenheter',
-    value: municipality.ElectricCarChangePercent.toFixed(1),
+    value: municipality.electricCarChangePercent.toFixed(1),
   },
   {
     title: 'Laddarna',
     description: 'Antal elbilar per laddare',
-    value: municipality.ElectricVehiclePerChargePoints.toFixed(1),
+    value: municipality.electricVehiclePerChargePoints.toFixed(1),
   },
   {
     title: 'Cyklarna',
     description: 'Antal meter cykelväg per invånare i meter',
-    value: municipality.BicycleMetrePerCapita.toFixed(1),
+    value: municipality.bicycleMetrePerCapita.toFixed(1),
   },
 ]
 ---

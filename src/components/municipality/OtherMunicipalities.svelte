@@ -1,27 +1,30 @@
 <script lang="ts">
-  import { MunicipalityDataService } from '@/data/municipalities'
+  import { getMunicipalities } from '@/data/municipalities'
   import { Combobox, type Item } from '../ui/combobox'
-  import { type Municipality } from '@/data/municipalityTypes'
   import { onMount } from 'svelte'
+  import type { Municipality } from '@/data/municipalityData'
 
-  let municipalityNames = $state<string[]>([])
+  let municipalityNames: string[] = []
 
-  const sorted = $derived(
-    municipalityNames.sort((a, b) => a.localeCompare(b)),
-  )
+  const sorted = () =>
+    municipalityNames.slice().sort((a, b) => a.localeCompare(b))
 
   function onSelect(item: Item<string>) {
     window.location.assign(item.data)
   }
 
   onMount(async () => {
-    const service = new MunicipalityDataService()
-    municipalityNames = service.getAllMunicipalityNames()
+    try {
+      const municipalities: Municipality[] = await getMunicipalities()
+      municipalityNames = municipalities.map((m) => m.name)
+    } catch (error) {
+      console.error('Failed to fetch municipalities:', error)
+    }
   })
 </script>
 
 <Combobox
-  items={sorted.map((c) => ({
+  items={sorted().map((c) => ({
     label: c,
     value: c,
     data: `/kommun/${c}`,

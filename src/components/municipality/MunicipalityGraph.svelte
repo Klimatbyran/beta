@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Municipality } from '@/data/municipalityTypes'
+  import type { EmissionPerYear, Municipality } from '@/data/municipalityData'
   import { Chart, registerables } from 'chart.js'
   import { onMount } from 'svelte'
 
@@ -9,23 +9,21 @@
 
   let lineChartElement: HTMLCanvasElement
 
-  const extractEmissions = (data: { Year: number; CO2Equivalent: number }[]) =>
-    data.map(({ Year, CO2Equivalent }) => ({
-      year: Year,
-      emission: CO2Equivalent,
+  const extractEmissions = (data: EmissionPerYear[]) =>
+    data.map(({ year, co2Equivalent }) => ({
+      year,
+      emission: co2Equivalent,
     }))
 
   const combinedPastEmissions = [
-    ...extractEmissions(municipality.HistoricalEmission.EmissionPerYear),
-    ...extractEmissions(
-      municipality.ApproximatedHistoricalEmission.EmissionPerYear,
-    ),
+    ...extractEmissions(municipality.emissions.emissionPerYear),
+    ...extractEmissions(municipality.emissions.emissionPerYear),
   ]
 
-  const trendEmissions = extractEmissions(
-    municipality.EmissionTrend.TrendPerYear,
+  const trendEmissions = extractEmissions(municipality.trend.trendPerYear)
+  const budgetEmissions = extractEmissions(
+    municipality.emissionBudget.budgetPerYear,
   )
-  const budgetEmissions = extractEmissions(municipality.Budget.BudgetPerYear)
 
   const allYears = [
     ...new Set([
@@ -100,10 +98,11 @@
             callbacks: {
               title: () => '',
               label: function (tooltipData) {
+                const datasetLabel = tooltipData.dataset.label
                 const emissions =
                   tooltipData.dataset.data[tooltipData.dataIndex]
                 const formattedEmissions = (Number(emissions) / 1000).toFixed(0)
-                return `${formattedEmissions}`
+                return `${datasetLabel}: ${formattedEmissions}k`
               },
             },
           },

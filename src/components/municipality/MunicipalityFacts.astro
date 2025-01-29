@@ -1,5 +1,5 @@
 ---
-import { type Municipality } from '@/data/municipalityTypes'
+import { type Municipality } from '@/data/municipalityData'
 import { Card } from '../ui/card'
 
 interface Props {
@@ -7,57 +7,49 @@ interface Props {
 }
 
 const { municipality } = Astro.props
-const climatePlan = municipality?.ClimatePlan
-const climatePlanLink = climatePlan?.Link
 ---
 
 <Card class="text-sm" level={1}>
   <h1
     class="text-balance pb-4 pt-4 text-4xl leading-none tracking-tight md:pt-0 lg:text-5xl"
   >
-    {municipality.Name}
+    {municipality.name}
   </h1>
 
   <div class="grid gap-4 pt-4 md:grid-cols-2">
     <Card class="flex flex-col justify-between gap-2" level={2}>
       {
-        municipality.County && (
+        municipality.region && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Län</h3>
-            <p class="text-sm text-muted">{municipality.County}</p>
+            <p class="text-sm text-muted">{municipality.region}</p>
           </div>
         )
       }
-      {
-        municipality.Population && (
-          <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
-            <h3>Utsläppsminskning för att klara Parisavtalet</h3>
-            <p class="text-sm text-orange-250">{municipality.Population}</p>
-          </div>
-        )
-      }
-      {
-        municipality.PoliticalRule && (
+      <!-- {
+        municipality.politicalRule && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Här styr</h3>
-            <p class="text-sm text-orange-250">{municipality.PoliticalRule}</p>
+            <p class="text-sm text-orange-250">{municipality.politicalRule}</p>
           </div>
         )
-      }
+      } -->
       {
-        climatePlan.YearAdapted !== 'Saknar plan' && (
+        municipality.climatePlanYear !== 'Saknar plan' && (
           <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
             <h3>Klimatplan antagen</h3>
-            <p class="text-sm text-orange-250">{climatePlan.YearAdapted}</p>
+            <p class="text-sm text-orange-250">
+              {municipality.climatePlanYear}
+            </p>
           </div>
         )
       }
       {
-        municipality.ClimatePlan.Link !== 'Saknar plan' ? (
+        municipality.climatePlanLink !== 'Saknar plan' ? (
           <span>
             Läs{' '}
             <a
-              href={municipality.ClimatePlan.Link}
+              href={municipality.climatePlanLink}
               class="self-start text-sm text-blue-500 underline"
             >
               klimatplanen
@@ -70,11 +62,11 @@ const climatePlanLink = climatePlan?.Link
     </Card>
 
     {
-      municipality.BudgetRunsOut && (
+      municipality.budgetRunsOut && (
         <Card level={2} class="flex flex-col justify-between gap-4">
           <h3 class="flex items-center gap-1">Koldioxidbudgeten tar slut </h3>
           <p class="text-3xl leading-none tracking-tight text-red-500 sm:text-4xl md:text-5xl lg:text-6xl">
-            {municipality.BudgetRunsOut}
+            {municipality.budgetRunsOut}
           </p>
         </Card>
       )

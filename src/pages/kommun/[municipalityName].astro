@@ -5,11 +5,10 @@ import Layout from '@/layouts/Layout.astro'
 import Municipality from '@/components/municipality/Municipality.astro'
 import OtherMunicipalities from '@/components/municipality/OtherMunicipalities.svelte'
 import { buttonVariants } from '@/components/ui/button'
-import { MunicipalityDataService } from '@/data/municipalities'
+import { getMunicipality } from '@/data/municipalities'
 
 const { municipalityName = '' } = Astro.params
-const dataService = new MunicipalityDataService()
-const municipality = await dataService.getMunicipality(municipalityName)
+const municipality = await getMunicipality(municipalityName)
 
 const title = `Klimatkollen - få koll på ${municipalityName}s utsläpp`
 ---
