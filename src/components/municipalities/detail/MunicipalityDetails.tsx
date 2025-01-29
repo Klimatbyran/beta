@@ -96,20 +96,63 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
         />
 
         <BlockGrid columns={2} gap="medium" className="mt-12">
-          <BlockMetric
-            label="Cykelväg per invånare"
-            value={municipality.bicycleMetrePerCapita.toFixed(1)}
-            unit="m"
-            icon={<TreePine className="w-4 h-4" />}
-            color="var(--orange-2)"
-          />
+          <div className="space-y-6">
+            <Text variant="h4">Cykelväg per invånare</Text>
+            <div className="grid grid-cols-2 gap-4">
+              <BlockMetric
+                label="Kommunen"
+                value={municipality.bicycleMetrePerCapita.toFixed(1)}
+                unit="m"
+                icon={<TreePine className="w-4 h-4" />}
+                color="var(--orange-2)"
+              />
+              <BlockMetric
+                label="Rikssnitt"
+                value="2.8"
+                unit="m"
+                color="var(--pink-3)"
+              />
+              <BlockMetric
+                label="Bäst i landet"
+                value="4.2"
+                unit="m"
+                color="var(--green-3)"
+              />
+              <BlockMetric
+                label="Sämst i landet"
+                value="1.2"
+                unit="m"
+                color="var(--grey)"
+              />
+            </div>
+          </div>
           
-          <BlockMetric
-            label="Elbilar per laddpunkt"
-            value={municipality.electricVehiclePerChargePoints.toFixed(1)}
-            icon={<Building2 className="w-4 h-4" />}
-            color="var(--blue-2)"
-          />
+          <div className="space-y-6">
+            <Text variant="h4">Elbilar per laddpunkt</Text>
+            <div className="grid grid-cols-2 gap-4">
+              <BlockMetric
+                label="Kommunen"
+                value={municipality.electricVehiclePerChargePoints.toFixed(1)}
+                icon={<Building2 className="w-4 h-4" />}
+                color="var(--blue-2)"
+              />
+              <BlockMetric
+                label="Rikssnitt"
+                value="15.2"
+                color="var(--pink-3)"
+              />
+              <BlockMetric
+                label="Bäst i landet"
+                value="8.4"
+                color="var(--green-3)"
+              />
+              <BlockMetric
+                label="Sämst i landet"
+                value="32.6"
+                color="var(--grey)"
+              />
+            </div>
+          </div>
         </BlockGrid>
       </Block>
 
