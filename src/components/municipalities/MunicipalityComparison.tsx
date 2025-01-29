@@ -38,11 +38,16 @@ export function MunicipalityComparison({
   const [activeTab, setActiveTab] = useState('cyklarna');
 
   const tabs = [
-    { id: 'cyklarna', label: 'Cyklarna' },
-    { id: 'elbilarna', label: 'Elbilarna' },
-    { id: 'klimatplanerna', label: 'Klimatplanerna' },
-    { id: 'konsumtionen', label: 'Konsumtionen' },
-    { id: 'laddarna', label: 'Laddarna' },
+    { id: 'historical', label: 'Historiska utsläpp' },
+    { id: 'budget', label: 'Utsläppsbudget' },
+    { id: 'budget_time', label: 'Budget räcker till' },
+    { id: 'reduction', label: 'Årlig minskning' },
+    { id: 'net_zero', label: 'Nettonoll-mål' },
+    { id: 'ev_change', label: 'Elbilsförändring' },
+    { id: 'ev_chargers', label: 'Laddpunkter' },
+    { id: 'consumption', label: 'Konsumtionsutsläpp' },
+    { id: 'bicycle', label: 'Cykelvägar' },
+    { id: 'procurement', label: 'Miljöupphandling' },
   ];
 
   return (
@@ -95,7 +100,7 @@ export function MunicipalityComparison({
 
       {/* Tab Content */}
       <div className="space-y-4">
-        {activeTab === 'cyklarna' && 
+        {activeTab === 'bicycle' && 
           municipalities.map((municipality, index) => (
             <Link
               key={municipality.id}
@@ -131,31 +136,49 @@ export function MunicipalityComparison({
           ))
         }
 
-        {activeTab === 'elbilarna' && (
-          <div className="text-center py-12">
-            <Text variant="h3" className="text-grey">Kommer snart</Text>
-            <Text variant="muted" className="mt-2">Vi samlar in data om elbilar</Text>
-          </div>
-        )}
+        {activeTab === 'historical' && municipalities.map((municipality, index) => (
+          <Link
+            key={municipality.id}
+            to={`/municipalities/${municipality.name.toLowerCase().replace(/ /g, '-')}`}
+            className="flex items-center justify-between py-4 border-t border-black-1 hover:bg-black-1/80 transition-colors"
+          >
+            <div className="flex items-center gap-8">
+              <Text className="text-blue-2 w-12 text-4xl font-light">
+                {String(index + 1).padStart(2, '0')}
+              </Text>
+              <Text className="text-2xl font-light">{municipality.name}</Text>
+            </div>
+            <div className="flex items-center gap-4">
+              <Text className="text-2xl font-light text-blue-2">
+                {municipality.value.toFixed(1)}
+                <span className="text-lg text-grey ml-1">ton CO₂e</span>
+              </Text>
+            </div>
+          </Link>
+        ))}
 
-        {activeTab === 'klimatplanerna' && (
+        {(activeTab === 'budget' || 
+          activeTab === 'budget_time' || 
+          activeTab === 'reduction' || 
+          activeTab === 'net_zero' || 
+          activeTab === 'ev_change' || 
+          activeTab === 'ev_chargers' || 
+          activeTab === 'consumption' || 
+          activeTab === 'bicycle' || 
+          activeTab === 'procurement') && (
           <div className="text-center py-12">
             <Text variant="h3" className="text-grey">Kommer snart</Text>
-            <Text variant="muted" className="mt-2">Vi analyserar kommunernas klimatplaner</Text>
-          </div>
-        )}
-
-        {activeTab === 'konsumtionen' && (
-          <div className="text-center py-12">
-            <Text variant="h3" className="text-grey">Kommer snart</Text>
-            <Text variant="muted" className="mt-2">Vi samlar in data om konsumtionsutsläpp</Text>
-          </div>
-        )}
-
-        {activeTab === 'laddarna' && (
-          <div className="text-center py-12">
-            <Text variant="h3" className="text-grey">Kommer snart</Text>
-            <Text variant="muted" className="mt-2">Vi samlar in data om laddinfrastruktur</Text>
+            <Text variant="muted" className="mt-2">
+              {activeTab === 'budget' && 'Vi beräknar kommunernas utsläppsbudget'}
+              {activeTab === 'budget_time' && 'Vi analyserar hur länge budgeten räcker'}
+              {activeTab === 'reduction' && 'Vi beräknar nödvändig årlig minskning'}
+              {activeTab === 'net_zero' && 'Vi sammanställer nettonoll-målen'}
+              {activeTab === 'ev_change' && 'Vi samlar in data om elbilsförändring'}
+              {activeTab === 'ev_chargers' && 'Vi samlar in data om laddinfrastruktur'}
+              {activeTab === 'consumption' && 'Vi samlar in data om konsumtionsutsläpp'}
+              {activeTab === 'bicycle' && 'Vi mäter cykelvägar per capita'}
+              {activeTab === 'procurement' && 'Vi analyserar miljöupphandling'}
+            </Text>
           </div>
         )}
       </div>
