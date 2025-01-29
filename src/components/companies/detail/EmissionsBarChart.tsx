@@ -62,18 +62,13 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           tickFormatter={(value) => formatEmissions(value)}
         />
         <Tooltip content={<CustomTooltip />} />
-        <Legend 
-          verticalAlign="top"
-          align="right"
-          wrapperStyle={{ paddingBottom: '20px' }}
-        />
         <Bar
           dataKey="scope3"
           stackId="emissions"
           fill="var(--blue-2)"
           name="Scope 3"
           radius={[0, 0, 12, 12]}
-          background={{ fill: 'rgba(255, 255, 255, 0.05)', radius: [0, 0, 12, 12] }}
+          background={{ fill: 'rgba(255, 255, 255, 0.03)', radius: [0, 0, 12, 12] }}
         />
         <Bar
           dataKey="scope2"
@@ -81,7 +76,7 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           fill="var(--pink-3)"
           name="Scope 2"
           radius={[0, 0, 0, 0]}
-          background={{ fill: 'rgba(255, 255, 255, 0.05)' }}
+          background={{ fill: 'rgba(255, 255, 255, 0.03)' }}
         />
         <Bar
           dataKey="scope1"
@@ -89,7 +84,7 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           fill="var(--orange-3)"
           name="Scope 1"
           radius={[12, 12, 0, 0]}
-          background={{ fill: 'rgba(255, 255, 255, 0.05)', radius: [12, 12, 0, 0] }}
+          background={{ fill: 'rgba(255, 255, 255, 0.03)', radius: [12, 12, 0, 0] }}
         />
       </BarChart>
     </ResponsiveContainer>
