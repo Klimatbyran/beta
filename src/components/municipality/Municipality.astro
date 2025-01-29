@@ -1,0 +1,27 @@
+---
+import { type Municipality } from '@/data/municipalityData'
+import OtherMunicipalities from './OtherMunicipalities.svelte'
+import MunicipalityFacts from './MunicipalityFacts.astro'
+import MunicipalityKPIs from './MunicipalityKPIs.astro'
+import MunicipalityEmissions from './MunicipalityEmissions.astro'
+
+interface Props {
+  municipality: Municipality
+}
+
+const { municipality } = Astro.props
+---
+
+<article class="mx-auto max-w-screen-lg xs:px-4">
+  <div class="mt-8 grid gap-8">
+    <MunicipalityFacts {municipality} />
+
+    <MunicipalityEmissions {municipality} />
+
+    <MunicipalityKPIs {municipality} />
+
+    <div class="grid place-content-center py-16">
+      <OtherMunicipalities client:idle />
+    </div>
+  </div>
+</article>
