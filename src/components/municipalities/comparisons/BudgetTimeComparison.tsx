@@ -8,7 +8,7 @@ interface BudgetTimeComparisonProps {
 
 export function BudgetTimeComparison({ municipalities, className }: BudgetTimeComparisonProps) {
   const comparisonData = municipalities.map(municipality => ({
-    id: municipality.id,
+    id: municipality.name,
     name: municipality.name,
     value: new Date(municipality.budgetRunsOut).getFullYear(),
     unit: '',

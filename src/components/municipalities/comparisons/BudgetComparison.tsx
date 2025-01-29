@@ -8,7 +8,7 @@ interface BudgetComparisonProps {
 
 export function BudgetComparison({ municipalities, className }: BudgetComparisonProps) {
   const comparisonData = municipalities.map(municipality => ({
-    id: municipality.id,
+    id: municipality.name,
     name: municipality.name,
     value: municipality.emissionBudget[2024] || 0,
     unit: 'ton CO₂e',
