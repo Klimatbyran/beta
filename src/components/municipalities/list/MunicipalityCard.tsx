@@ -14,6 +14,8 @@ interface MunicipalityCardProps {
   municipality: Municipality;
 }
 
+import { Link } from 'react-router-dom';
+
 export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
   // Format emissions values with appropriate scaling
   const formatEmissions = (tons: number) => {
@@ -36,7 +38,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           <div className="text-sm text-grey uppercase tracking-wide">UTSLÄPPSRANKING</div>
           <div className="text-3xl font-light">
             {municipality.rank}
-          </div>
+          </Link>
         </div>
 
         <p className="text-grey">{municipality.description}</p>
