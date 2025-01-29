@@ -2,6 +2,7 @@
 title: 'Välkommen till Klimatkollen'
 description: 'Läs om hur vi hjälper företag att bli mer transparenta med sina klimatdata'
 author: 'Alexandra Palmqvist'
+authorImg: '/people/alex.jpg'
 date: '2025-01-08'
 ---
 

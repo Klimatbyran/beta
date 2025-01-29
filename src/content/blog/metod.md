@@ -2,6 +2,7 @@
 title: 'Varför är scope 3 så svårt att få grepp om?'
 description: 'Redovisning av utsläpp i värdekedjan, scope 3, är en av de svåraste, men även viktigaste delarna av hållbarhetsrapporteringen. Klimatkollens Alexandra Palmquist skriver om varför scope är så svårt att beräkna korrekt – och ger tre tips på hur arbetet kan förbättras hos bolagen.'
 author: 'Alexandra Palmquist'
+authorImg: '/people/alex.jpg'
 date: '2025-01-08'
 ---
 
