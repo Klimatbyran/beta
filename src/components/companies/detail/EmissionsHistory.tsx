@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, ReferenceDot, Area } from 'recharts';
+import { EmissionsBarChart } from './EmissionsBarChart';
 import { Info } from 'lucide-react';
 import {
   Tooltip as UITooltip,
@@ -305,12 +306,22 @@ export function EmissionsHistory({
       </div>
 
       <div className="h-[400px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart 
-            data={projectedData} 
-            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-            onClick={handleClick}
-          >
+        {dataView === 'overview' ? (
+          <EmissionsBarChart 
+            data={chartData.map(d => ({
+              year: d.year,
+              scope1: d.scope1 || 0,
+              scope2: d.scope2 || 0,
+              scope3: d.scope3 || 0,
+            }))}
+          />
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart 
+              data={projectedData} 
+              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              onClick={handleClick}
+            >
             <XAxis 
               dataKey="year"
               stroke="#878787"
