@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Text } from "@/components/ui/text";
-import { cn } from "@/lib/utils";
+import { cn, formatPercentage } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import {
   Tabs,
@@ -123,7 +123,7 @@ export function MunicipalityComparison({
                         : "text-pink-3 bg-pink-5/30"
                     )}
                   >
-                    {municipality.change > 0 ? '+' : ''}{municipality.change}%
+                    {formatPercentage(municipality.change)}
                   </Text>
                 )}
               </div>
