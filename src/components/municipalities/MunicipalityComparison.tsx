@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { EmissionsComparison } from './comparisons/EmissionsComparison';
 import { BudgetComparison } from './comparisons/BudgetComparison';
 import { BudgetTimeComparison } from './comparisons/BudgetTimeComparison';
+import { ReductionComparison } from './comparisons/ReductionComparison';
+import { NetZeroComparison } from './comparisons/NetZeroComparison';
 import {
   Tabs,
   TabsList,
@@ -149,6 +151,14 @@ export function MunicipalityComparison({
 
         {activeTab === 'budget_time' && (
           <BudgetTimeComparison municipalities={municipalities} />
+        )}
+
+        {activeTab === 'reduction' && (
+          <ReductionComparison municipalities={municipalities} />
+        )}
+
+        {activeTab === 'net_zero' && (
+          <NetZeroComparison municipalities={municipalities} />
         )}
 
         {(activeTab === 'budget' || 
