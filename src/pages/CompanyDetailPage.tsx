@@ -81,9 +81,9 @@ export function CompanyDetailPage() {
         }
       />
 
-      <CompanySectorComparison company={company} />
-      
       {company.goals && <CompanyGoals goals={company.goals} />}
+      
+      <CompanySectorComparison company={company} />
     </div>
   );
 }
