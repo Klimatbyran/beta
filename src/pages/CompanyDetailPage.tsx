@@ -4,6 +4,7 @@ import { useCompanyDetails } from '@/hooks/useCompanyDetails';
 import { CompanyOverview } from '@/components/companies/detail/CompanyOverview';
 import { CompanyHistory } from '@/components/companies/detail/CompanyHistory';
 import { CompanyScope3 } from '@/components/companies/detail/CompanyScope3';
+import { EmissionsBubbleChart } from '@/components/companies/detail/EmissionsBubbleChart';
 import { CompanySectorComparison } from '@/components/companies/detail/CompanySectorComparison';
 import { CompanyGoals } from '@/components/companies/detail/CompanyGoals';
 import { Text } from "@/components/ui/text";
@@ -65,6 +66,10 @@ export function CompanyDetailPage() {
         company={company}
         selectedYear={selectedYear}
         onYearSelect={setSelectedYear}
+      />
+
+      <EmissionsBubbleChart 
+        emissions={selectedPeriod.emissions!}
       />
 
       <CompanyScope3 
