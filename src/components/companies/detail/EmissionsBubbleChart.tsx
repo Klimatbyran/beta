@@ -72,6 +72,12 @@ export function EmissionsBubbleChart({
       .attr('width', width)
       .attr('height', height)
 
+    // Calculate logarithmic scale for bubble sizes
+    const valueExtent = d3.extent(nodes, d => d.value) as [number, number]
+    const sizeScale = d3.scaleLog()
+      .domain(valueExtent)
+      .range([20, 100]) // Min and max bubble radius
+
     // Create the simulation
     const simulation = d3
       .forceSimulation(nodes as any)
@@ -79,7 +85,7 @@ export function EmissionsBubbleChart({
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
-        d3.forceCollide().radius((d) => Math.sqrt(d.value) / 8 + 30), // Increased padding
+        d3.forceCollide().radius((d) => sizeScale(d.value) + 10), // Add padding
       )
       .on('tick', ticked)
 
@@ -94,7 +100,7 @@ export function EmissionsBubbleChart({
     // Add circles
     node
       .append('circle')
-      .attr('r', (d) => Math.sqrt(d.value) / 10)
+      .attr('r', (d) => sizeScale(d.value))
       .style('fill', (d) => d.color)
       .style('fill-opacity', 0.7)
       .style('stroke', (d) => d.color)
