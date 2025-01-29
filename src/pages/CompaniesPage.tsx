@@ -2,24 +2,7 @@ import { useState } from 'react';
 import { useCompanies } from '@/hooks/useCompanies';
 import { CompanyCard } from '@/components/companies/list/CompanyCard';
 import { SectionedCompanyList } from '@/components/companies/list/SectionedCompanyList';
-import { Search, Filter, Check } from 'lucide-react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
+import { CompanyFilter } from '@/components/companies/list/CompanyFilter';
 import { cn } from "@/lib/utils";
 import { sectorNames } from '@/lib/constants/sectors';
 
@@ -132,7 +115,7 @@ export function CompaniesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-light">Företagsrapporter</h1>
           <p className="text-sm text-grey">
@@ -140,79 +123,16 @@ export function CompaniesPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="relative w-[200px]">
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-grey w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Sök (separera med ,)"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 py-1 h-8 bg-black-1 border-none text-sm"
-            />
-          </div>
-
-          <Popover open={filterOpen} onOpenChange={setFilterOpen}>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="h-8 bg-black-1 border-none gap-2">
-                <Filter className="w-4 h-4" />
-                Filter
-                {activeFilters.length > 0 && (
-                  <Badge variant="secondary" className="ml-1 bg-blue-5/30 text-blue-2">
-                    {activeFilters.length}
-                  </Badge>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[300px] p-0" align="end">
-              <Command>
-                <CommandInput placeholder="Sök i filter..." />
-                <CommandList>
-                  <CommandEmpty>Inga filter hittades.</CommandEmpty>
-                  <CommandGroup heading="Kategori">
-                    {categories.map(cat => (
-                      <CommandItem
-                        key={cat.value}
-                        onSelect={() => setCategory(cat.value as CompanyCategory)}
-                        className="flex items-center justify-between"
-                      >
-                        <span>{cat.label}</span>
-                        {category === cat.value && <Check className="w-4 h-4" />}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                  <CommandSeparator />
-                  <CommandGroup heading="Sektor">
-                    {sectors.map(sec => (
-                      <CommandItem
-                        key={sec.value}
-                        onSelect={() => setSector(sec.value as CompanySector)}
-                        className="flex items-center justify-between"
-                      >
-                        <span>{sec.label}</span>
-                        {sector === sec.value && <Check className="w-4 h-4" />}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                  <CommandSeparator />
-                  <CommandGroup heading="Sortera efter">
-                    {sortOptions.map(opt => (
-                      <CommandItem
-                        key={opt.value}
-                        onSelect={() => setSortBy(opt.value as SortOption)}
-                        className="flex items-center justify-between"
-                      >
-                        <span>{opt.label}</span>
-                        {sortBy === opt.value && <Check className="w-4 h-4" />}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </div>
+        <CompanyFilter
+          selectedCategory={category}
+          onCategoryChange={setCategory}
+          selectedSector={sector}
+          onSectorChange={setSector}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+        />
 
       {activeFilters.length > 0 && (
         <div className="flex flex-wrap gap-2">
