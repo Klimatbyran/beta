@@ -98,15 +98,9 @@ export function EmissionsHistory({
       const baseData = {
         year,
         total: period.emissions?.calculatedTotalEmissions || 0,
-      };
-
-      if (dataView === 'scopes') {
-        return {
-          ...baseData,
-          scope1: period.emissions?.scope1?.total || 0,
-          scope2: period.emissions?.scope2?.calculatedTotalEmissions || 0,
-          scope3: period.emissions?.scope3?.calculatedTotalEmissions || 0,
-        };
+        scope1: period.emissions?.scope1?.total || 0,
+        scope2: period.emissions?.scope2?.calculatedTotalEmissions || 0,
+        scope3: period.emissions?.scope3?.calculatedTotalEmissions || 0,
       }
 
       if (dataView === 'categories' && period.emissions?.scope3?.categories) {
@@ -122,7 +116,6 @@ export function EmissionsHistory({
         
         return {
           ...baseData,
-          ...categoryData,
           ...interpolatedData,
         };
       }
@@ -309,10 +302,10 @@ export function EmissionsHistory({
         {dataView === 'overview' ? (
           <EmissionsBarChart 
             data={chartData.map(d => ({
-              year: d.year,
-              scope1: d.emissions?.scope1?.total || 0,
-              scope2: d.emissions?.scope2?.calculatedTotalEmissions || 0,
-              scope3: d.emissions?.scope3?.total || 0,
+              year: d?.year,
+              scope1: d?.scope1 || 0,
+              scope2: d?.scope2 || 0,
+              scope3: d?.scope3 || 0,
             }))}
           />
         ) : (

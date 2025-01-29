@@ -4,6 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 const textVariants = cva("font-light tracking-tight", {
   variants: {
     variant: {
+      muted: "text-gray-500",
       // Large display text (like in ContentBlock)
       display: "text-[64px] leading-[1.1] tracking-[-0.02em]",
       // Heading variants
@@ -14,6 +15,7 @@ const textVariants = cva("font-light tracking-tight", {
       h5: "text-2xl",
       h6: "text-xl",
       // Body text variants
+      large: "text-lg",
       body: "text-base",
       small: "text-sm",
       tiny: "text-xs",
