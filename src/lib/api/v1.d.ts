@@ -35,9 +35,7 @@ export interface paths {
                             name: string;
                             description: string | null;
                             reportingPeriods: {
-                                /** Format: date-time */
                                 startDate: string;
-                                /** Format: date-time */
                                 endDate: string;
                                 reportURL: string | null;
                                 emissions: {
@@ -185,6 +183,32 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
             };
         };
         delete?: never;
@@ -226,19 +250,20 @@ export interface paths {
                             name: string;
                             description: string | null;
                             reportingPeriods: {
-                                /** Format: date-time */
+                                id: string;
                                 startDate: string;
-                                /** Format: date-time */
                                 endDate: string;
                                 reportURL: string | null;
                                 emissions: {
+                                    id: string;
                                     scope1: {
+                                        id: string;
                                         total: number;
                                         unit: string;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -249,14 +274,15 @@ export interface paths {
                                         };
                                     } | null;
                                     scope2: {
+                                        id: string;
                                         mb: number | null;
                                         lb: number | null;
                                         unknown: number | null;
                                         unit: string;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -268,14 +294,16 @@ export interface paths {
                                         calculatedTotalEmissions: number;
                                     } | null;
                                     scope3: {
+                                        id: string;
                                         categories: {
+                                            id: string;
                                             category: number;
                                             total: number;
                                             unit: string;
                                             metadata: {
+                                                id: string;
                                                 comment: string | null;
                                                 source: string | null;
-                                                /** Format: date-time */
                                                 updatedAt: string;
                                                 user: {
                                                     name: string;
@@ -286,12 +314,13 @@ export interface paths {
                                             };
                                         }[];
                                         statedTotalEmissions: {
+                                            id: string;
                                             total: number;
                                             unit: string;
                                             metadata: {
+                                                id: string;
                                                 comment: string | null;
                                                 source: string | null;
-                                                /** Format: date-time */
                                                 updatedAt: string;
                                                 user: {
                                                     name: string;
@@ -303,9 +332,9 @@ export interface paths {
                                         } | null;
                                         calculatedTotalEmissions: number;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -316,12 +345,13 @@ export interface paths {
                                         };
                                     } | null;
                                     scope1And2: {
+                                        id: string;
                                         total: number;
                                         unit: string;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -332,12 +362,13 @@ export interface paths {
                                         };
                                     } | null;
                                     biogenicEmissions: {
+                                        id: string;
                                         total: number;
                                         unit: string;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -348,12 +379,13 @@ export interface paths {
                                         };
                                     } | null;
                                     statedTotalEmissions: {
+                                        id: string;
                                         total: number;
                                         unit: string;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -366,13 +398,15 @@ export interface paths {
                                     calculatedTotalEmissions: number;
                                 } | null;
                                 economy: {
+                                    id: string;
                                     turnover: {
+                                        id: string;
                                         value: number | null;
                                         currency: string | null;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -383,12 +417,13 @@ export interface paths {
                                         };
                                     } | null;
                                     employees: {
+                                        id: string;
                                         value: number | null;
                                         unit: string | null;
                                         metadata: {
+                                            id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -401,6 +436,7 @@ export interface paths {
                                 } | null;
                             }[];
                             industry: {
+                                id: string;
                                 industryGics: {
                                     sectorCode: string;
                                     groupCode: string;
@@ -422,9 +458,9 @@ export interface paths {
                                     };
                                 };
                                 metadata: {
+                                    id: string;
                                     comment: string | null;
                                     source: string | null;
-                                    /** Format: date-time */
                                     updatedAt: string;
                                     user: {
                                         name: string;
@@ -435,14 +471,15 @@ export interface paths {
                                 };
                             } | null;
                             goals: {
+                                id: string;
                                 description: string;
                                 year: string | null;
                                 baseYear: string | null;
                                 target: number | null;
                                 metadata: {
+                                    id: string;
                                     comment: string | null;
                                     source: string | null;
-                                    /** Format: date-time */
                                     updatedAt: string;
                                     user: {
                                         name: string;
@@ -453,14 +490,15 @@ export interface paths {
                                 };
                             }[] | null;
                             initiatives: {
+                                id: string;
                                 title: string;
                                 description: string | null;
                                 year: string | null;
                                 scope: string | null;
                                 metadata: {
+                                    id: string;
                                     comment: string | null;
                                     source: string | null;
-                                    /** Format: date-time */
                                     updatedAt: string;
                                     user: {
                                         name: string;
@@ -474,12 +512,29 @@ export interface paths {
                     };
                 };
                 /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
                 404: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": unknown;
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -488,7 +543,7 @@ export interface paths {
         post?: never;
         /**
          * Delete company
-         * @description Deletes a company by Wikidata ID
+         * @description Delete a company by Wikidata ID
          */
         delete: {
             parameters: {
@@ -510,8 +565,218 @@ export interface paths {
                         "application/json": unknown;
                     };
                 };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
             };
         };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/municipalities/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get all municipalities
+         * @description Retrieve a list of all municipalities with data about their emissions, carbon budget, climate plans, bike infrastructure, procurements, and much more.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            name: string;
+                            region: string;
+                            budget: number;
+                            totalApproximatedHistoricalEmission: number;
+                            trendEmission: number;
+                            historicalEmissionChangePercent: number;
+                            neededEmissionChangePercent: number;
+                            hitNetZero: string;
+                            budgetRunsOut: string;
+                            electricCarChangePercent: number;
+                            climatePlanLink: string;
+                            climatePlanYear: "Saknar plan" | number;
+                            climatePlanComment: string;
+                            bicycleMetrePerCapita: number;
+                            totalConsumptionEmission: number;
+                            electricVehiclePerChargePoints: number;
+                            procurementScore: string;
+                            procurementLink: string;
+                            emissions: {
+                                year: string;
+                                value: number;
+                            }[];
+                            emissionBudget: {
+                                year: string;
+                                value: number;
+                            }[];
+                            approximatedHistoricalEmission: {
+                                year: string;
+                                value: number;
+                            }[];
+                            trend: {
+                                year: string;
+                                value: number;
+                            }[];
+                            electricCarChangeYearly: {
+                                year: string;
+                                value: number;
+                            }[];
+                        }[];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/municipalities/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get one municipality
+         * @description Retrieve a one municipality with data about their emissions, carbon budget, climate plans, bike infrastructure, procurements and much more.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            name: string;
+                            region: string;
+                            budget: number;
+                            totalApproximatedHistoricalEmission: number;
+                            trendEmission: number;
+                            historicalEmissionChangePercent: number;
+                            neededEmissionChangePercent: number;
+                            hitNetZero: string;
+                            budgetRunsOut: string;
+                            electricCarChangePercent: number;
+                            climatePlanLink: string;
+                            climatePlanYear: "Saknar plan" | number;
+                            climatePlanComment: string;
+                            bicycleMetrePerCapita: number;
+                            totalConsumptionEmission: number;
+                            electricVehiclePerChargePoints: number;
+                            procurementScore: string;
+                            procurementLink: string;
+                            emissions: {
+                                year: string;
+                                value: number;
+                            }[];
+                            emissionBudget: {
+                                year: string;
+                                value: number;
+                            }[];
+                            approximatedHistoricalEmission: {
+                                year: string;
+                                value: number;
+                            }[];
+                            trend: {
+                                year: string;
+                                value: number;
+                            }[];
+                            electricCarChangeYearly: {
+                                year: string;
+                                value: number;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -564,6 +829,32 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
             };
         };
         /**
@@ -588,6 +879,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -631,6 +948,11 @@ export interface paths {
                             emissions?: {
                                 scope1?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 scope2?: {
                                     /** @description Market-based scope 2 emissions */
@@ -639,24 +961,54 @@ export interface paths {
                                     lb?: number;
                                     /** @description Unspecified Scope 2 emissions */
                                     unknown?: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 scope3?: {
                                     categories?: {
                                         category: number;
                                         total: number;
+                                        /**
+                                         * @default tCO2e
+                                         * @enum {string}
+                                         */
+                                        unit?: "tCO2e" | "tCO2";
                                     }[];
                                     statedTotalEmissions?: {
                                         total: number;
+                                        /**
+                                         * @default tCO2e
+                                         * @enum {string}
+                                         */
+                                        unit?: "tCO2e" | "tCO2";
                                     };
                                 };
                                 biogenic?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 statedTotalEmissions?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 scope1And2?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                             };
                             economy?: {
@@ -686,6 +1038,32 @@ export interface paths {
                     content: {
                         "application/json": {
                             ok: boolean;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
                         };
                     };
                 };
@@ -744,6 +1122,32 @@ export interface paths {
                     content: {
                         "application/json": {
                             ok: boolean;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
                         };
                     };
                 };
@@ -809,6 +1213,32 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
             };
         };
         trace?: never;
@@ -860,6 +1290,32 @@ export interface paths {
                     content: {
                         "application/json": {
                             ok: boolean;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
                         };
                     };
                 };
@@ -925,6 +1381,32 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
             };
         };
         trace?: never;
@@ -941,7 +1423,7 @@ export interface paths {
         post?: never;
         /**
          * Delete a goal
-         * @description Deletes a goal by id
+         * @description Delete a goal by id
          */
         delete: {
             parameters: {
@@ -961,6 +1443,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -982,7 +1490,7 @@ export interface paths {
         post?: never;
         /**
          * Delete an initiative
-         * @description Deletes an initiative by id
+         * @description Delete an initiative by id
          */
         delete: {
             parameters: {
@@ -996,12 +1504,29 @@ export interface paths {
             requestBody?: never;
             responses: {
                 /** @description Default Response */
-                204: {
+                400: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": unknown;
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1023,7 +1548,7 @@ export interface paths {
         post?: never;
         /**
          * Delete a reporting period
-         * @description Deletes a reporting period by id
+         * @description Delete a reporting period by id
          */
         delete: {
             parameters: {
@@ -1043,6 +1568,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1064,7 +1615,7 @@ export interface paths {
         post?: never;
         /**
          * Delete stated total emissions
-         * @description Deletes stated total emissions by id
+         * @description Delete stated total emissions by id
          */
         delete: {
             parameters: {
@@ -1084,6 +1635,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1105,7 +1682,7 @@ export interface paths {
         post?: never;
         /**
          * Delete biogenic emissions
-         * @description Deletes biogenic emissions by id
+         * @description Delete biogenic emissions by id
          */
         delete: {
             parameters: {
@@ -1125,6 +1702,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1146,7 +1749,7 @@ export interface paths {
         post?: never;
         /**
          * Delete Scope1
-         * @description Deletes the Scope1 emissions by id
+         * @description Delete the Scope1 emissions by id
          */
         delete: {
             parameters: {
@@ -1166,6 +1769,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1187,7 +1816,7 @@ export interface paths {
         post?: never;
         /**
          * Delete scope1and2
-         * @description Deletes a scope1and2 by id
+         * @description Delete a scope1and2 by id
          */
         delete: {
             parameters: {
@@ -1207,6 +1836,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1228,7 +1883,7 @@ export interface paths {
         post?: never;
         /**
          * Delete scope2
-         * @description Deletes a scope2 by id
+         * @description Delete a scope2 by id
          */
         delete: {
             parameters: {
@@ -1248,6 +1903,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1269,7 +1950,7 @@ export interface paths {
         post?: never;
         /**
          * Delete scope3
-         * @description Deletes a scope3 by id
+         * @description Delete a scope3 by id
          */
         delete: {
             parameters: {
@@ -1289,6 +1970,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
@@ -1310,7 +2017,7 @@ export interface paths {
         post?: never;
         /**
          * Delete a scope3 category
-         * @description Deletes a scope3 category by id
+         * @description Delete a scope3 category by id
          */
         delete: {
             parameters: {
@@ -1330,6 +2037,32 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
                     };
                 };
             };
