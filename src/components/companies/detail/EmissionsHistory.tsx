@@ -52,7 +52,7 @@ export function EmissionsHistory({
   // Check if any period has scope 3 categories
   const hasScope3Categories = useMemo(() => 
     reportingPeriods.some(period => 
-      period.emissions?.scope3?.categories?.length > 0
+      period.emissions?.scope3?.categories?.length
     ),
     [reportingPeriods]
   );
@@ -445,7 +445,8 @@ export function EmissionsHistory({
                 );
               })}
           </LineChart>
-        </ResponsiveContainer>
+            </ResponsiveContainer>
+        )}
       </div>
 
       {/* Status Section */}
