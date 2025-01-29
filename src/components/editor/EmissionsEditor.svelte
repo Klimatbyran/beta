@@ -187,7 +187,7 @@
             <!-- Downstream (9-15) -->
             <div class="grid gap-4 content-start">
               <h4 class="text-lg font-medium">Nedströms (9-15)</h4>
-              {#each Array.from({ length: 7 }, (_, i) => i + 9) as categoryNumber}
+              {#each Array.from({ length: 8 }, (_, i) => i + 9) as categoryNumber}
                 {@render scope3Category(categoryNumber)}
               {/each}
             </div>

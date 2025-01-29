@@ -32,6 +32,7 @@ const scope3CategoriesSchema = z.object({
   '13': scope3CategorySchema,
   '14': scope3CategorySchema,
   '15': scope3CategorySchema,
+  '16': scope3CategorySchema,
 })
 
 export type Scope3CategoryStrings = z.infer<typeof scope3CategoriesSchema>

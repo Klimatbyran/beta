@@ -58,5 +58,9 @@
   "15": {
     "title": "Investeringar",
     "description": "Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp."
+  },
+  "16": {
+    "title": "Övriga",
+    "description": "Övriga rapporterade scope 3-utsläpp som inte följer GHG-protokollet."
   }
 }

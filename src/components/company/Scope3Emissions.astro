@@ -15,7 +15,6 @@ import ClarityBuildingSolid from 'icons:astro/clarity/building-solid'
 import BiHouses from 'icons:astro/bi/houses'
 import StreamlineInvestmentSelection from 'icons:astro/streamline/investment-selection'
 
-
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
 import type { CompanyDetails } from '@/lib/api/types'
@@ -127,6 +126,12 @@ export const categoryDefinitions = {
     title: '15. Investeringar',
     description:
       'Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp.',
+    Icon: StreamlineInvestmentSelection,
+  },
+  '16_other': {
+    title: '16. Övriga',
+    description:
+      'Övriga rapporterade scope 3-utsläpp som inte följer GHG-protokollet.',
     Icon: StreamlineInvestmentSelection,
   },
 }
