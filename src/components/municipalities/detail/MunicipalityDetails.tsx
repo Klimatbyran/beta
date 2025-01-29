@@ -10,7 +10,7 @@ import { Block } from "@/components/blocks/Block";
 import { BlockHeader } from "@/components/blocks/BlockHeader";
 import { BlockGrid } from "@/components/blocks/BlockGrid";
 import { BlockMetric } from "@/components/blocks/BlockMetric";
-import { EmissionsHistory } from '@/components/companies/detail/EmissionsHistory';
+import { MunicipalityMetricsHistory } from './MunicipalityMetricsHistory';
 import type { MunicipalityDetails } from '@/types/municipality';
 
 interface MunicipalityDetailsProps {
@@ -85,25 +85,8 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
         </Text>
       </Block>
 
-      {/* Emissions History */}
-      <EmissionsHistory 
-        reportingPeriods={[
-          {
-            startDate: "2023-01-01",
-            endDate: "2023-12-31",
-            emissions: {
-              calculatedTotalEmissions: municipality.trendEmission
-            }
-          },
-          {
-            startDate: "2022-01-01",
-            endDate: "2022-12-31",
-            emissions: {
-              calculatedTotalEmissions: municipality.totalApproximatedHistoricalEmission
-            }
-          }
-        ]}
-      />
+      {/* Metrics History */}
+      <MunicipalityMetricsHistory municipality={municipality} />
 
       {/* Key Metrics */}
       <Block level={1} padding="large">
