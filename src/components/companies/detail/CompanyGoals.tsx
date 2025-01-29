@@ -45,7 +45,7 @@ export function CompanyGoals({ goals, className }: CompanyGoalsProps) {
         {goals.map(goal => (
           <div 
             key={goal.id}
-            className="bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]"
+            className="bg-black-1 rounded-[32px] p-8 flex flex-col justify-end min-h-[240px]"
           >
             {goal.target && (
               <div className="mb-4">
