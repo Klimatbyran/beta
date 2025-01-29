@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 import {
   Tabs,
   TabsList,
@@ -96,9 +97,10 @@ export function MunicipalityComparison({
       <div className="space-y-4">
         {activeTab === 'cyklarna' && 
           municipalities.map((municipality, index) => (
-            <div
+            <Link
               key={municipality.id}
-              className="flex items-center justify-between py-4 border-t border-black-1"
+              to={`/municipalities/${municipality.name.toLowerCase().replace(/ /g, '-')}`}
+              className="flex items-center justify-between py-4 border-t border-black-1 hover:bg-black-1/80 transition-colors"
             >
               <div className="flex items-center gap-8">
                 <Text variant="large" className="text-blue-2 w-12">
@@ -125,7 +127,7 @@ export function MunicipalityComparison({
                   </Text>
                 )}
               </div>
-            </div>
+            </Link>
           ))
         }
 
