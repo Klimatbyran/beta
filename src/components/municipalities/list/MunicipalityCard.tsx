@@ -28,6 +28,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
     <Link 
       to={`/municipalities/${municipality.id}`}
       className="block bg-black-2 rounded-level-2 p-8 space-y-8 hover:bg-black-1/80 transition-colors"
+      data-testid={`municipality-card-${municipality.id}`}
     >
       <div className="space-y-6">
         <h2 className="text-5xl font-light">{municipality.name}</h2>
