@@ -1,94 +1,100 @@
-import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { EmissionsBreakdown } from './EmissionsBreakdown';
-import { Scope3Chart } from './Scope3Chart';
-import { RealEstateScope3History } from './RealEstateScope3History';
+import { useState } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { EmissionsBreakdown } from './EmissionsBreakdown'
+import { Scope3Chart } from './Scope3Chart'
+import { RealEstateScope3History } from './RealEstateScope3History'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Text } from "@/components/ui/text";
+} from '@/components/ui/select'
+import { Text } from '@/components/ui/text'
 
 interface Scope3DataProps {
   emissions: {
-    scope1And2?: { total: number; unit: string } | null;
-    scope1?: { total: number; unit: string } | null;
-    scope2?: { 
-      mb?: number | null;
-      lb?: number | null;
-      unknown?: number | null;
-      unit: string;
-      calculatedTotalEmissions: number;
-    } | null;
-    scope3?: { 
-      total: number; 
-      unit: string;
+    scope1And2?: { total: number; unit: string } | null
+    scope1?: { total: number; unit: string } | null
+    scope2?: {
+      mb?: number | null
+      lb?: number | null
+      unknown?: number | null
+      unit: string
+      calculatedTotalEmissions: number
+    } | null
+    scope3?: {
+      total: number
+      unit: string
       categories?: Array<{
-        category: number;
-        total: number;
-        unit: string;
-      }>;
-    } | null;
-    biogenicEmissions?: { total: number; unit: string } | null;
-  } | null;
-  year: number;
-  className?: string;
-  isRealEstate?: boolean;
+        category: number
+        total: number
+        unit: string
+      }>
+    } | null
+    biogenicEmissions?: { total: number; unit: string } | null
+  } | null
+  year: number
+  className?: string
+  isRealEstate?: boolean
   historicalData?: Array<{
-    year: number;
+    year: number
     categories: Array<{
-      category: number;
-      total: number;
-      unit: string;
-    }>;
-  }>;
+      category: number
+      total: number
+      unit: string
+    }>
+  }>
 }
 
-export function Scope3Data({ emissions, year, className, isRealEstate, historicalData }: Scope3DataProps) {
-  const [selectedYear, setSelectedYear] = useState<string>('latest');
+export function Scope3Data({
+  emissions,
+  year,
+  className,
+  isRealEstate,
+  historicalData,
+}: Scope3DataProps) {
+  const [selectedYear, setSelectedYear] = useState<string>('latest')
 
   if (!emissions?.scope3?.categories?.length) {
-    return null;
+    return null
   }
 
   // Get available years from historical data
   const availableYears = historicalData
-    ? [...new Set(historicalData.map(data => data.year))]
-        .sort((a, b) => b - a)
-    : [];
+    ? [...new Set(historicalData.map((data) => data.year))].sort(
+        (a, b) => b - a,
+      )
+    : []
 
   // Get categories for selected year
-  const selectedCategories = selectedYear === 'latest' 
-    ? emissions.scope3.categories
-    : historicalData?.find(data => data.year === parseInt(selectedYear))?.categories || emissions.scope3.categories;
+  const selectedCategories =
+    selectedYear === 'latest'
+      ? emissions.scope3.categories
+      : historicalData?.find((data) => data.year === parseInt(selectedYear))
+          ?.categories || emissions.scope3.categories
 
   // Create emissions object for selected year
   const selectedEmissions = {
     ...emissions,
     scope3: {
       ...emissions.scope3,
-      categories: selectedCategories
-    }
-  };
+      categories: selectedCategories,
+    },
+  }
 
   return (
     <div className={className}>
       <div className="flex items-center justify-between mb-8">
         <Text variant="h3">Scope 3-kategorier</Text>
         {historicalData && historicalData.length > 0 && (
-          <Select 
-            value={selectedYear} 
-            onValueChange={setSelectedYear}
-          >
+          <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[180px] bg-black-1">
               <SelectValue placeholder="Välj år" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="latest">Senaste året</SelectItem>
-              {availableYears.map(year => (
+              {availableYears.map((year) => (
                 <SelectItem key={year} value={year.toString()}>
                   {year}
                 </SelectItem>
@@ -106,16 +112,16 @@ export function Scope3Data({ emissions, year, className, isRealEstate, historica
             <TabsTrigger value="history">Historisk utveckling</TabsTrigger>
           )}
         </TabsList>
-        
+
         <TabsContent value="chart">
-          <Scope3Chart 
+          <Scope3Chart
             categories={selectedCategories}
             className="bg-transparent p-0"
           />
         </TabsContent>
-        
+
         <TabsContent value="data">
-          <EmissionsBreakdown 
+          <EmissionsBreakdown
             emissions={{ scope3: selectedEmissions.scope3 }}
             year={selectedYear === 'latest' ? year : parseInt(selectedYear)}
             className="bg-transparent p-0"
@@ -125,7 +131,7 @@ export function Scope3Data({ emissions, year, className, isRealEstate, historica
 
         {isRealEstate && historicalData && (
           <TabsContent value="history">
-            <RealEstateScope3History 
+            <RealEstateScope3History
               data={historicalData}
               className="bg-transparent p-0"
             />
@@ -133,5 +139,5 @@ export function Scope3Data({ emissions, year, className, isRealEstate, historica
         )}
       </Tabs>
     </div>
-  );
+  )
 }

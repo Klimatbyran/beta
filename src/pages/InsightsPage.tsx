@@ -1,47 +1,53 @@
-import { CalendarDays, Clock, ArrowUpRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Text } from "@/components/ui/text";
-import { cn } from "@/lib/utils";
+import { CalendarDays, Clock, ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Text } from '@/components/ui/text'
+import { cn } from '@/lib/utils'
 
 interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  category: string;
-  image: string;
+  id: string
+  title: string
+  excerpt: string
+  date: string
+  readTime: string
+  category: string
+  image: string
 }
 
 const blogPosts: BlogPost[] = [
   {
     id: 'trend-calculations',
     title: 'Så beräknar vi trendlinjer för utsläpp',
-    excerpt: 'En djupdykning i hur vi analyserar och projicerar företags utsläppstrender med hänsyn till datakvalitet, scope 3-rapportering och Parisavtalets mål.',
+    excerpt:
+      'En djupdykning i hur vi analyserar och projicerar företags utsläppstrender med hänsyn till datakvalitet, scope 3-rapportering och Parisavtalets mål.',
     date: '2024-03-20',
     readTime: '8 min',
     category: 'Metodik',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop',
   },
   {
     id: 'scope3-reduction',
     title: 'Så kan företag halvera sina scope 3-utsläpp till 2030',
-    excerpt: 'Ny forskning visar att företag kan uppnå betydande minskningar av sina scope 3-utsläpp genom att fokusera på fem nyckelområden.',
+    excerpt:
+      'Ny forskning visar att företag kan uppnå betydande minskningar av sina scope 3-utsläpp genom att fokusera på fem nyckelområden.',
     date: '2024-03-15',
     readTime: '5 min',
     category: 'Analys',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop',
   },
   {
     id: 'paris-agreement',
     title: 'Parisavtalet och näringslivet',
-    excerpt: 'Vad betyder Parisavtalets 1,5-gradersmål i praktiken för svenska företag? Vi reder ut begreppen.',
+    excerpt:
+      'Vad betyder Parisavtalets 1,5-gradersmål i praktiken för svenska företag? Vi reder ut begreppen.',
     date: '2024-03-05',
     readTime: '6 min',
     category: 'Guide',
-    image: 'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop',
   },
-];
+]
 
 export function InsightsPage() {
   return (
@@ -55,7 +61,7 @@ export function InsightsPage() {
       </div>
 
       {/* Featured Post */}
-      <Link 
+      <Link
         to={`/insights/${blogPosts[0].id}`}
         className="group block transition-all duration-300 hover:shadow-[0_0_40px_rgba(153,207,255,0.15)]"
       >
@@ -73,26 +79,29 @@ export function InsightsPage() {
               </span>
               <div className="flex items-center gap-2 text-grey text-sm">
                 <CalendarDays className="w-4 h-4" />
-                <span>{new Date(blogPosts[0].date).toLocaleDateString('sv-SE')}</span>
+                <span>
+                  {new Date(blogPosts[0].date).toLocaleDateString('sv-SE')}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-grey text-sm">
                 <Clock className="w-4 h-4" />
                 <span>{blogPosts[0].readTime}</span>
               </div>
             </div>
-            <Text variant="h2" className="group-hover:text-blue-2 transition-colors">
+            <Text
+              variant="h2"
+              className="group-hover:text-blue-2 transition-colors"
+            >
               {blogPosts[0].title}
             </Text>
-            <Text className="text-grey max-w-2xl">
-              {blogPosts[0].excerpt}
-            </Text>
+            <Text className="text-grey max-w-2xl">{blogPosts[0].excerpt}</Text>
           </div>
         </div>
       </Link>
 
       {/* Post Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {blogPosts.slice(1).map(post => (
+        {blogPosts.slice(1).map((post) => (
           <Link
             key={post.id}
             to={`/insights/${post.id}`}
@@ -119,12 +128,13 @@ export function InsightsPage() {
                   <span>{post.readTime}</span>
                 </div>
               </div>
-              <Text variant="h3" className="group-hover:text-blue-2 transition-colors">
+              <Text
+                variant="h3"
+                className="group-hover:text-blue-2 transition-colors"
+              >
                 {post.title}
               </Text>
-              <Text className="text-grey">
-                {post.excerpt}
-              </Text>
+              <Text className="text-grey">{post.excerpt}</Text>
               <div className="flex items-center gap-2 text-blue-2 group-hover:gap-3 transition-all">
                 <span>Läs mer</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -134,5 +144,5 @@ export function InsightsPage() {
         ))}
       </div>
     </div>
-  );
+  )
 }

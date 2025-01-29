@@ -1,44 +1,41 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface MetricValue {
-  value: string;
-  label: string;
+  value: string
+  label: string
 }
 
 interface ComparisonData {
-  name: string;
-  icon: React.ReactNode;
-  category: string;
+  name: string
+  icon: React.ReactNode
+  category: string
   metrics: {
-    local: MetricValue;
-    national: MetricValue;
-    target: MetricValue;
-  };
-  source: string;
-  year: number;
+    local: MetricValue
+    national: MetricValue
+    target: MetricValue
+  }
+  source: string
+  year: number
 }
 
 interface KeyMetricsComparisonProps {
-  title?: string;
-  data: ComparisonData[];
-  onPrevious?: () => void;
-  onNext?: () => void;
-  className?: string;
+  title?: string
+  data: ComparisonData[]
+  onPrevious?: () => void
+  onNext?: () => void
+  className?: string
 }
 
 export function KeyMetricsComparison({
-  title = "Nyckeltal",
+  title = 'Nyckeltal',
   data,
   onPrevious,
   onNext,
-  className
+  className,
 }: KeyMetricsComparisonProps) {
   return (
-    <div className={cn(
-      "bg-black-2 rounded-level-2 p-8",
-      className
-    )}>
+    <div className={cn('bg-black-2 rounded-level-2 p-8', className)}>
       <div className="flex items-center justify-between mb-12">
         <h2 className="text-3xl font-light">{title}</h2>
         <div className="flex gap-2">
@@ -97,23 +94,25 @@ export function KeyMetricsComparison({
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 interface MetricCardProps {
-  value: string;
-  label: string;
-  className?: string;
+  value: string
+  label: string
+  className?: string
 }
 
 function MetricCard({ value, label, className }: MetricCardProps) {
   return (
-    <div className={cn(
-      "rounded-level-2 p-4 flex flex-col justify-between min-h-[120px]",
-      className
-    )}>
+    <div
+      className={cn(
+        'rounded-level-2 p-4 flex flex-col justify-between min-h-[120px]',
+        className,
+      )}
+    >
       <span className="text-3xl font-light">{value}</span>
       <span className="text-xs text-grey uppercase">{label}</span>
     </div>
-  );
+  )
 }

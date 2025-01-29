@@ -1,46 +1,42 @@
-import { useState } from 'react';
-import { Text } from "@/components/ui/text";
-import { cn, formatPercentage } from "@/lib/utils";
-import { Link } from "react-router-dom";
-import { EmissionsComparison } from './comparisons/EmissionsComparison';
-import { BudgetComparison } from './comparisons/BudgetComparison';
-import { BudgetTimeComparison } from './comparisons/BudgetTimeComparison';
-import { ReductionComparison } from './comparisons/ReductionComparison';
-import { NetZeroComparison } from './comparisons/NetZeroComparison';
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { useState } from 'react'
+import { Text } from '@/components/ui/text'
+import { cn, formatPercentage } from '@/lib/utils'
+import { Link } from 'react-router-dom'
+import { EmissionsComparison } from './comparisons/EmissionsComparison'
+import { BudgetComparison } from './comparisons/BudgetComparison'
+import { BudgetTimeComparison } from './comparisons/BudgetTimeComparison'
+import { ReductionComparison } from './comparisons/ReductionComparison'
+import { NetZeroComparison } from './comparisons/NetZeroComparison'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 interface Municipality {
-  id: string;
-  name: string;
-  value: number;
-  rank: string;
-  change?: number;
+  id: string
+  name: string
+  value: number
+  rank: string
+  change?: number
 }
 
 interface MunicipalityComparisonProps {
-  title?: string;
-  description?: string;
-  nationalAverage?: number;
-  euTarget?: number;
-  unit?: string;
-  municipalities: Municipality[];
-  className?: string;
+  title?: string
+  description?: string
+  nationalAverage?: number
+  euTarget?: number
+  unit?: string
+  municipalities: Municipality[]
+  className?: string
 }
 
 export function MunicipalityComparison({
-  title = "Hur går det med?",
-  description = "Vi utför mätningar av den samlade längden av cykelvägar per invånare, inklusive alla väghållare (statliga, kommunala och enskilda). Den senaste tillgängliga datan är från år 2022.",
+  title = 'Hur går det med?',
+  description = 'Vi utför mätningar av den samlade längden av cykelvägar per invånare, inklusive alla väghållare (statliga, kommunala och enskilda). Den senaste tillgängliga datan är från år 2022.',
   nationalAverage = 2.8,
   euTarget = 3.8,
-  unit = "m",
+  unit = 'm',
   municipalities,
-  className
+  className,
 }: MunicipalityComparisonProps) {
-  const [activeTab, setActiveTab] = useState('cyklarna');
+  const [activeTab, setActiveTab] = useState('cyklarna')
 
   const tabs = [
     { id: 'historical', label: 'Historiska utsläpp' },
@@ -53,10 +49,10 @@ export function MunicipalityComparison({
     { id: 'consumption', label: 'Konsumtionsutsläpp' },
     { id: 'bicycle', label: 'Cykelvägar' },
     { id: 'procurement', label: 'Miljöupphandling' },
-  ];
+  ]
 
   return (
-    <div className={cn("space-y-8", className)}>
+    <div className={cn('space-y-8', className)}>
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="space-y-4">
@@ -88,13 +84,13 @@ export function MunicipalityComparison({
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="bg-transparent border border-black-1 p-2 h-auto">
-          {tabs.map(tab => (
+          {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
               className={cn(
-                "rounded-full data-[state=active]:bg-white data-[state=active]:text-black",
-                "transition-colors hover:text-white"
+                'rounded-full data-[state=active]:bg-white data-[state=active]:text-black',
+                'transition-colors hover:text-white',
               )}
             >
               {tab.label}
@@ -105,7 +101,7 @@ export function MunicipalityComparison({
 
       {/* Tab Content */}
       <div className="space-y-4">
-        {activeTab === 'bicycle' && 
+        {activeTab === 'bicycle' &&
           municipalities.map((municipality, index) => (
             <Link
               key={municipality.id}
@@ -124,13 +120,13 @@ export function MunicipalityComparison({
                   <span className="text-lg text-grey ml-1">{unit}</span>
                 </Text>
                 {municipality.change && (
-                  <Text 
-                    variant="small" 
+                  <Text
+                    variant="small"
                     className={cn(
-                      "px-2 rounded",
-                      municipality.change > 0 
-                        ? "text-green-3 bg-green-5/30" 
-                        : "text-pink-3 bg-pink-5/30"
+                      'px-2 rounded',
+                      municipality.change > 0
+                        ? 'text-green-3 bg-green-5/30'
+                        : 'text-pink-3 bg-pink-5/30',
                     )}
                   >
                     {formatPercentage(municipality.change)}
@@ -138,8 +134,7 @@ export function MunicipalityComparison({
                 )}
               </div>
             </Link>
-          ))
-        }
+          ))}
 
         {activeTab === 'historical' && (
           <EmissionsComparison municipalities={municipalities} />
@@ -161,25 +156,33 @@ export function MunicipalityComparison({
           <NetZeroComparison municipalities={municipalities} />
         )}
 
-        {(activeTab === 'budget' || 
-          activeTab === 'budget_time' || 
-          activeTab === 'reduction' || 
-          activeTab === 'net_zero' || 
-          activeTab === 'ev_change' || 
-          activeTab === 'ev_chargers' || 
-          activeTab === 'consumption' || 
-          activeTab === 'bicycle' || 
+        {(activeTab === 'budget' ||
+          activeTab === 'budget_time' ||
+          activeTab === 'reduction' ||
+          activeTab === 'net_zero' ||
+          activeTab === 'ev_change' ||
+          activeTab === 'ev_chargers' ||
+          activeTab === 'consumption' ||
+          activeTab === 'bicycle' ||
           activeTab === 'procurement') && (
           <div className="text-center py-12">
-            <Text variant="h3" className="text-grey">Kommer snart</Text>
+            <Text variant="h3" className="text-grey">
+              Kommer snart
+            </Text>
             <Text variant="muted" className="mt-2">
-              {activeTab === 'budget' && 'Vi beräknar kommunernas utsläppsbudget'}
-              {activeTab === 'budget_time' && 'Vi analyserar hur länge budgeten räcker'}
-              {activeTab === 'reduction' && 'Vi beräknar nödvändig årlig minskning'}
+              {activeTab === 'budget' &&
+                'Vi beräknar kommunernas utsläppsbudget'}
+              {activeTab === 'budget_time' &&
+                'Vi analyserar hur länge budgeten räcker'}
+              {activeTab === 'reduction' &&
+                'Vi beräknar nödvändig årlig minskning'}
               {activeTab === 'net_zero' && 'Vi sammanställer nettonoll-målen'}
-              {activeTab === 'ev_change' && 'Vi samlar in data om elbilsförändring'}
-              {activeTab === 'ev_chargers' && 'Vi samlar in data om laddinfrastruktur'}
-              {activeTab === 'consumption' && 'Vi samlar in data om konsumtionsutsläpp'}
+              {activeTab === 'ev_change' &&
+                'Vi samlar in data om elbilsförändring'}
+              {activeTab === 'ev_chargers' &&
+                'Vi samlar in data om laddinfrastruktur'}
+              {activeTab === 'consumption' &&
+                'Vi samlar in data om konsumtionsutsläpp'}
               {activeTab === 'bicycle' && 'Vi mäter cykelvägar per capita'}
               {activeTab === 'procurement' && 'Vi analyserar miljöupphandling'}
             </Text>
@@ -187,5 +190,5 @@ export function MunicipalityComparison({
         )}
       </div>
     </div>
-  );
+  )
 }

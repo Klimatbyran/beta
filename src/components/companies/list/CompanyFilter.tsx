@@ -1,24 +1,24 @@
-import { Search, Filter } from 'lucide-react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Search, Filter } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { sectorNames } from '@/lib/constants/sectors';
+} from '@/components/ui/select'
+import { sectorNames } from '@/lib/constants/sectors'
 
 interface CompanyFilterProps {
-  selectedCategory: string;
-  onCategoryChange: (category: string) => void;
-  selectedSector: string;
-  onSectorChange: (sector: string) => void;
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-  sortBy: string;
-  onSortChange: (sort: string) => void;
+  selectedCategory: string
+  onCategoryChange: (category: string) => void
+  selectedSector: string
+  onSectorChange: (sector: string) => void
+  searchQuery: string
+  onSearchChange: (query: string) => void
+  sortBy: string
+  onSortChange: (sort: string) => void
 }
 
 const categories = [
@@ -27,7 +27,7 @@ const categories = [
   { value: 'midcap', label: 'Mid Cap' },
   { value: 'sme', label: 'Small Cap' },
   { value: 'government', label: 'Statligt ägda' },
-] as const;
+] as const
 
 const sortOptions = [
   { value: 'emissions_reduction', label: 'Utsläppsminskning' },
@@ -35,7 +35,7 @@ const sortOptions = [
   { value: 'scope3_coverage', label: 'Scope 3-rapportering' },
   { value: 'data_quality', label: 'Datakvalitet' },
   { value: 'name', label: 'Företagsnamn' },
-] as const;
+] as const
 
 export function CompanyFilter({
   selectedCategory,
@@ -66,7 +66,7 @@ export function CompanyFilter({
             <SelectValue placeholder="Välj kategori" />
           </SelectTrigger>
           <SelectContent>
-            {categories.map(category => (
+            {categories.map((category) => (
               <SelectItem key={category.value} value={category.value}>
                 {category.label}
               </SelectItem>
@@ -93,7 +93,7 @@ export function CompanyFilter({
             <SelectValue placeholder="Sortera efter" />
           </SelectTrigger>
           <SelectContent>
-            {sortOptions.map(option => (
+            {sortOptions.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -102,10 +102,14 @@ export function CompanyFilter({
         </Select>
       </div>
 
-      <Button variant="outline" size="sm" className="h-8 bg-black-1 border-none gap-2">
+      <Button
+        variant="outline"
+        size="sm"
+        className="h-8 bg-black-1 border-none gap-2"
+      >
         <Filter className="w-4 h-4" />
         Filter
       </Button>
     </div>
-  );
+  )
 }

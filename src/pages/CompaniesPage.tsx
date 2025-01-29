@@ -99,7 +99,7 @@ export function CompaniesPage() {
           // Calculate scope 3 coverage percentage
           const getScope3Coverage = (company: typeof a) => {
             const scope3Reports = company.reportingPeriods.filter(
-              (p) => p.emissions?.scope3?.categories?.length > 0
+              (p) => p.emissions?.scope3?.categories?.length > 0,
             )
             return scope3Reports.length / company.reportingPeriods.length
           }
@@ -110,7 +110,7 @@ export function CompaniesPage() {
           const getQualityScore = (company: typeof a) => {
             const yearsScore = company.reportingPeriods.length
             const scope3Score = company.reportingPeriods.filter(
-              (p) => p.emissions?.scope3?.categories?.length > 0
+              (p) => p.emissions?.scope3?.categories?.length > 0,
             ).length
             return yearsScore + scope3Score
           }

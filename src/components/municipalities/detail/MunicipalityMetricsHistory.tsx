@@ -1,31 +1,42 @@
-import { useState } from 'react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, ReferenceDot } from 'recharts';
-import { Info } from 'lucide-react';
+import { useState } from 'react'
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ReferenceDot,
+} from 'recharts'
+import { Info } from 'lucide-react'
 import {
   Tooltip as UITooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Text } from "@/components/ui/text";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/tooltip'
+import { Text } from '@/components/ui/text'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { cn } from '@/lib/utils'
 
-type MetricView = 'bicycle' | 'charging' | 'emissions';
+type MetricView = 'bicycle' | 'charging' | 'emissions'
 
 interface MunicipalityMetricsHistoryProps {
   municipality: {
-    name: string;
-    bicycleMetrePerCapita: number;
-    electricVehiclePerChargePoints: number;
-    trendEmission: number;
-    totalApproximatedHistoricalEmission: number;
-  };
-  className?: string;
+    name: string
+    bicycleMetrePerCapita: number
+    electricVehiclePerChargePoints: number
+    trendEmission: number
+    totalApproximatedHistoricalEmission: number
+  }
+  className?: string
 }
 
-export function MunicipalityMetricsHistory({ municipality, className }: MunicipalityMetricsHistoryProps) {
-  const [view, setView] = useState<MetricView>('emissions');
+export function MunicipalityMetricsHistory({
+  municipality,
+  className,
+}: MunicipalityMetricsHistoryProps) {
+  const [view, setView] = useState<MetricView>('emissions')
 
   // Mock historical data - replace with real data when available
   const historicalData = {
@@ -43,11 +54,17 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
     ],
     emissions: [
       { year: 2020, value: municipality.totalApproximatedHistoricalEmission },
-      { year: 2021, value: municipality.totalApproximatedHistoricalEmission * 0.95 },
-      { year: 2022, value: municipality.totalApproximatedHistoricalEmission * 0.9 },
+      {
+        year: 2021,
+        value: municipality.totalApproximatedHistoricalEmission * 0.95,
+      },
+      {
+        year: 2022,
+        value: municipality.totalApproximatedHistoricalEmission * 0.9,
+      },
       { year: 2023, value: municipality.trendEmission },
     ],
-  };
+  }
 
   const getMetricInfo = (metricType: MetricView) => {
     switch (metricType) {
@@ -58,7 +75,7 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
           description: 'Meter cykelväg per invånare',
           target: 3.8, // EU target
           reference: 2.8, // National average
-        };
+        }
       case 'charging':
         return {
           title: 'Elbilar per laddpunkt',
@@ -66,7 +83,7 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
           description: 'Antal elbilar per offentlig laddpunkt',
           target: 10, // Example target
           reference: 15, // Example national average
-        };
+        }
       case 'emissions':
         return {
           title: 'Territoriella utsläpp',
@@ -74,29 +91,31 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
           description: 'Totala territoriella utsläpp',
           target: municipality.totalApproximatedHistoricalEmission * 0.5, // 50% reduction target
           reference: municipality.totalApproximatedHistoricalEmission,
-        };
+        }
     }
-  };
+  }
 
-  const currentMetric = getMetricInfo(view);
-  const data = historicalData[view];
+  const currentMetric = getMetricInfo(view)
+  const data = historicalData[view]
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-black-1 px-4 py-3 rounded-level-2">
-          <Text variant="small" className="text-grey">{label}</Text>
+          <Text variant="small" className="text-grey">
+            {label}
+          </Text>
           <Text variant="large">
             {Math.round(payload[0].value).toLocaleString()} {currentMetric.unit}
           </Text>
         </div>
-      );
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   return (
-    <div className={cn("bg-black-2 rounded-level-1 p-16", className)}>
+    <div className={cn('bg-black-2 rounded-level-1 p-16', className)}>
       <div className="flex items-center justify-between mb-12">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -115,7 +134,10 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
           <Text variant="muted">{currentMetric.unit}</Text>
         </div>
 
-        <Tabs value={view} onValueChange={(value) => setView(value as MetricView)}>
+        <Tabs
+          value={view}
+          onValueChange={(value) => setView(value as MetricView)}
+        >
           <TabsList className="bg-black-1">
             <TabsTrigger value="bicycle">Cykelvägar</TabsTrigger>
             <TabsTrigger value="charging">Laddpunkter</TabsTrigger>
@@ -126,18 +148,18 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
 
       <div className="h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart 
+          <LineChart
             data={data}
             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
           >
-            <XAxis 
+            <XAxis
               dataKey="year"
               stroke="#878787"
               tickLine={false}
               axisLine={false}
               tick={{ fontSize: 12 }}
             />
-            <YAxis 
+            <YAxis
               stroke="#878787"
               tickLine={false}
               axisLine={false}
@@ -146,7 +168,7 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
               domain={['auto', 'auto']}
             />
             <Tooltip content={<CustomTooltip />} />
-            
+
             {/* Main value line */}
             {view === 'emissions' ? (
               <>
@@ -214,19 +236,25 @@ export function MunicipalityMetricsHistory({ municipality, className }: Municipa
       <div className="mt-8 p-6 bg-black-1 rounded-level-2">
         <div className="flex items-center gap-6">
           <div>
-            <Text variant="muted" className="mb-2">Målbild</Text>
+            <Text variant="muted" className="mb-2">
+              Målbild
+            </Text>
             <Text variant="large" className="text-[#E2FF8D]">
-              {Math.round(currentMetric.target).toLocaleString()} {currentMetric.unit}
+              {Math.round(currentMetric.target).toLocaleString()}{' '}
+              {currentMetric.unit}
             </Text>
           </div>
           <div>
-            <Text variant="muted" className="mb-2">Rikssnitt</Text>
+            <Text variant="muted" className="mb-2">
+              Rikssnitt
+            </Text>
             <Text variant="large" className="text-pink-3">
-              {Math.round(currentMetric.reference).toLocaleString()} {currentMetric.unit}
+              {Math.round(currentMetric.reference).toLocaleString()}{' '}
+              {currentMetric.unit}
             </Text>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

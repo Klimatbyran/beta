@@ -1,14 +1,15 @@
-import { useParams } from 'react-router-dom';
-import { CalendarDays, Clock, ArrowLeft, Share2 } from 'lucide-react';
-import { Text } from "@/components/ui/text";
-import { Button } from "@/components/ui/button";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { useParams } from 'react-router-dom'
+import { CalendarDays, Clock, ArrowLeft, Share2 } from 'lucide-react'
+import { Text } from '@/components/ui/text'
+import { Button } from '@/components/ui/button'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 const blogPost = {
   id: 'trend-calculations',
   title: 'Så beräknar vi trendlinjer för utsläpp',
-  excerpt: 'En djupdykning i hur vi analyserar och projicerar företags utsläppstrender med hänsyn till datakvalitet, scope 3-rapportering och Parisavtalets mål.',
+  excerpt:
+    'En djupdykning i hur vi analyserar och projicerar företags utsläppstrender med hänsyn till datakvalitet, scope 3-rapportering och Parisavtalets mål.',
   content: `
 ## Varför är trendberäkningar viktiga?
 
@@ -94,36 +95,42 @@ Vi fortsätter att utveckla metoden baserat på ny forskning och feedback från 
   date: '2024-03-20',
   readTime: '8 min',
   category: 'Metodik',
-  image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
+  image:
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
   author: {
     name: 'Elvira Boman',
     role: 'Tech Lead',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop'
+    avatar:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop',
   },
   relatedPosts: [
     {
       id: '2',
       title: 'Så kan företag halvera sina scope 3-utsläpp till 2030',
-      excerpt: 'Ny forskning visar att företag kan uppnå betydande minskningar av sina scope 3-utsläpp genom att fokusera på fem nyckelområden.',
+      excerpt:
+        'Ny forskning visar att företag kan uppnå betydande minskningar av sina scope 3-utsläpp genom att fokusera på fem nyckelområden.',
       date: '2024-03-15',
       readTime: '5 min',
       category: 'Analys',
-      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop',
+      image:
+        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop',
     },
     {
       id: '3',
       title: 'Parisavtalet och näringslivet',
-      excerpt: 'Vad betyder Parisavtalets 1,5-gradersmål i praktiken för svenska företag? Vi reder ut begreppen.',
+      excerpt:
+        'Vad betyder Parisavtalets 1,5-gradersmål i praktiken för svenska företag? Vi reder ut begreppen.',
       date: '2024-03-05',
       readTime: '6 min',
       category: 'Guide',
-      image: 'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop',
+      image:
+        'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop',
     },
-  ]
-};
+  ],
+}
 
 export function BlogDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>()
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-16">
@@ -196,7 +203,7 @@ export function BlogDetailPage() {
       <div className="space-y-8">
         <Text variant="h3">Relaterade artiklar</Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPost.relatedPosts.map(post => (
+          {blogPost.relatedPosts.map((post) => (
             <a
               key={post.id}
               href={`/insights/${post.id}`}
@@ -216,24 +223,27 @@ export function BlogDetailPage() {
                   </span>
                   <div className="flex items-center gap-2 text-grey text-sm">
                     <CalendarDays className="w-4 h-4" />
-                    <span>{new Date(post.date).toLocaleDateString('sv-SE')}</span>
+                    <span>
+                      {new Date(post.date).toLocaleDateString('sv-SE')}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-grey text-sm">
                     <Clock className="w-4 h-4" />
                     <span>{post.readTime}</span>
                   </div>
                 </div>
-                <Text variant="h4" className="group-hover:text-blue-2 transition-colors">
+                <Text
+                  variant="h4"
+                  className="group-hover:text-blue-2 transition-colors"
+                >
                   {post.title}
                 </Text>
-                <Text className="text-grey">
-                  {post.excerpt}
-                </Text>
+                <Text className="text-grey">{post.excerpt}</Text>
               </div>
             </a>
           ))}
         </div>
       </div>
     </div>
-  );
+  )
 }

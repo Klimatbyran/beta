@@ -1,11 +1,11 @@
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts'
 
 interface DonutChartProps {
   data: Array<{
-    label: string;
-    value: number;
-    color: string;
-  }>;
+    label: string
+    value: number
+    color: string
+  }>
 }
 
 export function DonutChart({ data }: DonutChartProps) {
@@ -15,17 +15,17 @@ export function DonutChart({ data }: DonutChartProps) {
         <div className="bg-black-1 px-3 py-2 rounded-level-2 text-sm">
           <p className="text-white">{`${payload[0].name}: ${payload[0].value}%`}</p>
         </div>
-      );
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   const getColor = (colorKey: string) => {
-    const [palette, shade] = colorKey.split('.');
-    return `var(--${palette}-${shade})`;
-  };
+    const [palette, shade] = colorKey.split('.')
+    return `var(--${palette}-${shade})`
+  }
 
-  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const total = data.reduce((sum, item) => sum + item.value, 0)
 
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -39,12 +39,20 @@ export function DonutChart({ data }: DonutChartProps) {
           paddingAngle={8}
           dataKey="value"
           nameKey="label"
-          label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index }) => {
-            const RADIAN = Math.PI / 180;
-            const radius = outerRadius + 30;
-            const x = cx + radius * Math.cos(-midAngle * RADIAN);
-            const y = cy + radius * Math.sin(-midAngle * RADIAN);
-            const percent = ((value / total) * 100).toFixed(1);
+          label={({
+            cx,
+            cy,
+            midAngle,
+            innerRadius,
+            outerRadius,
+            value,
+            index,
+          }) => {
+            const RADIAN = Math.PI / 180
+            const radius = outerRadius + 30
+            const x = cx + radius * Math.cos(-midAngle * RADIAN)
+            const y = cy + radius * Math.sin(-midAngle * RADIAN)
+            const percent = ((value / total) * 100).toFixed(1)
 
             return (
               <text
@@ -57,11 +65,11 @@ export function DonutChart({ data }: DonutChartProps) {
               >
                 {`${data[index].label} ${percent}%`}
               </text>
-            );
+            )
           }}
         >
           {data.map((entry, index) => (
-            <Cell 
+            <Cell
               key={`cell-${index}`}
               fill={getColor(entry.color)}
               strokeWidth={0}
@@ -71,5 +79,5 @@ export function DonutChart({ data }: DonutChartProps) {
         <Tooltip content={<CustomTooltip />} />
       </PieChart>
     </ResponsiveContainer>
-  );
+  )
 }

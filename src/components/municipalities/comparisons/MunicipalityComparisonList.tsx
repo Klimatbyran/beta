@@ -1,22 +1,22 @@
-import { Link } from "react-router-dom";
-import { Text } from "@/components/ui/text";
-import { cn } from "@/lib/utils";
+import { Link } from 'react-router-dom'
+import { Text } from '@/components/ui/text'
+import { cn } from '@/lib/utils'
 
 interface Municipality {
-  id: string;
-  name: string;
-  value: number;
-  unit: string;
-  change?: number;
+  id: string
+  name: string
+  value: number
+  unit: string
+  change?: number
 }
 
 interface MunicipalityComparisonListProps {
-  title: string;
-  description: string;
-  municipalities: Municipality[];
-  formatValue?: (value: number) => string;
-  showChange?: boolean;
-  className?: string;
+  title: string
+  description: string
+  municipalities: Municipality[]
+  formatValue?: (value: number) => string
+  showChange?: boolean
+  className?: string
 }
 
 export function MunicipalityComparisonList({
@@ -25,10 +25,10 @@ export function MunicipalityComparisonList({
   municipalities,
   formatValue = (value) => value.toFixed(1),
   showChange = true,
-  className
+  className,
 }: MunicipalityComparisonListProps) {
   return (
-    <div className={cn("space-y-8", className)}>
+    <div className={cn('space-y-8', className)}>
       <div className="space-y-4">
         <Text variant="h3">{title}</Text>
         <Text variant="muted" className="max-w-2xl">
@@ -52,19 +52,22 @@ export function MunicipalityComparisonList({
             <div className="flex items-center gap-4">
               <Text className="text-2xl font-light text-blue-2">
                 {formatValue(municipality.value)}
-                <span className="text-lg text-grey ml-1">{municipality.unit}</span>
+                <span className="text-lg text-grey ml-1">
+                  {municipality.unit}
+                </span>
               </Text>
               {showChange && municipality.change && (
-                <Text 
-                  variant="small" 
+                <Text
+                  variant="small"
                   className={cn(
-                    "px-2 rounded",
-                    municipality.change > 0 
-                      ? "text-green-3 bg-green-5/30" 
-                      : "text-pink-3 bg-pink-5/30"
+                    'px-2 rounded',
+                    municipality.change > 0
+                      ? 'text-green-3 bg-green-5/30'
+                      : 'text-pink-3 bg-pink-5/30',
                   )}
                 >
-                  {municipality.change > 0 ? '+' : ''}{municipality.change.toFixed(1)}%
+                  {municipality.change > 0 ? '+' : ''}
+                  {municipality.change.toFixed(1)}%
                 </Text>
               )}
             </div>
@@ -72,5 +75,5 @@ export function MunicipalityComparisonList({
         ))}
       </div>
     </div>
-  );
+  )
 }

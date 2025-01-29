@@ -1,14 +1,22 @@
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-import { Text } from "@/components/ui/text";
-import { formatEmissions } from '@/lib/utils';
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from 'recharts'
+import { Text } from '@/components/ui/text'
+import { formatEmissions } from '@/lib/utils'
 
 interface EmissionsBarChartProps {
   data: Array<{
-    year: number;
-    scope1?: number;
-    scope2?: number;
-    scope3?: number;
-  }>;
+    year: number
+    scope1?: number
+    scope2?: number
+    scope3?: number
+  }>
 }
 
 export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
@@ -16,18 +24,24 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
   const chartData = [...data]
     .sort((a, b) => b.year - a.year)
     .slice(0, 5)
-    .reverse();
+    .reverse()
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-black-1 px-4 py-3 rounded-level-2">
-          <Text variant="small" className="text-grey">{label}</Text>
+          <Text variant="small" className="text-grey">
+            {label}
+          </Text>
           {payload.map((entry: any) => (
             <div key={entry.dataKey} className="text-sm">
               <span className="text-grey mr-2">
-                {entry.dataKey === 'scope1' ? 'Scope 1' :
-                 entry.dataKey === 'scope2' ? 'Scope 2' : 'Scope 3'}:
+                {entry.dataKey === 'scope1'
+                  ? 'Scope 1'
+                  : entry.dataKey === 'scope2'
+                    ? 'Scope 2'
+                    : 'Scope 3'}
+                :
               </span>
               <span style={{ color: entry.color }}>
                 {formatEmissions(entry.value)}
@@ -35,10 +49,10 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
             </div>
           ))}
         </div>
-      );
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -68,7 +82,10 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           fill="var(--blue-2)"
           name="Scope 3"
           radius={[0, 0, 12, 12]}
-          background={{ fill: 'rgba(255, 255, 255, 0.03)', radius: [0, 0, 12, 12] }}
+          background={{
+            fill: 'rgba(255, 255, 255, 0.03)',
+            radius: [0, 0, 12, 12],
+          }}
         />
         <Bar
           dataKey="scope2"
@@ -84,9 +101,12 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           fill="var(--orange-3)"
           name="Scope 1"
           radius={[12, 12, 0, 0]}
-          background={{ fill: 'rgba(255, 255, 255, 0.03)', radius: [12, 12, 0, 0] }}
+          background={{
+            fill: 'rgba(255, 255, 255, 0.03)',
+            radius: [12, 12, 0, 0],
+          }}
         />
       </BarChart>
     </ResponsiveContainer>
-  );
+  )
 }

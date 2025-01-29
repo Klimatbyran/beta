@@ -1,31 +1,34 @@
-import { useEffect, useRef } from 'react';
-import * as d3 from 'd3';
-import { Text } from "@/components/ui/text";
-import { cn } from "@/lib/utils";
-import { getCategoryName, getCategoryColor } from '@/lib/constants/emissions';
-import type { Emissions } from '@/types/company';
+import { useEffect, useRef } from 'react'
+import * as d3 from 'd3'
+import { Text } from '@/components/ui/text'
+import { cn } from '@/lib/utils'
+import { getCategoryName, getCategoryColor } from '@/lib/constants/emissions'
+import type { Emissions } from '@/types/company'
 
 interface EmissionsBubbleChartProps {
-  emissions: Emissions;
-  className?: string;
+  emissions: Emissions
+  className?: string
 }
 
 interface BubbleNode {
-  id: string;
-  value: number;
-  color: string;
-  label: string;
-  category?: number;
+  id: string
+  value: number
+  color: string
+  label: string
+  category?: number
 }
 
-export function EmissionsBubbleChart({ emissions, className }: EmissionsBubbleChartProps) {
-  const svgRef = useRef<SVGSVGElement>(null);
+export function EmissionsBubbleChart({
+  emissions,
+  className,
+}: EmissionsBubbleChartProps) {
+  const svgRef = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
-    if (!svgRef.current || !emissions) return;
+    if (!svgRef.current || !emissions) return
 
     // Prepare data
-    const nodes: BubbleNode[] = [];
+    const nodes: BubbleNode[] = []
 
     // Add Scope 1
     if (emissions.scope1?.total) {
@@ -34,7 +37,7 @@ export function EmissionsBubbleChart({ emissions, className }: EmissionsBubbleCh
         value: emissions.scope1.total,
         color: 'var(--orange-3)',
         label: `Scope 1\n${Math.round(emissions.scope1.total).toLocaleString()} ton`,
-      });
+      })
     }
 
     // Add Scope 2
@@ -44,82 +47,88 @@ export function EmissionsBubbleChart({ emissions, className }: EmissionsBubbleCh
         value: emissions.scope2.calculatedTotalEmissions,
         color: 'var(--pink-3)',
         label: `Scope 2\n${Math.round(emissions.scope2.calculatedTotalEmissions).toLocaleString()} ton`,
-      });
+      })
     }
 
     // Add Scope 3 categories
-    emissions.scope3?.categories?.forEach(cat => {
+    emissions.scope3?.categories?.forEach((cat) => {
       nodes.push({
         id: `cat${cat.category}`,
         value: cat.total,
         color: getCategoryColor(cat.category),
         label: `${getCategoryName(cat.category)}\n${Math.round(cat.total).toLocaleString()} ton`,
         category: cat.category,
-      });
-    });
+      })
+    })
 
     // Clear previous content
-    d3.select(svgRef.current).selectAll('*').remove();
+    d3.select(svgRef.current).selectAll('*').remove()
 
     // Set up the SVG
-    const width = svgRef.current.clientWidth;
-    const height = 600;
-    const svg = d3.select(svgRef.current)
+    const width = svgRef.current.clientWidth
+    const height = 600
+    const svg = d3
+      .select(svgRef.current)
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height)
 
     // Create the simulation
-    const simulation = d3.forceSimulation(nodes as any)
+    const simulation = d3
+      .forceSimulation(nodes as any)
       .force('charge', d3.forceManyBody().strength(100))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide().radius(d => Math.sqrt(d.value) / 10 + 2))
-      .on('tick', ticked);
+      .force(
+        'collision',
+        d3.forceCollide().radius((d) => Math.sqrt(d.value) / 10 + 2),
+      )
+      .on('tick', ticked)
 
     // Create the node elements
-    const node = svg.append('g')
+    const node = svg
+      .append('g')
       .selectAll('g')
       .data(nodes)
       .join('g')
-      .attr('class', 'node');
+      .attr('class', 'node')
 
     // Add circles
-    node.append('circle')
-      .attr('r', d => Math.sqrt(d.value) / 10)
-      .style('fill', d => d.color)
+    node
+      .append('circle')
+      .attr('r', (d) => Math.sqrt(d.value) / 10)
+      .style('fill', (d) => d.color)
       .style('fill-opacity', 0.7)
-      .style('stroke', d => d.color)
-      .style('stroke-width', 2);
+      .style('stroke', (d) => d.color)
+      .style('stroke-width', 2)
 
     // Add labels
-    node.append('text')
+    node
+      .append('text')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('fill', '#fff')
       .attr('font-size', '12px')
       .selectAll('tspan')
-      .data(d => d.label.split('\n'))
+      .data((d) => d.label.split('\n'))
       .join('tspan')
       .attr('x', 0)
       .attr('y', (_, i) => `${i * 1.1}em`)
-      .text(d => d);
+      .text((d) => d)
 
     function ticked() {
-      node.attr('transform', d => `translate(${d.x},${d.y})`);
+      node.attr('transform', (d) => `translate(${d.x},${d.y})`)
     }
 
     return () => {
-      simulation.stop();
-    };
-  }, [emissions]);
+      simulation.stop()
+    }
+  }, [emissions])
 
   return (
-    <div className={cn("bg-black-2 rounded-level-1 p-16", className)}>
-      <Text variant="h3" className="mb-12">Utsläpp per kategori</Text>
-      <svg 
-        ref={svgRef} 
-        className="w-full"
-        style={{ minHeight: '600px' }}
-      />
+    <div className={cn('bg-black-2 rounded-level-1 p-16', className)}>
+      <Text variant="h3" className="mb-12">
+        Utsläpp per kategori
+      </Text>
+      <svg ref={svgRef} className="w-full" style={{ minHeight: '600px' }} />
     </div>
-  );
+  )
 }

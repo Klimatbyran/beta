@@ -20,11 +20,14 @@ export default {
         sans: ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
       },
       fontSize: {
-        'display': ['64px', {
-          lineHeight: '1.1',
-          letterSpacing: '-0.02em',
-          fontWeight: '300',
-        }],
+        display: [
+          '64px',
+          {
+            lineHeight: '1.1',
+            letterSpacing: '-0.02em',
+            fontWeight: '300',
+          },
+        ],
       },
       borderRadius: {
         'level-1': '48px',
@@ -70,7 +73,7 @@ export default {
         'black-1': '#2E2E2E',
         'black-2': '#121212',
         'black-3': '#000000',
-        
+
         // Orange palette
         orange: {
           1: '#FDE7CE',
@@ -79,7 +82,7 @@ export default {
           4: '#B25F00',
           5: '#6B3700',
         },
-        
+
         // Blue palette
         blue: {
           1: '#D4E7F7',
@@ -88,7 +91,7 @@ export default {
           4: '#206288',
           5: '#13364E',
         },
-        
+
         // Green palette
         green: {
           1: '#F1FFCC',
@@ -97,7 +100,7 @@ export default {
           4: '#6C9105',
           5: '#3D4B16',
         },
-        
+
         // Pink palette
         pink: {
           1: '#FAE1E9',

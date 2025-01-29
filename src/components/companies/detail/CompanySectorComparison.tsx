@@ -1,25 +1,27 @@
-import { useCompanies } from '@/hooks/useCompanies';
-import { SectorComparison } from './SectorComparison';
-import type { CompanyDetails } from '@/types/company';
+import { useCompanies } from '@/hooks/useCompanies'
+import { SectorComparison } from './SectorComparison'
+import type { CompanyDetails } from '@/types/company'
 
 interface CompanySectorComparisonProps {
-  company: CompanyDetails;
+  company: CompanyDetails
 }
 
-export function CompanySectorComparison({ company }: CompanySectorComparisonProps) {
-  const { getCompaniesBySector } = useCompanies();
-  const sectorCode = company.industry?.industryGics?.sectorCode;
+export function CompanySectorComparison({
+  company,
+}: CompanySectorComparisonProps) {
+  const { getCompaniesBySector } = useCompanies()
+  const sectorCode = company.industry?.industryGics?.sectorCode
 
   if (!sectorCode) {
-    return null;
+    return null
   }
 
-  const sectorCompanies = getCompaniesBySector(sectorCode);
+  const sectorCompanies = getCompaniesBySector(sectorCode)
 
   return (
-    <SectorComparison 
+    <SectorComparison
       currentCompany={company}
       sectorCompanies={sectorCompanies}
     />
-  );
+  )
 }

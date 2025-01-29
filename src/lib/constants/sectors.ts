@@ -10,5 +10,5 @@ export const sectorNames: Record<string, string> = {
   '45': 'IT',
   '50': 'Kommunikation',
   '55': 'Kraftförsörjning',
-  '60': 'Fastigheter'
-};
+  '60': 'Fastigheter',
+}

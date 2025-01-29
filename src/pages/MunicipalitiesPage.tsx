@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { useMunicipalities } from '@/hooks/useMunicipalities';
-import { MunicipalityList } from '@/components/municipalities/list/MunicipalityList';
-import { Text } from "@/components/ui/text";
+import { useState } from 'react'
+import { useMunicipalities } from '@/hooks/useMunicipalities'
+import { MunicipalityList } from '@/components/municipalities/list/MunicipalityList'
+import { Text } from '@/components/ui/text'
 
-type SortOption = 'emissions' | 'reduction' | 'name';
+type SortOption = 'emissions' | 'reduction' | 'name'
 
 export function MunicipalitiesPage() {
-  const { municipalities, loading, error } = useMunicipalities();
-  const [selectedRegion, setSelectedRegion] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('emissions');
+  const { municipalities, loading, error } = useMunicipalities()
+  const [selectedRegion, setSelectedRegion] = useState<string>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState<SortOption>('emissions')
 
   if (loading) {
     return (
@@ -21,7 +21,7 @@ export function MunicipalitiesPage() {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -32,7 +32,7 @@ export function MunicipalitiesPage() {
         </Text>
         <Text variant="muted">Försök igen senare</Text>
       </div>
-    );
+    )
   }
 
   return (
@@ -54,5 +54,5 @@ export function MunicipalitiesPage() {
         onSortChange={setSortBy}
       />
     </div>
-  );
+  )
 }

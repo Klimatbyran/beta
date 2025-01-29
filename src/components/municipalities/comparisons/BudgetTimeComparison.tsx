@@ -1,19 +1,22 @@
-import { MunicipalityComparisonList } from './MunicipalityComparisonList';
-import type { Municipality } from '@/types/municipality';
+import { MunicipalityComparisonList } from './MunicipalityComparisonList'
+import type { Municipality } from '@/types/municipality'
 
 interface BudgetTimeComparisonProps {
-  municipalities: Municipality[];
-  className?: string;
+  municipalities: Municipality[]
+  className?: string
 }
 
-export function BudgetTimeComparison({ municipalities, className }: BudgetTimeComparisonProps) {
-  const comparisonData = municipalities.map(municipality => ({
+export function BudgetTimeComparison({
+  municipalities,
+  className,
+}: BudgetTimeComparisonProps) {
+  const comparisonData = municipalities.map((municipality) => ({
     id: municipality.name,
     name: municipality.name,
     value: new Date(municipality.budgetRunsOut).getFullYear(),
     unit: '',
     change: municipality.historicalEmissionChangePercent,
-  }));
+  }))
 
   return (
     <MunicipalityComparisonList
@@ -23,5 +26,5 @@ export function BudgetTimeComparison({ municipalities, className }: BudgetTimeCo
       formatValue={(value) => value.toString()}
       className={className}
     />
-  );
+  )
 }

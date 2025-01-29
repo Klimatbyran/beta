@@ -1,19 +1,22 @@
-import { MunicipalityComparisonList } from './MunicipalityComparisonList';
-import type { Municipality } from '@/types/municipality';
+import { MunicipalityComparisonList } from './MunicipalityComparisonList'
+import type { Municipality } from '@/types/municipality'
 
 interface ReductionComparisonProps {
-  municipalities: Municipality[];
-  className?: string;
+  municipalities: Municipality[]
+  className?: string
 }
 
-export function ReductionComparison({ municipalities, className }: ReductionComparisonProps) {
-  const comparisonData = municipalities.map(municipality => ({
+export function ReductionComparison({
+  municipalities,
+  className,
+}: ReductionComparisonProps) {
+  const comparisonData = municipalities.map((municipality) => ({
     id: municipality.id,
     name: municipality.name,
     value: municipality.neededEmissionChangePercent,
     unit: '%',
     change: municipality.historicalEmissionChangePercent,
-  }));
+  }))
 
   return (
     <MunicipalityComparisonList
@@ -23,5 +26,5 @@ export function ReductionComparison({ municipalities, className }: ReductionComp
       formatValue={(value) => value.toFixed(1)}
       className={className}
     />
-  );
+  )
 }

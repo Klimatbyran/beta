@@ -1,31 +1,37 @@
-import { Info, Building2, TreePine } from 'lucide-react';
-import { Text } from "@/components/ui/text";
+import { Info, Building2, TreePine } from 'lucide-react'
+import { Text } from '@/components/ui/text'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Block } from "@/components/blocks/Block";
-import { BlockHeader } from "@/components/blocks/BlockHeader";
-import { BlockGrid } from "@/components/blocks/BlockGrid";
-import { BlockMetric } from "@/components/blocks/BlockMetric";
-import { MunicipalityMetricsHistory } from './MunicipalityMetricsHistory';
-import type { MunicipalityDetails } from '@/types/municipality';
+} from '@/components/ui/tooltip'
+import { Block } from '@/components/blocks/Block'
+import { BlockHeader } from '@/components/blocks/BlockHeader'
+import { BlockGrid } from '@/components/blocks/BlockGrid'
+import { BlockMetric } from '@/components/blocks/BlockMetric'
+import { MunicipalityMetricsHistory } from './MunicipalityMetricsHistory'
+import type { MunicipalityDetails } from '@/types/municipality'
 
 interface MunicipalityDetailsProps {
-  municipality: MunicipalityDetails;
+  municipality: MunicipalityDetails
 }
 
-export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) {
+export function MunicipalityDetails({
+  municipality,
+}: MunicipalityDetailsProps) {
   // Format emissions values with appropriate scaling
   const formatEmissions = (tons: number) => {
-    if (tons >= 1500000) { // 1.5 million or more -> show in millions
-      return `${(tons / 1000000).toFixed(1)}m`;
-    } else { // Less than 1.5 million -> show in thousands
-      return `${Math.round(tons / 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}k`;
+    if (tons >= 1500000) {
+      // 1.5 million or more -> show in millions
+      return `${(tons / 1000000).toFixed(1)}m`
+    } else {
+      // Less than 1.5 million -> show in thousands
+      return `${Math.round(tons / 1000)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}k`
     }
-  };
+  }
 
   return (
     <div className="space-y-8">
@@ -39,20 +45,30 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
 
         <BlockGrid columns={3} gap="large" className="mt-12">
           <div>
-            <Text variant="muted" className="mb-2">Ranking</Text>
+            <Text variant="muted" className="mb-2">
+              Ranking
+            </Text>
             <Text variant="large">{municipality.rank}</Text>
           </div>
-          
+
           <div>
-            <Text variant="muted" className="mb-2">Koldioxidbudget tar slut</Text>
+            <Text variant="muted" className="mb-2">
+              Koldioxidbudget tar slut
+            </Text>
             <Text variant="large">{municipality.budgetRunsOut}</Text>
           </div>
-          
+
           <div>
-            <Text variant="muted" className="mb-2">Årlig minskning</Text>
-            <Text 
-              variant="large" 
-              className={municipality.historicalEmissionChangePercent > 0 ? "text-pink-3" : "text-green-3"}
+            <Text variant="muted" className="mb-2">
+              Årlig minskning
+            </Text>
+            <Text
+              variant="large"
+              className={
+                municipality.historicalEmissionChangePercent > 0
+                  ? 'text-pink-3'
+                  : 'text-green-3'
+              }
             >
               {municipality.historicalEmissionChangePercent > 0 ? '+' : ''}
               {municipality.historicalEmissionChangePercent.toFixed(1)}%
@@ -79,7 +95,7 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
             </TooltipProvider>
           </div>
         </div>
-        
+
         <Text className="text-[120px] font-light text-orange-2 tracking-tighter leading-none">
           {formatEmissions(municipality.trendEmission)}
         </Text>
@@ -126,7 +142,7 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
               />
             </div>
           </div>
-          
+
           <div className="space-y-6">
             <Text variant="h4">Elbilar per laddpunkt</Text>
             <div className="grid grid-cols-2 gap-4">
@@ -163,12 +179,12 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
             <div>
               <Text variant="h4">Klimatplan</Text>
               <Text variant="muted">
-                {municipality.climatePlanYear === "Saknar plan" 
-                  ? "Saknar plan" 
+                {municipality.climatePlanYear === 'Saknar plan'
+                  ? 'Saknar plan'
                   : `Antagen ${municipality.climatePlanYear}`}
               </Text>
             </div>
-            <a 
+            <a
               href={municipality.climatePlanLink}
               target="_blank"
               rel="noopener noreferrer"
@@ -180,5 +196,5 @@ export function MunicipalityDetails({ municipality }: MunicipalityDetailsProps) 
         </Block>
       )}
     </div>
-  );
+  )
 }

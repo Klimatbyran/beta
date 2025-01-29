@@ -1,57 +1,64 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Building2, TrendingDown, Users, Wallet } from 'lucide-react';
-import { useCompanies } from '@/hooks/useCompanies';
+import { useState, useEffect, useMemo } from 'react'
+import { Building2, TrendingDown, Users, Wallet } from 'lucide-react'
+import { useCompanies } from '@/hooks/useCompanies'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { getCategoryColor } from '@/lib/constants/emissions';
+} from '@/components/ui/select'
+import { getCategoryColor } from '@/lib/constants/emissions'
 
-type SortOption = 'emissions' | 'turnover' | 'employees' | 'name';
+type SortOption = 'emissions' | 'turnover' | 'employees' | 'name'
 
 const sortOptions = [
   { value: 'emissions', label: 'Utsläpp' },
   { value: 'turnover', label: 'Omsättning' },
   { value: 'employees', label: 'Antal anställda' },
   { value: 'name', label: 'Företagsnamn' },
-] as const;
+] as const
 
 export function CompanyList() {
-  const { companies, loading, error } = useCompanies();
-  const [sortBy, setSortBy] = useState<SortOption>('emissions');
-  const [sortedCompanies, setSortedCompanies] = useState(companies);
+  const { companies, loading, error } = useCompanies()
+  const [sortBy, setSortBy] = useState<SortOption>('emissions')
+  const [sortedCompanies, setSortedCompanies] = useState(companies)
 
   // Memoize the sorting function to prevent unnecessary recalculations
-  const getSortedCompanies = useMemo(() => (
-    companiesArray: typeof companies,
-    sortKey: SortOption
-  ) => {
-    return [...companiesArray].sort((a, b) => {
-      switch (sortKey) {
-        case 'emissions':
-          return (b.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0) -
-                 (a.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0);
-        case 'turnover':
-          return (b.reportingPeriods[0]?.economy?.turnover?.value || 0) -
-                 (a.reportingPeriods[0]?.economy?.turnover?.value || 0);
-        case 'employees':
-          return (b.reportingPeriods[0]?.economy?.employees?.value || 0) -
-                 (a.reportingPeriods[0]?.economy?.employees?.value || 0);
-        case 'name':
-          return a.name.localeCompare(b.name);
-        default:
-          return 0;
-      }
-    });
-  }, []);
+  const getSortedCompanies = useMemo(
+    () => (companiesArray: typeof companies, sortKey: SortOption) => {
+      return [...companiesArray].sort((a, b) => {
+        switch (sortKey) {
+          case 'emissions':
+            return (
+              (b.reportingPeriods[0]?.emissions?.calculatedTotalEmissions ||
+                0) -
+              (a.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0)
+            )
+          case 'turnover':
+            return (
+              (b.reportingPeriods[0]?.economy?.turnover?.value || 0) -
+              (a.reportingPeriods[0]?.economy?.turnover?.value || 0)
+            )
+          case 'employees':
+            return (
+              (b.reportingPeriods[0]?.economy?.employees?.value || 0) -
+              (a.reportingPeriods[0]?.economy?.employees?.value || 0)
+            )
+          case 'name':
+            return a.name.localeCompare(b.name)
+          default:
+            return 0
+        }
+      })
+    },
+    [],
+  )
 
   // Update sorted companies when companies or sort option changes
   useEffect(() => {
-    setSortedCompanies(getSortedCompanies(companies, sortBy));
-  }, [companies, sortBy, getSortedCompanies]);
+    setSortedCompanies(getSortedCompanies(companies, sortBy))
+  }, [companies, sortBy, getSortedCompanies])
 
   if (loading) {
     return (
@@ -60,7 +67,7 @@ export function CompanyList() {
           <div key={i} className="h-64 bg-black-2 rounded-level-2" />
         ))}
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -71,18 +78,21 @@ export function CompanyList() {
         </h2>
         <p className="text-grey mt-2">Försök igen senare</p>
       </div>
-    );
+    )
   }
 
   return (
     <div className="space-y-8">
       <div className="flex justify-end">
-        <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
+        <Select
+          value={sortBy}
+          onValueChange={(value) => setSortBy(value as SortOption)}
+        >
           <SelectTrigger className="w-[200px] bg-black-1">
             <SelectValue placeholder="Sortera efter" />
           </SelectTrigger>
           <SelectContent>
-            {sortOptions.map(option => (
+            {sortOptions.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -93,21 +103,24 @@ export function CompanyList() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {sortedCompanies.map((company) => {
-          const latestPeriod = company.reportingPeriods[0];
-          const turnover = latestPeriod?.economy?.turnover;
-          const employees = latestPeriod?.economy?.employees;
-          const emissions = latestPeriod?.emissions;
+          const latestPeriod = company.reportingPeriods[0]
+          const turnover = latestPeriod?.economy?.turnover
+          const employees = latestPeriod?.economy?.employees
+          const emissions = latestPeriod?.emissions
 
           // Find the largest scope 3 category
-          const scope3Categories = latestPeriod?.emissions?.scope3?.categories || [];
-          const largestCategory = scope3Categories.reduce((max, current) => 
-            current.total > (max?.total || 0) ? current : max
-          , scope3Categories[0]);
+          const scope3Categories =
+            latestPeriod?.emissions?.scope3?.categories || []
+          const largestCategory = scope3Categories.reduce(
+            (max, current) =>
+              current.total > (max?.total || 0) ? current : max,
+            scope3Categories[0],
+          )
 
           // Get the color for the largest category
-          const categoryColor = largestCategory 
+          const categoryColor = largestCategory
             ? getCategoryColor(largestCategory.category)
-            : 'var(--blue-2)';
+            : 'var(--blue-2)'
 
           return (
             <div
@@ -121,11 +134,11 @@ export function CompanyList() {
                     {company.description}
                   </p>
                 </div>
-                <div 
+                <div
                   className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={{ 
+                  style={{
                     backgroundColor: `color-mix(in srgb, ${categoryColor} 30%, transparent)`,
-                    color: categoryColor
+                    color: categoryColor,
                   }}
                 >
                   <Building2 className="w-6 h-6" />
@@ -188,9 +201,9 @@ export function CompanyList() {
                 </a>
               )}
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

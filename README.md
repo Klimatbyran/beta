@@ -25,13 +25,13 @@ src/
 
 All commands are run from the root of the project, from a terminal:
 
-| Command           | Action                                           |
-| :--------------- | :----------------------------------------------- |
-| `npm install`    | Installs dependencies                            |
-| `npm run dev`    | Starts local dev server at `localhost:5173`      |
-| `npm run build`  | Build your production site to `./dist/`          |
-| `npm run preview`| Preview your build locally, before deploying     |
-| `npm run lint`   | Run ESLint to check code quality                 |
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Installs dependencies                        |
+| `npm run dev`     | Starts local dev server at `localhost:5173`  |
+| `npm run build`   | Build your production site to `./dist/`      |
+| `npm run preview` | Preview your build locally, before deploying |
+| `npm run lint`    | Run ESLint to check code quality             |
 
 We're using [shadcn/ui](https://ui.shadcn.com/) for our components, which provides a collection of customizable React components built with Radix UI and Tailwind CSS.
 
