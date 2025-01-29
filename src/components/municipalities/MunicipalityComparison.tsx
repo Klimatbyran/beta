@@ -92,40 +92,70 @@ export function MunicipalityComparison({
         </TabsList>
       </Tabs>
 
-      {/* Rankings */}
+      {/* Tab Content */}
       <div className="space-y-4">
-        {municipalities.map((municipality, index) => (
-          <div
-            key={municipality.id}
-            className="flex items-center justify-between py-4 border-t border-black-1"
-          >
-            <div className="flex items-center gap-8">
-              <Text variant="large" className="text-blue-2 w-12">
-                {String(index + 1).padStart(2, '0')}
-              </Text>
-              <Text variant="large">{municipality.name}</Text>
-            </div>
-            <div className="flex items-center gap-4">
-              <Text variant="large" className="text-blue-2">
-                {municipality.value.toFixed(1)}
-                <span className="text-sm text-grey ml-1">{unit}</span>
-              </Text>
-              {municipality.change && (
-                <Text 
-                  variant="small" 
-                  className={cn(
-                    "px-2 rounded",
-                    municipality.change > 0 
-                      ? "text-green-3 bg-green-5/30" 
-                      : "text-pink-3 bg-pink-5/30"
-                  )}
-                >
-                  {municipality.change > 0 ? '+' : ''}{municipality.change}%
+        {activeTab === 'cyklarna' && (
+          {municipalities.map((municipality, index) => (
+            <div
+              key={municipality.id}
+              className="flex items-center justify-between py-4 border-t border-black-1"
+            >
+              <div className="flex items-center gap-8">
+                <Text variant="large" className="text-blue-2 w-12">
+                  {String(index + 1).padStart(2, '0')}
                 </Text>
-              )}
+                <Text variant="large">{municipality.name}</Text>
+              </div>
+              <div className="flex items-center gap-4">
+                <Text variant="large" className="text-blue-2">
+                  {municipality.value.toFixed(1)}
+                  <span className="text-sm text-grey ml-1">{unit}</span>
+                </Text>
+                {municipality.change && (
+                  <Text 
+                    variant="small" 
+                    className={cn(
+                      "px-2 rounded",
+                      municipality.change > 0 
+                        ? "text-green-3 bg-green-5/30" 
+                        : "text-pink-3 bg-pink-5/30"
+                    )}
+                  >
+                    {municipality.change > 0 ? '+' : ''}{municipality.change}%
+                  </Text>
+                )}
+              </div>
             </div>
+          ))}
+        )}
+
+        {activeTab === 'elbilarna' && (
+          <div className="text-center py-12">
+            <Text variant="h3" className="text-grey">Kommer snart</Text>
+            <Text variant="muted" className="mt-2">Vi samlar in data om elbilar</Text>
           </div>
-        ))}
+        )}
+
+        {activeTab === 'klimatplanerna' && (
+          <div className="text-center py-12">
+            <Text variant="h3" className="text-grey">Kommer snart</Text>
+            <Text variant="muted" className="mt-2">Vi analyserar kommunernas klimatplaner</Text>
+          </div>
+        )}
+
+        {activeTab === 'konsumtionen' && (
+          <div className="text-center py-12">
+            <Text variant="h3" className="text-grey">Kommer snart</Text>
+            <Text variant="muted" className="mt-2">Vi samlar in data om konsumtionsutsläpp</Text>
+          </div>
+        )}
+
+        {activeTab === 'laddarna' && (
+          <div className="text-center py-12">
+            <Text variant="h3" className="text-grey">Kommer snart</Text>
+            <Text variant="muted" className="mt-2">Vi samlar in data om laddinfrastruktur</Text>
+          </div>
+        )}
       </div>
     </div>
   );
