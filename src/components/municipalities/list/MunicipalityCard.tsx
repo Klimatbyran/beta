@@ -38,7 +38,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           <div className="text-sm text-grey uppercase tracking-wide">UTSLÄPPSRANKING</div>
           <div className="text-3xl font-light">
             {municipality.rank}
-          </Link>
+          </div>
         </div>
 
         <p className="text-grey">{municipality.description}</p>
