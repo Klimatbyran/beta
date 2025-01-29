@@ -10,9 +10,62 @@ export function MunicipalityDetailPage() {
 
   if (loading) {
     return (
-      <div className="animate-pulse space-y-16">
-        <div className="h-12 w-1/3 bg-black-1 rounded" />
-        <div className="h-96 bg-black-1 rounded-level-1" />
+      <div className="space-y-6">
+        <div className="animate-pulse space-y-6">
+          <div>
+            <div className="h-8 w-1/3 bg-black-1 rounded mb-2" />
+            <div className="h-4 w-1/2 bg-black-1 rounded" />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-[300px] h-8 bg-black-1 rounded" />
+              <div className="w-[200px] h-8 bg-black-1 rounded" />
+              <div className="w-[200px] h-8 bg-black-1 rounded" />
+              <div className="w-[200px] h-8 bg-black-1 rounded" />
+            </div>
+            <div className="w-[100px] h-8 bg-black-1 rounded" />
+          </div>
+        </div>
+
+        <div className="space-y-16">
+          {[...Array(3)].map((_, sectionIndex) => (
+            <section key={sectionIndex} className="space-y-6 animate-pulse">
+              <div className="flex items-center gap-4">
+                <div className="h-8 w-1/4 bg-black-1 rounded" />
+                <div className="h-4 w-16 bg-black-1 rounded" />
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {[...Array(4)].map((_, cardIndex) => (
+                  <div key={cardIndex} className="bg-black-2 rounded-level-2 p-8 space-y-8">
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-4 flex-1">
+                        <div className="h-8 w-3/4 bg-black-1 rounded" />
+                        <div className="flex gap-4">
+                          {[...Array(3)].map((_, i) => (
+                            <div key={i} className="h-4 w-20 bg-black-1 rounded" />
+                          ))}
+                        </div>
+                        <div className="h-4 w-full bg-black-1 rounded" />
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-black-1 flex-shrink-0" />
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="bg-black-1 rounded-level-2 p-4 space-y-2">
+                          <div className="h-4 w-1/2 bg-black-2 rounded" />
+                          <div className="h-6 w-2/3 bg-black-2 rounded" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
       </div>
     )
   }
