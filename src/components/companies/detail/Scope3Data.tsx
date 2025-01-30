@@ -18,6 +18,7 @@ import {
   getCategoryName,
 } from '@/lib/constants/categories'
 import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 interface Scope3DataProps {
   emissions: {
