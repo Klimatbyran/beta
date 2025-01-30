@@ -164,22 +164,24 @@ export function Scope3Data({
                     <Text className="text-grey">
                       {getCategoryDescription(categoryId)}
                     </Text>
-                    <div className="flex items-baseline gap-2">
-                      <Text
-                        className="text-[32px] font-light"
-                        style={{ color }}
-                      >
-                        {Math.round(category.total).toLocaleString()}
+                    <div className="flex flex-col items-end">
+                      <div className="flex items-baseline gap-2">
+                        <Text
+                          className="text-[48px] font-light tracking-tighter"
+                          style={{ color }}
+                        >
+                          {Math.round(category.total).toLocaleString('sv-SE')}
+                        </Text>
+                        <Text className="text-grey">{category.unit}</Text>
+                      </div>
+                      <Text variant="small" className="text-grey">
+                        {(
+                          (category.total / selectedEmissions.scope3!.total) *
+                          100
+                        ).toFixed(1)}
+                        % av scope 3
                       </Text>
-                      <Text className="text-grey">{category.unit}</Text>
                     </div>
-                    <Text variant="small" className="text-grey">
-                      {(
-                        (category.total / selectedEmissions.scope3!.total) *
-                        100
-                      ).toFixed(1)}
-                      % av scope 3
-                    </Text>
                   </div>
                 </div>
               )
