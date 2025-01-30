@@ -18,7 +18,6 @@ import {
   getCategoryName,
 } from '@/lib/constants/categories'
 import { cn } from '@/lib/utils'
-import { cn } from '@/lib/utils'
 
 interface Scope3DataProps {
   emissions: {
@@ -114,7 +113,11 @@ export function Scope3Data({
 
       <div className="space-y-8 mb-8">
         <Text variant="muted">
-          Scope 3-utsläpp delas in i uppströms och nedströms kategorier. Uppströms avser utsläpp som sker innan företagets egen verksamhet, till exempel från inköpta varor och tjänster. Nedströms avser utsläpp som sker efter företagets verksamhet, som användning av sålda produkter.
+          Scope 3-utsläpp delas in i uppströms och nedströms kategorier.
+          Uppströms avser utsläpp som sker innan företagets egen verksamhet,
+          till exempel från inköpta varor och tjänster. Nedströms avser utsläpp
+          som sker efter företagets verksamhet, som användning av sålda
+          produkter.
         </Text>
       </div>
 

@@ -90,7 +90,7 @@ export function MunicipalityComparison({
               value={tab.id}
               className={cn(
                 'rounded-full data-[state=active]:bg-white data-[state=active]:text-black',
-                'transition-colors hover:text-white',
+                'transition-colors hover:text-white'
               )}
             >
               {tab.label}
@@ -105,7 +105,9 @@ export function MunicipalityComparison({
           municipalities.map((municipality, index) => (
             <Link
               key={municipality.id}
-              to={`/municipalities/${municipality.name.toLowerCase().replace(/ /g, '-')}`}
+              to={`/municipalities/${municipality.name
+                .toLowerCase()
+                .replace(/ /g, '-')}`}
               className="flex items-center justify-between py-4 border-t border-black-1 hover:bg-black-1/80 transition-colors"
             >
               <div className="flex items-center gap-8">
@@ -126,7 +128,7 @@ export function MunicipalityComparison({
                       'px-2 rounded',
                       municipality.change > 0
                         ? 'text-green-3 bg-green-5/30'
-                        : 'text-pink-3 bg-pink-5/30',
+                        : 'text-pink-3 bg-pink-5/30'
                     )}
                   >
                     {formatPercentage(municipality.change)}

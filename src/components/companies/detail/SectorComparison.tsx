@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Link } from 'react-router-dom'
 
 type ComparisonView = 'emissions' | 'reporting' | 'scope3'
 
@@ -32,13 +33,13 @@ export function SectorComparison({
   const sortedCompanies = [...sectorCompanies].sort(
     (a, b) =>
       (b.metrics?.emissionsReduction || 0) -
-      (a.metrics?.emissionsReduction || 0),
+      (a.metrics?.emissionsReduction || 0)
   )
 
   // Find the current company's rank
   const currentCompanyRank =
     sortedCompanies.findIndex(
-      (c) => c.wikidataId === currentCompany.wikidataId,
+      (c) => c.wikidataId === currentCompany.wikidataId
     ) + 1
 
   // Transform companies data for the scope reporting list
@@ -74,13 +75,14 @@ export function SectorComparison({
             <Text variant="h4">Utsläppsminskning</Text>
             <div className="grid grid-cols-1 gap-4">
               {sortedCompanies.map((company, index) => (
-                <div
+                <Link
                   key={company.wikidataId}
+                  to={`/companies/${company.wikidataId}`}
                   className={cn(
                     'flex items-center justify-between p-6 rounded-level-2',
                     company.wikidataId === currentCompany.wikidataId
                       ? 'bg-blue-5/30'
-                      : 'bg-black-1',
+                      : 'bg-black-1'
                   )}
                 >
                   <div className="flex items-center gap-6">
@@ -94,13 +96,13 @@ export function SectorComparison({
                     className={cn(
                       company.metrics?.emissionsReduction >= 0
                         ? 'text-green-3'
-                        : 'text-pink-3',
+                        : 'text-pink-3'
                     )}
                   >
                     {company.metrics?.emissionsReduction > 0 ? '+' : ''}
                     {company.metrics?.displayReduction}%
                   </Text>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -114,16 +116,17 @@ export function SectorComparison({
               {sortedCompanies.map((company) => {
                 const years = company.reportingPeriods
                   .map((period) => new Date(period.endDate).getFullYear())
-                  .sort((a, b) => b - a)
+                  .sort((a, b) => a - b)
 
                 return (
-                  <div
+                  <Link
                     key={company.wikidataId}
+                    to={`/companies/${company.wikidataId}`}
                     className={cn(
                       'flex items-center justify-between p-6 rounded-level-2',
                       company.wikidataId === currentCompany.wikidataId
                         ? 'bg-blue-5/30'
-                        : 'bg-black-1',
+                        : 'bg-black-1'
                     )}
                   >
                     <Text variant="large">{company.name}</Text>
@@ -137,7 +140,7 @@ export function SectorComparison({
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </Link>
                 )
               })}
             </div>

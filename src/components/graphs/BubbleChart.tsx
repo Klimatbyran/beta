@@ -56,6 +56,7 @@ export function BubbleChart({ data }: BubbleChartProps) {
             key={index}
             name={item.label}
             data={[item]}
+            stroke="none"
             fill={getColor(item.color)}
           >
             <text

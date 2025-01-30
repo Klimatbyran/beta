@@ -54,22 +54,13 @@ export function EmissionsHistory({
     outlierDetection: true,
   },
 }: EmissionsHistoryProps) {
-  // Validate input data
-  if (!reportingPeriods?.length) {
-    return (
-      <div className="text-center py-12">
-        <Text variant="muted">No reporting periods available</Text>
-      </div>
-    )
-  }
-
   // Check if any period has scope 3 categories
   const hasScope3Categories = useMemo(
     () =>
       reportingPeriods.some(
-        (period) => period.emissions?.scope3?.categories?.length,
+        (period) => period.emissions?.scope3?.categories?.length
       ),
-    [reportingPeriods],
+    [reportingPeriods]
   )
 
   const [dataView, setDataView] = useState<DataView>(() => {
@@ -86,13 +77,13 @@ export function EmissionsHistory({
       features.interpolateScope3
         ? interpolateScope3Categories(reportingPeriods)
         : reportingPeriods,
-    [reportingPeriods, features.interpolateScope3],
+    [reportingPeriods, features.interpolateScope3]
   )
 
   // Calculate trend analysis with processed data and feature flags
   const trendAnalysis = useMemo(
     () => analyzeTrend(processedPeriods, features),
-    [processedPeriods, features],
+    [processedPeriods, features]
   )
 
   // Calculate annual reduction rate
@@ -108,7 +99,7 @@ export function EmissionsHistory({
 
     const sortedPeriods = [...processedPeriods].sort(
       (a, b) =>
-        new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     )
 
     return sortedPeriods
@@ -179,7 +170,7 @@ export function EmissionsHistory({
             paris: p.paris,
             // Calculate gap for projected years
             gap: p.trend - p.paris,
-          })),
+          }))
       )
   }, [trendAnalysis, firstPoint?.total, chartData])
 
@@ -262,6 +253,15 @@ export function EmissionsHistory({
     }
   }
 
+  // Validate input data
+  if (!reportingPeriods?.length) {
+    return (
+      <div className="text-center py-12">
+        <Text variant="muted">No reporting periods available</Text>
+      </div>
+    )
+  }
+
   return (
     <div className={cn('bg-black-2 rounded-level-1 p-16', className)}>
       <div className="flex items-center justify-between mb-12">
@@ -298,7 +298,7 @@ export function EmissionsHistory({
                 disabled={!hasScope3Categories}
                 className={cn(
                   !hasScope3Categories && 'opacity-50 cursor-not-allowed',
-                  'relative group',
+                  'relative group'
                 )}
               >
                 Scope 3-kategorier
@@ -452,7 +452,7 @@ export function EmissionsHistory({
                 Object.keys(chartData[0])
                   .filter(
                     (key) =>
-                      key.startsWith('cat') && !key.includes('Interpolated'),
+                      key.startsWith('cat') && !key.includes('Interpolated')
                   )
                   .map((categoryKey) => {
                     const categoryId = parseInt(categoryKey.replace('cat', ''))
@@ -539,7 +539,7 @@ export function EmissionsHistory({
                       }
                     >
                       {Math.round(
-                        projectedData.find((d) => d?.year === 2030)?.trend || 0,
+                        projectedData.find((d) => d?.year === 2030)?.trend || 0
                       ).toLocaleString()}
                     </Text>
                     <Text variant="muted">ton CO₂e</Text>
@@ -547,7 +547,9 @@ export function EmissionsHistory({
                   <Text variant="small" className="text-grey mt-1">
                     {annualReductionRate >= 7.6
                       ? 'På väg att nå målet med god marginal'
-                      : `${Math.round(totalExcessEmissions).toLocaleString()} ton överskjutande utsläpp totalt`}
+                      : `${Math.round(
+                          totalExcessEmissions
+                        ).toLocaleString()} ton överskjutande utsläpp totalt`}
                   </Text>
                 </>
               ) : (
@@ -565,8 +567,8 @@ export function EmissionsHistory({
               {trendAnalysis.dataQuality === 'high'
                 ? 'Hög'
                 : trendAnalysis.dataQuality === 'medium'
-                  ? 'Medium'
-                  : 'Låg'}
+                ? 'Medium'
+                : 'Låg'}
               <TooltipProvider>
                 <UITooltip>
                   <TooltipTrigger>

@@ -5,7 +5,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
 } from 'recharts'
 import { Text } from '@/components/ui/text'
 import { formatEmissions } from '@/lib/utils'
@@ -39,8 +38,8 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
                 {entry.dataKey === 'scope1'
                   ? 'Scope 1'
                   : entry.dataKey === 'scope2'
-                    ? 'Scope 2'
-                    : 'Scope 3'}
+                  ? 'Scope 2'
+                  : 'Scope 3'}
                 :
               </span>
               <span style={{ color: entry.color }}>
@@ -84,7 +83,7 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           radius={[0, 0, 12, 12]}
           background={{
             fill: 'rgba(255, 255, 255, 0.03)',
-            radius: [0, 0, 12, 12],
+            radius: 12,
           }}
         />
         <Bar
@@ -103,7 +102,7 @@ export function EmissionsBarChart({ data }: EmissionsBarChartProps) {
           radius={[12, 12, 0, 0]}
           background={{
             fill: 'rgba(255, 255, 255, 0.03)',
-            radius: [12, 12, 0, 0],
+            radius: 12,
           }}
         />
       </BarChart>

@@ -3,7 +3,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts'
 import { Text } from '@/components/ui/text'
 import { Button } from '@/components/ui/button'
 import { X, RotateCcw } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, formatEmissions } from '@/lib/utils'
 import {
   getCategoryName,
   getCategoryColor,
@@ -26,7 +26,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
   const totalAll = categories.reduce((sum, cat) => sum + cat.total, 0)
 
   const filteredCategories = categories.filter(
-    (cat) => !excludedCategories.includes(cat.category),
+    (cat) => !excludedCategories.includes(cat.category)
   )
 
   const chartData = filteredCategories
@@ -89,10 +89,9 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
     const percentage = (percent * 100).toFixed(1)
     const data = chartData[index]
 
-    // Split the category name into words
-    const words = data.name.split(' ')
-    const firstLine = words.slice(0, 2).join(' ')
-    const secondLine = words.slice(2).join(' ')
+    if (percent < 0.01) {
+      return null // too small to show
+    }
 
     return (
       <text
@@ -104,8 +103,10 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
         fontSize={12}
       >
         <tspan x={x} dy="0" fontSize="48" fontWeight="300">
-          {Number(percentage).toLocaleString('sv-SE')}
-          <tspan fontSize="24" className="text-grey">%</tspan>
+          {formatEmissions(data.value)}{' '}
+          <tspan fontSize="12" className="text-opacity-50">
+            ({percentage}%)
+          </tspan>
         </tspan>
       </text>
     )
@@ -143,7 +144,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
                   className={cn(
                     'flex items-center gap-2 px-3 py-1 rounded-full text-sm',
                     colors.bg,
-                    colors.text,
+                    colors.text
                   )}
                 >
                   <span>{getCategoryName(catId)}</span>
@@ -154,7 +155,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
                     }}
                     className={cn(
                       'p-0.5 rounded-full transition-colors',
-                      `hover:${colors.bg}`,
+                      `hover:${colors.bg}`
                     )}
                   >
                     <X className="w-3 h-3" />
@@ -189,7 +190,8 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
                 let color = 'var(--blue-2)' // Default color
                 if (entry.category <= 4) {
                   // Upstream categories 1-4
-                  color = index % 2 === 0 ? 'var(--orange-2)' : 'var(--orange-3)'
+                  color =
+                    index % 2 === 0 ? 'var(--orange-2)' : 'var(--orange-3)'
                 } else if (entry.category <= 8) {
                   // Upstream categories 5-8
                   color = index % 2 === 0 ? 'var(--pink-2)' : 'var(--pink-3)'

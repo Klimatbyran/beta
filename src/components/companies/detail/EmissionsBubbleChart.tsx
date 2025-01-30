@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
 import { Text } from '@/components/ui/text'
-import { cn } from '@/lib/utils'
+import { cn, formatEmissions } from '@/lib/utils'
 import { getCategoryName, getCategoryColor } from '@/lib/constants/emissions'
 import type { Emissions } from '@/types/company'
 
@@ -36,7 +36,7 @@ export function EmissionsBubbleChart({
         id: 'scope1',
         value: emissions.scope1.total,
         color: 'var(--orange-3)',
-        label: `Scope 1\n${Math.round(emissions.scope1.total).toLocaleString()} ton`,
+        label: `Scope 1\n${formatEmissions(emissions.scope1.total)}`,
       })
     }
 
@@ -46,7 +46,9 @@ export function EmissionsBubbleChart({
         id: 'scope2',
         value: emissions.scope2.calculatedTotalEmissions,
         color: 'var(--pink-3)',
-        label: `Scope 2\n${Math.round(emissions.scope2.calculatedTotalEmissions).toLocaleString()} ton`,
+        label: `Scope 2\n${formatEmissions(
+          emissions.scope2.calculatedTotalEmissions
+        )}`,
       })
     }
 
@@ -56,7 +58,7 @@ export function EmissionsBubbleChart({
         id: `cat${cat.category}`,
         value: cat.total,
         color: getCategoryColor(cat.category),
-        label: `${getCategoryName(cat.category)}\n${Math.round(cat.total).toLocaleString()} ton`,
+        label: `${formatEmissions(cat.total)}`,
         category: cat.category,
       })
     })
@@ -73,19 +75,17 @@ export function EmissionsBubbleChart({
       .attr('height', height)
 
     // Calculate logarithmic scale for bubble sizes
-    const valueExtent = d3.extent(nodes, d => d.value) as [number, number]
-    const sizeScale = d3.scaleLog()
-      .domain(valueExtent)
-      .range([20, 100]) // Min and max bubble radius
+    const valueExtent = d3.extent(nodes, (d) => d.value) as [number, number]
+    const sizeScale = d3.scaleLinear().domain(valueExtent).range([40, 200]) // Min and max bubble radius
 
     // Create the simulation
     const simulation = d3
       .forceSimulation(nodes as any)
-      .force('charge', d3.forceManyBody().strength(-50)) // Reduced repulsion
+      .force('charge', d3.forceManyBody().strength(100))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
-        d3.forceCollide().radius((d) => sizeScale(d.value) + 2), // Minimal padding
+        d3.forceCollide().radius((d) => sizeScale(d.value) + 2) // Minimal padding
       )
       .on('tick', ticked)
 
@@ -104,7 +104,7 @@ export function EmissionsBubbleChart({
       .style('fill', (d) => d.color)
       .style('fill-opacity', 0.7)
       .style('stroke', (d) => d.color)
-      .style('stroke-width', 2)
+      .style('stroke-width', 0)
 
     // Add labels
     node
@@ -112,7 +112,7 @@ export function EmissionsBubbleChart({
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('fill', '#fff')
-      .attr('font-size', '12px')
+      .attr('font-size', '30px')
       .selectAll('tspan')
       .data((d) => d.label.split('\n'))
       .join('tspan')

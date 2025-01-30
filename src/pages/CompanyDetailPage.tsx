@@ -46,14 +46,14 @@ export function CompanyDetailPage() {
   }
 
   const sortedPeriods = [...company.reportingPeriods].sort(
-    (a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime(),
+    (a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
   )
 
   const selectedPeriod =
     selectedYear === 'latest'
       ? sortedPeriods[0]
       : sortedPeriods.find(
-          (p) => new Date(p.endDate).getFullYear().toString() === selectedYear,
+          (p) => new Date(p.endDate).getFullYear().toString() === selectedYear
         ) || sortedPeriods[0]
 
   return (
@@ -66,7 +66,9 @@ export function CompanyDetailPage() {
         onYearSelect={setSelectedYear}
       />
 
-      <EmissionsBubbleChart emissions={selectedPeriod.emissions!} />
+      {
+        //<EmissionsBubbleChart emissions={selectedPeriod.emissions!} />
+      }
 
       <CompanyScope3
         emissions={selectedPeriod.emissions!}
