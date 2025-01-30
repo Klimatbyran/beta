@@ -101,8 +101,9 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
         dominantBaseline="central"
         fontSize={12}
       >
-        <tspan x={x} dy="0" fontSize="24" fontWeight="300">
-          {percentage}%
+        <tspan x={x} dy="0" fontSize="48" fontWeight="300">
+          {Number(percentage).toLocaleString('sv-SE')}
+          <tspan fontSize="24" className="text-grey">%</tspan>
         </tspan>
       </text>
     )
