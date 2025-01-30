@@ -22,10 +22,12 @@ interface Scope3ChartProps {
 export function Scope3Chart({ categories, className }: Scope3ChartProps) {
   const [excludedCategories, setExcludedCategories] = useState<number[]>([])
 
+  // Calculate total from all categories (including excluded ones)
+  const totalAll = categories.reduce((sum, cat) => sum + cat.total, 0)
+
   const filteredCategories = categories.filter(
     (cat) => !excludedCategories.includes(cat.category),
   )
-  const total = filteredCategories.reduce((sum, cat) => sum + cat.total, 0)
 
   const chartData = filteredCategories
     .sort((a, b) => b.total - a.total)
@@ -33,7 +35,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
       name: getCategoryName(cat.category),
       shortName: getCategoryName(cat.category),
       value: cat.total,
-      percentage: (cat.total / total) * 100,
+      percentage: (cat.total / totalAll) * 100, // Use total of all categories
       category: cat.category,
       color: getCategoryColor(cat.category),
     }))
