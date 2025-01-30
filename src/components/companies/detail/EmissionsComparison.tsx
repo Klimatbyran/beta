@@ -131,6 +131,7 @@ export function EmissionsComparison({ emissions }: EmissionsComparisonProps) {
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart
                 margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                className="[&_circle]:transition-[r] [&_circle]:duration-0"
               >
                 <XAxis type="number" dataKey="x" domain={[0, 800]} hide />
                 <YAxis type="number" dataKey="y" domain={[0, 100]} hide />
@@ -147,6 +148,7 @@ export function EmissionsComparison({ emissions }: EmissionsComparisonProps) {
                     name={data[0].name}
                     data={data}
                     fill={data[0].color}
+                    className="[&_circle]:rounded-full"
                   >
                     <text
                       x={data[0].x}
