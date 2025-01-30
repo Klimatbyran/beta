@@ -11,6 +11,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Text } from '@/components/ui/text'
+import {
+  getCategoryColor,
+  getCategoryDescription,
+  getCategoryIcon,
+  getCategoryName,
+} from '@/lib/constants/categories'
 
 interface Scope3DataProps {
   emissions: {
@@ -63,7 +69,7 @@ export function Scope3Data({
   // Get available years from historical data
   const availableYears = historicalData
     ? [...new Set(historicalData.map((data) => data.year))].sort(
-        (a, b) => b - a,
+        (a, b) => b - a
       )
     : []
 
@@ -123,16 +129,16 @@ export function Scope3Data({
         <TabsContent value="data">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {selectedCategories.map((category) => {
-              const categoryId = category.category;
-              const color = getCategoryColor(categoryId);
-              const Icon = getCategoryIcon(categoryId);
-              
+              const categoryId = category.category
+              const color = getCategoryColor(categoryId)
+              const Icon = getCategoryIcon(categoryId)
+
               return (
                 <div
                   key={categoryId}
                   className="bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]"
                   style={{
-                    background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`
+                    background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`,
                   }}
                 >
                   <div className="flex items-start justify-between mb-8">
@@ -144,34 +150,39 @@ export function Scope3Data({
                         {getCategoryName(categoryId)}
                       </Text>
                     </div>
-                    <div 
+                    <div
                       className="w-12 h-12 rounded-full flex items-center justify-center"
                       style={{
-                        backgroundColor: `${color}25`
+                        backgroundColor: `${color}25`,
                       }}
                     >
                       <Icon className="w-6 h-6" style={{ color }} />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <Text className="text-grey">
                       {getCategoryDescription(categoryId)}
                     </Text>
                     <div className="flex items-baseline gap-2">
-                      <Text className="text-[32px] font-light" style={{ color }}>
+                      <Text
+                        className="text-[32px] font-light"
+                        style={{ color }}
+                      >
                         {Math.round(category.total).toLocaleString()}
                       </Text>
-                      <Text className="text-grey">
-                        {category.unit}
-                      </Text>
+                      <Text className="text-grey">{category.unit}</Text>
                     </div>
                     <Text variant="small" className="text-grey">
-                      {((category.total / selectedEmissions.scope3!.total) * 100).toFixed(1)}% av scope 3
+                      {(
+                        (category.total / selectedEmissions.scope3!.total) *
+                        100
+                      ).toFixed(1)}
+                      % av scope 3
                     </Text>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </TabsContent>
