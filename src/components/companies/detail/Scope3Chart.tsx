@@ -184,13 +184,27 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
               onClick={(entry) => handleCategoryClick(entry.category)}
               className="cursor-pointer"
             >
-              {chartData.map((entry) => (
-                <Cell
-                  key={`cell-${entry.category}`}
-                  fill={entry.color}
-                  strokeWidth={0}
-                />
-              ))}
+              {chartData.map((entry, index) => {
+                // Use different color sets for different types of categories
+                let color = 'var(--blue-2)' // Default color
+                if (entry.category <= 4) {
+                  // Upstream categories 1-4
+                  color = index % 2 === 0 ? 'var(--orange-2)' : 'var(--orange-3)'
+                } else if (entry.category <= 8) {
+                  // Upstream categories 5-8
+                  color = index % 2 === 0 ? 'var(--pink-2)' : 'var(--pink-3)'
+                } else {
+                  // Downstream categories 9-15
+                  color = index % 2 === 0 ? 'var(--blue-2)' : 'var(--blue-3)'
+                }
+                return (
+                  <Cell
+                    key={`cell-${entry.category}`}
+                    fill={color}
+                    strokeWidth={0}
+                  />
+                )
+              })}
             </Pie>
             <Tooltip content={<CustomTooltip />} />
           </PieChart>
