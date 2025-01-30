@@ -127,65 +127,156 @@ export function Scope3Data({
         </TabsContent>
 
         <TabsContent value="data">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {selectedCategories.map((category) => {
-              const categoryId = category.category
-              const color = getCategoryColor(categoryId)
-              const Icon = getCategoryIcon(categoryId)
+          <div className="grid grid-cols-2 gap-8">
+            {/* Upstream Categories */}
+            <div className="space-y-8">
+              <Text variant="h4" className="text-grey">Uppströms</Text>
+              <div className="space-y-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((categoryId) => {
+                  const reportedCategory = selectedCategories.find(
+                    (c) => c.category === categoryId
+                  )
+                  const color = getCategoryColor(categoryId)
+                  const Icon = getCategoryIcon(categoryId)
+                  const isReported = !!reportedCategory
 
-              return (
-                <div
-                  key={categoryId}
-                  className="bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]"
-                  style={{
-                    background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`,
-                  }}
-                >
-                  <div className="flex items-start justify-between mb-8">
-                    <div>
-                      <Text variant="large" style={{ color }}>
-                        Kategori {categoryId}
-                      </Text>
-                      <Text variant="h3" className="mt-2">
-                        {getCategoryName(categoryId)}
-                      </Text>
-                    </div>
+                  return (
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center"
+                      key={categoryId}
+                      className={cn(
+                        "bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]",
+                        !isReported && "opacity-30"
+                      )}
                       style={{
-                        backgroundColor: `${color}25`,
+                        background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`,
                       }}
                     >
-                      <Icon className="w-6 h-6" style={{ color }} />
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-end">
-                    <Text className="text-grey max-w-[60%]">
-                      {getCategoryDescription(categoryId)}
-                    </Text>
-                    <div className="text-right">
-                      <div className="flex items-baseline gap-2">
-                        <Text
-                          className="text-[48px] font-light tracking-tighter"
-                          style={{ color }}
+                      <div className="flex items-start justify-between mb-8">
+                        <div>
+                          <Text variant="large" style={{ color }}>
+                            Kategori {categoryId}
+                          </Text>
+                          <Text variant="h3" className="mt-2">
+                            {getCategoryName(categoryId)}
+                          </Text>
+                        </div>
+                        <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center"
+                          style={{
+                            backgroundColor: `${color}25`,
+                          }}
                         >
-                          {Math.round(category.total).toLocaleString('sv-SE')}
-                        </Text>
-                        <Text className="text-grey">{category.unit}</Text>
+                          <Icon className="w-6 h-6" style={{ color }} />
+                        </div>
                       </div>
-                      <Text variant="small" className="text-grey">
-                        {(
-                          (category.total / selectedEmissions.scope3!.total) *
-                          100
-                        ).toFixed(1)}
-                        % av scope 3
-                      </Text>
+
+                      <div className="flex justify-between items-end">
+                        <Text className="text-grey max-w-[60%]">
+                          {getCategoryDescription(categoryId)}
+                        </Text>
+                        {isReported ? (
+                          <div className="text-right">
+                            <div className="flex items-baseline gap-2">
+                              <Text
+                                className="text-[48px] font-light tracking-tighter"
+                                style={{ color }}
+                              >
+                                {Math.round(reportedCategory.total).toLocaleString('sv-SE')}
+                              </Text>
+                              <Text className="text-grey">{reportedCategory.unit}</Text>
+                            </div>
+                            <Text variant="small" className="text-grey">
+                              {(
+                                (reportedCategory.total / selectedEmissions.scope3!.total) *
+                                100
+                              ).toFixed(1)}
+                              % av scope 3
+                            </Text>
+                          </div>
+                        ) : (
+                          <Text variant="muted">Ej rapporterat</Text>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )
-            })}
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Downstream Categories */}
+            <div className="space-y-8">
+              <Text variant="h4" className="text-grey">Nedströms</Text>
+              <div className="space-y-4">
+                {[9, 10, 11, 12, 13, 14, 15].map((categoryId) => {
+                  const reportedCategory = selectedCategories.find(
+                    (c) => c.category === categoryId
+                  )
+                  const color = getCategoryColor(categoryId)
+                  const Icon = getCategoryIcon(categoryId)
+                  const isReported = !!reportedCategory
+
+                  return (
+                    <div
+                      key={categoryId}
+                      className={cn(
+                        "bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]",
+                        !isReported && "opacity-30"
+                      )}
+                      style={{
+                        background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`,
+                      }}
+                    >
+                      <div className="flex items-start justify-between mb-8">
+                        <div>
+                          <Text variant="large" style={{ color }}>
+                            Kategori {categoryId}
+                          </Text>
+                          <Text variant="h3" className="mt-2">
+                            {getCategoryName(categoryId)}
+                          </Text>
+                        </div>
+                        <div
+                          className="w-12 h-12 rounded-full flex items-center justify-center"
+                          style={{
+                            backgroundColor: `${color}25`,
+                          }}
+                        >
+                          <Icon className="w-6 h-6" style={{ color }} />
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-end">
+                        <Text className="text-grey max-w-[60%]">
+                          {getCategoryDescription(categoryId)}
+                        </Text>
+                        {isReported ? (
+                          <div className="text-right">
+                            <div className="flex items-baseline gap-2">
+                              <Text
+                                className="text-[48px] font-light tracking-tighter"
+                                style={{ color }}
+                              >
+                                {Math.round(reportedCategory.total).toLocaleString('sv-SE')}
+                              </Text>
+                              <Text className="text-grey">{reportedCategory.unit}</Text>
+                            </div>
+                            <Text variant="small" className="text-grey">
+                              {(
+                                (reportedCategory.total / selectedEmissions.scope3!.total) *
+                                100
+                              ).toFixed(1)}
+                              % av scope 3
+                            </Text>
+                          </div>
+                        ) : (
+                          <Text variant="muted">Ej rapporterat</Text>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </TabsContent>
 
