@@ -5,4 +5,4 @@ resources:
   - ../../base
 images:
   - name: ghcr.io/klimatbyran/frontend
-    newTag: '3.10.1-rc.0' # {"$imagepolicy": "flux-system:frontend:tag"}
+    newTag: '0.0.1-rc.0' # {"$imagepolicy": "flux-system:frontend:tag"}
