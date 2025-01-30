@@ -17,6 +17,7 @@ import {
   getCategoryIcon,
   getCategoryName,
 } from '@/lib/constants/categories'
+import { cn } from '@/lib/utils'
 
 interface Scope3DataProps {
   emissions: {
@@ -130,7 +131,9 @@ export function Scope3Data({
           <div className="grid grid-cols-2 gap-8">
             {/* Upstream Categories */}
             <div className="space-y-8">
-              <Text variant="h4" className="text-grey">Uppströms</Text>
+              <Text variant="h4" className="text-grey">
+                Uppströms
+              </Text>
               <div className="space-y-4">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((categoryId) => {
                   const reportedCategory = selectedCategories.find(
@@ -144,8 +147,8 @@ export function Scope3Data({
                     <div
                       key={categoryId}
                       className={cn(
-                        "bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]",
-                        !isReported && "opacity-30"
+                        'bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]',
+                        !isReported && 'opacity-30'
                       )}
                       style={{
                         background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`,
@@ -181,13 +184,18 @@ export function Scope3Data({
                                 className="text-[48px] font-light tracking-tighter"
                                 style={{ color }}
                               >
-                                {Math.round(reportedCategory.total).toLocaleString('sv-SE')}
+                                {Math.round(
+                                  reportedCategory.total
+                                ).toLocaleString('sv-SE')}
                               </Text>
-                              <Text className="text-grey">{reportedCategory.unit}</Text>
+                              <Text className="text-grey">
+                                {reportedCategory.unit}
+                              </Text>
                             </div>
                             <Text variant="small" className="text-grey">
                               {(
-                                (reportedCategory.total / selectedEmissions.scope3!.total) *
+                                (reportedCategory.total /
+                                  selectedEmissions.scope3!.total) *
                                 100
                               ).toFixed(1)}
                               % av scope 3
@@ -205,7 +213,9 @@ export function Scope3Data({
 
             {/* Downstream Categories */}
             <div className="space-y-8">
-              <Text variant="h4" className="text-grey">Nedströms</Text>
+              <Text variant="h4" className="text-grey">
+                Nedströms
+              </Text>
               <div className="space-y-4">
                 {[9, 10, 11, 12, 13, 14, 15].map((categoryId) => {
                   const reportedCategory = selectedCategories.find(
@@ -219,8 +229,8 @@ export function Scope3Data({
                     <div
                       key={categoryId}
                       className={cn(
-                        "bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]",
-                        !isReported && "opacity-30"
+                        'bg-black-1 rounded-[32px] p-8 flex flex-col justify-between min-h-[240px]',
+                        !isReported && 'opacity-30'
                       )}
                       style={{
                         background: `linear-gradient(160deg, ${color}15 0%, rgba(0,0,0,0) 100%)`,
@@ -256,13 +266,18 @@ export function Scope3Data({
                                 className="text-[48px] font-light tracking-tighter"
                                 style={{ color }}
                               >
-                                {Math.round(reportedCategory.total).toLocaleString('sv-SE')}
+                                {Math.round(
+                                  reportedCategory.total
+                                ).toLocaleString('sv-SE')}
                               </Text>
-                              <Text className="text-grey">{reportedCategory.unit}</Text>
+                              <Text className="text-grey">
+                                {reportedCategory.unit}
+                              </Text>
                             </div>
                             <Text variant="small" className="text-grey">
                               {(
-                                (reportedCategory.total / selectedEmissions.scope3!.total) *
+                                (reportedCategory.total /
+                                  selectedEmissions.scope3!.total) *
                                 100
                               ).toFixed(1)}
                               % av scope 3
