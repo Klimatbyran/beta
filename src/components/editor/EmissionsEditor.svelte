@@ -160,8 +160,9 @@
             {#snippet scope3Category(categoryNumber: number)}
               <label class="grid gap-1.5">
                 <span class="text-sm">
-                  {categoryNumber}. {getScope3CategoryTitle(categoryNumber)} (ton
-                  CO₂e)
+                  {categoryNumber < 16
+                    ? `${categoryNumber}. `
+                    : ''}{getScope3CategoryTitle(categoryNumber)} (ton CO₂e)
                 </span>
                 <NumberInput
                   value={editByReportingPeriod.scope3?.categories?.[
