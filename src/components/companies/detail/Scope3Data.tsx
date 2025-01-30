@@ -160,11 +160,11 @@ export function Scope3Data({
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <Text className="text-grey">
+                  <div className="flex justify-between items-end">
+                    <Text className="text-grey max-w-[60%]">
                       {getCategoryDescription(categoryId)}
                     </Text>
-                    <div className="flex flex-col items-end">
+                    <div className="text-right">
                       <div className="flex items-baseline gap-2">
                         <Text
                           className="text-[48px] font-light tracking-tighter"
