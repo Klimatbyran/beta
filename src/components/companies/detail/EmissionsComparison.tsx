@@ -27,7 +27,7 @@ const COMPARISONS = [
     value: 4.2,
     unit: 'ton CO₂e per år',
     description: 'En genomsnittlig svensk släpper ut cirka 4,2 ton CO₂e per år',
-    color: '#99CFFF', // blue-2
+    color: 'var(--blue-2)',
   },
   {
     name: 'Sveriges totala utsläpp',
@@ -35,7 +35,7 @@ const COMPARISONS = [
     unit: 'ton CO₂e per år',
     description:
       'Sveriges territoriella utsläpp är cirka 44,4 miljoner ton CO₂e per år',
-    color: '#F48F2A', // orange-3
+    color: 'var(--orange-3)',
   },
   {
     name: 'Bilkörning (10000 km)',
@@ -43,7 +43,7 @@ const COMPARISONS = [
     unit: 'ton CO₂e',
     description:
       'En genomsnittlig bensinbil släpper ut cirka 170g CO₂e per kilometer',
-    color: '#F0759A', // pink-3
+    color: 'var(--pink-3)',
   },
   {
     name: 'Flygresor (10 timmar)',
@@ -51,7 +51,7 @@ const COMPARISONS = [
     unit: 'ton CO₂e',
     description:
       'En genomsnittlig flygresa släpper ut cirka 250kg CO₂e per flygtimme',
-    color: '#AAE506', // green-3
+    color: 'var(--green-3)',
   },
 ]
 
