@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: klimatbyran/frontend:latest
+          image: ghcr.io/klimatbyran/frontend:0.0.1-rc.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80
