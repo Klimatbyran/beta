@@ -14,17 +14,16 @@ import IonTrashBin from 'icons:astro/ion/trash-bin'
 import ClarityBuildingSolid from 'icons:astro/clarity/building-solid'
 import BiHouses from 'icons:astro/bi/houses'
 import StreamlineInvestmentSelection from 'icons:astro/streamline/investment-selection'
+import MaterialSymbolsOtherAdmissionOutlineRounded from 'icons:astro/material-symbols/other-admission-outline-rounded'
 
-import {
-  type CompanyData,
-  type Emissions,
-  type Scope3,
-} from '@/data/companyData'
 import Scope3EmissionsCategory from '../company/Scope3EmissionsCategory.astro'
 import { Card } from '../ui/card'
+import type { CompanyDetails } from '@/lib/api/types'
+import type { Emissions } from '@/lib/api/types'
+import type { Scope3 } from '@/lib/api/types'
 
 interface Props {
-  company: CompanyData
+  company: CompanyDetails
   emissions?: Emissions | null
 }
 
@@ -130,6 +129,12 @@ export const categoryDefinitions = {
       'Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp.',
     Icon: StreamlineInvestmentSelection,
   },
+  '16_other': {
+    title: 'Övriga',
+    description:
+      'Övriga rapporterade scope 3-utsläpp som inte följer GHG-protokollet.',
+    Icon: MaterialSymbolsOtherAdmissionOutlineRounded,
+  },
 }
 
 function getReportedCategories(
@@ -157,7 +162,8 @@ const reportedCategories = getReportedCategories(emissions?.scope3)
 const reportedCount = reportedCategories.filter((c) => c.value !== null).length
 
 const upstream = reportedCategories.slice(0, 8)
-const downstream = reportedCategories.slice(8)
+const downstream = reportedCategories.slice(8, 15)
+const other = reportedCategories.slice(15)
 ---
 
 <Card class="grid gap-8" level={2}>
@@ -178,46 +184,63 @@ const downstream = reportedCategories.slice(8)
     </p>
   </div>
 
-  <div class="grid gap-2 text-sm">
-    <h4
-      class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight"
-    >
-      Uppströms
-      <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-    </h4>
-    {
-      upstream.map(({ Icon, title, description, value, verified }) => (
-        <Scope3EmissionsCategory
-          {Icon}
-          {title}
-          {description}
-          {verified}
-          {value}
-        />
-      ))
-    }
-  </div>
+  {
+    upstream.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Uppströms
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {upstream.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            {value}
+          />
+        ))}
+      </div>
+    ) : null
+  }
 
-  <div class="grid gap-2 text-sm">
-    <h4
-      class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight"
-    >
-      Nedströms
-      <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
-    </h4>
-    {
-      downstream.map(({ Icon, title, description, value, verified }) => (
-        <Scope3EmissionsCategory
-          {Icon}
-          {title}
-          {description}
-          {verified}
-          {value}
-        />
-      ))
-    }
-    {
-      /* TODO: Should we show the `other` category at the bottom? This would make it clear why the total for scope 3 might be larger than the GHG categories combined, and ideally the difference would be visible as part of `other` */
-    }
-  </div>
+  {
+    downstream.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Nedströms
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {downstream.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            {value}
+          />
+        ))}
+      </div>
+    ) : null
+  }
+
+  {
+    other.length ? (
+      <div class="grid gap-2 text-sm">
+        <h4 class="flex items-center justify-between pb-2 text-lg leading-none tracking-tight">
+          Övriga
+          <span class="pr-4 text-base text-muted xs:text-lg">(ton CO₂e)</span>
+        </h4>
+        {other.map(({ Icon, title, description, value, verified }) => (
+          <Scope3EmissionsCategory
+            {Icon}
+            {title}
+            {description}
+            {verified}
+            {value}
+          />
+        ))}
+      </div>
+    ) : null
+  }
 </Card>

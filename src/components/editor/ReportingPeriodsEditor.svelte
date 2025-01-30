@@ -1,0 +1,43 @@
+<script lang="ts">
+  import { Card } from '../ui/card'
+  import EmissionsEditor from './EmissionsEditor.svelte'
+  import EconomyEditor from './EconomyEditor.svelte'
+  import { editByReportingPeriod } from './reporting-periods-editor.svelte'
+  import type { Scope3CategoryStrings } from '@/content/config'
+
+  type Props = {
+    scope3CategoryStrings: Scope3CategoryStrings
+  }
+  let { scope3CategoryStrings }: Props = $props()
+</script>
+
+<div class="sticky top-0 z-10">
+  <div class="grid gap-8 bg-gray-800 rounded-xl py-4 px-12">
+    <div class="grid gap-2">
+      <label for="reportingPeriods" class="block text-sm font-medium">
+        Välj rapporteringsperiod
+      </label>
+      <select
+        id="reportingPeriods"
+        class="mt-1 block w-full rounded-md border-gray-700 bg-gray-900 p-4 text-white"
+        bind:value={editByReportingPeriod.selectedYear}
+      >
+        {#each editByReportingPeriod.reportingYears as year}
+          <option value={year}>{year}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
+</div>
+<Card level={1} class="mb-4 bg-gray-800 p-6">
+  {#if editByReportingPeriod.selectedPeriod}
+    <div class="grid gap-8">
+      <EmissionsEditor {scope3CategoryStrings} />
+      <EconomyEditor />
+    </div>
+  {:else}
+    <p class="text-muted">
+      Ingen rapporteringsperiod med utsläppsdata hittades.
+    </p>
+  {/if}
+</Card>

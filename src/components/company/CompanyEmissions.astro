@@ -2,17 +2,16 @@
 import {
   getFormattedReportingPeriod,
   getLatestReportingPeriodWithEmissions,
-  hasVerifiedScope3,
-  type CompanyData,
-  type Scope3,
+  hasVerifiedScope3
 } from '@/data/companyData'
 import { Card } from '../ui/card'
 import Scope3Emissions from './Scope3Emissions.astro'
 import VerifiedBadge from '../VerifiedBadge.astro'
 import { cn, isNumber } from '@/lib/utils'
+import type { CompanyDetails, Scope3 } from '@/lib/api/types'
 
 interface Props {
-  company: CompanyData
+  company: CompanyDetails
 }
 
 const { company } = Astro.props

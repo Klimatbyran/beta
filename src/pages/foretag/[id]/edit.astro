@@ -1,16 +1,16 @@
 ---
+import { getEntry } from 'astro:content'
 import LucideChevronLeft from 'icons:astro/lucide/chevron-left'
 
 import Layout from '@/layouts/Layout.astro'
-import Company from '@/components/company/Company.astro'
+import { client } from '@/lib/api/request'
+import CompanyEditor from '@/components/editor/CompanyEditor.svelte'
 import OtherCompanies from '@/components/company/OtherCompanies.svelte'
 import { buttonVariants } from '@/components/ui/button'
-import { client } from '@/lib/api/request'
 
 const { id = '' } = Astro.params
-
-// Assume the wikidataId to be in the final part of the URL
 const wikidataId = id.split('-').at(-1) ?? ''
+
 const company = wikidataId.startsWith('Q')
   ? await client
       .GET('/companies/{wikidataId}', {
@@ -18,20 +18,21 @@ const company = wikidataId.startsWith('Q')
       })
       .then(({ data }) => data)
   : null
+
+const scope3CategoryStrings = await getEntry(
+  'contentStrings',
+  'scope3Categories',
+)?.then((res) => res.data)
+
+const title = `Redigera ${company ? company.name : 'företag'}`
 ---
 
-<Layout title={company?.name}>
+<Layout {title}>
   {
     company ? (
-      <Company {company} />
-    ) : (
-      <div class="mx-auto flex max-w-screen-md flex-col items-start p-4">
-        <p class="py-4">
-          Vi hittade inget företag med den länken, men testa gärna att söka här
-          nedanför!
-        </p>
-
-        <div class="grid w-full place-items-center">
+      <div class="container mx-auto max-w-screen-lg px-4 py-8">
+        <CompanyEditor client:load {company} {scope3CategoryStrings} />
+        <div class="mt-16 grid w-full place-items-center">
           <OtherCompanies client:load />
 
           <a
@@ -45,6 +46,10 @@ const company = wikidataId.startsWith('Q')
             Tillbaka till alla företag
           </a>
         </div>
+      </div>
+    ) : (
+      <div class="container mx-auto max-w-4xl px-4 py-8">
+        <p>Företaget hittades inte.</p>
       </div>
     )
   }
