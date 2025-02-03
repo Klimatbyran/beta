@@ -1,7 +1,7 @@
 import createClient from 'openapi-fetch'
 import type { paths } from './api-types'
 
-const baseUrl = 'https://stage-api.klimatkollen.se'
+const baseUrl = 'https://stage-api.klimatkollen.se/api'
 const { GET } = createClient<paths>({ baseUrl })
 
 // Cache configuration
