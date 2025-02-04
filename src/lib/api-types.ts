@@ -35,9 +35,7 @@ export interface paths {
                             name: string;
                             description: string | null;
                             reportingPeriods: {
-                                /** Format: date-time */
                                 startDate: string;
-                                /** Format: date-time */
                                 endDate: string;
                                 reportURL: string | null;
                                 emissions: {
@@ -253,9 +251,7 @@ export interface paths {
                             description: string | null;
                             reportingPeriods: {
                                 id: string;
-                                /** Format: date-time */
                                 startDate: string;
-                                /** Format: date-time */
                                 endDate: string;
                                 reportURL: string | null;
                                 emissions: {
@@ -268,7 +264,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -288,7 +283,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -310,7 +304,6 @@ export interface paths {
                                                 id: string;
                                                 comment: string | null;
                                                 source: string | null;
-                                                /** Format: date-time */
                                                 updatedAt: string;
                                                 user: {
                                                     name: string;
@@ -328,7 +321,6 @@ export interface paths {
                                                 id: string;
                                                 comment: string | null;
                                                 source: string | null;
-                                                /** Format: date-time */
                                                 updatedAt: string;
                                                 user: {
                                                     name: string;
@@ -343,7 +335,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -361,7 +352,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -379,7 +369,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -397,7 +386,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -419,7 +407,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -437,7 +424,6 @@ export interface paths {
                                             id: string;
                                             comment: string | null;
                                             source: string | null;
-                                            /** Format: date-time */
                                             updatedAt: string;
                                             user: {
                                                 name: string;
@@ -475,7 +461,6 @@ export interface paths {
                                     id: string;
                                     comment: string | null;
                                     source: string | null;
-                                    /** Format: date-time */
                                     updatedAt: string;
                                     user: {
                                         name: string;
@@ -495,7 +480,6 @@ export interface paths {
                                     id: string;
                                     comment: string | null;
                                     source: string | null;
-                                    /** Format: date-time */
                                     updatedAt: string;
                                     user: {
                                         name: string;
@@ -515,7 +499,6 @@ export interface paths {
                                     id: string;
                                     comment: string | null;
                                     source: string | null;
-                                    /** Format: date-time */
                                     updatedAt: string;
                                     user: {
                                         name: string;
@@ -624,7 +607,7 @@ export interface paths {
         };
         /**
          * Get all municipalities
-         * @description Retrieve a list of all municipalities with data about their emissions, carbon budget, climate plans, bike infrastructure, procurements and much more.
+         * @description Retrieve a list of all municipalities with data about their emissions, carbon budget, climate plans, bike infrastructure, procurements, and much more.
          */
         get: {
             parameters: {
@@ -644,29 +627,14 @@ export interface paths {
                         "application/json": {
                             name: string;
                             region: string;
-                            emissions: {
-                                [key: string]: number;
-                            };
                             budget: number;
-                            emissionBudget: {
-                                [key: string]: number;
-                            };
-                            approximatedHistoricalEmission: {
-                                [key: string]: number;
-                            };
                             totalApproximatedHistoricalEmission: number;
-                            trend: {
-                                [key: string]: number;
-                            };
                             trendEmission: number;
                             historicalEmissionChangePercent: number;
                             neededEmissionChangePercent: number;
                             hitNetZero: string;
                             budgetRunsOut: string;
                             electricCarChangePercent: number;
-                            electricCarChangeYearly: {
-                                [key: string]: number;
-                            };
                             climatePlanLink: string;
                             climatePlanYear: "Saknar plan" | number;
                             climatePlanComment: string;
@@ -675,6 +643,26 @@ export interface paths {
                             electricVehiclePerChargePoints: number;
                             procurementScore: string;
                             procurementLink: string;
+                            emissions: {
+                                year: string;
+                                value: number;
+                            }[];
+                            emissionBudget: {
+                                year: string;
+                                value: number;
+                            }[];
+                            approximatedHistoricalEmission: {
+                                year: string;
+                                value: number;
+                            }[];
+                            trend: {
+                                year: string;
+                                value: number;
+                            }[];
+                            electricCarChangeYearly: {
+                                year: string;
+                                value: number;
+                            }[];
                         }[];
                     };
                 };
@@ -719,29 +707,14 @@ export interface paths {
                         "application/json": {
                             name: string;
                             region: string;
-                            emissions: {
-                                [key: string]: number;
-                            };
                             budget: number;
-                            emissionBudget: {
-                                [key: string]: number;
-                            };
-                            approximatedHistoricalEmission: {
-                                [key: string]: number;
-                            };
                             totalApproximatedHistoricalEmission: number;
-                            trend: {
-                                [key: string]: number;
-                            };
                             trendEmission: number;
                             historicalEmissionChangePercent: number;
                             neededEmissionChangePercent: number;
                             hitNetZero: string;
                             budgetRunsOut: string;
                             electricCarChangePercent: number;
-                            electricCarChangeYearly: {
-                                [key: string]: number;
-                            };
                             climatePlanLink: string;
                             climatePlanYear: "Saknar plan" | number;
                             climatePlanComment: string;
@@ -750,6 +723,26 @@ export interface paths {
                             electricVehiclePerChargePoints: number;
                             procurementScore: string;
                             procurementLink: string;
+                            emissions: {
+                                year: string;
+                                value: number;
+                            }[];
+                            emissionBudget: {
+                                year: string;
+                                value: number;
+                            }[];
+                            approximatedHistoricalEmission: {
+                                year: string;
+                                value: number;
+                            }[];
+                            trend: {
+                                year: string;
+                                value: number;
+                            }[];
+                            electricCarChangeYearly: {
+                                year: string;
+                                value: number;
+                            }[];
                         };
                     };
                 };
@@ -955,6 +948,11 @@ export interface paths {
                             emissions?: {
                                 scope1?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 scope2?: {
                                     /** @description Market-based scope 2 emissions */
@@ -963,24 +961,54 @@ export interface paths {
                                     lb?: number;
                                     /** @description Unspecified Scope 2 emissions */
                                     unknown?: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 scope3?: {
                                     categories?: {
                                         category: number;
                                         total: number;
+                                        /**
+                                         * @default tCO2e
+                                         * @enum {string}
+                                         */
+                                        unit?: "tCO2e" | "tCO2";
                                     }[];
                                     statedTotalEmissions?: {
                                         total: number;
+                                        /**
+                                         * @default tCO2e
+                                         * @enum {string}
+                                         */
+                                        unit?: "tCO2e" | "tCO2";
                                     };
                                 };
                                 biogenic?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 statedTotalEmissions?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                                 scope1And2?: {
                                     total: number;
+                                    /**
+                                     * @default tCO2e
+                                     * @enum {string}
+                                     */
+                                    unit?: "tCO2e" | "tCO2";
                                 };
                             };
                             economy?: {
