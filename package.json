@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-api": "openapi-typescript https://api.klimatkollen.se/api/openapi.json -o src/lib/api-types.ts"
+    "generate-api": "node scripts/generate-api.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -48,7 +48,7 @@
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^11.18.0",
     "input-otp": "^1.2.4",
-    "lucide-react": "^0.446.0",
+    "lucide-react": "^0.474.0",
     "next-themes": "^0.3.0",
     "openapi-fetch": "^0.9.3",
     "openapi-typescript": "^7.5.2",
