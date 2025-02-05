@@ -1,0 +1,7 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: frontend-certificate
+spec:
+  domains:
+    - v3.klimatkollen.se

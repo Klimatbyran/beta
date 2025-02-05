@@ -6,3 +6,5 @@ resources:
   - service.yaml
   - ingress.yaml
   - configmap.yaml
+  - certificate.yaml
+  - frontend-config.yaml
