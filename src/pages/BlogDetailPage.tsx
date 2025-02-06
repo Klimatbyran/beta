@@ -1,50 +1,80 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { CalendarDays, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks"; // Converts single newlines to line breaks
+import remarkMath from "remark-math"; // Enables math notation in Markdown
+import rehypeKatex from "rehype-katex"; // Renders math notation
+import rehypeRaw from "rehype-raw";
 import { BlogPostMeta, blogMetadata } from "../lib/blog/blogPostsList";
 
-// Import Markdown files dynamically
-const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md");
+// Import Markdown files dynamically with `eager: true`
+const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md", {
+  as: "raw",
+  eager: true,
+});
 
 export function BlogDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const [blogPost, setBlogPost] = useState<{ metadata: BlogPostMeta; content: string } | null>(null);
+  const [blogPost, setBlogPost] = useState<{
+    metadata: BlogPostMeta;
+    content: string;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const location = useLocation(); // Detects route changes
+
   useEffect(() => {
-    async function fetchBlog() {
-      if (!id) return;
-      
-      const filePath = `/src/content/blog/${id}.md`;
+    window.scrollTo(0, 0); // Scrolls to top when route changes
+  }, [location.pathname]);
 
-      // Check if the Markdown file exists
-      if (!markdownFiles[filePath]) {
-        setBlogPost(null);
-        setLoading(false);
-        return;
-      }
+  useEffect(() => {
+    if (!id) return;
 
-      // Fetch and parse the Markdown file
-      const module = await markdownFiles[filePath]();
-      const content = (module as { default: string }).default; // Markdown content
+    // Locate the Markdown file using the post ID
+    const filePath = `/src/lib/blog/posts/${id}.md`;
+    const rawMarkdown = markdownFiles[filePath];
 
-      // Find metadata from blogMetadata
-      const metadata = blogMetadata.find((post) => post.id === id);
-      if (!metadata) {
-        setBlogPost(null);
-        setLoading(false);
-        return;
-      }
+    console.log("📂 Available Markdown Files:", Object.keys(markdownFiles));
+    console.log("🔍 Expected file path:", filePath);
+    console.log("🔍 Found file:", rawMarkdown);
 
-      setBlogPost({ metadata, content });
+    if (!rawMarkdown) {
+      console.error(`❌ Markdown file not found: ${filePath}`);
+      setBlogPost(null);
       setLoading(false);
+      return;
     }
 
-    fetchBlog();
+    // Extract metadata using a simple regex (avoiding gray-matter)
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
+    const match = rawMarkdown.match(frontmatterRegex);
+
+    if (!match) {
+      console.error(`❌ No frontmatter found in: ${filePath}`);
+      setBlogPost(null);
+      setLoading(false);
+      return;
+    }
+
+    // Remove frontmatter from content
+    const content = rawMarkdown.replace(frontmatterRegex, "").trim();
+
+    // Find metadata from the predefined list
+    const metadata = blogMetadata.find((post) => post.id === id);
+
+    if (!metadata) {
+      console.error(`❌ Metadata not found for post: ${id}`);
+      setBlogPost(null);
+      setLoading(false);
+      return;
+    }
+
+    setBlogPost({ metadata, content });
+    setLoading(false);
   }, [id]);
 
   if (loading) return <div>Loading...</div>;
@@ -54,7 +84,7 @@ export function BlogDetailPage() {
   const relatedPosts = blogPost.metadata.relatedPosts
     ? blogPost.metadata.relatedPosts
         .map((relatedId) => blogMetadata.find((post) => post.id === relatedId))
-        .filter((post): post is BlogPostMeta => post !== undefined) // Remove undefined values
+        .filter((post): post is BlogPostMeta => post !== undefined)
     : [];
 
   return (
@@ -81,7 +111,9 @@ export function BlogDetailPage() {
           </span>
           <div className="flex items-center gap-2 text-grey text-sm">
             <CalendarDays className="w-4 h-4" />
-            <span>{new Date(blogPost.metadata.date).toLocaleDateString("sv-SE")}</span>
+            <span>
+              {new Date(blogPost.metadata.date).toLocaleDateString("sv-SE")}
+            </span>
           </div>
           <div className="flex items-center gap-2 text-grey text-sm">
             <Clock className="w-4 h-4" />
@@ -120,11 +152,19 @@ export function BlogDetailPage() {
 
       {/* Content */}
       <div className="prose prose-invert max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
+          rehypePlugins={[rehypeRaw, rehypeKatex]}
+          className="prose prose-invert max-w-none"
+          components={{
+            img: ({ node, ...props }) => (
+              <img {...props} className="w-2/3 max-w-lg mx-auto rounded-lg shadow-lg" />
+            ),
+          }}
+        >
           {blogPost.content}
         </ReactMarkdown>
       </div>
-
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <div className="space-y-8">
@@ -150,19 +190,22 @@ export function BlogDetailPage() {
                     </span>
                     <div className="flex items-center gap-2 text-grey text-sm">
                       <CalendarDays className="w-4 h-4" />
-                      <span>{new Date(post.date).toLocaleDateString("sv-SE")}</span>
+                      <span>
+                        {new Date(post.date).toLocaleDateString("sv-SE")}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 text-grey text-sm">
                       <Clock className="w-4 h-4" />
                       <span>{post.readTime}</span>
                     </div>
                   </div>
-                  <Text variant="h4" className="group-hover:text-blue-2 transition-colors">
+                  <Text
+                    variant="h4"
+                    className="group-hover:text-blue-2 transition-colors"
+                  >
                     {post.title}
                   </Text>
-                  <Text className="text-grey">
-                    {post.excerpt}
-                  </Text>
+                  <Text className="text-grey">{post.excerpt}</Text>
                 </div>
               </Link>
             ))}

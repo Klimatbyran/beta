@@ -2,13 +2,9 @@
 id: "ai-process-del-1"
 ---
 
-# Så kan AI hjälpa oss förstå företagens klimatdata. Del 1 – Översikt
-
-> Vi på Klimatbyrån har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!
-
 ## Vad är problemet med klimatdata?
 
-[Screenshot av några av de mest kluriga sidorna i företagens rapportering. ]
+[Screenshot av några av de mest kluriga sidorna i företagens rapportering.]
 
 Inom EU finns det numera lagstiftning (CSRD) för hur företag måste rapportera sina utsläpp, helst enligt GHG-protokollet. Dessa ska rapporteras inom tre olika så kallade scopes. Scope 1 är alla direkta utsläpp från källor som företaget äger eller kontrollerar – det handlar om utsläpp från egna fabriker och fordon. Scope 2 är inköpt energi som el och värme, som kan rapporteras i antingen marknadsbaserad redovisning (där tex solceller minskar utsläppen) eller platsbaserad (där man bara tittar på KWh och tar ett genomsnitt av utsläppen baserad på den platsen per KWh).
 
