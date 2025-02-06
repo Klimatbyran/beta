@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import { BlogPostMeta, blogMetadata } from "../lib/blog/blogPostsList";
 
 // Import Markdown files dynamically
-const markdownFiles = import.meta.glob("/src/content/blog/*.md");
+const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md");
 
 export function BlogDetailPage() {
   const { id } = useParams<{ id: string }>();
