@@ -1,6 +1,6 @@
 import { useParams, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { CalendarDays, Clock, ArrowLeft, Share2 } from "lucide-react";
+import { CalendarDays, Clock, ArrowLeft, Share2, Check } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
@@ -11,7 +11,7 @@ import rehypeKatex from "rehype-katex"; // Renders math notation
 import rehypeRaw from "rehype-raw";
 import { BlogPostMeta, blogMetadata } from "../lib/blog/blogPostsList";
 
-// Import Markdown files dynamically with `eager: true`
+// Import Markdown files
 const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md", {
   as: "raw",
   eager: true,
@@ -24,7 +24,7 @@ export function BlogDetailPage() {
     content: string;
   } | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [copied, setCopied] = useState(false);
   const location = useLocation(); // Detects route changes
 
   useEffect(() => {
@@ -87,6 +87,34 @@ export function BlogDetailPage() {
         .filter((post): post is BlogPostMeta => post !== undefined)
     : [];
 
+  /**
+   * Share function
+   */
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: blogPost.metadata.title,
+          text: "Kolla in det här blogginlägget!",
+          url: shareUrl,
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset after 2 sec
+      } catch (error) {
+        console.error("Error copying to clipboard:", error);
+      }
+    }
+  };
+
   return (
     <div className="max-w-[1200px] mx-auto space-y-16">
       {/* Navigation */}
@@ -97,9 +125,18 @@ export function BlogDetailPage() {
             Tillbaka
           </a>
         </Button>
-        <Button variant="ghost" size="sm" className="gap-2">
-          <Share2 className="w-4 h-4" />
-          Dela
+        <Button
+          variant="ghost"
+          size="sm"
+          className="gap-2"
+          onClick={handleShare}
+        >
+          {copied ? (
+            <Check className="w-4 h-4 text-green-500" />
+          ) : (
+            <Share2 className="w-4 h-4" />
+          )}
+          {copied ? "Länk kopierad!" : "Dela"}
         </Button>
       </div>
 
@@ -158,7 +195,7 @@ export function BlogDetailPage() {
           className="prose prose-invert max-w-none"
           components={{
             img: ({ node, ...props }) => (
-              <img {...props} className="w-2/3 max-w-lg mx-auto rounded-lg shadow-lg" />
+              <img {...props} className="w-2/3 mx-auto rounded-lg shadow-lg" />
             ),
           }}
         >
