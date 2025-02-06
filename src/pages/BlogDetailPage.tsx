@@ -5,9 +5,9 @@ import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks"; // Converts single newlines to line breaks
-import remarkMath from "remark-math"; // Enables math notation in Markdown
-import rehypeKatex from "rehype-katex"; // Renders math notation
+import remarkBreaks from "remark-breaks";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import { BlogPostMeta, blogMetadata } from "../lib/blog/blogPostsList";
 
@@ -25,22 +25,16 @@ export function BlogDetailPage() {
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const location = useLocation(); // Detects route changes
+  const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scrolls to top when route changes
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   useEffect(() => {
     if (!id) return;
-
-    // Locate the Markdown file using the post ID
     const filePath = `/src/lib/blog/posts/${id}.md`;
     const rawMarkdown = markdownFiles[filePath];
-
-    console.log("📂 Available Markdown Files:", Object.keys(markdownFiles));
-    console.log("🔍 Expected file path:", filePath);
-    console.log("🔍 Found file:", rawMarkdown);
 
     if (!rawMarkdown) {
       console.error(`❌ Markdown file not found: ${filePath}`);
@@ -49,21 +43,7 @@ export function BlogDetailPage() {
       return;
     }
 
-    // Extract metadata using a simple regex (avoiding gray-matter)
-    const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
-    const match = rawMarkdown.match(frontmatterRegex);
-
-    if (!match) {
-      console.error(`❌ No frontmatter found in: ${filePath}`);
-      setBlogPost(null);
-      setLoading(false);
-      return;
-    }
-
-    // Remove frontmatter from content
-    const content = rawMarkdown.replace(frontmatterRegex, "").trim();
-
-    // Find metadata from the predefined list
+    const extractedMetadata = extractMetadata(rawMarkdown);
     const metadata = blogMetadata.find((post) => post.id === id);
 
     if (!metadata) {
@@ -73,30 +53,22 @@ export function BlogDetailPage() {
       return;
     }
 
-    setBlogPost({ metadata, content });
+    setBlogPost({ metadata, content: extractedMetadata });
     setLoading(false);
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!blogPost) return <div>Post not found</div>;
+  const extractMetadata = (rawMarkdown: string) => {
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
+    return rawMarkdown.replace(frontmatterRegex, "").trim();
+  };
 
-  // Get related posts metadata
-  const relatedPosts = blogPost.metadata.relatedPosts
-    ? blogPost.metadata.relatedPosts
-        .map((relatedId) => blogMetadata.find((post) => post.id === relatedId))
-        .filter((post): post is BlogPostMeta => post !== undefined)
-    : [];
-
-  /**
-   * Share function
-   */
   const handleShare = async () => {
     const shareUrl = window.location.href;
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: blogPost.metadata.title,
+          title: blogPost?.metadata.title,
           text: "Kolla in det här blogginlägget!",
           url: shareUrl,
         });
@@ -104,16 +76,24 @@ export function BlogDetailPage() {
         console.error("Error sharing:", error);
       }
     } else {
-      // Fallback: Copy to clipboard
       try {
         await navigator.clipboard.writeText(shareUrl);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000); // Reset after 2 sec
+        setTimeout(() => setCopied(false), 2000);
       } catch (error) {
         console.error("Error copying to clipboard:", error);
       }
     }
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (!blogPost) return <div>Post not found</div>;
+
+  const relatedPosts = blogPost.metadata.relatedPosts
+    ? blogPost.metadata.relatedPosts
+        .map((relatedId) => blogMetadata.find((post) => post.id === relatedId))
+        .filter(Boolean)
+    : [];
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-16">
@@ -192,60 +172,66 @@ export function BlogDetailPage() {
         <ReactMarkdown
           remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
           rehypePlugins={[rehypeRaw, rehypeKatex]}
-          className="prose prose-invert max-w-none"
           components={{
             img: ({ node, ...props }) => (
-              <img {...props} className="w-2/3 mx-auto rounded-lg shadow-lg" />
+              <img
+                {...props}
+                className="w-2/3 mx-auto shadow-lg !rounded-lg !overflow-hidden"
+              />
             ),
           }}
         >
           {blogPost.content}
         </ReactMarkdown>
       </div>
+
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <div className="space-y-8">
           <Text variant="h3">Relaterade artiklar</Text>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {relatedPosts.map((post) => (
-              <Link
-                key={post.id}
-                to={`/insights/${post.id}`}
-                className="group bg-black-2 rounded-level-2 overflow-hidden transition-transform hover:scale-[1.02]"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-8 space-y-4">
-                  <div className="flex items-center gap-4">
-                    <span className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm">
-                      {post.category}
-                    </span>
-                    <div className="flex items-center gap-2 text-grey text-sm">
-                      <CalendarDays className="w-4 h-4" />
-                      <span>
-                        {new Date(post.date).toLocaleDateString("sv-SE")}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-grey text-sm">
-                      <Clock className="w-4 h-4" />
-                      <span>{post.readTime}</span>
-                    </div>
-                  </div>
-                  <Text
-                    variant="h4"
-                    className="group-hover:text-blue-2 transition-colors"
+            {relatedPosts.map(
+              (post) =>
+                post && (
+                  <Link
+                    key={post.id}
+                    to={`/insights/${post.id}`}
+                    className="group bg-black-2 rounded-level-2 overflow-hidden transition-transform hover:scale-[1.02]"
                   >
-                    {post.title}
-                  </Text>
-                  <Text className="text-grey">{post.excerpt}</Text>
-                </div>
-              </Link>
-            ))}
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-8 space-y-4">
+                      <div className="flex items-center gap-4">
+                        <span className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm">
+                          {post.category}
+                        </span>
+                        <div className="flex items-center gap-2 text-grey text-sm">
+                          <CalendarDays className="w-4 h-4" />
+                          <span>
+                            {new Date(post.date).toLocaleDateString("sv-SE")}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-grey text-sm">
+                          <Clock className="w-4 h-4" />
+                          <span>{post.readTime}</span>
+                        </div>
+                      </div>
+                      <Text
+                        variant="h4"
+                        className="group-hover:text-blue-2 transition-colors"
+                      >
+                        {post.title}
+                      </Text>
+                      <Text className="text-grey">{post.excerpt}</Text>
+                    </div>
+                  </Link>
+                )
+            )}
           </div>
         </div>
       )}
