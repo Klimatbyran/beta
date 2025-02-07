@@ -8,6 +8,7 @@ import {
   Area,
   Legend,
   Tooltip,
+  TooltipProps,
 } from "recharts";
 
 interface DataPoint {
@@ -15,7 +16,7 @@ interface DataPoint {
   total?: number;
   trend?: number;
   paris?: number;
-  gap?: number;
+  gap?: number; // fixme add to graph
 }
 
 interface MunicipalityEmissionsGraphProps {
