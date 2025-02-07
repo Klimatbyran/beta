@@ -8,7 +8,6 @@ import {
   Area,
   Legend,
   Tooltip,
-  TooltipProps,
 } from "recharts";
 
 interface DataPoint {
@@ -77,6 +76,9 @@ export const MunicipalityEmissionsGraph: FC<
             axisLine={false}
             tick={{ fontSize: 12 }}
             padding={{ left: 0, right: 0 }}
+            domain={[1990, 2050]}
+            ticks={[1990, 2015, 2020, 2030, 2040, 2050]} // fixme find better solution where years are not hardcoded
+            tickFormatter={(year) => year}
           />
           <YAxis
             stroke="#878787"
