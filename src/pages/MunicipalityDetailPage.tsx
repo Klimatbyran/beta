@@ -1,245 +1,221 @@
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { Info, Building2, TreePine, ArrowUpRight } from 'lucide-react';
+import { useParams } from "react-router-dom";
 import { Text } from "@/components/ui/text";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { EmissionsHistory } from '@/components/companies/detail/EmissionsHistory';
-import { KeyMetricsComparison } from '@/components/KeyMetricsComparison';
-
-/**
- * MOCKED DATA TO REPLACE BEFORE LAUNCH:
- * 
- * 1. Municipality Details:
- *    - Replace municipalityData object with real API data including:
- *      - Basic info (name, description, rank)
- *      - Emissions data (historical, current, target)
- *      - Target dates
- *      - Yearly reduction rates
- * 
- * 2. Metrics Data:
- *    - Replace metrics array with real data for:
- *      - Bicycle paths per capita
- *      - Charging stations
- *      - Other environmental metrics
- *    - Update sources and years to match actual data sources
- * 
- * 3. Report Links:
- *    - Add real links to climate plans and action documents
- *    - Ensure proper error handling for missing documents
- */
-
-const municipalityData = {
-  id: "1",
-  name: "Alingsås",
-  description: "Alingsås är en kommun i Västra Götalands län med cirka 40 000 invånare. Kommunen har ett aktivt klimatarbete och har antagit ambitiösa mål för att minska sina utsläpp.",
-  rank: "124/290",
-  targetDate: "26 feb 2028",
-  emissions: {
-    historical: 915.7,
-    current: 1086.2,
-    target: 256.7,
-  },
-  yearlyReduction: -3,
-  reportingPeriods: [
-    {
-      startDate: "2023-01-01",
-      endDate: "2023-12-31",
-      emissions: {
-        calculatedTotalEmissions: 1086.2,
-      }
-    },
-    {
-      startDate: "2022-01-01",
-      endDate: "2022-12-31",
-      emissions: {
-        calculatedTotalEmissions: 1120.4,
-      }
-    },
-    {
-      startDate: "2021-01-01",
-      endDate: "2021-12-31",
-      emissions: {
-        calculatedTotalEmissions: 1156.8,
-      }
-    }
-  ],
-  metrics: [
-    {
-      name: "Cykelvägar",
-      icon: <TreePine className="w-6 h-6 text-white" />,
-      category: "Transport",
-      metrics: {
-        local: { value: "2.1", label: "Meter per invånare" },
-        national: { value: "1.8", label: "Rikssnitt" },
-        target: { value: "3.0", label: "Målbild 2030" },
-      },
-      source: "Trafikverket",
-      year: 2023,
-    },
-    {
-      name: "Laddstolpar",
-      icon: <Building2 className="w-6 h-6 text-white" />,
-      category: "Infrastruktur",
-      metrics: {
-        local: { value: "12.4", label: "Per 1000 invånare" },
-        national: { value: "8.2", label: "Rikssnitt" },
-        target: { value: "25.0", label: "Målbild 2030" },
-      },
-      source: "Power Circle",
-      year: 2023,
-    }
-  ]
-};
+import { useMunicipalityDetails } from "@/hooks/useMunicipalityDetails";
 
 export function MunicipalityDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const [selectedYear, setSelectedYear] = useState<string>('latest');
+  const { municipality, loading, error } = useMunicipalityDetails(id || "");
 
-  const sortedPeriods = [...municipalityData.reportingPeriods].sort(
-    (a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
-  );
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error loading data</Text>;
+  if (!municipality) return <Text>No data available</Text>;
 
-  const selectedPeriod = selectedYear === 'latest' 
-    ? sortedPeriods[0]
-    : sortedPeriods.find(p => new Date(p.endDate).getFullYear().toString() === selectedYear) || sortedPeriods[0];
-
-  const periodYear = new Date(selectedPeriod.endDate).getFullYear();
+  const requirementsInProcurement =
+    municipality.procurementScore === "2"
+      ? "Ja"
+      : municipality.procurementScore === "1"
+      ? "Kanske"
+      : "Nej";
 
   return (
     <div className="space-y-16 max-w-[1400px] mx-auto">
       {/* Municipality Header */}
       <div className="bg-black-2 rounded-level-1 p-16">
-        <div className="flex items-start justify-between mb-12">
-          <div className="space-y-4">
-            <Text variant="display">{municipalityData.name}</Text>
-            <Text variant="muted" className="text-lg max-w-3xl">
-              {municipalityData.description}
-            </Text>
-          </div>
-          <div className="w-16 h-16 rounded-full bg-[#FDE7CE]/30 flex items-center justify-center">
-            <TreePine className="w-8 h-8 text-[#FDE7CE]" />
-          </div>
-        </div>
+        <Text variant="h1">{municipality.name}</Text>
+        <Text variant="body">{municipality.region}</Text>
 
-        <div className="grid grid-cols-3 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mt-8">
           <div>
-            <Text variant="muted" className="mb-2">Ranking</Text>
-            <Text variant="large">
-              {municipalityData.rank}
+            <Text variant="body">Årlig utsläppsförändring sedan 2015</Text>
+            <Text
+              variant="h2"
+              className={
+                Math.abs(municipality.historicalEmissionChangePercent) >=
+                municipality.neededEmissionChangePercent
+                  ? "text-green-3"
+                  : "text-red-500"
+              }
+            >
+              {municipality.historicalEmissionChangePercent.toFixed(1)}%
             </Text>
           </div>
-          
           <div>
-            <Text variant="muted" className="mb-2">Koldioxidbudget tar slut</Text>
-            <Text variant="large">
-              {municipalityData.targetDate}
+            <Text variant="body">
+              Utsläppsminskning för att klara Parisavtalet
+            </Text>
+            <Text variant="h2" className="text-green-3">
+              {-municipality.neededEmissionChangePercent.toFixed(1)}%
             </Text>
           </div>
-          
+
           <div>
-            <Text variant="muted" className="mb-2">Årlig minskning</Text>
-            <Text variant="large" className={municipalityData.yearlyReduction > 0 ? "text-green-3" : "text-pink-3"}>
-              {municipalityData.yearlyReduction}%
+            <Text variant="body">
+              Konsumtionsutsläpp per invånare (ton CO₂)
+            </Text>
+            <Text
+              variant="h2"
+              className={
+                municipality.totalConsumptionEmission >= 7000
+                  ? "text-red-700"
+                  : municipality.totalConsumptionEmission >= 6000
+                  ? "text-red-500"
+                  : "text-red-300"
+              }
+            >
+              {(municipality.totalConsumptionEmission / 1000).toFixed(1)}
             </Text>
           </div>
         </div>
       </div>
 
-      {/* Year Selector and Total Emissions */}
       <div className="bg-black-2 rounded-level-1 p-16">
-        <div className="flex items-baseline justify-between mb-12">
-          <div className="flex items-baseline gap-4">
-            <Text variant="h3">Totala utsläpp</Text>
-            <Text variant="muted">(tusen ton CO₂e)</Text>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Info className="w-4 h-4 text-grey" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Territoriella utsläpp inom kommunens gränser</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+        <Text variant="h3">Framtida utsläpp</Text>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-8">
+          <div>
+            <Text variant="body">Koldioxidbudget tar slut</Text>
+            <Text
+              variant="h2"
+              className={
+                municipality.budgetRunsOut === "Håller budget"
+                  ? "text-blue-3"
+                  : "text-red-500"
+              }
+            >
+              {municipality.budgetRunsOut.toString()}
+            </Text>
           </div>
-
-          <Select 
-            value={selectedYear} 
-            onValueChange={setSelectedYear}
-          >
-            <SelectTrigger className="w-[180px] bg-black-1">
-              <SelectValue placeholder="Välj år" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="latest">Senaste året</SelectItem>
-              {sortedPeriods.map(period => {
-                const year = new Date(period.endDate).getFullYear().toString();
-                return (
-                  <SelectItem key={year} value={year}>
-                    {year}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
+          <div>
+            <Text variant="body">Når nettonoll</Text>
+            <Text
+              variant="h2"
+              className={
+                municipality.hitNetZero === "Aldrig" ||
+                new Date(municipality.hitNetZero) > new Date("2050-01-01")
+                  ? "text-red-500"
+                  : "text-blue-3"
+              }
+            >
+              {municipality.hitNetZero.toString()}
+            </Text>
+          </div>
         </div>
-        
-        <Text className="text-[120px] font-light text-orange-2 tracking-tighter leading-none">
-          {selectedPeriod.emissions.calculatedTotalEmissions.toLocaleString()}
-        </Text>
       </div>
 
-      {/* Emissions History */}
-      <EmissionsHistory 
-        reportingPeriods={municipalityData.reportingPeriods}
-        onYearSelect={setSelectedYear}
-      />
+      <div className="bg-black-2 rounded-level-1 p-16">
+        <Text variant="h3">Klimatplan</Text>
+        <Text variant="body">År: {municipality.climatePlanYear}</Text>
+        <Text variant="body">{municipality.climatePlanComment}</Text>
+        {municipality.climatePlanLink !== "Saknar plan" && (
+          <a
+            href={municipality.climatePlanLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-3 underline"
+          >
+            Läs mer
+          </a>
+        )}
+      </div>
 
-      {/* Key Metrics */}
-      <KeyMetricsComparison 
-        title="Nyckeltal"
-        data={municipalityData.metrics}
-      />
-
-      {/* Action Links */}
-      <div className="grid grid-cols-2 gap-8">
-        <a 
-          href="#klimatplan"
-          className="group bg-black-2 rounded-level-2 p-8 hover:bg-black-1 transition-colors"
-        >
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <Text variant="h4">Klimatplan</Text>
-              <Text className="text-grey">Se kommunens klimatplan och åtgärder</Text>
-            </div>
-            <ArrowUpRight className="w-6 h-6 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+      {/* Electric Vehicle Information */}
+      <div className="bg-black-2 rounded-level-1 p-16">
+        <Text variant="h3">Elfordon</Text>
+        <div className="grid grid-cols-2 gap-16 mt-8">
+          <div>
+            <Text variant="body">Förändring i elbilsandel</Text>
+            <Text
+              variant="h2"
+              className={
+                municipality.electricCarChangePercent * 100 >= 8
+                  ? "text-blue-3"
+                  : municipality.electricCarChangePercent * 100 >= 7
+                  ? "text-orange-2"
+                  : municipality.electricCarChangePercent * 100 >= 6
+                  ? "text-orange-500"
+                  : municipality.electricCarChangePercent * 100 >= 5
+                  ? "text-red-300"
+                  : municipality.electricCarChangePercent * 100 >= 4
+                  ? "text-red-500"
+                  : "text-red-700"
+              }
+            >
+              {(municipality.electricCarChangePercent * 100).toFixed(1)}%
+            </Text>
           </div>
-        </a>
-
-        <a 
-          href="#atgarder"
-          className="group bg-black-2 rounded-level-2 p-8 hover:bg-black-1 transition-colors"
-        >
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <Text variant="h4">Åtgärder</Text>
-              <Text className="text-grey">Utforska kommunens klimatåtgärder</Text>
-            </div>
-            <ArrowUpRight className="w-6 h-6 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          <div>
+            <Text variant="body">Elbilar per laddpunkt</Text>
+            <Text
+              variant="h2"
+              className={
+                !municipality.electricVehiclePerChargePoints
+                  ? "text-red-700"
+                  : municipality.electricVehiclePerChargePoints <= 10
+                  ? "text-blue-3"
+                  : municipality.electricVehiclePerChargePoints <= 20
+                  ? "text-orange-2"
+                  : municipality.electricVehiclePerChargePoints <= 30
+                  ? "text-orange-500"
+                  : "text-red-500"
+              }
+            >
+              {municipality.electricVehiclePerChargePoints
+                ? municipality.electricVehiclePerChargePoints.toFixed(1)
+                : "Inga laddpunkter"}
+            </Text>
           </div>
-        </a>
+        </div>
+      </div>
+
+      <div className="bg-black-2 rounded-level-1 p-16">
+        <Text variant="h3">Övriga nyckeltal</Text>
+        <div className="grid grid-cols-2 gap-16 mt-8">
+          <div>
+            <Text variant="body">Cykelmeter per capita</Text>
+            <Text
+              variant="h2"
+              className={
+                municipality.bicycleMetrePerCapita >= 5
+                  ? "text-blue-3"
+                  : municipality.bicycleMetrePerCapita >= 4
+                  ? "text-orange-2"
+                  : municipality.bicycleMetrePerCapita >= 3
+                  ? "text-orange-500"
+                  : municipality.bicycleMetrePerCapita >= 2
+                  ? "text-red-300"
+                  : municipality.bicycleMetrePerCapita >= 1
+                  ? "text-red-500"
+                  : "text-red-700"
+              }
+            >
+              {municipality.bicycleMetrePerCapita.toFixed(1)}
+            </Text>
+          </div>
+          <div>
+            <Text variant="body">Klimatkrav i upphandlingar</Text>
+            <Text
+              variant="h2"
+              className={
+                municipality.procurementScore === "2"
+                  ? "text-blue-3"
+                  : municipality.procurementScore === "1"
+                  ? "text-orange-2"
+                  : "text-red-500"
+              }
+            >
+              {requirementsInProcurement}
+            </Text>
+            {municipality.procurementLink && (
+              <a
+                href={municipality.procurementLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                Läs mer
+              </a>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
