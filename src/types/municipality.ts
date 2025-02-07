@@ -10,7 +10,7 @@ export type Municipality = {
   historicalEmissionChangePercent: number;
   neededEmissionChangePercent: number;
   budgetRunsOut: Date | string;
-  climatePlanYear: number;
+  climatePlanYear: number | string;
   climatePlanComment: string;
   climatePlanLink: string;
   electricVehiclePerChargePoints: number;
