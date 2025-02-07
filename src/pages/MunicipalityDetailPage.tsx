@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Text } from "@/components/ui/text";
 import { useMunicipalityDetails } from "@/hooks/useMunicipalityDetails";
+import { transformEmissionsData } from "@/types/municipality";
+import { MunicipalityEmissionsGraph } from "@/components/municipalities/MunicipalityEmissionsGraph";
 
 export function MunicipalityDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +18,8 @@ export function MunicipalityDetailPage() {
       : municipality.procurementScore === "1"
       ? "Kanske"
       : "Nej";
+
+  const projectedData = transformEmissionsData(municipality);
 
   return (
     <div className="space-y-16 max-w-[1400px] mx-auto">
@@ -68,6 +72,16 @@ export function MunicipalityDetailPage() {
         </div>
       </div>
 
+      <div className="bg-black-2 rounded-level-1">
+        <Text variant="h3" className="p-16 pb-1">
+          Utsläppsutveckling
+        </Text>
+        <Text variant="body" className="text-gray-500 px-16 pb-4">
+          I tusen ton CO₂
+        </Text>
+        <MunicipalityEmissionsGraph projectedData={projectedData} />
+      </div>
+
       <div className="bg-black-2 rounded-level-1 p-16">
         <Text variant="h3">Framtida utsläpp</Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-8">
@@ -102,24 +116,45 @@ export function MunicipalityDetailPage() {
       </div>
 
       <div className="bg-black-2 rounded-level-1 p-16">
-        <Text variant="h3">Klimatplan</Text>
-        <Text variant="body">År: {municipality.climatePlanYear}</Text>
-        <Text variant="body">{municipality.climatePlanComment}</Text>
-        {municipality.climatePlanLink !== "Saknar plan" && (
-          <a
-            href={municipality.climatePlanLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-3 underline"
-          >
-            Läs mer
-          </a>
-        )}
+        <div className="flex flex-col space-y-4">
+          <div className="flex justify-between items-start">
+            <Text variant="h3">Klimatplan</Text>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center space-x-2">
+              <Text variant="body" className="text-gray-400">
+                Status:
+              </Text>
+              <Text
+                variant="body"
+                className={
+                  municipality.climatePlanYear === "Saknar plan"
+                    ? "text-red-500"
+                    : "text-green-3"
+                }
+              >
+                {municipality.climatePlanYear === "Saknar plan"
+                  ? "Saknar klimatplan"
+                  : `Antagen ${municipality.climatePlanYear}`}
+              </Text>
+            </div>
+            <Text variant="body">{municipality.climatePlanComment}</Text>
+            {municipality.climatePlanLink !== "Saknar plan" && (
+              <a
+                href={municipality.climatePlanLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" text-blue-2 underline rounded-md hover:text-blue-4 transition-colors"
+              >
+                Läs planen
+              </a>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Electric Vehicle Information */}
       <div className="bg-black-2 rounded-level-1 p-16">
-        <Text variant="h3">Elfordon</Text>
+        <Text variant="h3">Elbilar</Text>
         <div className="grid grid-cols-2 gap-16 mt-8">
           <div>
             <Text variant="body">Förändring i elbilsandel</Text>

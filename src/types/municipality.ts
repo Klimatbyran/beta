@@ -1,6 +1,5 @@
 import type { paths } from "@/lib/api-types";
 
-// Base municipality type from API
 export type Municipality = {
   name: string;
   region: string;
@@ -19,14 +18,11 @@ export type Municipality = {
   procurementLink: string | null;
   totalConsumptionEmission: number;
   hitNetZero: Date | string;
-  // Add other properties that are actually returned by the API
   electricCarChangeYearly: { year: string; value: number }[];
   electricCarChangePercent: number;
-  // Optional properties if they might be missing
   wikidataId?: string;
   description?: string | null;
-  // Add any other missing properties
-};
+} & EmissionsData;
 
 // Detailed municipality type from API
 export type MunicipalityDetails = NonNullable<
@@ -78,3 +74,58 @@ export function getAvailableYears(
     .filter((year) => !isNaN(year))
     .sort((a, b) => b - a);
 }
+
+export type EmissionDataPoint = {
+  year: string;
+  value: number;
+};
+
+export type EmissionsData = {
+  emissions: EmissionDataPoint[];
+  emissionBudget: EmissionDataPoint[];
+  approximatedHistoricalEmission: EmissionDataPoint[];
+  trend: EmissionDataPoint[];
+};
+
+export function transformEmissionsData(municipality: Municipality) {
+  const years = new Set<string>();
+
+  municipality.emissions.forEach((d) => years.add(d.year));
+  municipality.emissionBudget.forEach((d) => years.add(d.year));
+  municipality.approximatedHistoricalEmission.forEach((d) => years.add(d.year));
+  municipality.trend.forEach((d) => years.add(d.year));
+
+  return Array.from(years)
+    .sort()
+    .map((year) => {
+      const historical = municipality.emissions.find(
+        (d) => d.year === year
+      )?.value;
+      const budget = municipality.emissionBudget.find(
+        (d) => d.year === year
+      )?.value;
+      const approximated = municipality.approximatedHistoricalEmission.find(
+        (d) => d.year === year
+      )?.value;
+      const trend = municipality.trend.find((d) => d.year === year)?.value;
+
+      const gap = trend && budget ? trend - budget : undefined;
+
+      return {
+        year: parseInt(year, 10),
+        total: historical || approximated,
+        paris: budget,
+        trend,
+        gap,
+      };
+    })
+    .filter((d) => d.year >= 1990 && d.year <= 2050);
+}
+
+export type DataPoint = {
+  year: number;
+  total: number | undefined;
+  paris: number | undefined;
+  trend: number | undefined;
+  gap: number | undefined;
+};
