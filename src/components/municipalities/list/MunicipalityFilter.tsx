@@ -1,4 +1,4 @@
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,24 +8,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { regions } from '@/lib/constants/regions';
+import { regions } from "@/lib/constants/regions";
 
 interface MunicipalityFilterProps {
   selectedRegion: string;
   onRegionChange: (region: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  sortBy: 'emissions' | 'reduction' | 'climate_plan' | 'bicycle' | 'charging' | 'name';
+  sortBy:
+    | "emissions"
+    | "reduction"
+    | "climate_plan"
+    | "bicycle"
+    | "charging"
+    | "name";
   onSortChange: (sort: typeof sortBy) => void;
 }
 
 const sortOptions = [
-  { value: 'reduction', label: 'Utsläppsminskning' },
-  { value: 'emissions', label: 'Totala utsläpp' },
-  { value: 'climate_plan', label: 'Klimatplan' },
-  { value: 'bicycle', label: 'Cykelvägar' },
-  { value: 'charging', label: 'Laddinfrastruktur' },
-  { value: 'name', label: 'Namn' },
+  { value: "reduction", label: "Utsläppsminskning" },
+  { value: "emissions", label: "Totala utsläpp" },
+  { value: "climate_plan", label: "Klimatplan" },
+  { value: "bicycle", label: "Cykelvägar" },
+  { value: "charging", label: "Laddinfrastruktur" },
+  { value: "name", label: "Namn" },
 ] as const;
 
 export function MunicipalityFilter({
@@ -56,7 +62,7 @@ export function MunicipalityFilter({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Alla län</SelectItem>
-            {Object.keys(regions).map(region => (
+            {Object.keys(regions).map((region) => (
               <SelectItem key={region} value={region}>
                 {region}
               </SelectItem>
@@ -64,12 +70,15 @@ export function MunicipalityFilter({
           </SelectContent>
         </Select>
 
-        <Select value={sortBy} onValueChange={(value) => onSortChange(value as typeof sortBy)}>
+        <Select
+          value={sortBy}
+          onValueChange={(value) => onSortChange(value as typeof sortBy)}
+        >
           <SelectTrigger className="w-[200px] bg-black-1">
             <SelectValue placeholder="Sortera efter" />
           </SelectTrigger>
           <SelectContent>
-            {sortOptions.map(option => (
+            {sortOptions.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -77,11 +86,6 @@ export function MunicipalityFilter({
           </SelectContent>
         </Select>
       </div>
-
-      <Button variant="outline" size="sm" className="h-8 bg-black-1 border-none gap-2">
-        <Filter className="w-4 h-4" />
-        Filter
-      </Button>
     </div>
   );
 }
