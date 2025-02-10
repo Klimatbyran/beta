@@ -17,10 +17,13 @@ export function PartnerPage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const [submitted, setSubmitted] = useState(false)
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission logic here
     console.log('Form submitted:', formData)
+    setSubmitted(true)
   }
 
   return (
@@ -30,83 +33,89 @@ export function PartnerPage() {
         Vi erbjuder två typer av partnerskap: API-kund för vår kommersiella API och vänföretag där ni kan få vår logotyp och er placering i er sektorsindustri.
       </Text>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div>
-          <label htmlFor="companyName" className="block text-sm font-medium text-grey">
-            Företagsnamn
-          </label>
-          <Input
-            id="companyName"
-            name="companyName"
-            type="text"
-            value={formData.companyName}
-            onChange={handleChange}
-            required
-            className="mt-1"
-          />
+      {submitted ? (
+        <div className="bg-green-2 text-white p-4 rounded">
+          Tack för din förfrågan! Vi kommer att kontakta dig snart.
         </div>
-
-        <div>
-          <label htmlFor="contactEmail" className="block text-sm font-medium text-grey">
-            Kontakt E-post
-          </label>
-          <Input
-            id="contactEmail"
-            name="contactEmail"
-            type="email"
-            value={formData.contactEmail}
-            onChange={handleChange}
-            required
-            className="mt-1"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-grey">Typ av partnerskap</label>
-          <div className="mt-1 space-y-2">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="partnershipType"
-                value="api"
-                checked={formData.partnershipType === 'api'}
-                onChange={handleChange}
-                className="form-radio"
-              />
-              <span className="ml-2">API-kund</span>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div>
+            <label htmlFor="companyName" className="block text-sm font-medium text-grey">
+              Företagsnamn
             </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="partnershipType"
-                value="friend"
-                checked={formData.partnershipType === 'friend'}
-                onChange={handleChange}
-                className="form-radio"
-              />
-              <span className="ml-2">Vänföretag</span>
-            </label>
+            <Input
+              id="companyName"
+              name="companyName"
+              type="text"
+              value={formData.companyName}
+              onChange={handleChange}
+              required
+              className="mt-1"
+            />
           </div>
-        </div>
 
-        <div>
-          <label htmlFor="message" className="block text-sm font-medium text-grey">
-            Meddelande
-          </label>
-          <Textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows={4}
-            className="mt-1"
-          />
-        </div>
+          <div>
+            <label htmlFor="contactEmail" className="block text-sm font-medium text-grey">
+              Kontakt E-post
+            </label>
+            <Input
+              id="contactEmail"
+              name="contactEmail"
+              type="email"
+              value={formData.contactEmail}
+              onChange={handleChange}
+              required
+              className="mt-1"
+            />
+          </div>
 
-        <Button type="submit" className="w-full">
-          Skicka förfrågan
-        </Button>
-      </form>
+          <div>
+            <label className="block text-sm font-medium text-grey">Typ av partnerskap</label>
+            <div className="mt-1 space-y-2">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="partnershipType"
+                  value="api"
+                  checked={formData.partnershipType === 'api'}
+                  onChange={handleChange}
+                  className="form-radio"
+                />
+                <span className="ml-2">API-kund</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="partnershipType"
+                  value="friend"
+                  checked={formData.partnershipType === 'friend'}
+                  onChange={handleChange}
+                  className="form-radio"
+                />
+                <span className="ml-2">Vänföretag</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-grey">
+              Meddelande
+            </label>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={4}
+              className="mt-1"
+            />
+          </div>
+
+          <Button type="submit" className="w-full">
+            Skicka förfrågan
+          </Button>
+        </form>
+      )}
     </div>
   )
 }
