@@ -56,7 +56,13 @@ export function RankedList({
               >
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <span className="text-lg">{item.name}</span>
+              <span className="text-lg flex items-center">
+                <Building2 className="w-4 h-4 mr-2" />
+                {item.name}
+                <span className="ml-2 text-grey-500" style={{ opacity: 0.5 }}>
+                  ...
+                </span>
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-grey">Utsläppsförändring</span>
