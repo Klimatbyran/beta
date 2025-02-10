@@ -9,6 +9,7 @@ import { AboutPage } from './pages/AboutPage'
 import { InsightsPage } from './pages/InsightsPage'
 import { BlogDetailPage } from './pages/BlogDetailPage'
 import { EmissionsTestPage } from './pages/EmissionsTestPage'
+import { PartnerPage } from './pages/PartnerPage'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="insights" element={<InsightsPage />} />
           <Route path="insights/:id" element={<BlogDetailPage />} />
           <Route path="emissions-test" element={<EmissionsTestPage />} />
+          <Route path="partner" element={<PartnerPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
