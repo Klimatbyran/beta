@@ -179,6 +179,14 @@ export function BlogDetailPage() {
                 className="w-2/3 mx-auto shadow-lg !rounded-lg !overflow-hidden"
               />
             ),
+            a: ({ node, ...props }) => (
+              <a
+                {...props}
+                target="_blank" // Opens link in a new tab
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              />
+            ),
           }}
         >
           {blogPost.content}

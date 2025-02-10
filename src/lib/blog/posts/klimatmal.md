@@ -1,5 +1,5 @@
 ---
-id: 'klimatmål' 
+id: 'klimatmal' 
 ---
 
 Inför valet 2022 genomförde Klimatkollen en granskning av riksdagspartiernas klimatpolitik. En analys av partiernas klimatmål jämfört med Parisavtalets 1,5-gradersmål utfördes, där hänsyn tagits till avtalets rättviseaspekt.
