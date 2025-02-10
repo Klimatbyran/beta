@@ -31,6 +31,10 @@ export function PartnerPage() {
       <Text variant="display">Bli vår partner</Text>
       <Text variant="large" className="text-grey">
         Vi erbjuder två typer av partnerskap: API-kund för vår kommersiella API och vänföretag där ni kan få vår logotyp och er placering i er sektorsindustri.
+        <br /><br />
+        <strong>API Access:</strong> Som API-kund får ni tillgång till vår omfattande databas med klimatdata, vilket möjliggör integration av våra data i era egna system och applikationer. Detta inkluderar realtidsdata om utsläpp, klimatmål och trender.
+        <br /><br />
+        <strong>Vänföretag:</strong> Som vänföretag får ni möjlighet att använda vår logotyp i ert marknadsföringsmaterial och på er webbplats. Ni kommer också att listas som en partner på vår webbplats, vilket ger er ökad synlighet inom er sektorsindustri.
       </Text>
 
       {submitted ? (
