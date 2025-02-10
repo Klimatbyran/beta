@@ -143,6 +143,14 @@ export function AboutPage() {
                 Parisavtalet.
               </p>
             </div>
+            <div className="mt-8">
+              <a
+                href="/partner"
+                className="text-blue-2 hover:underline"
+              >
+                Bli vår partner
+              </a>
+            </div>
           </AccordionContent>
         </AccordionItem>
 
