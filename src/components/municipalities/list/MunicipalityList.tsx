@@ -33,7 +33,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
   const sortOptions = [
     { value: "meets_paris", label: "Möter Parisavtalet" },
     { value: "reduction", label: "Utsläppsminskning" },
-    { value: "needed_reduction", label: "Behövd utsläppsminskning" },
+    { value: "needed_reduction", label: "Krävd utsläppsminskning" },
     { value: "consumption_emissions", label: "Konsumtionsutsläpp" },
     { value: "charging_points", label: "Laddinfrastruktur" },
     { value: "climate_plan", label: "Klimatplan" },
@@ -60,7 +60,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
       });
     }
 
-    return false;
+    return true;
   });
 
   const sortedMunicipalities = filteredMunicipalities.sort((a, b) => {
