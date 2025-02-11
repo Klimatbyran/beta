@@ -1,7 +1,6 @@
-import { Github, Linkedin, Twitter, Disc as Discord } from "lucide-react";
+import { Github, Linkedin, Twitter, Disc as Discord, Copy } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
 
 export function Footer() {
   return (
@@ -11,7 +10,7 @@ export function Footer() {
           <Text variant="body" className="text-sm text-grey md:text-base">
             Kontakta oss
           </Text>
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Text variant="display" className="text-3xl md:text-5xl">
               hej@klimatkollen.se
             </Text>
@@ -26,7 +25,6 @@ export function Footer() {
               <Copy className="w-4 h-4" />
               Kopiera
             </Button>
-         
           </div>
         </div>
 
