@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Building2 } from 'lucide-react'
 import { Text } from '@/components/ui/text'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
