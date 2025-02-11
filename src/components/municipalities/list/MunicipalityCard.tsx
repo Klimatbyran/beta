@@ -96,8 +96,17 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           <Text variant="body" className="mb-2 text-grey">
             Elbilar per offentlig laddpunkt
           </Text>
-          <Text className={cn("text-6xl text-green-3")}>
-            {municipality.electricVehiclePerChargePoints.toFixed(1)}
+          <Text
+            className={cn(
+              "text-6xl",
+              municipality.electricVehiclePerChargePoints === 1e10
+                ? "text-pink-3"
+                : "text-green-3"
+            )}
+          >
+            {municipality.electricVehiclePerChargePoints === 1e10
+              ? "-"
+              : municipality.electricVehiclePerChargePoints.toFixed(1)}
           </Text>
         </div>
       </div>

@@ -28,6 +28,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
     | "climate_plan"
     | "name"
   >("reduction");
+  const [sortDirection, setSortDirection] = useState<"best" | "worst">("best");
 
   const sortOptions = [
     { value: "meets_paris", label: "Möter Parisavtalet" },
@@ -58,6 +59,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
       return true;
     })
     .sort((a, b) => {
+      const directionMultiplier = sortDirection === "best" ? 1 : -1;
       switch (sortBy) {
         case "meets_paris":
           // Sort by whether the municipality meets the Paris Agreement (Yes first)
@@ -67,45 +69,65 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
           ) {
             // Both meet the Paris Agreement, sort by hitNetZero date
             return (
-              new Date(a.hitNetZero).getTime() -
-              new Date(b.hitNetZero).getTime()
+              directionMultiplier *
+              (new Date(a.hitNetZero).getTime() -
+                new Date(b.hitNetZero).getTime())
             );
           }
-          if (a.budgetRunsOut === "Håller budget") return -1;
-          if (b.budgetRunsOut === "Håller budget") return 1;
-          return 0;
+          if (a.budgetRunsOut === "Håller budget") {
+            return -1 * directionMultiplier;
+          }
+          if (b.budgetRunsOut === "Håller budget") {
+            return 1 * directionMultiplier;
+          }
+          // Both do not meet the Paris Agreement, sort by budgetRunsOut date
+          return (
+            directionMultiplier *
+            (new Date(b.budgetRunsOut).getTime() -
+              new Date(a.budgetRunsOut).getTime())
+          );
         case "reduction":
           // Sort by emission reduction (negative is better)
           return (
-            a.historicalEmissionChangePercent -
-            b.historicalEmissionChangePercent
+            directionMultiplier *
+            (a.historicalEmissionChangePercent -
+              b.historicalEmissionChangePercent)
           );
         case "needed_reduction":
           // Sort by needed emission reduction (low to high)
-          return a.neededEmissionChangePercent - b.neededEmissionChangePercent;
+          return (
+            directionMultiplier *
+            (b.neededEmissionChangePercent - a.neededEmissionChangePercent)
+          );
         case "consumption_emissions":
           // Sort by consumption emissions per capita (low to high)
-          return a.totalConsumptionEmission - b.totalConsumptionEmission;
+          return (
+            directionMultiplier *
+            (b.totalConsumptionEmission - a.totalConsumptionEmission)
+          );
         case "charging_points":
           // Sort by EV charging infrastructure (low ratio is better)
           return (
-            a.electricVehiclePerChargePoints - b.electricVehiclePerChargePoints
+            directionMultiplier *
+            (a.electricVehiclePerChargePoints -
+              b.electricVehiclePerChargePoints)
           );
         case "climate_plan":
           // Sort by climate plan year (newest first, missing plans last)
           if (a.climatePlanYear === "Saknar plan") {
-            return 1;
+            return 1 * directionMultiplier;
           }
           if (b.climatePlanYear === "Saknar plan") {
-            return -1;
+            return -1 * directionMultiplier;
           }
           return (
-            parseInt(b.climatePlanYear as unknown as string) -
-            parseInt(a.climatePlanYear as unknown as string)
+            directionMultiplier *
+            (parseInt(b.climatePlanYear as unknown as string) -
+              parseInt(a.climatePlanYear as unknown as string))
           );
         case "name":
           // Sort by name alphabetically
-          return a.name.localeCompare(b.name);
+          return directionMultiplier * a.name.localeCompare(b.name);
         default:
           return 0;
       }
@@ -113,21 +135,21 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="relative w-[300px]">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-4 w-full">
+          <div className="relative w-full md:w-[350px]">
             <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-grey w-4 h-4" />
             <Input
               type="text"
               placeholder="Sök kommun (separera med komma)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 py-1 h-9 bg-black-1 border-none text-sm"
+              className="pl-8 py-1 h-8 bg-black-1 border-none text-sm w-full"
             />
           </div>
 
           <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-            <SelectTrigger className="w-[200px] bg-black-1">
+            <SelectTrigger className="w-full md:w-[250px] bg-black-1">
               <SelectValue placeholder="Välj län" />
             </SelectTrigger>
             <SelectContent>
@@ -144,7 +166,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             value={sortBy}
             onValueChange={(value) => setSortBy(value as typeof sortBy)}
           >
-            <SelectTrigger className="w-[200px] bg-black-1">
+            <SelectTrigger className="w-full md:w-[250px] bg-black-1">
               <SelectValue placeholder="Sortera efter" />
             </SelectTrigger>
             <SelectContent>
@@ -155,6 +177,15 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
               ))}
             </SelectContent>
           </Select>
+
+          <button
+            onClick={() =>
+              setSortDirection(sortDirection === "best" ? "worst" : "best")
+            }
+            className="px-4 py-2 bg-gray-700 text-white rounded w-full md:w-auto"
+          >
+            Visar {sortDirection === "best" ? "bäst" : "sämst"} först
+          </button>
         </div>
       </div>
 
