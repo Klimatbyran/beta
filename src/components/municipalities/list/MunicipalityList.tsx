@@ -40,89 +40,93 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
     { value: "name", label: "Namn" },
   ];
 
-  const filteredMunicipalities = municipalities
-    .filter((municipality) => {
-      if (selectedRegion !== "all" && municipality.region !== selectedRegion) {
-        return false;
-      }
+  const filteredMunicipalities = municipalities.filter((municipality) => {
+    if (selectedRegion !== "all" && municipality.region !== selectedRegion) {
+      return false;
+    }
 
-      if (searchQuery) {
-        const searchTerms = searchQuery
-          .toLowerCase()
-          .split(",")
-          .map((term) => term.trim());
-        return searchTerms.some((term) =>
-          municipality.name.toLowerCase().includes(term)
+    if (searchQuery) {
+      const searchTerms = searchQuery
+        .toLowerCase()
+        .split(",")
+        .map((term) => term.trim())
+        .filter((term) => term.length > 0);
+
+      return searchTerms.some((term) => {
+        if (term.endsWith(",")) {
+          return municipality.name.toLowerCase() === term.slice(0, -1);
+        }
+        return municipality.name.toLowerCase().startsWith(term);
+      });
+    }
+
+    return false;
+  });
+
+  const sortedMunicipalities = filteredMunicipalities.sort((a, b) => {
+    const directionMultiplier = sortDirection === "best" ? 1 : -1;
+    switch (sortBy) {
+      case "meets_paris":
+        if (
+          a.budgetRunsOut === "Håller budget" &&
+          b.budgetRunsOut === "Håller budget"
+        ) {
+          return (
+            directionMultiplier *
+            (new Date(a.hitNetZero).getTime() -
+              new Date(b.hitNetZero).getTime())
+          );
+        }
+        if (a.budgetRunsOut === "Håller budget") {
+          return -1 * directionMultiplier;
+        }
+        if (b.budgetRunsOut === "Håller budget") {
+          return 1 * directionMultiplier;
+        }
+        return (
+          directionMultiplier *
+          (new Date(b.budgetRunsOut).getTime() -
+            new Date(a.budgetRunsOut).getTime())
         );
-      }
-
-      return true;
-    })
-    .sort((a, b) => {
-      const directionMultiplier = sortDirection === "best" ? 1 : -1;
-      switch (sortBy) {
-        case "meets_paris":
-          if (
-            a.budgetRunsOut === "Håller budget" &&
-            b.budgetRunsOut === "Håller budget"
-          ) {
-            return (
-              directionMultiplier *
-              (new Date(a.hitNetZero).getTime() -
-                new Date(b.hitNetZero).getTime())
-            );
-          }
-          if (a.budgetRunsOut === "Håller budget") {
-            return -1 * directionMultiplier;
-          }
-          if (b.budgetRunsOut === "Håller budget") {
-            return 1 * directionMultiplier;
-          }
-          return (
-            directionMultiplier *
-            (new Date(b.budgetRunsOut).getTime() -
-              new Date(a.budgetRunsOut).getTime())
-          );
-        case "reduction":
-          return (
-            directionMultiplier *
-            (a.historicalEmissionChangePercent -
-              b.historicalEmissionChangePercent)
-          );
-        case "needed_reduction":
-          return (
-            directionMultiplier *
-            (a.neededEmissionChangePercent - b.neededEmissionChangePercent)
-          );
-        case "consumption_emissions":
-          return (
-            directionMultiplier *
-            (a.totalConsumptionEmission - b.totalConsumptionEmission)
-          );
-        case "charging_points":
-          return (
-            directionMultiplier *
-            (a.electricVehiclePerChargePoints -
-              b.electricVehiclePerChargePoints)
-          );
-        case "climate_plan":
-          if (a.climatePlanYear === "Saknar plan") {
-            return 1 * directionMultiplier;
-          }
-          if (b.climatePlanYear === "Saknar plan") {
-            return -1 * directionMultiplier;
-          }
-          return (
-            directionMultiplier *
-            (parseInt(b.climatePlanYear as unknown as string) -
-              parseInt(a.climatePlanYear as unknown as string))
-          );
-        case "name":
-          return directionMultiplier * a.name.localeCompare(b.name);
-        default:
-          return 0;
-      }
-    });
+      case "reduction":
+        return (
+          directionMultiplier *
+          (a.historicalEmissionChangePercent -
+            b.historicalEmissionChangePercent)
+        );
+      case "needed_reduction":
+        return (
+          directionMultiplier *
+          (a.neededEmissionChangePercent - b.neededEmissionChangePercent)
+        );
+      case "consumption_emissions":
+        return (
+          directionMultiplier *
+          (a.totalConsumptionEmission - b.totalConsumptionEmission)
+        );
+      case "charging_points":
+        return (
+          directionMultiplier *
+          (a.electricVehiclePerChargePoints - b.electricVehiclePerChargePoints)
+        );
+      case "climate_plan":
+        if (a.climatePlanYear === "Saknar plan") {
+          return 1 * directionMultiplier;
+        }
+        if (b.climatePlanYear === "Saknar plan") {
+          return -1 * directionMultiplier;
+        }
+        return (
+          directionMultiplier *
+          (parseInt(b.climatePlanYear as unknown as string) -
+            parseInt(a.climatePlanYear as unknown as string))
+        );
+      case "name":
+        return directionMultiplier * a.name.localeCompare(b.name);
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="space-y-8">
@@ -187,7 +191,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredMunicipalities.map((municipality) => (
+        {sortedMunicipalities.map((municipality) => (
           <MunicipalityCard
             key={municipality.name}
             municipality={municipality}
