@@ -1,19 +1,14 @@
 import { execSync } from "child_process";
 import path from "path";
+import { API_BASE_URL } from "lib/constants/urls"
 
 async function generateApi() {
-  const nodeEnv = process.env.NODE_ENV || "development";
-  const baseURL =
-    nodeEnv === "production"
-      ? "https://api.klimatkollen.se/api"
-      : "http://localhost:3000/api";
-
   const outputPath = path.resolve("src/lib/api-types.ts");
 
   try {
-    console.log(`Fetching OpenAPI schema from: ${baseURL}/openapi.json`);
+    console.log(`Fetching OpenAPI schema from: ${API_BASE_URL}/api/openapi.json`);
     execSync(
-      `npx openapi-typescript ${baseURL}/openapi.json -o ${outputPath}`,
+      `npx openapi-typescript ${API_BASE_URL}/api/openapi.json -o ${outputPath}`,
       {
         stdio: "inherit",
       }

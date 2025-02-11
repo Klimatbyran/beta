@@ -1,6 +1,7 @@
 import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { API_BASE_URL } from './src/lib/constants/urls'
 
 // Cache storage for API responses
 const apiCache = new Map();
@@ -28,7 +29,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://api.klimatkollen.se",
+        target: API_BASE_URL,
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/api/, "/api"),
