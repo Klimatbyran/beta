@@ -112,7 +112,7 @@ export function AboutPage() {
                   href="https://www.klimatkollen.se/stadgar.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline"
+                  className="underline hover:text-white"
                 >
                   stadgar
                 </a>
@@ -121,7 +121,7 @@ export function AboutPage() {
                   href="https://www.klimatkollen.se/uppforandekod.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline"
+                  className="underline hover:text-white"
                 >
                   uppförandekod
                 </a>{" "}
@@ -130,7 +130,7 @@ export function AboutPage() {
                   href="https://www.klimatkollen.se/antikorruptionspolicy.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline"
+                  className="underline hover:text-white"
                 >
                   antikorruptionspolicy
                 </a>{" "}
@@ -150,7 +150,7 @@ export function AboutPage() {
                 href="https://impactchallenge.withgoogle.com/techforsocialgood-sv/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline"
+                className="underline hover:text-white"
               >
                 Google.org Impact Challenge: Tech for Social Good
               </a>
@@ -162,7 +162,7 @@ export function AboutPage() {
                 href="https://www.mynewsdesk.com/se/klimatbyraan/pressreleases/klimatkollen-faar-stoed-av-postkodstiftelsen-och-rekryterar-toppnamn-3223979"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline"
+                className="underline hover:text-white"
               >
                 Postkodstiftelsen
               </a>
@@ -196,7 +196,7 @@ export function AboutPage() {
                   href="https://postkodstiftelsen.se/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline"
+                  className="underline hover:text-white"
                 >
                   Postkodstiftelsen
                 </a>{" "}
@@ -217,7 +217,7 @@ export function AboutPage() {
                   modified/moved to the blog, original link
                   https://www.klimatkollen.se/partierna */}
                 <a
-                  href="#klimatmal"
+                  href="/insights/klimatmal"
                   className="block bg-black-1 rounded-level-2 p-6 hover:bg-black-1/80 transition-colors"
                 >
                   <div className="flex items-center justify-between">
@@ -231,8 +231,7 @@ export function AboutPage() {
                   </div>
                 </a>
                 <a
-                  // TODO: Update this link once the content has been modified/moved to the blog, original link https://www.klimatkollen.se/utslappsberakningar
-                  href="#utslapp"
+                  href="/insights/utslappsberakning"
                   className="block bg-black-1 rounded-level-2 p-6 hover:bg-black-1/80 transition-colors"
                 >
                   <div className="flex items-center justify-between">
