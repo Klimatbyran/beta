@@ -43,21 +43,23 @@ export function PartnerPage() {
           <Text variant="h3" className="mb-4">
             Exempel på partnerföretag
           </Text>
-          <Text variant="large" className="text-white">
-            Företag AB
-            <span className="ml-2 text-grey-500" style={{ opacity: 0.5 }}>
-              ...
-            </span>
-          </Text>
+          <div className="flex items-center">
+            <Text variant="large" className="text-white">
+              Företag AB
+              <span className="ml-2 text-grey-500" style={{ opacity: 0.5 }}>
+                ...
+              </span>
+            </Text>
+            <CheckCircle className="w-6 h-6 text-green-3 ml-2" />
+          </div>
           <Text variant="muted" className="text-sm">
             Vänföretag
           </Text>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ml-auto">
           <div className="w-16 h-16 rounded-full bg-blue-2 flex items-center justify-center">
             <Building2 className="w-8 h-8 text-white" />
           </div>
-          <CheckCircle className="w-8 h-8 text-green-3" />
         </div>
       </div>
 
