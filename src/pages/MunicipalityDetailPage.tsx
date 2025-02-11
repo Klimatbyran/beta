@@ -177,8 +177,8 @@ export function MunicipalityDetailPage() {
       </div>
 
       <div className="bg-black-2 rounded-level-1 p-16">
-        <Text variant="h3">Elbilar</Text>
-        <div className="grid grid-cols-2 gap-16 mt-8">
+        <Text variant="h3">Hållbar transport</Text>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mt-8">
           <div>
             <Text variant="body">Förändring i elbilsandel</Text>
             <Text variant="h2" className="text-orange-2">
@@ -200,12 +200,6 @@ export function MunicipalityDetailPage() {
                 : "Inga laddpunkter"}
             </Text>
           </div>
-        </div>
-      </div>
-
-      <div className="bg-black-2 rounded-level-1 p-16">
-        <Text variant="h3">Övriga nyckeltal</Text>
-        <div className="grid grid-cols-2 gap-16 mt-8">
           <div>
             <Text variant="body">Cykelmeter per capita</Text>
             <Text variant="h2" className="text-orange-2">
