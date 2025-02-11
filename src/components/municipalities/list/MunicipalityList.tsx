@@ -62,12 +62,10 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
       const directionMultiplier = sortDirection === "best" ? 1 : -1;
       switch (sortBy) {
         case "meets_paris":
-          // Sort by whether the municipality meets the Paris Agreement (Yes first)
           if (
             a.budgetRunsOut === "Håller budget" &&
             b.budgetRunsOut === "Håller budget"
           ) {
-            // Both meet the Paris Agreement, sort by hitNetZero date
             return (
               directionMultiplier *
               (new Date(a.hitNetZero).getTime() -
@@ -80,40 +78,34 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
           if (b.budgetRunsOut === "Håller budget") {
             return 1 * directionMultiplier;
           }
-          // Both do not meet the Paris Agreement, sort by budgetRunsOut date
           return (
             directionMultiplier *
             (new Date(b.budgetRunsOut).getTime() -
               new Date(a.budgetRunsOut).getTime())
           );
         case "reduction":
-          // Sort by emission reduction (negative is better)
           return (
             directionMultiplier *
             (a.historicalEmissionChangePercent -
               b.historicalEmissionChangePercent)
           );
         case "needed_reduction":
-          // Sort by needed emission reduction (low to high)
           return (
             directionMultiplier *
             (a.neededEmissionChangePercent - b.neededEmissionChangePercent)
           );
         case "consumption_emissions":
-          // Sort by consumption emissions per capita (low to high)
           return (
             directionMultiplier *
             (a.totalConsumptionEmission - b.totalConsumptionEmission)
           );
         case "charging_points":
-          // Sort by EV charging infrastructure (low ratio is better)
           return (
             directionMultiplier *
             (a.electricVehiclePerChargePoints -
               b.electricVehiclePerChargePoints)
           );
         case "climate_plan":
-          // Sort by climate plan year (newest first, missing plans last)
           if (a.climatePlanYear === "Saknar plan") {
             return 1 * directionMultiplier;
           }
@@ -126,7 +118,6 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
               parseInt(a.climatePlanYear as unknown as string))
           );
         case "name":
-          // Sort by name alphabetically
           return directionMultiplier * a.name.localeCompare(b.name);
         default:
           return 0;
