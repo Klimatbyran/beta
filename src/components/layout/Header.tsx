@@ -112,17 +112,19 @@ export function Header() {
               </MenubarMenu>
 
               <MenubarMenu>
-                <MenubarTrigger
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
-                    location.pathname.startsWith("/municipalities")
-                      ? "bg-black-1 text-white"
-                      : "text-grey hover:text-white"
-                  )}
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  <span>Kommuner</span>
-                </MenubarTrigger>
+                <Link to="/municipalities">
+                  <MenubarTrigger
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
+                      location.pathname.startsWith("/municipalities")
+                        ? "bg-black-1 text-white"
+                        : "text-grey hover:text-white"
+                    )}
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    <span>Kommuner</span>
+                  </MenubarTrigger>
+                </Link>
               </MenubarMenu>
             </Menubar>
 

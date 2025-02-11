@@ -21,7 +21,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<
     "emissions" | "reduction" | "climate_plan" | "bicycle" | "charging" | "name"
-  >("name");
+  >("reduction");
 
   const sortOptions = [
     { value: "reduction", label: "Utsläppsminskning" },
