@@ -37,7 +37,7 @@ export function MunicipalityDetailPage() {
                 Math.abs(municipality.historicalEmissionChangePercent) >=
                 municipality.neededEmissionChangePercent
                   ? "text-green-3"
-                  : "text-red-500"
+                  : "text-pink-3"
               }
             >
               {municipality.historicalEmissionChangePercent.toFixed(1)}%
@@ -59,11 +59,9 @@ export function MunicipalityDetailPage() {
             <Text
               variant="h2"
               className={
-                municipality.totalConsumptionEmission >= 7000
-                  ? "text-red-700"
-                  : municipality.totalConsumptionEmission >= 6000
-                  ? "text-red-500"
-                  : "text-red-300"
+                municipality.totalConsumptionEmission >= 2000
+                  ? "text-pink-3"
+                  : "text-green-3"
               }
             >
               {(municipality.totalConsumptionEmission / 1000).toFixed(1)}
@@ -91,8 +89,8 @@ export function MunicipalityDetailPage() {
               variant="h2"
               className={
                 municipality.budgetRunsOut === "Håller budget"
-                  ? "text-blue-3"
-                  : "text-red-500"
+                  ? "text-green-3"
+                  : "text-pink-3"
               }
             >
               {municipality.budgetRunsOut.toString()}
@@ -105,8 +103,8 @@ export function MunicipalityDetailPage() {
               className={
                 municipality.hitNetZero === "Aldrig" ||
                 new Date(municipality.hitNetZero) > new Date("2050-01-01")
-                  ? "text-red-500"
-                  : "text-blue-3"
+                  ? "text-pink-3"
+                  : "text-green-3"
               }
             >
               {municipality.hitNetZero.toString()}
@@ -144,7 +142,7 @@ export function MunicipalityDetailPage() {
                 href={municipality.climatePlanLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className=" text-blue-2 underline rounded-md hover:text-blue-4 transition-colors"
+                className="underline rounded-md hover:text-blue-3 transition-colors"
               >
                 Läs planen
               </a>
@@ -158,22 +156,7 @@ export function MunicipalityDetailPage() {
         <div className="grid grid-cols-2 gap-16 mt-8">
           <div>
             <Text variant="body">Förändring i elbilsandel</Text>
-            <Text
-              variant="h2"
-              className={
-                municipality.electricCarChangePercent * 100 >= 8
-                  ? "text-blue-3"
-                  : municipality.electricCarChangePercent * 100 >= 7
-                  ? "text-orange-2"
-                  : municipality.electricCarChangePercent * 100 >= 6
-                  ? "text-orange-500"
-                  : municipality.electricCarChangePercent * 100 >= 5
-                  ? "text-red-300"
-                  : municipality.electricCarChangePercent * 100 >= 4
-                  ? "text-red-500"
-                  : "text-red-700"
-              }
-            >
+            <Text variant="h2" className="text-orange-2">
               {(municipality.electricCarChangePercent * 100).toFixed(1)}%
             </Text>
           </div>
@@ -183,14 +166,8 @@ export function MunicipalityDetailPage() {
               variant="h2"
               className={
                 !municipality.electricVehiclePerChargePoints
-                  ? "text-red-700"
-                  : municipality.electricVehiclePerChargePoints <= 10
-                  ? "text-blue-3"
-                  : municipality.electricVehiclePerChargePoints <= 20
-                  ? "text-orange-2"
-                  : municipality.electricVehiclePerChargePoints <= 30
-                  ? "text-orange-500"
-                  : "text-red-500"
+                  ? "text-pink-3"
+                  : "text-green-3"
               }
             >
               {municipality.electricVehiclePerChargePoints
@@ -206,22 +183,7 @@ export function MunicipalityDetailPage() {
         <div className="grid grid-cols-2 gap-16 mt-8">
           <div>
             <Text variant="body">Cykelmeter per capita</Text>
-            <Text
-              variant="h2"
-              className={
-                municipality.bicycleMetrePerCapita >= 5
-                  ? "text-blue-3"
-                  : municipality.bicycleMetrePerCapita >= 4
-                  ? "text-orange-2"
-                  : municipality.bicycleMetrePerCapita >= 3
-                  ? "text-orange-500"
-                  : municipality.bicycleMetrePerCapita >= 2
-                  ? "text-red-300"
-                  : municipality.bicycleMetrePerCapita >= 1
-                  ? "text-red-500"
-                  : "text-red-700"
-              }
-            >
+            <Text variant="h2" className="text-orange-2">
               {municipality.bicycleMetrePerCapita.toFixed(1)}
             </Text>
           </div>
@@ -231,10 +193,8 @@ export function MunicipalityDetailPage() {
               variant="h2"
               className={
                 municipality.procurementScore === "2"
-                  ? "text-blue-3"
-                  : municipality.procurementScore === "1"
-                  ? "text-orange-2"
-                  : "text-red-500"
+                  ? "text-green-3"
+                  : "text-pink-500"
               }
             >
               {requirementsInProcurement}
