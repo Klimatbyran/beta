@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Building2 } from 'lucide-react'
+import { Building2, CheckCircle } from 'lucide-react'
 import { Text } from '@/components/ui/text'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -38,25 +38,26 @@ export function PartnerPage() {
         <strong>Vänföretag:</strong> Som vänföretag får ni möjlighet att använda vår logotyp i ert marknadsföringsmaterial och på er webbplats. Ni kommer också att listas som en partner på vår webbplats, vilket ger er ökad synlighet inom er sektorsindustri.
       </Text>
 
-      <div className="bg-black-2 rounded-level-2 p-8 mb-8">
-        <Text variant="h3" className="mb-4">
-          Exempel på partnerföretag
-        </Text>
+      <div className="bg-black-2 rounded-level-2 p-8 mb-8 flex items-center justify-between">
+        <div>
+          <Text variant="h3" className="mb-4">
+            Exempel på partnerföretag
+          </Text>
+          <Text variant="large" className="text-white">
+            Företag AB
+            <span className="ml-2 text-grey-500" style={{ opacity: 0.5 }}>
+              ...
+            </span>
+          </Text>
+          <Text variant="muted" className="text-sm">
+            Vänföretag
+          </Text>
+        </div>
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-blue-2 flex items-center justify-center">
             <Building2 className="w-8 h-8 text-white" />
           </div>
-          <div className="flex-1">
-            <Text variant="large" className="text-white">
-              Företag AB
-              <span className="ml-2 text-grey-500" style={{ opacity: 0.5 }}>
-                ...
-              </span>
-            </Text>
-            <Text variant="muted" className="text-sm">
-              Vänföretag
-            </Text>
-          </div>
+          <CheckCircle className="w-8 h-8 text-green-3" />
         </div>
       </div>
 
