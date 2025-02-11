@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { MunicipalityCard } from "./MunicipalityCard";
-import { MunicipalityMap } from "./MunicipalityMap";
 import type { Municipality } from "@/types/municipality";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -18,7 +17,6 @@ interface MunicipalityListProps {
 }
 
 export function MunicipalityList({ municipalities }: MunicipalityListProps) {
-  const [view, setView] = useState<"list" | "map">("list");
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<
@@ -101,6 +99,20 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             />
           </div>
 
+          <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+            <SelectTrigger className="w-[200px] bg-black-1">
+              <SelectValue placeholder="Välj län" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Alla län</SelectItem>
+              {Object.keys(regions).map((region) => (
+                <SelectItem key={region} value={region}>
+                  {region}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <Select
             value={sortBy}
             onValueChange={(value) => setSortBy(value as typeof sortBy)}
@@ -117,44 +129,16 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             </SelectContent>
           </Select>
         </div>
-
-        <div>
-          <button
-            onClick={() => setView(view === "list" ? "map" : "list")}
-            className="px-4 py-2 bg-black-1 text-white rounded"
-          >
-            Visa {view === "list" ? "karta" : "lista"}
-          </button>
-        </div>
       </div>
 
-      {view === "list" ? (
-        <>
-          <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-            <SelectTrigger className="w-[200px] bg-black-1">
-              <SelectValue placeholder="Välj län" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Alla län</SelectItem>
-              {Object.keys(regions).map((region) => (
-                <SelectItem key={region} value={region}>
-                  {region}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredMunicipalities.map((municipality) => (
-              <MunicipalityCard
-                key={municipality.name}
-                municipality={municipality}
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <MunicipalityMap municipalities={filteredMunicipalities} />
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredMunicipalities.map((municipality) => (
+          <MunicipalityCard
+            key={municipality.name}
+            municipality={municipality}
+          />
+        ))}
+      </div>
     </div>
   );
 }
