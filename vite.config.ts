@@ -1,6 +1,7 @@
-import path from "path";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { plugin as markdown } from "vite-plugin-markdown";
+import { Mode } from "vite-plugin-markdown";
 
 // Cache storage for API responses
 const apiCache = new Map();
@@ -16,12 +17,14 @@ export default defineConfig({
         ],
       },
     }),
+    markdown({ mode: ["html", "toc", "meta", "react"] as Mode[] }),
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": new URL("./src", import.meta.url).pathname, // Replaces path.resolve()
     },
   },
+  assetsInclude: ["**/*.md"], // Include Markdown files in the build
   optimizeDeps: {
     include: ["lucide-react"],
   },
@@ -31,7 +34,7 @@ export default defineConfig({
         target: "https://api.klimatkollen.se",
         changeOrigin: true,
         secure: true,
-        rewrite: (path) => path.replace(/^\/api/, "/api"),
+        rewrite: (p) => p.replace(/^\/api/, "/api"),
         configure: (proxy) => {
           proxy.on("proxyReq", (proxyReq, req) => {
             // Generate cache key from request URL and method

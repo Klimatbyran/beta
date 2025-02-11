@@ -1,6 +1,7 @@
 import { Github, Linkedin, Twitter, Disc as Discord } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+import { Copy } from "lucide-react";
 
 export function Footer() {
   return (
@@ -17,13 +18,15 @@ export function Footer() {
             <Button
               variant="outline"
               size="sm"
-              className="bg-black-1 border-none"
+              className="bg-black-1 border-none hover:bg-black-1/80 transition-colors gap-2"
               onClick={() => {
                 navigator.clipboard.writeText("hej@klimatkollen.se");
               }}
             >
-              Kopiera mailadress
+              <Copy className="w-4 h-4" />
+              Kopiera
             </Button>
+         
           </div>
         </div>
 
