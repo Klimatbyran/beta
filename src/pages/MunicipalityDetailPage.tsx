@@ -3,6 +3,7 @@ import { Text } from "@/components/ui/text";
 import { useMunicipalityDetails } from "@/hooks/useMunicipalityDetails";
 import { transformEmissionsData } from "@/types/municipality";
 import { MunicipalityEmissionsGraph } from "@/components/municipalities/MunicipalityEmissionsGraph";
+import { ArrowUpRight } from "lucide-react";
 
 export function MunicipalityDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -14,10 +15,10 @@ export function MunicipalityDetailPage() {
 
   const requirementsInProcurement =
     municipality.procurementScore === "2"
-      ? "Ja"
+      ? "Kommunen ställer klimatkrav i upphandlingar"
       : municipality.procurementScore === "1"
-      ? "Kanske"
-      : "Nej";
+      ? "Kommunen ställer kanske klimatkrav i upphandlingar"
+      : "Kommunen ställer inte klimatkrav i upphandlingar";
 
   const projectedData = transformEmissionsData(municipality);
 
@@ -113,21 +114,25 @@ export function MunicipalityDetailPage() {
         </div>
       </div>
 
-      <div className="bg-black-2 rounded-level-1 p-16">
-        <div className="flex flex-col space-y-4">
-          <div className="flex justify-between items-start">
-            <Text variant="h3">Klimatplan</Text>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <div className="flex items-center space-x-2">
-              <Text variant="body" className="text-gray-400">
-                Status:
-              </Text>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <a
+          href={
+            municipality.climatePlanLink !== "Saknar plan"
+              ? municipality.climatePlanLink
+              : undefined
+          }
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-black-2 rounded-level-2 p-8 hover:bg-black-1 transition-colors"
+        >
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <Text variant="h4">Klimatplan</Text>
               <Text
                 variant="body"
                 className={
                   municipality.climatePlanYear === "Saknar plan"
-                    ? "text-red-500"
+                    ? "text-pink-3"
                     : "text-green-3"
                 }
               >
@@ -136,19 +141,39 @@ export function MunicipalityDetailPage() {
                   : `Antagen ${municipality.climatePlanYear}`}
               </Text>
             </div>
-            <Text variant="body">{municipality.climatePlanComment}</Text>
             {municipality.climatePlanLink !== "Saknar plan" && (
-              <a
-                href={municipality.climatePlanLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline rounded-md hover:text-blue-3 transition-colors"
-              >
-                Läs planen
-              </a>
+              <ArrowUpRight className="w-6 h-6 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             )}
           </div>
-        </div>
+        </a>
+
+        <a
+          href={municipality.procurementLink || undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-black-2 rounded-level-2 p-8 hover:bg-black-1 transition-colors"
+        >
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <Text variant="h4">Klimatkrav i upphandlingar</Text>
+              <div>
+                <Text
+                  variant="body"
+                  className={
+                    municipality.procurementScore === "2"
+                      ? "text-green-3"
+                      : "text-pink-3"
+                  }
+                >
+                  {requirementsInProcurement}
+                </Text>
+              </div>
+            </div>
+            {municipality.procurementLink && (
+              <ArrowUpRight className="w-6 h-6 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            )}
+          </div>
+        </a>
       </div>
 
       <div className="bg-black-2 rounded-level-1 p-16">
@@ -165,9 +190,9 @@ export function MunicipalityDetailPage() {
             <Text
               variant="h2"
               className={
-                !municipality.electricVehiclePerChargePoints
-                  ? "text-pink-3"
-                  : "text-green-3"
+                municipality.electricVehiclePerChargePoints
+                  ? "text-green-3"
+                  : "text-pink-3"
               }
             >
               {municipality.electricVehiclePerChargePoints
@@ -186,29 +211,6 @@ export function MunicipalityDetailPage() {
             <Text variant="h2" className="text-orange-2">
               {municipality.bicycleMetrePerCapita.toFixed(1)}
             </Text>
-          </div>
-          <div>
-            <Text variant="body">Klimatkrav i upphandlingar</Text>
-            <Text
-              variant="h2"
-              className={
-                municipality.procurementScore === "2"
-                  ? "text-green-3"
-                  : "text-pink-500"
-              }
-            >
-              {requirementsInProcurement}
-            </Text>
-            {municipality.procurementLink && (
-              <a
-                href={municipality.procurementLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-              >
-                Läs mer
-              </a>
-            )}
           </div>
         </div>
       </div>
