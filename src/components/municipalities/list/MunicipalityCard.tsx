@@ -99,7 +99,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           <Text
             className={cn(
               "text-6xl",
-              municipality.electricVehiclePerChargePoints === 1e10
+              municipality.electricVehiclePerChargePoints > 10
                 ? "text-pink-3"
                 : "text-green-3"
             )}

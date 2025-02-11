@@ -97,13 +97,13 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
           // Sort by needed emission reduction (low to high)
           return (
             directionMultiplier *
-            (b.neededEmissionChangePercent - a.neededEmissionChangePercent)
+            (a.neededEmissionChangePercent - b.neededEmissionChangePercent)
           );
         case "consumption_emissions":
           // Sort by consumption emissions per capita (low to high)
           return (
             directionMultiplier *
-            (b.totalConsumptionEmission - a.totalConsumptionEmission)
+            (a.totalConsumptionEmission - b.totalConsumptionEmission)
           );
         case "charging_points":
           // Sort by EV charging infrastructure (low ratio is better)
@@ -184,7 +184,13 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             }
             className="px-4 py-2 bg-gray-700 text-white rounded w-full md:w-auto"
           >
-            Visar {sortDirection === "best" ? "bäst" : "sämst"} först
+            {sortBy === "name"
+              ? sortDirection === "best"
+                ? "A-Ö"
+                : "Ö-A"
+              : sortDirection === "best"
+              ? "Visar bäst först"
+              : "Visar sämst först"}
           </button>
         </div>
       </div>
