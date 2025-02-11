@@ -20,17 +20,24 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<
-    "emissions" | "reduction" | "climate_plan" | "bicycle" | "charging" | "name"
+    | "meets_paris"
+    | "reduction"
+    | "needed_reduction"
+    | "consumption_emissions"
+    | "charging_points"
+    | "climate_plan"
+    | "name"
   >("reduction");
 
   const sortOptions = [
+    { value: "meets_paris", label: "Möter Parisavtalet" },
     { value: "reduction", label: "Utsläppsminskning" },
-    { value: "emissions", label: "Totala utsläpp" },
+    { value: "needed_reduction", label: "Behövd utsläppsminskning" },
+    { value: "consumption_emissions", label: "Konsumtionsutsläpp" },
+    { value: "charging_points", label: "Laddinfrastruktur" },
     { value: "climate_plan", label: "Klimatplan" },
-    { value: "bicycle", label: "Cykelvägar" },
-    { value: "charging", label: "Laddinfrastruktur" },
     { value: "name", label: "Namn" },
-  ] as const;
+  ];
 
   const filteredMunicipalities = municipalities
     .filter((municipality) => {
@@ -52,32 +59,52 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
     })
     .sort((a, b) => {
       switch (sortBy) {
+        case "meets_paris":
+          // Sort by whether the municipality meets the Paris Agreement (Yes first)
+          if (
+            a.budgetRunsOut === "Håller budget" &&
+            b.budgetRunsOut === "Håller budget"
+          ) {
+            // Both meet the Paris Agreement, sort by hitNetZero date
+            return (
+              new Date(a.hitNetZero).getTime() -
+              new Date(b.hitNetZero).getTime()
+            );
+          }
+          if (a.budgetRunsOut === "Håller budget") return -1;
+          if (b.budgetRunsOut === "Håller budget") return 1;
+          return 0;
         case "reduction":
           // Sort by emission reduction (negative is better)
           return (
             a.historicalEmissionChangePercent -
             b.historicalEmissionChangePercent
           );
-        case "emissions":
-          // Sort by total emissions (high to low)
-          return b.trendEmission - a.trendEmission;
-        case "climate_plan":
-          // Sort by climate plan year (newest first, missing plans last)
-          if (a.climatePlanYear === "Saknar plan") return 1;
-          if (b.climatePlanYear === "Saknar plan") return -1;
-          return (
-            parseInt(b.climatePlanYear as unknown as string) -
-            parseInt(a.climatePlanYear as unknown as string)
-          );
-        case "bicycle":
-          // Sort by bicycle paths per capita (high to low)
-          return b.bicycleMetrePerCapita - a.bicycleMetrePerCapita;
-        case "charging":
+        case "needed_reduction":
+          // Sort by needed emission reduction (low to high)
+          return a.neededEmissionChangePercent - b.neededEmissionChangePercent;
+        case "consumption_emissions":
+          // Sort by consumption emissions per capita (low to high)
+          return a.totalConsumptionEmission - b.totalConsumptionEmission;
+        case "charging_points":
           // Sort by EV charging infrastructure (low ratio is better)
           return (
             a.electricVehiclePerChargePoints - b.electricVehiclePerChargePoints
           );
+        case "climate_plan":
+          // Sort by climate plan year (newest first, missing plans last)
+          if (a.climatePlanYear === "Saknar plan") {
+            return 1;
+          }
+          if (b.climatePlanYear === "Saknar plan") {
+            return -1;
+          }
+          return (
+            parseInt(b.climatePlanYear as unknown as string) -
+            parseInt(a.climatePlanYear as unknown as string)
+          );
         case "name":
+          // Sort by name alphabetically
           return a.name.localeCompare(b.name);
         default:
           return 0;
