@@ -1,6 +1,7 @@
-import { Github, Linkedin, Twitter, Disc as Discord } from 'lucide-react';
+import { Github, Linkedin, Twitter, Disc as Discord } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+import { Copy } from "lucide-react";
 
 export function Footer() {
   return (
@@ -8,53 +9,55 @@ export function Footer() {
       <div className="container mx-auto px-4 space-y-16">
         {/* Contact Section */}
         <div className="space-y-4">
-          <Text variant="muted">Kontakta oss</Text>
+          <Text variant="body">Kontakta oss</Text>
           <div className="flex items-center gap-4">
             <Text variant="display" className="text-5xl">
               hej@klimatkollen.se
             </Text>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="bg-black-1 border-none"
+            <Button
+              variant="ghost"
+              size="sm"
+              className="bg-black-1 border-none  hover:bg-black-1/80 transition-colors gap-2"
               onClick={() => {
-                navigator.clipboard.writeText('hej@klimatkollen.se');
+                navigator.clipboard.writeText("hej@klimatkollen.se");
               }}
             >
-              Kopiera mailadress
+              <Copy className="w-4 h-4" />
+              Kopiera
             </Button>
+         
           </div>
         </div>
 
         {/* Social Links */}
         <div className="flex gap-4">
-          <a 
-            href="https://github.com/klimatbyran" 
-            target="_blank" 
+          <a
+            href="https://github.com/klimatbyran"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
             <Github className="w-6 h-6" />
           </a>
-          <a 
-            href="https://linkedin.com/company/klimatkollen" 
-            target="_blank" 
+          <a
+            href="https://linkedin.com/company/klimatkollen"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
             <Linkedin className="w-6 h-6" />
           </a>
-          <a 
-            href="https://twitter.com/klimatkollen" 
-            target="_blank" 
+          <a
+            href="https://twitter.com/klimatkollen"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
             <Twitter className="w-6 h-6" />
           </a>
-          <a 
-            href="https://discord.gg/klimatkollen" 
-            target="_blank" 
+          <a
+            href="https://discord.gg/klimatkollen"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
@@ -63,8 +66,9 @@ export function Footer() {
         </div>
 
         {/* Description */}
-        <Text variant="muted" className="max-w-2xl">
-          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen källkod.
+        <Text variant="body" className="max-w-2xl">
+          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata
+          och är utvecklad med öppen källkod.
         </Text>
 
         {/* Legal Links */}
