@@ -72,6 +72,6 @@ Just nu behöver vi hjälp av:
 - Frontendutvecklare- React eller Svelte - vi bygger våra komponenter som byggblock med hjälp av Shadcn/ui och vi behöver massor av hjälp
 - Backendutvecklare- vår pipeline körs i Kubernetes och kommer behöva skalas upp en hel del- dessutom behöver vi en mer trygg CI/CD pipeline som också verifierar grundläggande funktionalitet = tester. Vi har redan en GitOps pipeline som bygger all kod och rullar ut i klustret automatiskt.
 
-Hör av dig till hej@klimatkollen.se eller joina vår Discord här.
+Hör av dig till hej@klimatkollen.se eller joina vår Discord [här](https://discord.com/channels/1049333222309371965/1049333222309371967).
 
 I nästa inlägg ska vi dyka djupare in i hur vi använder AI för att tolka företagens rapporter och vilka utmaningar vi stött på längs vägen, exempelvis hur man får ett AI att förstå skillnaden mellan en fotnot (2) och en tabell i en PDF.

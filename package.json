@@ -55,6 +55,7 @@
     "openapi-fetch": "^0.9.3",
     "openapi-typescript": "^7.5.2",
     "react": "^18.3.1",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-markdown": "^9.0.3",

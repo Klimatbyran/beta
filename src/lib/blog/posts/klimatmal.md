@@ -12,7 +12,7 @@ Analysen visar att två partiers klimatmål, Miljöpartiets och Vänsterpartiets
 
 För att vara i linje med Parisavtalets 1,5-gradersmål bör Sverige maximalt släppa ut cirka 170 miljoner ton koldioxid. Det utgör Sveriges andel av den globala utsläppsbudgeten för Parisavtalets 1,5-gradersmål, med hänsyn tagen till avtalets rättviseaspekt, där rika och tidigt industrialiserade länder ska gå före.
 
-Den framräknade nationella koldioxidbudgeten ligger även till grund för jämförelsen på [startsidan](https://www.klimatkollen.se) på Klimatkollen. Läs mer om hur den är beräknad [här](https://www.cemus.uu.se).
+Den framräknade nationella koldioxidbudgeten ligger även till grund för jämförelsen på [startsidan](https://www.klimatkollen.se) på Klimatkollen. Läs mer om hur den är beräknad [här](https://www.cemus.uu.se/wp-content/uploads/2023/12/Paris-compliant-carbon-budgets-for-Swedens-counties-.pdf).
 
 Analysen baseras på två frågor i en enkät som skickats till samtliga riksdagspartier under våren. Den första frågan var: ”Vilken utsläppsbudget eller klimatmål och takt för utsläppsminskningar vill ert parti se?”. Den andra frågan var: ”Står ert parti bakom EU:s nya förslag till mål om att Sverige ska ha en nettoinbindning av kolinlagring från skog och mark på 47,3 miljoner ton CO₂e årligen till 2030?”
 

@@ -17,4 +17,4 @@ Vi tror på transparens och öppen dialog kring klimatfrågor. Denna blogg är e
 2. Skapa diskussion
 3. Visa framsteg
 
-Följ med oss på resan mot bättre klimatrapportering!
+Följ oss i arbetet med att synliggöra utsläppen och fakta om klimatomställningen!
