@@ -112,64 +112,19 @@ export function Header() {
               </MenubarMenu>
 
               <MenubarMenu>
-                <MenubarTrigger
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
-                    location.pathname.startsWith("/municipalities")
-                      ? "bg-black-1 text-white"
-                      : "text-grey hover:text-white"
-                  )}
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  <span>Kommuner</span>
-                  <ChevronDown className="w-4 h-4" />
-                </MenubarTrigger>
-                <MenubarContent>
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Alla kommuner
-                      <MenubarShortcut>⌘K</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities?sort=top"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Topplista
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities?sort=emissions"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Högst utsläpp
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities?sort=reduction"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Störst minskning
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities/insights"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Insikter
-                      <MenubarShortcut>⌘I</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
-                </MenubarContent>
+                <Link to="/municipalities">
+                  <MenubarTrigger
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
+                      location.pathname.startsWith("/municipalities")
+                        ? "bg-black-1 text-white"
+                        : "text-grey hover:text-white"
+                    )}
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    <span>Kommuner</span>
+                  </MenubarTrigger>
+                </Link>
               </MenubarMenu>
             </Menubar>
 
@@ -179,6 +134,12 @@ export function Header() {
                 className="text-grey hover:text-white transition-colors"
               >
                 Om oss
+              </Link>
+              <Link
+                to="/tools"
+                className="text-grey hover:text-white transition-colors"
+              >
+                Vårt verktyg
               </Link>
               <Link
                 to="/insights"
