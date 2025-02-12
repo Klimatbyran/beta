@@ -15,9 +15,9 @@ import {
 
 const NAV_LINKS = [
   {
-    path: "/companies",
     label: "Företag",
     icon: <BarChart3 className="w-4 h-4" />,
+    path: "/companies",
     sublinks: [
       { path: "/companies", label: "Alla företag", shortcut: "⌘F" },
       { path: "/companies?category=omx", label: "Large Cap (OMX)" },
@@ -27,9 +27,16 @@ const NAV_LINKS = [
     ],
   },
   {
-    path: "/municipalities",
     label: "Kommuner",
     icon: <BarChart3 className="w-4 h-4" />,
+    path: "/municipalities",
+    sublinks: [
+      { path: "/municipalities", label: "Alla kommuner", shortcut: "⌘K" },
+      { path: "/municipalities?sort=top", label: "Topplista" },
+      { path: "/municipalities?sort=emissions", label: "Högst utsläpp" },
+      { path: "/municipalities?sort=reduction", label: "Störst minskning" },
+      { path: "/municipalities/insights", label: "Insikter", shortcut: "⌘I" },
+    ],
   },
   { path: "/about", label: "Om oss" },
   { path: "/tools", label: "Vårt verktyg" },
@@ -68,177 +75,84 @@ export function Header() {
             Klimatkollen
           </Link>
 
-          <a
-            className="md:hidden text-white cursor-pointer"
-            onClick={() => setMenuOpen(true)}
+          <button
+            className="md:hidden text-white"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
-            <Menu className="w-6 h-6" />
-          </a>
+            {menuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
 
           <div className="hidden md:flex items-center gap-8">
             <Menubar className="border-none bg-transparent">
-              <MenubarMenu>
-                <MenubarTrigger
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
-                    location.pathname.startsWith("/companies")
-                      ? "bg-black-1 text-white"
-                      : "text-grey hover:text-white"
-                  )}
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  <span>Företag</span>
-                  <ChevronDown className="w-4 h-4" />
-                </MenubarTrigger>
-                <MenubarContent>
-                  <MenubarItem>
-                    <Link
-                      to="/companies"
-                      className="flex items-center justify-between w-full"
+              {NAV_LINKS.map((item) =>
+                item.sublinks ? (
+                  <MenubarMenu key={item.label}>
+                    <MenubarTrigger
+                      className={cn(
+                        "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
+                        location.pathname.startsWith(item.path)
+                          ? "bg-black-1 text-white"
+                          : "text-grey hover:text-white"
+                      )}
                     >
-                      Alla företag
-                      <MenubarShortcut>⌘F</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/companies?category=omx"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Large Cap (OMX)
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/companies?category=midcap"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Mid Cap
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/companies?category=sme"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Small Cap
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/companies/insights"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Insikter
-                      <MenubarShortcut>⌘I</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
-                </MenubarContent>
-              </MenubarMenu>
-
-              <MenubarMenu>
-                <MenubarTrigger
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors data-[state=open]:bg-black-1",
-                    location.pathname.startsWith("/municipalities")
-                      ? "bg-black-1 text-white"
-                      : "text-grey hover:text-white"
-                  )}
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  <span>Kommuner</span>
-                  <ChevronDown className="w-4 h-4" />
-                </MenubarTrigger>
-                <MenubarContent>
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Alla kommuner
-                      <MenubarShortcut>⌘K</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities?sort=top"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Topplista
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities?sort=emissions"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Högst utsläpp
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities?sort=reduction"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Störst minskning
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/municipalities/insights"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Insikter
-                      <MenubarShortcut>⌘I</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
-                </MenubarContent>
-              </MenubarMenu>
+                      {item.icon}
+                      <span>{item.label}</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </MenubarTrigger>
+                    <MenubarContent>
+                      {item.sublinks.map((sublink) => (
+                        <MenubarItem key={sublink.path}>
+                          <Link
+                            to={sublink.path}
+                            className="flex items-center justify-between w-full"
+                          >
+                            {sublink.label}
+                            {sublink.shortcut && (
+                              <MenubarShortcut>
+                                {sublink.shortcut}
+                              </MenubarShortcut>
+                            )}
+                          </Link>
+                        </MenubarItem>
+                      ))}
+                      <MenubarSeparator />
+                    </MenubarContent>
+                  </MenubarMenu>
+                ) : (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors text-sm",
+                      location.pathname.startsWith(item.path)
+                        ? "bg-black-1 text-white"
+                        : "text-grey hover:text-white"
+                    )}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              )}
             </Menubar>
-
-            <div className="flex items-center gap-6 text-sm">
-              <Link
-                to="/about"
-                className="text-grey hover:text-white transition-colors"
-              >
-                Om oss
-              </Link>
-              <Link
-                to="/tools"
-                className="text-grey hover:text-white transition-colors"
-              >
-                Vårt verktyg
-              </Link>
-              <Link
-                to="/insights"
-                className="text-grey hover:text-white transition-colors"
-              >
-                Insikter
-              </Link>
-              <Link
-                to="/methodology"
-                className="text-grey hover:text-white transition-colors"
-              >
-                Källor och metod
-              </Link>
-            </div>
           </div>
         </div>
       </div>
 
       {menuOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-screen bg-black-2 z-400 flex flex-col text-white pt-12">
-          <a
-            className="absolute top-3 right-4 text-white"
+        <div className="fixed inset-0 bg-black-2/90 z-40 flex flex-col items-center justify-center text-white">
+          <button
+            className="absolute top-4 right-4 text-white"
             onClick={() => setMenuOpen(false)}
-            aira-label="Close menu"
+            aria-label="Close menu"
           >
-            <X className="w-6 h-6" />
-          </a>
+            <X className="w-8 h-8" />
+          </button>
           <div className="flex flex-col items-center gap-6 text-lg">
             {NAV_LINKS.map((link) => (
               <Link
