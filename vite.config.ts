@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { API_BASE_URL } from './src/lib/constants/urls'
 import react from "@vitejs/plugin-react";
 import { plugin as markdown } from "vite-plugin-markdown";
 import { Mode } from "vite-plugin-markdown";
@@ -31,7 +32,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://api.klimatkollen.se",
+        target: API_BASE_URL,
         changeOrigin: true,
         secure: true,
         rewrite: (p) => p.replace(/^\/api/, "/api"),
