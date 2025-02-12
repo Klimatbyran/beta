@@ -14,9 +14,7 @@ async function generateApi() {
       }
     );
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    console.error("Failed to generate API types:", errorMessage);
+    console.error("Failed to generate API types:", error instanceof Error ? error.message : "Unknown error occurred");
     process.exit(1);
   }
 }
