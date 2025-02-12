@@ -75,18 +75,12 @@ export function Header() {
                       Mid Cap
                     </Link>
                   </MenubarItem>
-                  <MenubarItem>
+                  {/* <MenubarItem>
                     <Link to="/companies?category=sme" className="flex items-center justify-between w-full">
                       Small Cap
                     </Link>
-                  </MenubarItem>
+                  </MenubarItem> */}
                   <MenubarSeparator />
-                  <MenubarItem>
-                    <Link to="/companies/insights" className="flex items-center justify-between w-full">
-                      Insikter
-                      <MenubarShortcut>⌘I</MenubarShortcut>
-                    </Link>
-                  </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
 

@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Disc as Discord } from 'lucide-react';
+import { Github, Linkedin, Twitter, Disc as Discord } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 
@@ -13,12 +13,12 @@ export function Footer() {
             <Text variant="display" className="text-5xl">
               hej@klimatkollen.se
             </Text>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="bg-black-1 border-none"
               onClick={() => {
-                navigator.clipboard.writeText('hej@klimatkollen.se');
+                navigator.clipboard.writeText("hej@klimatkollen.se");
               }}
             >
               Kopiera mailadress
@@ -28,33 +28,33 @@ export function Footer() {
 
         {/* Social Links */}
         <div className="flex gap-4">
-          <a 
-            href="https://github.com/klimatbyran" 
-            target="_blank" 
+          <a
+            href="https://github.com/klimatbyran"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
             <Github className="w-6 h-6" />
           </a>
-          <a 
-            href="https://linkedin.com/company/klimatkollen" 
-            target="_blank" 
+          <a
+            href="https://linkedin.com/company/klimatkollen"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
             <Linkedin className="w-6 h-6" />
           </a>
-          <a 
-            href="https://twitter.com/klimatkollen" 
-            target="_blank" 
+          <a
+            href="https://twitter.com/klimatkollen"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
             <Twitter className="w-6 h-6" />
           </a>
-          <a 
-            href="https://discord.gg/klimatkollen" 
-            target="_blank" 
+          <a
+            href="https://discord.gg/klimatkollen"
+            target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           >
@@ -64,7 +64,8 @@ export function Footer() {
 
         {/* Description */}
         <Text variant="muted" className="max-w-2xl">
-          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen källkod.
+          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata
+          och är utvecklad med öppen källkod.
         </Text>
 
         {/* Legal Links */}

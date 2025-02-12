@@ -92,10 +92,10 @@ export function SectionedCompanyList({ companies, sortBy }: SectionedCompanyList
                 >
                   <CompanyCard
                     {...company}
-                    rankings={{
-                      ...company.rankings,
-                      sector: `${index + 1}/${sectorCompanies.length}`,
-                    }}
+                    // rankings={{
+                    //   ...company.rankings,
+                    //   sector: `${index + 1}/${sectorCompanies.length}`,
+                    // }}
                   />
                 </div>
               ))}
