@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { API_BASE_URL } from './src/lib/constants/urls'
+import { API_BASE_URL } from "./src/lib/constants/urls.js";
 import react from "@vitejs/plugin-react";
 import { plugin as markdown } from "vite-plugin-markdown";
 import { Mode } from "vite-plugin-markdown";
