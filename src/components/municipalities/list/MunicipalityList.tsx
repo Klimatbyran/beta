@@ -130,8 +130,8 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex flex-col md:flex-row items-center gap-4 w-full">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 flex-wrap">
+        <div className="flex flex-col md:flex-row items-center gap-4 w-full flex-wrap">
           <div className="relative w-full md:w-[350px]">
             <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-grey w-4 h-4" />
             <Input
@@ -139,12 +139,12 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
               placeholder="Sök kommun (separera med komma)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 py-1 h-8 bg-black-1 border-none text-sm w-full"
+              className="pl-8 py-1 h-10 bg-black-1 border-none text-sm w-full"
             />
           </div>
 
           <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-            <SelectTrigger className="w-full md:w-[250px] bg-black-1">
+            <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
               <SelectValue placeholder="Välj län" />
             </SelectTrigger>
             <SelectContent>
@@ -161,7 +161,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             value={sortBy}
             onValueChange={(value) => setSortBy(value as typeof sortBy)}
           >
-            <SelectTrigger className="w-full md:w-[250px] bg-black-1">
+            <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
               <SelectValue placeholder="Sortera efter" />
             </SelectTrigger>
             <SelectContent>
@@ -177,7 +177,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             onClick={() =>
               setSortDirection(sortDirection === "best" ? "worst" : "best")
             }
-            className="px-4 py-2 bg-gray-700 text-white rounded w-full md:w-auto"
+            className="px-4 py-2 bg-gray-700 text-white text-sm rounded w-full md:w-[150px] h-10"
           >
             {sortBy === "name"
               ? sortDirection === "best"

@@ -17,7 +17,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
       <div className="space-y-6">
         <h2 className="text-5xl font-light">{municipality.name}</h2>
 
-        {/* <div className="space-y-2"> //fixme add!
+        {/* <div className="space-y-2"> //fixme add as soon as we have time!
           <div className="text-sm text-grey uppercase tracking-wide">
             UTSLÄPPSRANKING
           </div>
@@ -75,7 +75,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           </div>
         </div>
         <div>
-          <div className="text-sm text-grey">Behövd utsläppsminskning</div>
+          <div className="text-sm text-grey">Krävd utsläppsminskning</div>
           <div className="text-6xl font-light text-green-3">
             -{municipality.neededEmissionChangePercent.toFixed(1)}%
           </div>
