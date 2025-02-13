@@ -3,16 +3,19 @@ kind: Ingress
 metadata:
   name: frontend
   annotations:
-    kubernetes.io/ingress.class: "gce"
-    kubernetes.io/ingress.global-static-ip-name: "klimatkollen-frontend-ip"
-    networking.gke.io/managed-certificates: "frontend-certificate"
-    networking.gke.io/v1beta1.FrontendConfig: "frontend-config"
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - stage.klimatkollen.se
+      secretName: stage-klimatkollen-se-tls
   rules:
-    - http:
+    - host: stage.klimatkollen.se
+      http:
         paths:
-          - path: /*
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: frontend
