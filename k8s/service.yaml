@@ -1,11 +1,16 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: beta
+  name: klimatkollen-frontend
+  namespace: klimatkollen
+  labels:
+    app: klimatkollen-frontend
 spec:
+  type: ClusterIP
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
   selector:
-    app: beta
+    app: klimatkollen-frontend
