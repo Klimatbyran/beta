@@ -102,7 +102,10 @@ export function Header() {
                     >
                       {item.icon}
                       <span>{item.label}</span>
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown
+                        className="w-4 h-4"
+                        aria-label="Open submenu"
+                      />
                     </MenubarTrigger>
                     <MenubarContent>
                       {item.sublinks.map((sublink) => (
