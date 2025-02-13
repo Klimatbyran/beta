@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCompanies } from "@/hooks/useCompanies";
 import { CompanyCard } from "@/components/companies/list/CompanyCard";
 import { SectionedCompanyList } from "@/components/companies/list/SectionedCompanyList";
-import { Search, Filter, Check } from "lucide-react";
+import { Search, Filter, Check, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +30,7 @@ type SortOption =
   | "scope3_coverage"
   | "name";
 
-const categories = [
+const categoriesOptions = [
   { value: "all", label: "Alla företag" },
   { value: "omx", label: "Large Companies (OMX)" },
   { value: "midcap", label: "Mid Size Companies" },
@@ -38,7 +38,7 @@ const categories = [
   { value: "government", label: "Statligt ägda" },
 ] as const;
 
-const sectors = [
+const sectorsOptions = [
   { value: "all", label: "Alla sektorer" },
   ...Object.entries(sectorNames).map(([code, name]) => ({
     value: code,
@@ -55,75 +55,88 @@ const sortOptions = [
 
 export function CompaniesPage() {
   const { companies, loading, error } = useCompanies();
-  const [category, setCategory] = useState<CompanyCategory>("all");
-  const [sector, setSector] = useState<CompanySector>("all");
+  const [categories, setCategories] = useState<CompanyCategory[]>([]);
+  const [sectors, setSectors] = useState<CompanySector[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>("emissions_reduction");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const filteredCompanies = companies
-    .filter((company) => {
-      // Category filter
-      if (category !== "all") {
-        return company.tags.includes(category);
-      }
-
-      // Sector filter
-      if (
-        sector !== "all" &&
-        company.industry?.industryGics?.sectorCode !== sector
-      ) {
-        return false;
-      }
-
-      // Search filter - support multiple companies separated by comma
-      if (searchQuery) {
-        const searchTerms = searchQuery
-          .toLowerCase()
-          .split(",")
-          .map((term) => term.trim());
-        return searchTerms.some((term) => {
-          const nameMatch = company.name.toLowerCase().includes(term);
-          const sectorMatch = company.industry?.industryGics?.sectorName
-            ?.toLowerCase()
-            .includes(term);
-          return nameMatch || sectorMatch;
-        });
-      }
-
-      return true;
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "emissions_reduction":
-          return b.metrics.emissionsReduction - a.metrics.emissionsReduction;
-        case "total_emissions":
-          return (
-            (b.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0) -
-            (a.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0)
-          );
-        case "scope3_coverage": {
-          // Calculate scope 3 coverage percentage
-          const getScope3Coverage = (company: typeof a) => {
-            const scope3Reports = company.reportingPeriods.filter(
-              (p) => p.emissions?.scope3?.categories?.length > 0
-            );
-            return scope3Reports.length / company.reportingPeriods.length;
-          };
-          return getScope3Coverage(b) - getScope3Coverage(a);
-        }
-        case "name":
-          return a.name.localeCompare(b.name);
-        default:
-          return 0;
-      }
-    });
-
   const activeFilters = [
-    category !== "all" && categories.find((c) => c.value === category)?.label,
-    sector !== "all" && sectors.find((s) => s.value === sector)?.label,
-    sortOptions.find((s) => s.value === sortBy)?.label,
+    ...categories.map((cat) => ({
+      type: "filter" as const,
+      label: categoriesOptions.find((c) => c.value === cat)?.label,
+      onRemove: () => setCategories((prev) => prev.filter((c) => c !== cat)),
+    })),
+    ...sectors.map((sec) => ({
+      type: "filter" as const,
+      label: sectorsOptions.find((s) => s.value === sec)?.label,
+      onRemove: () => setSectors((prev) => prev.filter((s) => s !== sec)),
+    })),
+    {
+      type: "sort" as const,
+      label: sortOptions.find((s) => s.value === sortBy)?.label,
+    },
   ].filter(Boolean);
+
+  const activeFilterCount = activeFilters.filter(
+    (filter) => filter.type === "filter"
+  ).length;
+
+  const filteredCompanies = companies.filter((company) => {
+    // If no filters are applied, show all companies
+    if (categories.length === 0 && sectors.length === 0 && !searchQuery) {
+      return true;
+    }
+
+    let matchesCategory =
+      categories.length === 0
+        ? true
+        : categories.some((cat) => company.tags.includes(cat));
+    let matchesSector =
+      sectors.length === 0
+        ? true
+        : sectors.some(
+            (sec) => company.industry?.industryGics?.sectorCode === sec
+          );
+    let matchesSearch = true;
+
+    if (searchQuery) {
+      const searchTerms = searchQuery
+        .toLowerCase()
+        .split(",")
+        .map((term) => term.trim());
+      matchesSearch = searchTerms.some((term) => {
+        const nameMatch = company.name.toLowerCase().includes(term);
+        const sectorMatch = company.industry?.industryGics?.sectorCode
+          ?.toLowerCase()
+          .includes(term);
+        return nameMatch || sectorMatch;
+      });
+    }
+
+    return matchesCategory && matchesSector && matchesSearch;
+  });
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-pulse">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-64 bg-black-2 rounded-level-2" />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-light text-red-500">
+          Det gick inte att hämta företagsinformation
+        </h2>
+        <p className="text-grey mt-2">Försök igen senare</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -156,12 +169,12 @@ export function CompaniesPage() {
               >
                 <Filter className="w-4 h-4" />
                 Filter
-                {activeFilters.length > 0 && (
+                {activeFilterCount > 0 && (
                   <Badge
                     variant="secondary"
                     className="ml-1 bg-blue-5/30 text-blue-2"
                   >
-                    {activeFilters.length}
+                    {activeFilterCount}
                   </Badge>
                 )}
               </Button>
@@ -172,16 +185,24 @@ export function CompaniesPage() {
                 <CommandList>
                   <CommandEmpty>Inga filter hittades.</CommandEmpty>
                   <CommandGroup heading="Kategori">
-                    {categories.map((cat) => (
+                    {categoriesOptions.map((cat) => (
                       <CommandItem
                         key={cat.value}
-                        onSelect={() =>
-                          setCategory(cat.value as CompanyCategory)
-                        }
+                        onSelect={() => {
+                          if (cat.value === "all") {
+                            setCategories([]);
+                          } else {
+                            setCategories((prev) =>
+                              prev.includes(cat.value as CompanyCategory)
+                                ? prev.filter((c) => c !== cat.value)
+                                : [...prev, cat.value as CompanyCategory]
+                            );
+                          }
+                        }}
                         className="flex items-center justify-between"
                       >
                         <span>{cat.label}</span>
-                        {category === cat.value && (
+                        {categories.includes(cat.value as CompanyCategory) && (
                           <Check className="w-4 h-4" />
                         )}
                       </CommandItem>
@@ -189,14 +210,26 @@ export function CompaniesPage() {
                   </CommandGroup>
                   <CommandSeparator />
                   <CommandGroup heading="Sektor">
-                    {sectors.map((sec) => (
+                    {sectorsOptions.map((sec) => (
                       <CommandItem
                         key={sec.value}
-                        onSelect={() => setSector(sec.value as CompanySector)}
+                        onSelect={() => {
+                          if (sec.value === "all") {
+                            setSectors([]);
+                          } else {
+                            setSectors((prev) =>
+                              prev.includes(sec.value as CompanySector)
+                                ? prev.filter((s) => s !== sec.value)
+                                : [...prev, sec.value as CompanySector]
+                            );
+                          }
+                        }}
                         className="flex items-center justify-between"
                       >
                         <span>{sec.label}</span>
-                        {sector === sec.value && <Check className="w-4 h-4" />}
+                        {sectors.includes(sec.value as CompanySector) && (
+                          <Check className="w-4 h-4" />
+                        )}
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -226,9 +259,23 @@ export function CompaniesPage() {
             <Badge
               key={index}
               variant="secondary"
-              className="bg-blue-5/30 text-blue-2"
+              className="bg-blue-5/30 text-blue-2 pl-2 pr-1 flex items-center gap-1"
             >
-              {filter}
+              <span className="text-grey text-xs mr-1">
+                {filter.type === "sort" ? "Sorterar:" : "Filter:"}
+              </span>
+              {filter.label}
+              {filter.type === "filter" && filter.onRemove && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    filter.onRemove();
+                  }}
+                  className="hover:bg-blue-5/50 p-1 rounded-sm transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              )}
             </Badge>
           ))}
         </div>
@@ -241,7 +288,7 @@ export function CompaniesPage() {
           </h3>
           <p className="text-grey mt-2">Försök med andra sökkriterier</p>
         </div>
-      ) : sector === "all" && category === "all" && !searchQuery ? (
+      ) : sectors.length === 0 && categories.length === 0 && !searchQuery ? (
         <SectionedCompanyList companies={filteredCompanies} sortBy={sortBy} />
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

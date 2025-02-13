@@ -18,7 +18,10 @@ import { getCategoryColor, sectorNames } from "@/lib/constants/emissions";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
 
-type CompanyCardProps = RankedCompany;
+type CompanyCardProps = Omit<
+  RankedCompany,
+  "rankings" | "goals" | "initiatives"
+>;
 
 export function CompanyCard({
   wikidataId,
@@ -116,77 +119,82 @@ export function CompanyCard({
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {currentEmissions && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-grey mb-2">
-                <TrendingDown className="w-4 h-4" />
-                <span className="text-lg">Utsläpp</span>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="w-4 h-4" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Totala utsläpp (Scope 1 & 2)</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="text-6xl font-light text-orange-3">
-                {(currentEmissions / 1000).toFixed(1)}k
-                <span className="text-lg text-grey ml-1">tCO₂e</span>
-              </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-grey mb-2 text-lg">
+              <TrendingDown className="w-4 h-4" />
+              <span>Utsläpp</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Totala utsläpp (Scope 1 & 2)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
-          )}
-          {currentEmissions && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-grey mb-2">
-                <TrendingDown className="w-4 h-4" />
-                <span className="text-lg">Rate of Change</span>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="w-4 h-4" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>
-                        Rate of emissions change from previous reporting period
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="text-6xl font-light text-orange-3">
-                {emissionsChange && (
-                  <span
-                    className={` ml-2 ${
-                      emissionsChange < 0 ? "text-green-3" : "text-pink-3"
-                    }`}
-                  >
-                    {emissionsChange > 0 ? "+" : ""}
-                    {emissionsChange.toFixed(1)}%
-                  </span>
-                )}
-              </div>
+            <div className="text-3xl font-light">
+              {currentEmissions ? (
+                <span className="text-orange-3">
+                  {Math.ceil(currentEmissions).toLocaleString("sv-SE")}
+                  <span className="text-lg text-grey ml-1">tCO₂e</span>
+                </span>
+              ) : (
+                <span className="text-grey">Ingen data</span>
+              )}
             </div>
-          )}
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-grey mb-2 text-lg">
+              <TrendingDown className="w-4 h-4" />
+              <span>Förändringstakt</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>
+                      Förändringstakt för utsläpp jämfört med föregående
+                      rapporteringsperiod.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <div className="text-3xl font-light">
+              {emissionsChange !== null ? (
+                <span
+                  className={
+                    emissionsChange < 0 ? "text-green-3" : "text-pink-3"
+                  }
+                >
+                  {emissionsChange > 0 ? "+" : ""}
+                  {Math.ceil(emissionsChange).toLocaleString("sv-SE")}%
+                </span>
+              ) : (
+                <span className="text-grey">Ingen data</span>
+              )}
+            </div>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-4 pt-4 border-t border-black-1">
           {latestPeriod?.economy?.turnover && (
             <div>
               <Text
                 variant="body"
-                className="flex items-center gap-2 text-grey mb-2"
+                className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
                 <Wallet className="w-4 h-4" />
                 <span> Omsättning</span>
               </Text>
-              <Text variant="large">
+              <Text variant="h6">
                 {latestPeriod.economy.turnover.value
                   ? (latestPeriod.economy.turnover.value / 1e9).toFixed(1)
                   : "N/A"}{" "}
                 mdr
-                <span className="text-xs text-grey ml-1">
+                <span className="text-lg text-grey ml-1">
                   {latestPeriod.economy.turnover.currency}
                 </span>
               </Text>
@@ -196,11 +204,11 @@ export function CompanyCard({
             <div>
               <Text
                 variant="body"
-                className="flex items-center gap-2 text-grey mb-2"
+                className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
                 <Users className="w-4 h-4" /> <span>Anställda</span>
               </Text>
-              <Text variant="large">{formattedEmployeeCount}</Text>
+              <Text variant="h6">{formattedEmployeeCount}</Text>
             </div>
           )}
         </div>
@@ -214,11 +222,14 @@ export function CompanyCard({
           >
             <div className="flex items-center justify-between">
               <div>
-                <Text variant="large" className="flex items-center gap-2 text-white mb-2">
-                  <FileText className="w-4 h-4 text-white" />
+                <Text
+                  variant="h6"
+                  className="flex items-center gap-2 text-white mb-2"
+                >
+                  <FileText className="w-6 h-6 text-white" />
                   <span>Company Report</span>
                 </Text>
-                <Text variant="muted">
+                <Text variant="body" className=" text-grey">
                   {latestPeriod.reportURL === "Saknar report"
                     ? "Saknar report"
                     : ``}
@@ -228,112 +239,6 @@ export function CompanyCard({
             </div>
           </a>
         )}
-        {/* ---original styling-----
-        <div className="grid grid-cols-2 gap-4">
-          {currentEmissions && (
-            <div className="bg-black-1 rounded-level-2 p-4">
-              <div className="flex items-center gap-2 text-grey mb-2">
-                <TrendingDown className="w-4 h-4" />
-                <span className="text-xs">Utsläpp</span>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="w-4 h-4" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Totala utsläpp (Scope 1 & 2)</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="text-3xl font-light">
-                <span className="text-orange-3">
-                  {(currentEmissions / 1000).toFixed(1)}k
-                </span>
-                <span className="text-lg text-grey ml-1">tCO₂e</span>
-              </div>
-            </div>
-          )}
-          {currentEmissions && (
-            <div className="bg-black-1 rounded-level-2 p-4">
-              <div className="flex items-center gap-2 text-grey mb-2">
-                <TrendingDown className="w-4 h-4" />
-                <span className="text-xs">Rate of Change</span>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="w-4 h-4" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>
-                        Rate of emissions change from previous reporting period
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="text-lg font-light">
-                {emissionsChange && (
-                  <span
-                    className={`text-3xl ml-2 ${
-                      emissionsChange < 0 ? "text-green-3" : "text-pink-3"
-                    }`}
-                  >
-                    {emissionsChange > 0 ? "+" : ""}
-                    {emissionsChange.toFixed(1)}%
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          {latestPeriod?.economy?.turnover && (
-            <div className="bg-black-1 rounded-level-2 p-4">
-              <div className="flex items-center gap-2 text-grey mb-2">
-                <Wallet className="w-4 h-4" />
-                <span className="text-xs">Omsättning</span>
-              </div>
-              <div className="text-lg font-light">
-                {latestPeriod.economy.turnover.value
-                  ? (latestPeriod.economy.turnover.value / 1e9).toFixed(1)
-                  : "N/A"}{" "}
-                mdr
-                <span className="text-xs text-grey ml-1">
-                  {latestPeriod.economy.turnover.currency}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {latestPeriod?.economy?.employees && (
-            <div className="bg-black-1 rounded-level-2 p-4">
-              <div className="flex items-center gap-2 text-grey mb-2">
-                <Users className="w-4 h-4" />
-                <span className="text-xs">Anställda</span>
-              </div>
-              <div className="text-lg font-light">{formattedEmployeeCount}</div>
-            </div>
-          )}
-        </div>
-        {latestPeriod?.reportURL && (
-          <div
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(
-                latestPeriod.reportURL || "",
-                "_blank",
-                "noopener,noreferrer"
-              );
-            }}
-            className="inline-flex items-center gap-2 text-sm hover:text-white transition-colors cursor-pointer"
-            style={{ color: categoryColor }}
-          >
-            <FileText className="w-4 h-4 text-white" />
-            Company Report
-            <ArrowUpRight className="w-4 h-4" />
-          </div>
-        )} */}
       </Link>
     </div>
   );
