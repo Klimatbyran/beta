@@ -6,36 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { CompanyCard } from "./CompanyCard";
 import type { RankedCompany } from "@/types/company";
-
-// GICS sector names mapping
-const sectorNames: Record<string, string> = {
-  "10": "Energi",
-  "15": "Material",
-  "20": "Industri",
-  "25": "Sällanköpsvaror",
-  "30": "Dagligvaror",
-  "35": "Hälsovård",
-  "40": "Finans",
-  "45": "IT",
-  "50": "Kommunikation",
-  "55": "Kraftförsörjning",
-  "60": "Fastigheter",
-};
-
-// Order sectors by code
-const sectorOrder = [
-  "10",
-  "15",
-  "20",
-  "25",
-  "30",
-  "35",
-  "40",
-  "45",
-  "50",
-  "55",
-  "60",
-];
+import { SECTOR_NAMES, SECTOR_ORDER } from "@/lib/constants/sectors";
 
 interface SectionedCompanyListProps {
   companies: Omit<RankedCompany, "rankings" | "goals" | "initiatives">[];
@@ -58,8 +29,8 @@ export function SectionedCompanyList({
 
   // Sort sectors by predefined order
   const sortedSectors = Object.keys(companiesBySector).sort((a, b) => {
-    const indexA = sectorOrder.indexOf(a);
-    const indexB = sectorOrder.indexOf(b);
+    const indexA = SECTOR_ORDER.indexOf(a as typeof SECTOR_ORDER[number]);
+    const indexB = SECTOR_ORDER.indexOf(b as typeof SECTOR_ORDER[number]);
     if (indexA === -1) return 1;
     if (indexB === -1) return -1;
     return indexA - indexB;
@@ -111,7 +82,7 @@ export function SectionedCompanyList({
               <AccordionTrigger className="rounded-level-2 p-6 hover:no-underline hover:bg-black-2 data-[state=open]:hover:bg-black-2">
                 <div className="flex items-center gap-4">
                   <h2 className="text-2xl font-light">
-                    {sectorNames[sectorCode] || "Övriga företag"}
+                    {SECTOR_NAMES[sectorCode] || "Övriga företag"}
                   </h2>
                   <span className="text-grey">
                     {sectorCompanies.length} företag

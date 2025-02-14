@@ -3,7 +3,7 @@ import { getCompanies } from "@/lib/api";
 import type { paths } from "@/lib/api-types";
 
 // Get company type from API types
-type Company = NonNullable<
+ type Company = NonNullable<
   paths["/companies/"]["get"]["responses"][200]["content"]["application/json"]
 >[0];
 
@@ -17,7 +17,6 @@ export interface RankedCompany extends Company {
     emissionsReduction: number;
     displayReduction: string;
   };
-  tags: string[];
 }
 
 function formatReductionValue(value: number): string {
@@ -52,7 +51,6 @@ export function useCompanies() {
 
         return {
           ...company,
-          tags: company.tags || [],
           // rankings: {
           //   overall: "12/290",
           //   sector: "3/45",

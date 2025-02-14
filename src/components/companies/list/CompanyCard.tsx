@@ -14,13 +14,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getCategoryColor, sectorNames } from "@/lib/constants/emissions";
+import { getCategoryColor } from "@/lib/constants/emissions";
+import { SECTOR_NAMES } from "@/lib/constants/sectors";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
 
-type CompanyCardProps = Omit<
+type CompanyCardProps = Pick<
   RankedCompany,
-  "rankings" | "goals" | "initiatives"
+  'wikidataId' | 'name' | 'description' | 'industry' | 'reportingPeriods' | 'metrics'
 >;
 
 export function CompanyCard({
@@ -46,7 +47,7 @@ export function CompanyCard({
     : "N/A";
 
   const sectorName = industry?.industryGics?.sectorCode
-    ? sectorNames[industry.industryGics.sectorCode]
+    ? SECTOR_NAMES[industry.industryGics.sectorCode]
     : "Okänd sektor";
 
   // Find the largest scope 3 category
