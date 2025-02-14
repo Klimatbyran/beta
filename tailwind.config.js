@@ -1,134 +1,13 @@
-import { fontFamily, screens } from 'tailwindcss/defaultTheme'
-import typography from '@tailwindcss/typography'
-import { white, black, transparent, current } from 'tailwindcss/colors'
-
-const colors = {
-  gray: {
-    50: '#F7F7F7',
-    100: '#E1E1E1',
-    150: '#C3C3C3',
-    200: '#A5A5A5',
-    250: '#878787',
-    300: '#717171',
-    350: '#5B5B5B',
-    400: '#444444',
-    500: '#2E2E2E',
-    600: '#272727',
-    650: '#202020',
-    700: '#191919',
-    750: '#121212',
-    800: '#0E0E0E',
-    850: '#090909',
-    900: '#050505',
-    950: '#000000',
-  },
-  orange: {
-    50: '#FEE7CD',
-    100: '#FEDBB4',
-    150: '#FDCF9A',
-    200: '#FDC381',
-    250: '#FDB768',
-    300: '#FBAD59',
-    350: '#F9A349',
-    400: '#F6993A',
-    500: '#F48F2A',
-    600: '#E38320',
-    650: '#D37715',
-    700: '#C26B0B',
-    750: '#B25F00',
-    800: '#A05500',
-    850: '#8E4B00',
-    900: '#7D4100',
-    950: '#6B3700',
-  },
-  blue: {
-    50: '#D4E7F7',
-    100: '#C5DFFA',
-    150: '#B6DAFB',
-    200: '#A7D5FD',
-    250: '#99CFFF',
-    300: '#96CDFD',
-    350: '#79B7F0',
-    400: '#69ACE9',
-    500: '#59A0E1',
-    600: '#4B90CB',
-    650: '#3D81B5',
-    700: '#2E729E',
-    750: '#206288',
-    800: '#1D577A',
-    850: '#1A4C6B',
-    900: '#16415D',
-    950: '#13364E',
-  },
-  green: {
-    50: '#F1FFCC',
-    100: '#E7FEA5',
-    150: '#E3FD95',
-    200: '#DEFD86',
-    250: '#D5FD63',
-    300: '#CDFA4C',
-    350: '#C5F735',
-    400: '#BCF51D',
-    500: '#AAE506',
-    600: '#9AD006',
-    650: '#8BBB06',
-    700: '#7CA605',
-    750: '#6C9105',
-    800: '#608009',
-    850: '#556E0E',
-    900: '#495D12',
-    950: '#3D4B16',
-  },
-  pink: {
-    50: '#FAE1E9',
-    100: '#F5C6D4',
-    150: '#F3B9CB',
-    200: '#F0ADC1',
-    250: '#EEA0B7',
-    300: '#EF95B0',
-    350: '#EF8AA9',
-    400: '#F080A1',
-    500: '#F0759A',
-    600: '#DA698B',
-    650: '#C35D7C',
-    700: '#AD516C',
-    750: '#97455D',
-    800: '#8E3D55',
-    850: '#85364D',
-    900: '#7C2E45',
-    950: '#73263D',
-  },
-  // NOTE: This was generated from the base color 600: '#e72c4e' since we didn't get a red color scale from the designers.
-  // This explains why we only have 11 hues for this color.
-  red: {
-    50: '#fff1f1',
-    100: '#ffe4e5',
-    200: '#ffccd0',
-    300: '#fea3ab',
-    400: '#fd6f7e',
-    500: '#f73c55',
-    600: '#e72c4e',
-    700: '#c10f34',
-    800: '#a11033',
-    900: '#8a1131',
-    950: '#4d0416',
-  },
-}
-
 /** @type {import('tailwindcss').Config} */
-const config = {
-  plugins: [typography],
+export default {
   darkMode: ['class'],
-  content: ['./src/**/*.{astro,svelte,ts,tsx,js,md,mdx,html}'],
-  safelist: ['dark'],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
   theme: {
-    colors: {
-      ...colors,
-      white,
-      black,
-      transparent,
-      current,
-    },
     container: {
       center: true,
       padding: '2rem',
@@ -137,93 +16,115 @@ const config = {
       },
     },
     extend: {
-      screens: {
-        '2xs': '375px',
-        xs: '475px',
-        ...screens,
+      fontFamily: {
+        sans: ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
       },
-      colors: {
-        border: 'hsl(var(--border) / <alpha-value>)',
-        input: 'hsl(var(--input) / <alpha-value>)',
-        ring: 'hsl(var(--ring) / <alpha-value>)',
-        background: 'hsl(var(--background) / <alpha-value>)',
-        foreground: 'hsl(var(--foreground) / <alpha-value>)',
-        primary: {
-          DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
-          foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
-          foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
-          foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
-          foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
-          foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
-          foreground: 'hsl(var(--popover-foreground) / <alpha-value>)',
-        },
-        card: {
-          DEFAULT: 'hsl(var(--card) / <alpha-value>)',
-          foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
-        },
+      fontSize: {
+        'display': ['64px', {
+          lineHeight: '1.1',
+          letterSpacing: '-0.02em',
+          fontWeight: '300',
+        }],
       },
       borderRadius: {
-        '3xl': '3rem',
-        '2xl': '1.875rem',
-        xl: '1.5rem',
-        lg: '1.125rem',
-        md: '1rem',
-        sm: '0.875rem',
-        xs: '0.625rem',
+        'level-1': '48px',
+        'level-2': '30px',
       },
-      fontFamily: {
-        sans: ['DM Sans Variable', ...fontFamily.sans],
+      colors: {
+        border: 'transparent',
+        input: 'transparent',
+        ring: 'rgb(255 255 255 / 0.1)',
+        background: 'transparent',
+        foreground: 'rgb(255 255 255)',
+        primary: {
+          DEFAULT: 'rgb(153, 207, 255)',
+          foreground: 'rgb(0, 0, 0)',
+        },
+        secondary: {
+          DEFAULT: 'rgb(46, 46, 46)',
+          foreground: 'rgb(255, 255, 255)',
+        },
+        destructive: {
+          DEFAULT: 'rgb(240, 117, 154)',
+          foreground: 'rgb(255, 255, 255)',
+        },
+        muted: {
+          DEFAULT: 'rgb(46, 46, 46)',
+          foreground: 'rgb(135, 135, 135)',
+        },
+        accent: {
+          DEFAULT: 'rgb(46, 46, 46)',
+          foreground: 'rgb(255, 255, 255)',
+        },
+        popover: {
+          DEFAULT: 'rgb(18, 18, 18)',
+          foreground: 'rgb(255, 255, 255)',
+        },
+        card: {
+          DEFAULT: 'rgb(18, 18, 18)',
+          foreground: 'rgb(255, 255, 255)',
+        },
+        // Base colors
+        white: '#F7F7F7',
+        grey: '#878787',
+        'black-1': '#2E2E2E',
+        'black-2': '#121212',
+        'black-3': '#000000',
+        
+        // Orange palette
+        orange: {
+          1: '#FDE7CE',
+          2: '#FDB768',
+          3: '#F48F2A',
+          4: '#B25F00',
+          5: '#6B3700',
+        },
+        
+        // Blue palette
+        blue: {
+          1: '#D4E7F7',
+          2: '#99CFFF',
+          3: '#59A0E1',
+          4: '#206288',
+          5: '#13364E',
+        },
+        
+        // Green palette
+        green: {
+          1: '#F1FFCC',
+          2: '#D5FD63',
+          3: '#AAE506',
+          4: '#6C9105',
+          5: '#3D4B16',
+        },
+        
+        // Pink palette
+        pink: {
+          1: '#FAE1E9',
+          2: '#EEA0B7',
+          3: '#F0759A',
+          4: '#97455D',
+          5: '#73263D',
+        },
+      },
+      letterSpacing: {
+        tightest: '-0.02em',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
+  plugins: [require('tailwindcss-animate')],
 }
-
-export default config
-
-// NOTE: This is purely for reference to make it easier to translate the design into code
-// const namedColors = {
-//   white: colors.gray[50],
-//   gray: colors.gray[250],
-//   black1: colors.gray[500],
-//   black2: colors.gray[750],
-//   black3: colors.gray[950],
-
-//   orange1: colors.orange[50],
-//   orange2: colors.orange[250],
-//   orange3: colors.orange[500],
-//   orange4: colors.orange[750],
-//   orange5: colors.orange[950],
-
-//   blue1: colors.blue[50],
-//   blue2: colors.blue[250],
-//   blue3: colors.blue[500],
-//   blue4: colors.blue[750],
-//   blue5: colors.blue[950],
-
-//   green1: colors.green[50],
-//   green2: colors.green[250],
-//   green3: colors.green[500],
-//   green4: colors.green[750],
-//   green5: colors.green[950],
-
-//   pink1: colors.pink[50],
-//   pink2: colors.pink[250],
-//   pink3: colors.pink[500],
-//   pink4: colors.pink[750],
-//   pink5: colors.pink[950],
-// }
