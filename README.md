@@ -48,4 +48,4 @@ Postkodstiftelsen, ClimateView, Klimatklubben.se, Researcher's Desk, Exponential
 
 ## LICENSE
 
-MIT Copyright (c) Klimatbyrån
+This project is licensed under the terms of the [Apache 2.0](LICENSE) © Klimatbyrån Ideell Förening.
