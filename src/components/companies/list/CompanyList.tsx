@@ -133,7 +133,7 @@ export function CompanyList() {
               </div>
 
               <div className="grid grid-cols-3 gap-4">
-                {turnover && (
+                {turnover?.value && (
                   <div className="bg-black-1 rounded-level-2 p-4">
                     <div className="flex items-center gap-2 text-grey mb-2">
                       <Wallet className="w-4 h-4" />
@@ -148,7 +148,7 @@ export function CompanyList() {
                   </div>
                 )}
 
-                {employees && (
+                {employees?.value && (
                   <div className="bg-black-1 rounded-level-2 p-4">
                     <div className="flex items-center gap-2 text-grey mb-2">
                       <Users className="w-4 h-4" />
