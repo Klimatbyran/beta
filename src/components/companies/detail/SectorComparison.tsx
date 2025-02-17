@@ -55,7 +55,7 @@ export function SectorComparison({
       emissionsReduction: company.metrics?.emissionsReduction || 0,
       isCurrentCompany: company.wikidataId === currentCompany.wikidataId,
       reportedCategories,
-      reportingPeriods: company.reportingPeriods
+      reportingPeriods: company.reportingPeriods,
     };
   });
 

@@ -21,8 +21,14 @@ import { Text } from "@/components/ui/text";
 
 type CompanyCardProps = Pick<
   RankedCompany,
-  'wikidataId' | 'name' | 'description' | 'industry' | 'reportingPeriods' | 'metrics'
->;
+  | "wikidataId"
+  | "name"
+  | "description"
+  | "industry"
+  | "reportingPeriods"
+  | "metrics"
+> &
+  Partial<Pick<RankedCompany, "rankings">>;
 
 export function CompanyCard({
   wikidataId,

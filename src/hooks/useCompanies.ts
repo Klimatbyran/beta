@@ -3,16 +3,23 @@ import { getCompanies } from "@/lib/api";
 import type { paths } from "@/lib/api-types";
 
 // Get company type from API types
- type Company = NonNullable<
+type Company = NonNullable<
   paths["/companies/"]["get"]["responses"][200]["content"]["application/json"]
 >[0];
 
-export interface RankedCompany extends Company {
-  // rankings: {
-  //   overall: string;
-  //   sector: string;
-  //   category: string;
-  // };
+// Define the modified reporting period type with added IDs
+type ReportingPeriodWithIds = Company["reportingPeriods"][0] & {
+  id: string;
+  emissions:
+    | (Company["reportingPeriods"][0]["emissions"] & {
+        id: string;
+        biogenicEmissions: null;
+      })
+    | null;
+};
+
+export interface RankedCompany extends Omit<Company, "reportingPeriods"> {
+  reportingPeriods: ReportingPeriodWithIds[];
   metrics: {
     emissionsReduction: number;
     displayReduction: string;
@@ -34,7 +41,6 @@ export function useCompanies() {
     queryKey: ["companies"],
     queryFn: getCompanies,
     select: (data): RankedCompany[] => {
-      // Transform data to include rankings and metrics
       return data.map((company) => {
         // Calculate emissions reduction
         const latestPeriod = company.reportingPeriods[0];
@@ -51,11 +57,17 @@ export function useCompanies() {
 
         return {
           ...company,
-          // rankings: {
-          //   overall: "12/290",
-          //   sector: "3/45",
-          //   category: "5/120",
-          // },
+          reportingPeriods: company.reportingPeriods.map((period) => ({
+            ...period,
+            id: period.startDate,
+            emissions: period.emissions
+              ? {
+                  ...period.emissions,
+                  id: `${period.startDate}-emissions`,
+                  biogenicEmissions: null,
+                }
+              : null,
+          })),
           metrics: {
             emissionsReduction,
             displayReduction: formatReductionValue(emissionsReduction),

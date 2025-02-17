@@ -22,12 +22,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SECTORS, SECTOR_NAMES } from "@/lib/constants/sectors";
 
-type CompanySector = "all" | keyof typeof SECTORS;
-type SortOption =
-  | "emissions_reduction"
-  | "total_emissions"
-  | "scope3_coverage"
-  | "name";
+type CompanySector = (typeof SECTORS)[number]["value"];
+type SortOption = (typeof SORT_OPTIONS)[number]["value"];
 
 const SORT_OPTIONS = [
   { value: "emissions_reduction", label: "Utsläppsminskning" },
@@ -91,6 +87,39 @@ function FilterPopover({
   );
 }
 
+interface FilterGroupProps {
+  title: string;
+  items: typeof SECTORS;
+  selected: string[];
+  onSelect: (value: string[]) => void;
+}
+
+function FilterGroup({ title, items, selected, onSelect }: FilterGroupProps) {
+  return (
+    <CommandGroup heading={title}>
+      {items.map((item) => (
+        <CommandItem
+          key={item.value}
+          onSelect={() => {
+            if (item.value === "all") {
+              onSelect([]);
+            } else {
+              const newValue = selected.includes(item.value)
+                ? selected.filter((v) => v !== item.value)
+                : [...selected, item.value];
+              onSelect(newValue);
+            }
+          }}
+          className="flex items-center justify-between"
+        >
+          <span>{item.label}</span>
+          {selected.includes(item.value) && <Check className="w-4 h-4" />}
+        </CommandItem>
+      ))}
+    </CommandGroup>
+  );
+}
+
 interface SortGroupProps {
   sortBy: SortOption;
   setSortBy: (sort: SortOption) => void;
@@ -141,42 +170,6 @@ function FilterCommands({
         <SortGroup sortBy={sortBy} setSortBy={setSortBy} />
       </CommandList>
     </Command>
-  );
-}
-
-interface FilterGroupProps {
-  title: string;
-  items: typeof SECTORS;
-  selected: CompanySector[];
-  onSelect: React.Dispatch<React.SetStateAction<CompanySector[]>>;
-}
-
-function FilterGroup({ title, items, selected, onSelect }: FilterGroupProps) {
-  return (
-    <CommandGroup heading={title}>
-      {items.map((item) => (
-        <CommandItem
-          key={item.value}
-          onSelect={() => {
-            if (item.value === "all") {
-              onSelect([]);
-            } else {
-              onSelect((prev) =>
-                prev.includes(item.value as CompanySector)
-                  ? prev.filter((v) => v !== item.value)
-                  : [...prev, item.value as CompanySector]
-              );
-            }
-          }}
-          className="flex items-center justify-between"
-        >
-          <span>{item.label}</span>
-          {selected.includes(item.value as CompanySector) && (
-            <Check className="w-4 h-4" />
-          )}
-        </CommandItem>
-      ))}
-    </CommandGroup>
   );
 }
 
@@ -319,15 +312,13 @@ export function CompaniesPage() {
         </div>
       ) : sectors.length === 0 && !searchQuery ? (
         <SectionedCompanyList
-          companies={filteredCompanies.map(
-            ({ ...rest }) => ({
-              ...rest,
-              reportingPeriods: rest.reportingPeriods.map((period) => ({
-                ...period,
-                id: period.startDate, // Using startDate as temporary id
-              })),
-            })
-          )}
+          companies={filteredCompanies.map(({ ...rest }) => ({
+            ...rest,
+            reportingPeriods: rest.reportingPeriods.map((period) => ({
+              ...period,
+              id: period.startDate, // Using startDate as temporary id
+            })),
+          }))}
           sortBy={sortBy}
         />
       ) : (
