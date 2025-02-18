@@ -135,18 +135,33 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <div className="fixed inset-0 bg-black-2 w-full h-full z-100 flex justify-center mt-12 p-8">
-          <div className="flex flex-col items-center gap-6 text-lg">
+        <div className="fixed inset-0 bg-black-2 w-full h-full z-100 flex  mt-12 p-8">
+          <div className="flex flex-col gap-6 text-lg">
             {NAV_LINKS.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={toggleMenu}
-                className="flex items-center gap-2"
-              >
-                {link.icon}
-                {link.label}
-              </Link>
+              <div key={link.path} className="flex flex-col">
+                <Link
+                  to={link.path}
+                  onClick={toggleMenu}
+                  className="flex items-center gap-2"
+                >
+                  {link.icon}
+                  {link.label}
+                </Link>
+
+                {link.sublinks && (
+                  <div className="flex flex-col gap-2 pl-4 mt-2">
+                    {link.sublinks.map((sublink) => (
+                      <Link
+                        key={sublink.path}
+                        to={sublink.path}
+                        className="flex items-center gap-2 text-sm text-gray-400"
+                      >
+                        {sublink.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
