@@ -58,12 +58,9 @@ export function RankedList({
             <div className="grid grid-cols-1 md:grid-cols-2 items-center md:gap-4">
               <span className="text-base md:text-lg">{item.name}</span>
               <span
-                className={cn(
-                  "text-base md:text-lg md:text-right",
-                  item.value > 0 ? "text-pink-3" : "text-green-3"
-                )}
+                className={"text-base md:text-lg md:text-right text-green-3"}
               >
-                {item.value > 0 ? "+" : ""}
+                {item.value > 0 ? "-" : ""}
                 {item.displayValue || item.value.toFixed(1)}%
               </span>
             </div>
