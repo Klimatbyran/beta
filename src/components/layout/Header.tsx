@@ -38,7 +38,6 @@ const NAV_LINKS = [
     ],
   },
   { path: "/about", label: "Om oss" },
-  { path: "/tools", label: "Vårt verktyg" },
   { path: "/insights", label: "Insikter" },
   { path: "/methodology", label: "Källor och metod" },
 ];
