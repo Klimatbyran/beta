@@ -19,15 +19,7 @@ interface MunicipalityListProps {
 export function MunicipalityList({ municipalities }: MunicipalityListProps) {
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [sortBy, setSortBy] = useState<
-    | "meets_paris"
-    | "reduction"
-    | "needed_reduction"
-    | "consumption_emissions"
-    | "charging_points"
-    | "climate_plan"
-    | "name"
-  >("reduction");
+  const [sortBy, setSortBy] = useState<"meets_paris" | "name">("meets_paris");
   const [sortDirection, setSortDirection] = useState<"best" | "worst">("best");
 
   const sortOptions = [
