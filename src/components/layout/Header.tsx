@@ -73,32 +73,6 @@ export function Header() {
                       <MenubarShortcut>⌘F</MenubarShortcut>
                     </Link>
                   </MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>
-                    <Link
-                      to="/companies?category=omx"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Large Cap (OMX)
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/companies?category=midcap"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Mid Cap
-                    </Link>
-                  </MenubarItem>
-                  <MenubarItem>
-                    <Link
-                      to="/companies?category=sme"
-                      className="flex items-center justify-between w-full"
-                    >
-                      Small Cap
-                    </Link>
-                  </MenubarItem>
-                  <MenubarSeparator />
                   <MenubarItem>
                     <Link
                       to="/companies/insights"

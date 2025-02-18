@@ -53,18 +53,17 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
   const sortedMunicipalities = filteredMunicipalities.sort((a, b) => {
     const directionMultiplier = sortDirection === "best" ? 1 : -1;
     switch (sortBy) {
-      case "meets_paris":
-        if (
-          a.budgetRunsOut === "Håller budget" &&
-          b.budgetRunsOut === "Håller budget"
-        ) {
+      case "meets_paris": {
+        const aMeetsParis = a.budgetRunsOut === "Håller budget";
+        const bMeetsParis = b.budgetRunsOut === "Håller budget";
+        if (aMeetsParis && bMeetsParis) {
           return (
             directionMultiplier *
             (new Date(a.hitNetZero).getTime() -
               new Date(b.hitNetZero).getTime())
           );
         }
-        if (a.budgetRunsOut === "Håller budget") {
+        if (aMeetsParis) {
           return -1 * directionMultiplier;
         }
         if (b.budgetRunsOut === "Håller budget") {
@@ -75,6 +74,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
           (new Date(b.budgetRunsOut).getTime() -
             new Date(a.budgetRunsOut).getTime())
         );
+      }
       case "name":
         return directionMultiplier * a.name.localeCompare(b.name);
       default:
