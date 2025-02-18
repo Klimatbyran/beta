@@ -167,7 +167,7 @@ export function LandingPage() {
         </div>
       </div>
 
-      <div className="pb-16 md:pb-24">
+      <div className="pb-8 md:pb-16">
         <div className="container mx-auto">
           <ContentBlock
             title="Vilka är vi?"
