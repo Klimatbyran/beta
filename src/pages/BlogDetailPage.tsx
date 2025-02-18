@@ -1,129 +1,99 @@
-import { useParams } from 'react-router-dom';
-import { CalendarDays, Clock, ArrowLeft, Share2 } from 'lucide-react';
+import { useParams, Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { CalendarDays, Clock, ArrowLeft, Share2, Check } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import rehypeRaw from "rehype-raw";
+import { BlogPostMeta, blogMetadata } from "../lib/blog/blogPostsList";
 
-const blogPost = {
-  id: 'trend-calculations',
-  title: 'Så beräknar vi trendlinjer för utsläpp',
-  excerpt: 'En djupdykning i hur vi analyserar och projicerar företags utsläppstrender med hänsyn till datakvalitet, scope 3-rapportering och Parisavtalets mål.',
-  content: `
-## Varför är trendberäkningar viktiga?
-
-För att förstå om ett företag är på rätt väg i klimatomställningen räcker det inte att titta på enskilda år. Vi behöver analysera den långsiktiga trenden och jämföra den med vad som krävs enligt Parisavtalet. Men att beräkna trender för utsläppsdata är komplext av flera anledningar:
-
-- Företag rapporterar olika mycket data och med varierande kvalitet
-- Scope 3-utsläpp rapporteras inte alltid konsekvent
-- Extrema värden eller outliers kan ge missvisande trender
-- Linjära trender ger ofta orealistiska långsiktiga projektioner
-
-## Vår metod för trendberäkning
-
-För att hantera dessa utmaningar använder vi en kombination av flera metoder som anpassas efter datakvaliteten. Här är de viktigaste komponenterna:
-
-### 1. Datakvalitetsbedömning
-
-Först analyserar vi kvaliteten på tillgänglig data genom att titta på:
-
-- Antal år med rapporterade utsläpp
-- Konsistens i scope 3-rapportering
-- Förekomst av extremvärden eller outliers
-- Täckning av olika utsläppskategorier
-
-### 2. Val av trendberäkningsmetod
-
-Baserat på datakvaliteten väljer vi den mest lämpliga metoden:
-
-- **Hög kvalitet:** Använder totala utsläpp (scope 1-3) med full viktning
-- **Medium kvalitet:** Fokuserar på scope 1-2 med reducerad viktning av scope 3
-- **Låg kvalitet:** Använder endast verifierade utsläpp med extra försiktighet
-
-### 3. Progressiv reduktion av förändringstakt
-
-En av de viktigaste innovationerna i vår metod är hur vi hanterar långsiktiga projektioner. Vi använder en modell med progressiv reduktion av förändringstakten:
-
-- **År 1-5:** 100% av initial förändringstakt
-- **År 5-10:** Linjär minskning till 70% av initial takt
-- **År 10-15:** Ytterligare minskning till 50%
-- **Efter år 15:** Exponentiell avtagning mot 30%
-
-Detta ger mer realistiska projektioner som undviker extrema värden i långsiktiga prognoser, samtidigt som kortsiktiga trender respekteras.
-
-## Hantering av särskilda fall
-
-### 1. Inkonsekvent scope 3-rapportering
-
-När ett företag rapporterar scope 3 oregelbundet använder vi flera tekniker:
-
-- Interpolering mellan kända värden
-- Viktad trend baserad på rapporterade år
-- Tydlig markering av interpolerade värden
-
-### 2. Nollrapportering till aktiv rapportering
-
-När företag går från noll till aktiv rapportering:
-
-- Identifierar första året med faktiska utsläpp som basår
-- Exkluderar initiala nollår från trendberäkningen
-- Markerar tydligt när rapporteringen började
-
-### 3. Outliers och extremvärden
-
-För att hantera extremvärden:
-
-- Använder Median Absolute Deviation (MAD) för att identifiera outliers
-- Justerar extrema värden mot mer troliga nivåer
-- Behåller original data men med reducerad vikt i trendberäkningen
-
-## Jämförelse med Parisavtalet
-
-Parallellt med företagets trend visar vi alltid Parisavtalets målbana som kräver 7,6% minskning per år. Detta ger en tydlig referens för att bedöma om företagets utveckling är i linje med klimatmålen.
-
-### Begränsningar och fortsatt utveckling
-
-Vi är medvetna om metodens begränsningar:
-
-- Kräver minst två års data för meningsfull analys
-- Kan underskatta effekten av planerade åtgärder
-- Tar inte hänsyn till branschspecifika utmaningar
-
-Vi fortsätter att utveckla metoden baserat på ny forskning och feedback från användare och experter. Målet är att ge en så rättvisande bild som möjligt av företagens klimatomställning, samtidigt som vi är transparenta med osäkerheter och begränsningar.
-  `,
-  date: '2024-03-20',
-  readTime: '8 min',
-  category: 'Metodik',
-  image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop',
-  author: {
-    name: 'Elvira Boman',
-    role: 'Tech Lead',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop'
-  },
-  relatedPosts: [
-    {
-      id: '2',
-      title: 'Så kan företag halvera sina scope 3-utsläpp till 2030',
-      excerpt: 'Ny forskning visar att företag kan uppnå betydande minskningar av sina scope 3-utsläpp genom att fokusera på fem nyckelområden.',
-      date: '2024-03-15',
-      readTime: '5 min',
-      category: 'Analys',
-      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop',
-    },
-    {
-      id: '3',
-      title: 'Parisavtalet och näringslivet',
-      excerpt: 'Vad betyder Parisavtalets 1,5-gradersmål i praktiken för svenska företag? Vi reder ut begreppen.',
-      date: '2024-03-05',
-      readTime: '6 min',
-      category: 'Guide',
-      image: 'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop',
-    },
-  ]
-};
+// Import Markdown files
+const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md", {
+  as: "raw",
+  eager: true,
+});
 
 export function BlogDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const [blogPost, setBlogPost] = useState<{
+    metadata: BlogPostMeta;
+    content: string;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!id) return;
+    const filePath = `/src/lib/blog/posts/${id}.md`;
+    const rawMarkdown = markdownFiles[filePath];
+
+    if (!rawMarkdown) {
+      console.error(`❌ Markdown file not found: ${filePath}`);
+      setBlogPost(null);
+      setLoading(false);
+      return;
+    }
+
+    const extractedMetadata = extractMetadata(rawMarkdown);
+    const metadata = blogMetadata.find((post) => post.id === id);
+
+    if (!metadata) {
+      console.error(`❌ Metadata not found for post: ${id}`);
+      setBlogPost(null);
+      setLoading(false);
+      return;
+    }
+
+    setBlogPost({ metadata, content: extractedMetadata });
+    setLoading(false);
+  }, [id]);
+
+  const extractMetadata = (rawMarkdown: string) => {
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
+    return rawMarkdown.replace(frontmatterRegex, "").trim();
+  };
+
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: blogPost?.metadata.title,
+          text: "Kolla in det här blogginlägget!",
+          url: shareUrl,
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (error) {
+        console.error("Error copying to clipboard:", error);
+      }
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (!blogPost) return <div>Post not found</div>;
+
+  const relatedPosts = blogPost.metadata.relatedPosts
+    ? blogPost.metadata.relatedPosts
+        .map((relatedId) => blogMetadata.find((post) => post.id === relatedId))
+        .filter(Boolean)
+    : [];
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-16">
@@ -135,9 +105,18 @@ export function BlogDetailPage() {
             Tillbaka
           </a>
         </Button>
-        <Button variant="ghost" size="sm" className="gap-2">
-          <Share2 className="w-4 h-4" />
-          Dela
+        <Button
+          variant="ghost"
+          size="sm"
+          className="gap-2"
+          onClick={handleShare}
+        >
+          {copied ? (
+            <Check className="w-4 h-4 text-green-500" />
+          ) : (
+            <Share2 className="w-4 h-4" />
+          )}
+          {copied ? "Länk kopierad!" : "Dela"}
         </Button>
       </div>
 
@@ -145,95 +124,125 @@ export function BlogDetailPage() {
       <div className="space-y-8">
         <div className="flex items-center gap-4">
           <span className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm">
-            {blogPost.category}
+            {blogPost.metadata.category}
           </span>
           <div className="flex items-center gap-2 text-grey text-sm">
             <CalendarDays className="w-4 h-4" />
-            <span>{new Date(blogPost.date).toLocaleDateString('sv-SE')}</span>
+            <span>
+              {new Date(blogPost.metadata.date).toLocaleDateString("sv-SE")}
+            </span>
           </div>
           <div className="flex items-center gap-2 text-grey text-sm">
             <Clock className="w-4 h-4" />
-            <span>{blogPost.readTime}</span>
+            <span>{blogPost.metadata.readTime}</span>
           </div>
         </div>
 
-        <Text variant="display">{blogPost.title}</Text>
-        <Text variant="large" className="text-grey max-w-3xl">
-          {blogPost.excerpt}
+        <Text variant="display">{blogPost.metadata.title}</Text>
+        <Text variant="body" className="text-grey max-w-3xl">
+          {blogPost.metadata.excerpt}
         </Text>
       </div>
 
       {/* Featured Image */}
       <div className="relative h-[500px] rounded-level-1 overflow-hidden">
         <img
-          src={blogPost.image}
-          alt={blogPost.title}
+          src={blogPost.metadata.image}
+          alt={blogPost.metadata.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
 
-      {/* Author */}
-      <div className="flex items-center gap-4 p-8 bg-black-2 rounded-level-2">
-        <img
-          src={blogPost.author.avatar}
-          alt={blogPost.author.name}
-          className="w-16 h-16 rounded-full object-cover"
-        />
-        <div>
-          <Text variant="large">{blogPost.author.name}</Text>
-          <Text variant="muted">{blogPost.author.role}</Text>
+      {/* Author Section */}
+      {blogPost.metadata.author && (
+        <div className="flex items-center gap-4 p-8 bg-black-2 rounded-level-2">
+          <img
+            src={blogPost.metadata.author.avatar}
+            alt={blogPost.metadata.author.name}
+            className="w-16 h-16 rounded-full object-cover"
+          />
+          <div>
+            <Text variant="body">{blogPost.metadata.author.name}</Text>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Content */}
       <div className="prose prose-invert max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkBreaks, remarkMath]}
+          rehypePlugins={[rehypeRaw, rehypeKatex]}
+          components={{
+            img: ({ node, ...props }) => (
+              <img
+                {...props}
+                className="w-2/3 mx-auto shadow-lg !rounded-lg !overflow-hidden"
+              />
+            ),
+            a: ({ node, ...props }) => (
+              <a
+                {...props}
+                target="_blank" // Opens link in a new tab
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              />
+            ),
+          }}
+        >
           {blogPost.content}
         </ReactMarkdown>
       </div>
 
       {/* Related Posts */}
-      <div className="space-y-8">
-        <Text variant="h3">Relaterade artiklar</Text>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPost.relatedPosts.map(post => (
-            <a
-              key={post.id}
-              href={`/insights/${post.id}`}
-              className="group bg-black-2 rounded-level-2 overflow-hidden transition-transform hover:scale-[1.02]"
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-8 space-y-4">
-                <div className="flex items-center gap-4">
-                  <span className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm">
-                    {post.category}
-                  </span>
-                  <div className="flex items-center gap-2 text-grey text-sm">
-                    <CalendarDays className="w-4 h-4" />
-                    <span>{new Date(post.date).toLocaleDateString('sv-SE')}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-grey text-sm">
-                    <Clock className="w-4 h-4" />
-                    <span>{post.readTime}</span>
-                  </div>
-                </div>
-                <Text variant="h4" className="group-hover:text-blue-2 transition-colors">
-                  {post.title}
-                </Text>
-                <Text className="text-grey">
-                  {post.excerpt}
-                </Text>
-              </div>
-            </a>
-          ))}
+      {relatedPosts.length > 0 && (
+        <div className="space-y-8">
+          <Text variant="h3">Relaterade artiklar</Text>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {relatedPosts.map(
+              (post) =>
+                post && (
+                  <Link
+                    key={post.id}
+                    to={`/insights/${post.id}`}
+                    className="group bg-black-2 rounded-level-2 overflow-hidden transition-transform hover:scale-[1.02]"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-8 space-y-4">
+                      <div className="flex items-center gap-4">
+                        <span className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm">
+                          {post.category}
+                        </span>
+                        <div className="flex items-center gap-2 text-grey text-sm">
+                          <CalendarDays className="w-4 h-4" />
+                          <span>
+                            {new Date(post.date).toLocaleDateString("sv-SE")}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-grey text-sm">
+                          <Clock className="w-4 h-4" />
+                          <span>{post.readTime}</span>
+                        </div>
+                      </div>
+                      <Text
+                        variant="h4"
+                        className="group-hover:text-blue-2 transition-colors"
+                      >
+                        {post.title}
+                      </Text>
+                      <Text className="text-grey">{post.excerpt}</Text>
+                    </div>
+                  </Link>
+                )
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

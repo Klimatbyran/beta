@@ -1,27 +1,25 @@
 import { execSync } from "child_process";
 import path from "path";
+import { API_BASE_URL } from "../src/lib/constants/urls.js";
 
 async function generateApi() {
-  const nodeEnv = process.env.NODE_ENV || "development";
-  const baseURL =
-    nodeEnv === "production"
-      ? "https://api.klimatkollen.se/api"
-      : "http://localhost:3000/api";
-
   const outputPath = path.resolve("src/lib/api-types.ts");
 
   try {
-    console.log(`Fetching OpenAPI schema from: ${baseURL}/openapi.json`);
+    console.log(
+      `Fetching OpenAPI schema from: ${API_BASE_URL}/api/openapi.json`
+    );
     execSync(
-      `npx openapi-typescript ${baseURL}/openapi.json -o ${outputPath}`,
+      `npx openapi-typescript ${API_BASE_URL}/api/openapi.json -o ${outputPath}`,
       {
         stdio: "inherit",
       }
     );
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    console.error("Failed to generate API types:", errorMessage);
+    console.error(
+      "Failed to generate API types:",
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
     process.exit(1);
   }
 }

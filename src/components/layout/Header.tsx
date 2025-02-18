@@ -74,7 +74,6 @@ export function Header() {
           >
             Klimatkollen
           </Link>
-
           <button
             className="md:hidden text-white"
             onClick={() => setMenuOpen(!menuOpen)}
