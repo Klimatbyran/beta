@@ -9,6 +9,13 @@ interface MunicipalityCardProps {
 }
 
 export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
+  const meetsParis = municipality.budgetRunsOut === "Håller budget";
+  const lastYearEmission = municipality.approximatedHistoricalEmission.at(-1);
+  const lastYearEmissionsKtons = lastYearEmission
+    ? (lastYearEmission.value / 1000).toFixed(1)
+    : "N/A";
+  const lastYear = lastYearEmission?.year.toString();
+
   return (
     <Link
       to={`/municipalities/${municipality.name}`}
@@ -33,24 +40,22 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           <div
             className={cn(
               "text-5xl font-light",
-              municipality.budgetRunsOut === "Håller budget"
-                ? "text-green-3"
-                : "text-pink-3"
+              meetsParis ? "text-green-3" : "text-pink-3"
             )}
           >
-            {municipality.budgetRunsOut === "Håller budget" ? "Ja" : "Nej"}
-            {municipality.budgetRunsOut === "Håller budget" ? (
+            {meetsParis ? "Ja" : "Nej"}
+            {meetsParis ? (
               <div className="flex items-center text-sm text-grey mt-2">
                 Kommunen når nollutsläpp
                 <Text variant="body" className="text-green-3 ml-1">
-                  {municipality.hitNetZero}
+                  {municipality.hitNetZero.toString()}
                 </Text>
               </div>
             ) : (
               <div className="flex items-center text-sm text-grey mt-2">
                 Koldioxidbudgeten tar slut
                 <Text variant="body" className="text-pink-3 ml-1">
-                  {municipality.budgetRunsOut}
+                  {municipality.budgetRunsOut.toString()}
                 </Text>
               </div>
             )}
@@ -60,54 +65,26 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <div className="text-sm text-grey">Årlig utsläppsminskning</div>
+          <div className="text-sm text-grey">
+            Totala utsläpp {lastYear} (tusen kg CO₂e)
+          </div>
+          <div className="text-6xl font-light text-orange-3">
+            {lastYearEmissionsKtons}{" "}
+          </div>
+        </div>
+        <div>
+          <div className="text-sm text-grey">
+            Årlig utsläppsminskning sen Parisavtalet
+          </div>
           <div
             className={cn(
               "text-6xl font-light",
-              municipality.historicalEmissionChangePercent >=
-                municipality.neededEmissionChangePercent
-                ? "text-green-3"
-                : "text-pink-3"
+              meetsParis ? "text-green-3" : "text-pink-3"
             )}
           >
             {municipality.historicalEmissionChangePercent > 0 ? "+" : ""}
             {municipality.historicalEmissionChangePercent.toFixed(1)}%
           </div>
-        </div>
-        <div>
-          <div className="text-sm text-grey">Krävd utsläppsminskning</div>
-          <div className="text-6xl font-light text-green-3">
-            -{municipality.neededEmissionChangePercent.toFixed(1)}%
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Metrics */}
-      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-black-1">
-        <div>
-          <Text variant="body" className="mb-2 text-grey">
-            Konsumtionsutsläpp per invånare (tusen kg CO₂e)
-          </Text>
-          <Text className="text-6xl text-pink-3">
-            {(municipality.totalConsumptionEmission / 1000).toFixed(1)}
-          </Text>
-        </div>
-        <div>
-          <Text variant="body" className="mb-2 text-grey">
-            Elbilar per offentlig laddpunkt
-          </Text>
-          <Text
-            className={cn(
-              "text-6xl",
-              municipality.electricVehiclePerChargePoints > 10
-                ? "text-pink-3"
-                : "text-green-3"
-            )}
-          >
-            {municipality.electricVehiclePerChargePoints === 1e10
-              ? "-"
-              : municipality.electricVehiclePerChargePoints.toFixed(1)}
-          </Text>
         </div>
       </div>
       <a
@@ -120,7 +97,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
         target="_blank"
         rel="noopener noreferrer"
         className="block bg-black-1 rounded-level-2 p-4 hover:bg-black-1/80 transition-colors"
-        onClick={(e) => e.stopPropagation()} // Prevent event bubbling
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
           <div>
