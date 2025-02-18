@@ -1,3 +1,6 @@
+// This is only being kept as reference for now while we continue to work with the company details
+// eventually we can fully remove this file when we no longer want to actively reference it
+
 import { useState, useMemo, useEffect } from "react";
 import {
   ResponsiveContainer,
