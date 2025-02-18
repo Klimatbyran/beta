@@ -70,7 +70,6 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-16 md:py-24">
         <div className="mb-8 md:mb-12">
           <Tabs
@@ -150,20 +149,21 @@ export function LandingPage() {
         </div>
       )} */}
 
-      {/* Rankings Section */}
-      <div className="py-16 md:py-24">
+      <div className="py-8 md:py-24">
         <div className="container mx-auto">
-          <h2 className="text-4xl md:text-5xl font-light text-center mb-12 md:mb-16">
+          <h2 className="text-4xl md:text-5xl font-light text-center mb-8 md:mb-16">
             Vilka gör det bäst?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <RankedList
               title="Sveriges bästa kommuner"
+              description="Årlig utsläppsminskning sedan Parisavtalet 2015"
               items={topMunicipalities}
               type="municipality"
             />
             <RankedList
               title="Företag som minskat utsläppen mest"
+              description="Utsläppsminskning mellan 2023 och 2024"
               items={topCompanies}
               type="company"
             />
