@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -6,8 +6,8 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ReferenceDot,
-  Area,
+  // ReferenceDot,
+  // Area,
 } from "recharts";
 import { Info, X } from "lucide-react";
 import {
@@ -20,13 +20,21 @@ import { Text } from "@/components/ui/text";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import {
-  analyzeTrend,
-  projectEmissions,
-  getDataQualityColor,
+  // analyzeTrend,
+  // projectEmissions,
+  // getDataQualityColor,
   interpolateScope3Categories,
 } from "@/lib/calculations/emissions";
 import { getCategoryColor, getCategoryName } from "@/lib/constants/emissions";
 import type { ReportingPeriod } from "@/types/company";
+import { ChartData } from "@/types/emissions"; // Adjust the import path as necessary
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 interface EmissionsHistoryProps {
   reportingPeriods: ReportingPeriod[];
@@ -79,6 +87,17 @@ export function EmissionsHistory({
     return "overview";
   });
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Adjust breakpoint if needed
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Only interpolate if the feature is enabled
   const processedPeriods = useMemo(
     () =>
@@ -88,19 +107,19 @@ export function EmissionsHistory({
     [reportingPeriods, features.interpolateScope3]
   );
 
-  const trendAnalysis = useMemo(
-    () => analyzeTrend(processedPeriods, features),
-    [processedPeriods, features]
-  );
+  // const trendAnalysis = useMemo(
+  //   () => analyzeTrend(processedPeriods, features),
+  //   [processedPeriods, features]
+  // );
 
-  const annualReductionRate = trendAnalysis.hasEmissions
-    ? (-trendAnalysis.trend.slope /
-        (trendAnalysis.trend.dataPoints[0]?.value || 1)) *
-      100
-    : 0;
+  // const annualReductionRate = trendAnalysis.hasEmissions
+  //   ? (-trendAnalysis.trend.slope /
+  //       (trendAnalysis.trend.dataPoints[0]?.value || 1)) *
+  //     100
+  //   : 0;
 
   // Process data based on view
-  const chartData = useMemo(() => {
+  const chartData: ChartData[] = useMemo(() => {
     if (!processedPeriods?.length) return [];
 
     const sortedPeriods = [...processedPeriods].sort(
@@ -114,135 +133,144 @@ export function EmissionsHistory({
     ).getFullYear();
     const futureYears = Array.from({ length: 5 }, (_, i) => lastYear + i + 1);
 
-    const historicalData = sortedPeriods
-      .map((period) => {
-        if (!period) return null;
-        const year = new Date(period.startDate).getFullYear();
-        const baseData = {
-          year,
-          total: period.emissions?.calculatedTotalEmissions || 0,
-        };
+    // Extract unique category keys from historical data
+    const categoryKeys = new Set(
+      processedPeriods.flatMap(
+        (period) =>
+          period.emissions?.scope3?.categories?.map(
+            (cat) => `cat${cat.category}`
+          ) || []
+      )
+    );
 
-        if (dataView === "scopes") {
-          return {
-            ...baseData,
-            scope1: period.emissions?.scope1?.total || 0,
-            scope2: period.emissions?.scope2?.calculatedTotalEmissions || 0,
-            scope3: period.emissions?.scope3?.calculatedTotalEmissions || 0,
-          };
-        }
+    const historicalData = sortedPeriods.map((period) => {
+      const year = new Date(period.startDate).getFullYear();
 
-        if (dataView === "categories" && period.emissions?.scope3?.categories) {
-          const categoryData: Record<string, number> = {};
-          const interpolatedData: Record<string, boolean> = {};
+      // Capture original values before overriding with 0 for graph continuity
+      const categoryData = [...categoryKeys].reduce<
+        Record<string, number | null>
+      >((acc, key) => {
+        const categoryEntry = period.emissions?.scope3?.categories?.find(
+          (cat) => `cat${cat.category}` === key
+        );
 
-          period.emissions.scope3.categories.forEach((cat) => {
-            if (cat) {
-              categoryData[`cat${cat.category}`] = cat.total;
-              interpolatedData[`cat${cat.category}Interpolated`] =
-                "isInterpolated" in cat;
-            }
-          });
+        acc[key] = categoryEntry?.total ?? null; // Preserve null if data is missing
+        return acc;
+      }, {});
 
-          return {
-            ...baseData,
-            ...categoryData,
-            ...interpolatedData,
-          };
-        }
+      return {
+        year,
+        total: period.emissions?.calculatedTotalEmissions ?? 0,
+        scope1: period.emissions?.scope1?.total ?? 0,
+        scope2: period.emissions?.scope2?.calculatedTotalEmissions ?? 0,
+        scope3: period.emissions?.scope3?.calculatedTotalEmissions ?? 0,
+        originalValues: { ...categoryData }, // Keep original null values
+        ...Object.fromEntries(
+          Object.entries(categoryData).map(([key, value]) => [key, value ?? 0]) // Graph continuity: replace null with 0
+        ),
+      };
+    });
 
-        return baseData;
-      })
-      .filter(Boolean);
-
-    // Add empty future years
+    // Add empty future years with null values
     const futureData = futureYears.map((year) => ({
       year,
       total: null,
-      // Add other required fields with null values based on dataView
-      ...(dataView === "scopes"
-        ? { scope1: null, scope2: null, scope3: null }
-        : {}),
-      ...(dataView === "categories" ? {} : {}),
+      scope1: null,
+      scope2: null,
+      scope3: null,
+      ...Object.fromEntries([...categoryKeys].map((key) => [key, undefined])),
+      originalValues: Object.fromEntries(
+        [...categoryKeys].map((key) => [key, null])
+      ),
     }));
 
+    console.log("Processed Periods:", processedPeriods);
+    console.log("Historical Data:", historicalData);
+    console.log("Future Data:", futureData);
+
     return [...historicalData, ...futureData];
-  }, [processedPeriods, dataView]);
+  }, [processedPeriods]);
 
+  // Ensure that chartData is defined before using it
   const firstPoint = chartData[0];
-  const projectedData = useMemo(() => {
-    if (!firstPoint?.total) return [];
 
-    const projections = projectEmissions(trendAnalysis, firstPoint.total);
+  // const projectedData = useMemo(() => {
+  //   if (!firstPoint?.total) return [];
 
-        // Merge actual data with projections
-    return chartData.map(point => {
-      if (!point) return null;
-      return {
-        ...point,
-        trend: projections.find(p => p.year === point.year)?.trend,
-        paris: projections.find(p => p.year === point.year)?.paris,
-        // Calculate gap between trend and Paris target
-        gap: (projections.find(p => p.year === point.year)?.trend || 0) - 
-             (projections.find(p => p.year === point.year)?.paris || 0)
-      };
-    }).filter(Boolean).concat(
-      projections
-        .filter(p => p.year > (chartData[chartData.length - 1]?.year || 0))
-        .map(p => ({
-          year: p.year,
-          total: null,
-          trend: p.trend,
-          paris: p.paris,
-          // Calculate gap for projected years
-          gap: p.trend - p.paris
-        }))
-    );
-  }, [trendAnalysis, firstPoint?.total, chartData]);
+  //   const projections = projectEmissions(trendAnalysis, firstPoint.total);
 
- // Calculate total excess emissions compared to Paris Agreement pathway
-  const totalExcessEmissions = useMemo(() => {
-    return projectedData.reduce((sum, point) => {
-      if (!point) return sum;
-      const excess = (point.trend || 0) - (point.paris || 0);
-      return sum + (excess > 0 ? excess : 0);
-    }, 0);
-  }, [projectedData]);
+  //   // Merge actual data with projections
+  //   return chartData
+  //     .map((point) => {
+  //       if (!point) return null;
+  //       return {
+  //         ...point,
+  //         trend: projections.find((p) => p.year === point.year)?.trend || 0,
+  //         paris: projections.find((p) => p.year === point.year)?.paris || 0,
+  //         // Calculate gap between trend and Paris target
+  //         gap:
+  //           (projections.find((p) => p.year === point.year)?.trend || 0) -
+  //           (projections.find((p) => p.year === point.year)?.paris || 0),
+  //       };
+  //     })
+  //     .filter(Boolean)
+  //     .concat(
+  //       projections
+  //         .filter((p) => p.year > (chartData[chartData.length - 1]?.year || 0))
+  //         .map((p) => ({
+  //           year: p.year,
+  //           total: 0,
+  //           trend: p.trend || 0,
+  //           paris: p.paris || 0,
+  //           // Calculate gap for projected years
+  //           gap: (p.trend || 0) - (p.paris || 0),
+  //         }))
+  //     );
+  // }, [trendAnalysis, firstPoint?.total, chartData]);
+
+  // Calculate total excess emissions compared to Paris Agreement pathway
+  // const totalExcessEmissions = useMemo(() => {
+  //   return projectedData.reduce((sum, point) => {
+  //     if (!point) return sum;
+  //     const excess = (point.trend || 0) - (point.paris || 0);
+  //     return sum + (excess > 0 ? excess : 0);
+  //   }, 0);
+  // }, [projectedData]);
 
   // Determine status text and colors
-  const getStatusInfo = (reductionRate: number) => {
-    if (reductionRate >= 7.6) {
-      return {
-        status: "Följer Parisavtalet",
-        color: "text-green-3",
-        message: "Överträffar Parisavtalets krav på 7,6% minskning",
-      };
-    } else if (reductionRate >= 3) {
-      return {
-        status: "På rätt väg",
-        color: "text-[#E2FF8D]",
-        message: "Behöver öka till minst 7,6% för att nå Parisavtalets mål",
-      };
-    } else if (reductionRate > 0) {
-      return {
-        status: "Otillräcklig minskning",
-        color: "text-pink-3",
-        message: "Långt ifrån Parisavtalets krav på 7,6% årlig minskning",
-      };
-    } else {
-      return {
-        status: "Ökande utsläpp",
-        color: "text-pink-3",
-        message: "Utsläppen ökar istället för att minska",
-      };
-    }
-  };
+  // const getStatusInfo = (reductionRate: number) => {
+  //   if (reductionRate >= 7.6) {
+  //     return {
+  //       status: "Följer Parisavtalet",
+  //       color: "text-green-3",
+  //       message: "Överträffar Parisavtalets krav på 7,6% minskning",
+  //     };
+  //   } else if (reductionRate >= 3) {
+  //     return {
+  //       status: "På rätt väg",
+  //       color: "text-[#E2FF8D]",
+  //       message: "Behöver öka till minst 7,6% för att nå Parisavtalets mål",
+  //     };
+  //   } else if (reductionRate > 0) {
+  //     return {
+  //       status: "Otillräcklig minskning",
+  //       color: "text-pink-3",
+  //       message: "Långt ifrån Parisavtalets krav på 7,6% årlig minskning",
+  //     };
+  //   } else {
+  //     return {
+  //       status: "Ökande utsläpp",
+  //       color: "text-pink-3",
+  //       message: "Utsläppen ökar istället för att minska",
+  //     };
+  //   }
+  // };
 
-  const statusInfo = getStatusInfo(annualReductionRate);
+  // const statusInfo = getStatusInfo(annualReductionRate);
 
-  const periodYear = reportingPeriods[0]?.endDate
-    ? new Date(reportingPeriods[0].endDate).getFullYear()
-    : new Date().getFullYear();
+  // const periodYear = reportingPeriods[0]?.endDate
+  //   ? new Date(reportingPeriods[0].endDate).getFullYear()
+  //   : new Date().getFullYear();
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -250,7 +278,6 @@ export function EmissionsHistory({
         <div className="bg-black-1 px-4 py-3 rounded-level-2">
           <div className="text-sm font-medium mb-2">{label}</div>
           {payload.map((entry: any) => {
-            // Skip gap data in tooltip
             if (entry.dataKey === "gap") return null;
 
             let name = entry.name;
@@ -259,12 +286,20 @@ export function EmissionsHistory({
               name = getCategoryName(categoryId);
             }
 
+            // Extract the original value from payload
+            const originalValue =
+              entry.payload?.originalValues?.[entry.dataKey];
+
+            // Correctly display "No Data Available" if original value was null
+            const displayValue =
+              originalValue === null
+                ? "No Data Available"
+                : `${Math.round(entry.value).toLocaleString()} ton CO₂e`;
+
             return (
               <div key={entry.dataKey} className="text-sm">
                 <span className="text-grey mr-2">{name}:</span>
-                <span style={{ color: entry.color }}>
-                  {Math.round(entry.value).toLocaleString()} ton CO₂e
-                </span>
+                <span style={{ color: entry.color }}>{displayValue}</span>
               </div>
             );
           })}
@@ -296,17 +331,28 @@ export function EmissionsHistory({
   const [hiddenCategories, setHiddenCategories] = useState<number[]>([]);
 
   // Add toggle handler for categories
+  // const handleCategoryToggle = (categoryId: number) => {
+  //   setHiddenCategories((prev) =>
+  //     prev.includes(categoryId)
+  //       ? prev.filter((id) => id !== categoryId)
+  //       : [...prev, categoryId]
+  //   );
+  // };
   const handleCategoryToggle = (categoryId: number) => {
-    setHiddenCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
-    );
+    setHiddenCategories((prev) => {
+      if (prev.includes(categoryId)) {
+        return prev.filter((id) => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
+      }
+    });
   };
 
   return (
-    <div className={cn("bg-black-2 rounded-level-1 p-16", className)}>
-      <div className="flex items-center justify-between mb-12">
+    <div
+      className={cn("bg-black-2 rounded-level-1 px-4 md:px-16 py-8", className)}
+    >
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-12 gap-4 md:gap-0">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <Text variant="h3">Historiska utsläpp</Text>
@@ -327,8 +373,41 @@ export function EmissionsHistory({
           </div>
           <Text variant="body">Ton CO₂e per år</Text>
         </div>
+        {/* Switch between Tabs and Dropdown based on screen size */}
+        <div className="w-full max-w-xs">
+          {!isMobile ? (
+            <Tabs
+              value={dataView}
+              onValueChange={(value) => setDataView(value as any)}
+            >
+              <TabsList className="bg-black-1">
+                <TabsTrigger value="overview">Översikt</TabsTrigger>
+                <TabsTrigger value="scopes">Scope 1-3</TabsTrigger>
+                <TabsTrigger value="categories" disabled={!hasScope3Categories}>
+                  Scope 3-kategorier
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          ) : (
+            <Select
+              value={dataView}
+              onValueChange={(value) => setDataView(value as any)}
+            >
+              <SelectTrigger className="w-full bg-black-1 text-white border border-gray-600 px-3 py-2 rounded-md">
+                <SelectValue placeholder="Välj visning" />
+              </SelectTrigger>
+              <SelectContent className="bg-black-1 text-white">
+                <SelectItem value="overview">Översikt</SelectItem>
+                <SelectItem value="scopes">Scope 1-3</SelectItem>
+                <SelectItem value="categories" disabled={!hasScope3Categories}>
+                  Scope 3-kategorier
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        </div>
 
-        <div className="flex items-center gap-8">
+        {/* <div className="flex items-center gap-8">
           <Tabs
             value={dataView}
             onValueChange={(value) => setDataView(value as DataView)}
@@ -357,9 +436,9 @@ export function EmissionsHistory({
                 )}
               </TabsTrigger>
             </TabsList>
-          </Tabs>
+          </Tabs> */}
 
-          {/* {dataView === "overview" && (
+        {/* {dataView === "overview" && (
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-pink-3" />
@@ -371,13 +450,13 @@ export function EmissionsHistory({
               </div>
             </div>
           )} */}
-        </div>
+        {/* </div> */}
       </div>
-      <div className="h-[400px]">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="h-[300px] md:h-[400px]">
+        <ResponsiveContainer width="100%" height="100%" className="w-full">
           <LineChart
             data={chartData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
             onClick={handleClick}
           >
             <XAxis
@@ -513,7 +592,6 @@ export function EmissionsHistory({
             )}
 
             {dataView === "categories" &&
-              chartData[0] &&
               Object.keys(chartData[0])
                 .filter(
                   (key) =>
@@ -523,25 +601,92 @@ export function EmissionsHistory({
                   const categoryId = parseInt(categoryKey.replace("cat", ""));
                   const isInterpolatedKey = `${categoryKey}Interpolated`;
 
+                  // Check if the category is hidden
                   if (hiddenCategories.includes(categoryId)) return null;
+                  // Calculate strokeDasharray based on the first data point
+                  const strokeDasharray = chartData[0][isInterpolatedKey]
+                    ? "4 4"
+                    : "0";
 
                   return (
+                    // <Line
+                    //   key={categoryKey}
+                    //   type="monotone"
+                    //   dataKey={categoryKey as keyof ChartData}
+                    //   stroke={getCategoryColor(categoryId)}
+                    //   strokeWidth={2}
+                    //   strokeDasharray={strokeDasharray}
+                    //   dot={(props) => {
+                    //     const { cx, cy, payload } = props;
+                    //     if (
+                    //       payload[categoryKey] === 0 &&
+                    //       payload.originalValue === null
+                    //     ) {
+                    //       // Render an outlined dot if the value was originally missing (null)
+                    //       return (
+                    //         <circle
+                    //           cx={cx}
+                    //           cy={cy}
+                    //           r={4}
+                    //           fill="none"
+                    //           stroke={getCategoryColor(categoryId)}
+                    //           strokeWidth={2}
+                    //           cursor="pointer"
+                    //           onClick={() => handleCategoryToggle(categoryId)}
+                    //         />
+                    //       );
+                    //     }
+                    //     return (
+                    //       <circle
+                    //         cx={cx}
+                    //         cy={cy}
+                    //         r={4}
+                    //         fill={getCategoryColor(categoryId)}
+                    //         cursor="pointer"
+                    //         onClick={() => handleCategoryToggle(categoryId)}
+                    //       />
+                    //     );
+                    //   }}
+                    //   activeDot={{
+                    //     r: 6,
+                    //     fill: getCategoryColor(categoryId),
+                    //     cursor: "pointer",
+                    //     onClick: () => handleCategoryToggle(categoryId),
+                    //   }}
+                    //   name={getCategoryName(categoryId)}
+                    // />
                     <Line
                       key={categoryKey}
                       type="monotone"
-                      dataKey={categoryKey}
+                      dataKey={categoryKey as keyof ChartData}
                       stroke={getCategoryColor(categoryId)}
                       strokeWidth={2}
-                      strokeDasharray={(data: any) =>
-                        data[isInterpolatedKey] ? "4 4" : "0"
-                      }
-                      dot={{
-                        r: 4,
-                        fill: getCategoryColor(categoryId),
-                        strokeDasharray: (data: any) =>
-                          data[isInterpolatedKey] ? "2 2" : "0",
-                        cursor: "pointer",
-                        onClick: () => handleCategoryToggle(categoryId),
+                      strokeDasharray={strokeDasharray}
+                      dot={(props) => {
+                        const { cx, cy, payload } = props;
+                        const isMissingData =
+                          payload.originalValues?.[categoryKey] === null;
+
+                        return (
+                          <circle
+                            cx={cx}
+                            cy={cy}
+                            r={4}
+                            fill={
+                              isMissingData
+                                ? "none"
+                                : getCategoryColor(categoryId)
+                            }
+                            stroke={
+                              isMissingData
+                                ? getCategoryColor(categoryId)
+                                : "none"
+                            }
+                            strokeWidth={2}
+                            cursor="pointer"
+                            onClick={() => handleCategoryToggle(categoryId)}
+                          />
+                        );
                       }}
                       activeDot={{
                         r: 6,
@@ -594,8 +739,8 @@ export function EmissionsHistory({
           ))}
         </div>
       )}
-      /* Status Section */
-      <div className="mt-8 p-6 bg-black-1 rounded-level-2">
+      {/* Status Section  */}
+      {/* <div className="mt-8 p-6 bg-black-1 rounded-level-2">
         <div className="space-y-6">
           <div className="flex items-baseline gap-2">
             <Text variant="h4">Status {periodYear}:</Text>
@@ -612,37 +757,37 @@ export function EmissionsHistory({
 
           <div className="grid grid-cols-2 gap-8">
             <div>
-              <Text variant="muted" className="mb-2">
+              <Text variant="body" className="mb-2">
                 Årlig minskningstakt
               </Text>
               {trendAnalysis.hasEmissions ? (
                 <>
                   <div className="flex items-baseline gap-2">
-                    <Text variant="large" className={statusInfo.color}>
+                    <Text variant="body" className={statusInfo.color}>
                       {annualReductionRate > 0
                         ? `${annualReductionRate.toFixed(1)}%`
                         : `+${(-annualReductionRate).toFixed(1)}%`}
                     </Text>
-                    <Text variant="muted">per år</Text>
+                    <Text variant="body">per år</Text>
                   </div>
                   <Text variant="small" className="text-grey mt-1">
                     {statusInfo.message}
                   </Text>
                 </>
               ) : (
-                <Text variant="muted">Ingen minskningstakt kan beräknas</Text>
+                <Text variant="body">Ingen minskningstakt kan beräknas</Text>
               )}
             </div>
 
             <div>
-              <Text variant="muted" className="mb-2">
+              <Text variant="body" className="mb-2">
                 Prognos 2030
               </Text>
               {trendAnalysis.hasEmissions ? (
                 <>
                   <div className="flex items-baseline gap-2">
                     <Text
-                      variant="large"
+                      variant="body"
                       className={
                         annualReductionRate >= 7.6
                           ? "text-green-3"
@@ -653,7 +798,7 @@ export function EmissionsHistory({
                         projectedData.find((d) => d?.year === 2030)?.trend || 0
                       ).toLocaleString()}
                     </Text>
-                    <Text variant="muted">ton CO₂e</Text>
+                    <Text variant="body">ton CO₂e</Text>
                   </div>
                   <Text variant="small" className="text-grey mt-1">
                     {annualReductionRate >= 7.6
@@ -664,7 +809,7 @@ export function EmissionsHistory({
                   </Text>
                 </>
               ) : (
-                <Text variant="muted">Ingen prognos tillgänglig</Text>
+                <Text variant="body">Ingen prognos tillgänglig</Text>
               )}
             </div>
           </div>
@@ -701,7 +846,7 @@ export function EmissionsHistory({
             </Text>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

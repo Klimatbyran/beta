@@ -72,8 +72,8 @@ export function CompanyDetailPage() {
         selectedYear={selectedYear}
       />
 
-      {/* <CompanyHistory company={company} />
-
+       <CompanyHistory company={company} />
+{/*
       <CompanyScope3
         emissions={selectedPeriod.emissions!}
         year={new Date(selectedPeriod.endDate).getFullYear()}
