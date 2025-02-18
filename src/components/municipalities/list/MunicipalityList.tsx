@@ -32,11 +32,6 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
 
   const sortOptions = [
     { value: "meets_paris", label: "Möter Parisavtalet" },
-    { value: "reduction", label: "Utsläppsminskning" },
-    { value: "needed_reduction", label: "Krävd utsläppsminskning" },
-    { value: "consumption_emissions", label: "Konsumtionsutsläpp" },
-    { value: "charging_points", label: "Laddinfrastruktur" },
-    { value: "climate_plan", label: "Klimatplan" },
     { value: "name", label: "Namn" },
   ];
 
@@ -87,39 +82,6 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
           directionMultiplier *
           (new Date(b.budgetRunsOut).getTime() -
             new Date(a.budgetRunsOut).getTime())
-        );
-      case "reduction":
-        return (
-          directionMultiplier *
-          (a.historicalEmissionChangePercent -
-            b.historicalEmissionChangePercent)
-        );
-      case "needed_reduction":
-        return (
-          directionMultiplier *
-          (a.neededEmissionChangePercent - b.neededEmissionChangePercent)
-        );
-      case "consumption_emissions":
-        return (
-          directionMultiplier *
-          (a.totalConsumptionEmission - b.totalConsumptionEmission)
-        );
-      case "charging_points":
-        return (
-          directionMultiplier *
-          (a.electricVehiclePerChargePoints - b.electricVehiclePerChargePoints)
-        );
-      case "climate_plan":
-        if (a.climatePlanYear === "Saknar plan") {
-          return 1 * directionMultiplier;
-        }
-        if (b.climatePlanYear === "Saknar plan") {
-          return -1 * directionMultiplier;
-        }
-        return (
-          directionMultiplier *
-          (parseInt(b.climatePlanYear as unknown as string) -
-            parseInt(a.climatePlanYear as unknown as string))
         );
       case "name":
         return directionMultiplier * a.name.localeCompare(b.name);
