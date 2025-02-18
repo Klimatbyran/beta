@@ -5,9 +5,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RankedList } from "@/components/RankedList";
 import { ContentBlock } from "@/components/ContentBlock";
 import { Typewriter } from "@/components/ui/typewriter";
-import { MunicipalityComparison } from "@/components/municipalities/MunicipalityComparison";
-import { Text } from "@/components/ui/text";
-import { cn } from "@/lib/utils";
 import { useCompanies } from "@/hooks/useCompanies";
 import { useMunicipalities } from "@/hooks/useMunicipalities";
 
@@ -35,8 +32,7 @@ const tabName = {
 export function LandingPage() {
   const [selectedTab, setSelectedTab] = useState("companies");
   const { companies } = useCompanies();
-  const { municipalities, getTopMunicipalities, getMunicipalitiesForMap } =
-    useMunicipalities();
+  const { getTopMunicipalities, getMunicipalitiesForMap } = useMunicipalities();
 
   // Get top 5 companies by emissions reduction
   const topCompanies = companies
@@ -58,15 +54,15 @@ export function LandingPage() {
   }));
 
   // Get municipality data for comparison
-  const municipalityComparisonData = getMunicipalitiesForMap(10).map(
-    (municipality) => ({
-      id: municipality.id,
-      name: municipality.name,
-      value: municipality.value,
-      rank: "1",
-      change: Math.random() > 0.5 ? 5.2 : -3.4, // Mock data - replace with real change values
-    })
-  );
+  // const municipalityComparisonData = getMunicipalitiesForMap(10).map(
+  //   (municipality) => ({
+  //     id: municipality.id,
+  //     name: municipality.name,
+  //     value: municipality.value,
+  //     rank: "1",
+  //     change: Math.random() > 0.5 ? 5.2 : -3.4, // Mock data - replace with real change values
+  //   })
+  // );
 
   return (
     <div className="min-h-screen flex flex-col">
