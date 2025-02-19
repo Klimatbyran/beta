@@ -62,9 +62,10 @@ export const MunicipalityEmissionsGraph: FC<
   return (
     <div className="h-[400px] pr-8">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={projectedData} margin={{ top: 20, bottom: 20 }}>
+        <LineChart data={projectedData}>
           <Legend
             verticalAlign="top"
+            align="right"
             height={36}
             iconType="line"
             wrapperStyle={{ fontSize: "12px", color: "#878787" }}

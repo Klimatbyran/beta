@@ -64,15 +64,15 @@ export function MunicipalityDetailPage() {
         </div>
       </div>
 
-      <MunicipalitySection
-        title="Utsläppsutveckling"
-        items={[
-          {
-            title: "I tusen ton CO₂",
-            value: <MunicipalityEmissionsGraph projectedData={emissionsData} />,
-          },
-        ]}
-      />
+      <div className={cn("bg-black-2 rounded-level-1 py-8 md:py-16")}>
+        <div className="px-8 md:px-16">
+          <Text className="text-2xl md:text-4xl">Utsläppsutveckling</Text>
+          <Text className="text-grey">I tusen ton CO₂</Text>
+        </div>
+        <div className="mt-8 mr-8">
+          <MunicipalityEmissionsGraph projectedData={emissionsData} />
+        </div>
+      </div>
 
       <MunicipalitySection
         title="Framtida utsläpp"
