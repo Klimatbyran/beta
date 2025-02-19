@@ -25,6 +25,10 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
 
   const emissionsChange = municipality.historicalEmissionChangePercent;
 
+  const noClimatePlan =
+    municipality.climatePlanLink === "Saknar plan" ||
+    municipality.climatePlanLink === undefined;
+
   return (
     <Link
       to={`/municipalities/${municipality.name}`}
@@ -152,8 +156,11 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
               <FileText className="w-6 h-6 text-white" />
               <span>Klimatplan</span>
             </Text>
-            <Text variant="body" className="text-grey">
-              {municipality.climatePlanYear === "Saknar plan"
+            <Text
+              variant="body"
+              className={cn(noClimatePlan ? "text-pink-3" : "text-green-3")}
+            >
+              {noClimatePlan
                 ? "Saknar plan"
                 : `Antagen ${municipality.climatePlanYear}`}
             </Text>
