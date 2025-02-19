@@ -17,10 +17,6 @@ const NAV_LINKS = [
     label: "Företag",
     icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
     path: "/companies",
-    sublinks: [
-      { path: "/companies", label: "Alla företag", shortcut: "⌘F" },
-      { path: "/companies/insights", label: "Insikter", shortcut: "⌘I" },
-    ],
   },
   {
     label: "Kommuner",
