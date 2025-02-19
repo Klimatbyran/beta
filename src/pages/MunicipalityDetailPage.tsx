@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { Text } from "@/components/ui/text";
+import { cn } from "@/lib/utils";
 import { useMunicipalityDetails } from "@/hooks/useMunicipalityDetails";
 import { transformEmissionsData } from "@/types/municipality";
 import { MunicipalityEmissionsGraph } from "@/components/municipalities/MunicipalityEmissionsGraph";
 import { MunicipalitySection } from "@/components/municipalities/MunicipalitySection";
-import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLinkCard";
-import { cn } from "@/lib/utils";
 import { MunicipalityStatCard } from "@/components/municipalities/MunicipalityStatCard";
+import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLinkCard";
 
 export function MunicipalityDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -23,7 +23,13 @@ export function MunicipalityDetailPage() {
       ? "Kommunen ställer kanske klimatkrav i upphandlingar"
       : "Kommunen ställer inte klimatkrav i upphandlingar";
 
-  const projectedData = transformEmissionsData(municipality);
+  const emissionsData = transformEmissionsData(municipality);
+
+  const lastYearEmissions = municipality.approximatedHistoricalEmission.at(-1);
+  const lastYear = lastYearEmissions?.year;
+  const lastYearEmissionsKTon = lastYearEmissions
+    ? (lastYearEmissions.value / 1000).toFixed(1)
+    : "N/A";
 
   return (
     <div className="space-y-16 max-w-[1400px] mx-auto">
@@ -32,25 +38,25 @@ export function MunicipalityDetailPage() {
         <Text className="text-grey">{municipality.region}</Text>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mt-8">
           <MunicipalityStatCard
-            title="Årlig utsläppsförändring sedan 2015"
-            value={municipality.historicalEmissionChangePercent.toFixed(1)}
-            valueClassName={cn(
-              Math.abs(municipality.historicalEmissionChangePercent) >=
-                municipality.neededEmissionChangePercent
+            title={`Totala utsläpp ${lastYear} i tusen ton CO₂`}
+            value={lastYearEmissionsKTon}
+            valueClassName="text-orange-2"
+          />
+          <MunicipalityStatCard
+            title="Koldioxidbudgeten tar slut"
+            value={municipality.budgetRunsOut.toString()}
+            valueClassName={
+              municipality.budgetRunsOut === "Håller budget"
                 ? "text-green-3"
                 : "text-pink-3"
-            )}
+            }
           />
           <MunicipalityStatCard
-            title="Utsläppsminskning för att klara Parisavtalet"
-            value={`-${municipality.neededEmissionChangePercent.toFixed(1)}%`}
-            valueClassName={"text-green-3"}
-          />
-          <MunicipalityStatCard
-            title="Konsumtionsutsläpp per invånare (ton CO₂)"
-            value={(municipality.totalConsumptionEmission / 1000).toFixed(1)}
+            title="Når nettonoll"
+            value={municipality.hitNetZero.toString()}
             valueClassName={cn(
-              municipality.totalConsumptionEmission >= 2000
+              municipality.hitNetZero === "Aldrig" ||
+                new Date(municipality.hitNetZero) > new Date("2050-01-01")
                 ? "text-pink-3"
                 : "text-green-3"
             )}
@@ -63,7 +69,7 @@ export function MunicipalityDetailPage() {
         items={[
           {
             title: "I tusen ton CO₂",
-            value: <MunicipalityEmissionsGraph projectedData={projectedData} />,
+            value: <MunicipalityEmissionsGraph projectedData={emissionsData} />,
           },
         ]}
       />
@@ -72,21 +78,30 @@ export function MunicipalityDetailPage() {
         title="Framtida utsläpp"
         items={[
           {
-            title: "Koldioxidbudget tar slut",
-            value: municipality.budgetRunsOut.toString(),
-            valueClassName:
-              municipality.budgetRunsOut === "Håller budget"
+            title: "Årlig utsläppsförändring sedan 2015",
+            value: `${municipality.historicalEmissionChangePercent.toFixed(
+              1
+            )}%`,
+            valueClassName: cn(
+              Math.abs(municipality.historicalEmissionChangePercent) >=
+                municipality.neededEmissionChangePercent
                 ? "text-green-3"
-                : "text-pink-3",
+                : "text-pink-3"
+            ),
           },
           {
-            title: "Når nettonoll",
-            value: municipality.hitNetZero.toString(),
-            valueClassName:
-              municipality.hitNetZero === "Aldrig" ||
-              new Date(municipality.hitNetZero) > new Date("2050-01-01")
+            title: "Utsläppsminskning för att klara Parisavtalet",
+            value: `-${municipality.neededEmissionChangePercent.toFixed(1)}%`,
+            valueClassName: "text-green-3",
+          },
+          {
+            title: "Konsumtionsutsläpp per invånare i ton CO₂",
+            value: (municipality.totalConsumptionEmission / 1000).toFixed(1),
+            valueClassName: cn(
+              municipality.totalConsumptionEmission >= 2000
                 ? "text-pink-3"
-                : "text-green-3",
+                : "text-green-3"
+            ),
           },
         ]}
       />
