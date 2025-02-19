@@ -1,16 +1,16 @@
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { useCompanyDetails } from '@/hooks/useCompanyDetails';
-import { CompanyOverview } from '@/components/companies/detail/CompanyOverview';
-import { CompanyHistory } from '@/components/companies/detail/CompanyHistory';
-import { CompanyScope3 } from '@/components/companies/detail/CompanyScope3';
-import { CompanySectorComparison } from '@/components/companies/detail/CompanySectorComparison';
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useCompanyDetails } from "@/hooks/useCompanyDetails";
+import { CompanyOverview } from "@/components/companies/detail/CompanyOverview";
+import { CompanyHistory } from "@/components/companies/detail/CompanyHistory";
+import { CompanyScope3 } from "@/components/companies/detail/CompanyScope3";
+import { CompanySectorComparison } from "@/components/companies/detail/CompanySectorComparison";
 import { Text } from "@/components/ui/text";
 
 export function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { company, loading, error } = useCompanyDetails(id!);
-  const [selectedYear, setSelectedYear] = useState<string>('latest');
+  const [selectedYear, setSelectedYear] = useState<string>("latest");
 
   if (loading) {
     return (
@@ -27,7 +27,7 @@ export function CompanyDetailPage() {
         <Text variant="h3" className="text-red-500 mb-4">
           Det gick inte att hämta företagsinformation
         </Text>
-        <Text variant="muted">Försök igen senare</Text>
+        <Text variant="body">Försök igen senare</Text>
       </div>
     );
   }
@@ -38,9 +38,7 @@ export function CompanyDetailPage() {
         <Text variant="h3" className="text-red-500 mb-4">
           Företaget kunde inte hittas
         </Text>
-        <Text variant="muted">
-          Kontrollera att företags-ID:t är korrekt
-        </Text>
+        <Text variant="body">Kontrollera att företags-ID:t är korrekt</Text>
       </div>
     );
   }
@@ -49,38 +47,47 @@ export function CompanyDetailPage() {
     (a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
   );
 
-  const selectedPeriod = selectedYear === 'latest' 
-    ? sortedPeriods[0]
-    : sortedPeriods.find(p => new Date(p.endDate).getFullYear().toString() === selectedYear) || sortedPeriods[0];
+  const selectedPeriod =
+    selectedYear === "latest"
+      ? sortedPeriods[0]
+      : sortedPeriods.find(
+          (p) => new Date(p.endDate).getFullYear().toString() === selectedYear
+        ) || sortedPeriods[0];
+
+  const selectedIndex = sortedPeriods.findIndex(
+    (p) => p.endDate === selectedPeriod.endDate
+  );
+  const previousPeriod =
+    selectedIndex < sortedPeriods.length - 1
+      ? sortedPeriods[selectedIndex + 1]
+      : undefined;
 
   return (
     <div className="space-y-16 max-w-[1400px] mx-auto">
-      <CompanyOverview 
-        company={company} 
-        selectedPeriod={selectedPeriod}
-      />
-
-      <CompanyHistory 
+      <CompanyOverview
         company={company}
-        selectedYear={selectedYear}
+        selectedPeriod={selectedPeriod}
+        previousPeriod={previousPeriod}
         onYearSelect={setSelectedYear}
+        selectedYear={selectedYear}
       />
 
-      <CompanyScope3 
+       <CompanyHistory company={company} />
+{/*
+      <CompanyScope3
         emissions={selectedPeriod.emissions!}
         year={new Date(selectedPeriod.endDate).getFullYear()}
-        isRealEstate={company.industry?.industryGics?.sectorCode === '60'}
+        isRealEstate={company.industry?.industryGics?.sectorCode === "60"}
         historicalData={sortedPeriods
-          .filter(period => period.emissions?.scope3?.categories?.length > 0)
-          .map(period => ({
+          .filter((period) => period.emissions?.scope3?.categories?.length > 0)
+          .map((period) => ({
             year: new Date(period.endDate).getFullYear(),
-            categories: period.emissions!.scope3!.categories!
+            categories: period.emissions!.scope3!.categories!,
           }))
-          .sort((a, b) => a.year - b.year)
-        }
+          .sort((a, b) => a.year - b.year)}
       />
 
-      <CompanySectorComparison company={company} />
+      <CompanySectorComparison company={company} /> */}
     </div>
   );
 }
