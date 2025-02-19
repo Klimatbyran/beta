@@ -21,8 +21,6 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Builds your production site to `./dist/`         |
 | `npm run preview`         | Previews your build locally, before deploying    |
 
-We're using [shadcn](https://www.shadcn-svelte.com/) for our components. [Learn how to add new components](https://www.shadcn-svelte.com/docs/installation/astro#thats-it) which you can then customize.
-
 ## 👩‍💻 Contributing
 
 Do you have an idea for a feature? Jump into the code or head to our [Discord server](https://discord.gg/N5P64QPQ6v) to discuss your thoughts. You can also submit an [issue](https://github.com/Klimatbyran/beta/issues) explaining your suggestion.
