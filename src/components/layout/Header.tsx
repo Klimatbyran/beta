@@ -44,7 +44,7 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isMinimized ? "h-8" : "h-12",
+        isMinimized ? "h-8" : "h-14",
         isMinimized ? "bg-black-2/60" : "bg-black-2"
       )}
     >
