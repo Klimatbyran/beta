@@ -39,9 +39,10 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2 md:py-0",
         isMinimized ? "h-9" : "h-10",
-        isMinimized ? "bg-black-2/60" : "bg-black-2"
+        isMinimized ? "bg-black-2/90" : "bg-black-2",
+        menuOpen && "h-full"
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between py-0">
@@ -118,40 +119,40 @@ export function Header() {
             )}
           </Menubar>
         </nav>
-      </div>
 
-      {menuOpen && (
-        <div className="fixed inset-0 bg-black-2 w-full h-full z-100 flex  mt-12 p-8">
-          <div className="flex flex-col gap-6 text-lg">
-            {NAV_LINKS.map((link) => (
-              <div key={link.path} className="flex flex-col">
-                <Link
-                  to={link.path}
-                  onClick={toggleMenu}
-                  className="flex items-center gap-2"
-                >
-                  {link.icon}
-                  {link.label}
-                </Link>
+        {menuOpen && (
+          <div className="fixed inset-0 w-full h-full z-100 flex p-8 mt-12">
+            <div className="flex flex-col gap-6 text-lg">
+              {NAV_LINKS.map((link) => (
+                <div key={link.path} className="flex flex-col">
+                  <Link
+                    to={link.path}
+                    onClick={toggleMenu}
+                    className="flex items-center gap-2"
+                  >
+                    {link.icon}
+                    {link.label}
+                  </Link>
 
-                {link.sublinks && (
-                  <div className="flex flex-col gap-2 pl-4 mt-2">
-                    {link.sublinks.map((sublink) => (
-                      <Link
-                        key={sublink.path}
-                        to={sublink.path}
-                        className="flex items-center gap-2 text-sm text-gray-400"
-                      >
-                        {sublink.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                  {link.sublinks && (
+                    <div className="flex flex-col gap-2 pl-4 mt-2">
+                      {link.sublinks.map((sublink) => (
+                        <Link
+                          key={sublink.path}
+                          to={sublink.path}
+                          className="flex items-center gap-2 text-sm text-gray-400"
+                        >
+                          {sublink.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }
