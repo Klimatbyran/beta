@@ -40,11 +40,11 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isMinimized ? "h-8" : "h-14",
+        isMinimized ? "h-9" : "h-10",
         isMinimized ? "bg-black-2/60" : "bg-black-2"
       )}
     >
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between py-0">
         <Link
           to="/"
           className={cn(
@@ -63,7 +63,7 @@ export function Header() {
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className={cn("hidden md:flex gap-8")}>
           <Menubar className="border-none bg-transparent">
             {NAV_LINKS.map((item) =>
               item.sublinks ? (
@@ -71,7 +71,7 @@ export function Header() {
                   <MenubarTrigger
                     aria-expanded={location.pathname.startsWith(item.path)}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-1.5 transition-colors",
+                      "flex items-center gap-2 px-3 py-4 transition-colors",
                       location.pathname.startsWith(item.path)
                         ? "bg-black-1 text-white"
                         : "text-grey hover:text-white"
@@ -104,10 +104,11 @@ export function Header() {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 transition-colors text-sm",
+                    "flex items-center gap-2 p-3 transition-colors text-sm",
                     matchPath(item.path, location.pathname)
                       ? "bg-black-1 text-white"
-                      : "text-grey hover:text-white"
+                      : "text-grey hover:text-white",
+                    isMinimized && "scale-75 -translate-x-4"
                   )}
                 >
                   {item.icon}
