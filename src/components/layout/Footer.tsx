@@ -10,14 +10,14 @@ export function Footer() {
           <Text variant="body" className="text-sm text-grey md:text-base">
             Kontakta oss
           </Text>
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex flex-col md:flex-row md:items-center align-left gap-2 md:gap-4">
             <Text variant="display" className="text-3xl md:text-5xl">
               hej@klimatkollen.se
             </Text>
             <Button
               variant="outline"
               size="sm"
-              className="bg-black-1 border-none hover:bg-black-1/80 transition-colors gap-2"
+              className="w-[110px] bg-black-1 border-none hover:bg-black-1/80 transition-colors gap-2"
               onClick={() => {
                 navigator.clipboard.writeText("hej@klimatkollen.se");
               }}
