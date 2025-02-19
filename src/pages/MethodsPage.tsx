@@ -1,22 +1,15 @@
-import { ArrowUpRight } from "lucide-react";
-import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
+import { LinkButton } from "@/components/layout/LinkButton";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export function MethodsPage() {
   return (
     <div className="max-w-[1200px] mx-auto space-y-20">
-      {/* Hero Section */}
-      <div className="space-y-8">
-        <Text variant="display" className="text-4xl md:text-3xl sm:text-2xl">
-          Källor och Metod
-        </Text>
-        <Text variant="body" className="text-grey max-w-3xl">
-          Vår utgångspunkt är Parisavtalets 1,5-gradersmål och våra datakällor
-          är offentliga. Klicka på rubrikerna för att läsa mer.
-        </Text>
-      </div>
+      <PageHeader
+        title="Källor och Metod"
+        description="Vår utgångspunkt är Parisavtalets 1,5-gradersmål och våra datakällor är offentliga. Klicka på rubrikerna för att läsa mer."
+      />
       <Accordion type="single" collapsible className="space-y-6">
         {/* Main Content */}
         <AccordionGroup title="Klimatkollen utgår från Parisavtalet">
@@ -49,20 +42,11 @@ export function MethodsPage() {
               ställa om.
             </p>
             <div className="space-y-6 max-w-3xl">
-              <a
-                href="https://www.naturvardsverket.se/parisavtalet"
-                className="block bg-black-1 rounded-level-2 p-6 hover:bg-blue-5/30 transition-colors  hover:text-blue-2"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Text>Parisavtalet</Text>
-                    <Text>
-                      Läs mer om Parisavtalet på Naturvårdsverkets webbplats.
-                    </Text>
-                  </div>
-                  <ArrowUpRight className="w-6 h-6" />
-                </div>
-              </a>
+              <LinkButton
+                title="Parisavtalet"
+                text="Läs mer om Parisavtalet på Naturvårdsverkets webbplats."
+                link="https://www.naturvardsverket.se/parisavtalet"
+              />
             </div>
           </div>
         </AccordionGroup>
@@ -80,7 +64,7 @@ export function MethodsPage() {
             </p>
 
             {/* Grid Layout for Links */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
               {[
                 {
                   title: "Sveriges Kommuner och Regioner",
@@ -117,20 +101,8 @@ export function MethodsPage() {
                   text: "Har vi samlat in med hjälp av allmänheten och Klimatklubbens och Naturskyddsföreningens medlemmar",
                   link: "https://docs.google.com/spreadsheets/d/13CMqmfdd6QUD6agKFyVhwZUol4PKzvy253_EwtsFyvw/edit#gid=0",
                 },
-              ].map(({ title, text, link }) => (
-                <a
-                  key={title}
-                  href={link}
-                  className="block bg-black-1 rounded-level-2 p-6 hover:bg-blue-5/30 transition-colors hover:text-blue-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Text>{title}</Text>
-                      <Text>{text}</Text>
-                    </div>
-                    <ArrowUpRight className="w-6 h-6" />
-                  </div>
-                </a>
+              ].map((item) => (
+                <LinkButton key={item.title} {...item} />
               ))}
             </div>
           </div>
