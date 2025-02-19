@@ -19,7 +19,6 @@ import { cn } from "@/lib/utils";
 import { interpolateScope3Categories } from "@/lib/calculations/emissions";
 import { getCategoryColor, getCategoryName } from "@/lib/constants/emissions";
 import type { EmissionsHistoryProps, DataView } from "@/types/emissions";
-import { ChartData } from "@/types/emissions"; // Adjust the import path as necessary
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { getChartData } from "./utils";
 import { CustomTooltip } from "./CustomTooltip";
@@ -260,41 +259,65 @@ export function EmissionsHistory({
                     <Line
                       key={categoryKey}
                       type="monotone"
-                      dataKey={categoryKey as keyof ChartData}
+                      dataKey={categoryKey}
                       stroke={getCategoryColor(categoryId)}
                       strokeWidth={2}
                       strokeDasharray={strokeDasharray}
                       dot={(props) => {
                         const { cx, cy, payload } = props;
-                        const isMissingData =
-                          payload.originalValues?.[categoryKey] === null;
+
+                        if (!payload) return undefined;
+
+                        const value = payload.originalValues?.[categoryKey];
+
+                        if (
+                          value === null ||
+                          value === undefined ||
+                          isNaN(value)
+                        ) {
+                          return undefined;
+                        }
 
                         return (
                           <circle
                             cx={cx}
                             cy={cy}
                             r={4}
-                            fill={
-                              isMissingData
-                                ? "none"
-                                : getCategoryColor(categoryId)
-                            }
-                            stroke={
-                              isMissingData
-                                ? getCategoryColor(categoryId)
-                                : "none"
-                            }
+                            fill={getCategoryColor(categoryId)}
+                            stroke={getCategoryColor(categoryId)}
                             strokeWidth={2}
                             cursor="pointer"
                             onClick={() => handleCategoryToggle(categoryId)}
                           />
                         );
                       }}
-                      activeDot={{
-                        r: 6,
-                        fill: getCategoryColor(categoryId),
-                        cursor: "pointer",
-                        onClick: () => handleCategoryToggle(categoryId),
+                      activeDot={(props) => {
+                        const { cx, cy, payload } = props;
+
+                        if (!payload) return undefined;
+
+                        const value = payload.originalValues?.[categoryKey];
+
+                        if (
+                          value === null ||
+                          value === undefined ||
+                          isNaN(value)
+                        ) {
+                          return undefined;
+                        }
+
+                        return (
+                          <circle
+                            cx={cx}
+                            cy={cy}
+                            r={6}
+                            fill={getCategoryColor(categoryId)}
+                            stroke={getCategoryColor(categoryId)}
+                            strokeWidth={2}
+                            cursor="pointer"
+                            onClick={() => handleCategoryToggle(categoryId)}
+                          />
+                        );
                       }}
                       name={getCategoryName(categoryId)}
                     />

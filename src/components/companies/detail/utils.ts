@@ -52,7 +52,7 @@ export function getChartData(processedPeriods: EmissionPeriod[]): ChartData[] {
     };
   });
 
-  // Add empty future years with **undefined** values instead of null
+  // Add empty future years
   const futureData = futureYears.map((year) => ({
     year,
     total: undefined,
