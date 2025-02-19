@@ -20,7 +20,7 @@ import { interpolateScope3Categories } from "@/lib/calculations/emissions";
 import { getCategoryColor, getCategoryName } from "@/lib/constants/emissions";
 import type { EmissionsHistoryProps, DataView } from "@/types/emissions";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { getChartData } from "./utils";
+import { getChartData } from "../../../utils/getChartData";
 import { CustomTooltip } from "./CustomTooltip";
 import { DataViewSelector } from "./DataViewSelector";
 
