@@ -97,11 +97,7 @@ export function MunicipalityDetailPage() {
           {
             title: "Konsumtionsutsläpp per invånare i ton CO₂",
             value: (municipality.totalConsumptionEmission / 1000).toFixed(1),
-            valueClassName: cn(
-              municipality.totalConsumptionEmission >= 2000
-                ? "text-pink-3"
-                : "text-green-3"
-            ),
+            valueClassName: "text-orange-2",
           },
         ]}
       />
