@@ -51,7 +51,7 @@ export function MethodsPage() {
           </div>
         </AccordionGroup>
         <AccordionGroup title="Om våra källor">
-          <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
+          <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <p>
               Klimatkollen baseras på offentliga källor och verifierad data. Vi
               anger alla källor så att du enkelt kan kolla upp och läsa mer. Om
@@ -101,10 +101,131 @@ export function MethodsPage() {
                   text: "Har vi samlat in med hjälp av allmänheten och Klimatklubbens och Naturskyddsföreningens medlemmar",
                   link: "https://docs.google.com/spreadsheets/d/13CMqmfdd6QUD6agKFyVhwZUol4PKzvy253_EwtsFyvw/edit#gid=0",
                 },
+                {
+                  title: "Upphandlingsmyndigheten",
+                  text: "Information om klimatkrav vid kommunernas upphandlingar",
+                  link: "https://www.klimatkollen.se/data/procurements/NUE2022_DATA_2023-12-20.xlsx",
+                },
+                {
+                  title: "Greenpeace.",
+                  text: "Information om klimatkrav vid kommunernas upphandlingar",
+                  link: "https://docs.google.com/spreadsheets/d/1EdHUa49HJZn0rXqM-6tChdim4TJzXnwA/edit#gid=1040317160",
+                },
               ].map((item) => (
                 <LinkButton key={item.title} {...item} />
               ))}
             </div>
+          </div>
+        </AccordionGroup>
+        <AccordionGroup title="Om koldioxidbudgetar">
+          <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
+            <p>
+              En koldioxidbudget anger hur mycket koldioxid som kan släppas ut
+              innan koldioxidhalten i atmosfären blir så hög att uppvärmningen
+              överstiger Parisavtalets 1,5-gradersmål.
+            </p>
+            <p>
+              Enligt en{" "}
+              <a
+                href="https://www.cemus.uu.se/wp-content/uploads/2023/12/Paris-compliant-carbon-budgets-for-Swedens-counties-.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                beräkning
+              </a>{" "}
+              av forskare vid Uppsala universitet och Tyndall Centre i
+              Storbritannien, återstår globalt cirka 340 gigaton koldioxid från
+              och med år 2024 för 50 procents chans att hålla uppvärmningen
+              under 1,5 grader. Med dagens utsläppstakt tar den globala budgeten
+              slut om cirka åtta år.
+            </p>
+            <p>
+              Utifrån den globala budgeten har forskarna även gjort en beräkning
+              av hur en nationel koldioxidbudget för en rättvis
+              klimatomställning skulle se ut för Sverige.
+            </p>
+            <p>
+              Beräkningen visar att från och med januari 2024 återstår ett
+              nationellt utsläppsutrymme på 80 miljoner ton för att ligga i
+              linje med 1,5 grader. För 83 procents chans att inte överskrida 2
+              grader är budgeten 285 miljoner ton. Som jämförelse uppgick de
+              totala växthusgasutsläppen för Sverige år 2022 till 45,2 miljoner
+              ton.
+            </p>
+            <p>
+              Med Sveriges nuvarande utsläppstakt återstår 1,8 år av
+              1,5-gradersbudgeten, 6,4 år för 2 grader. För att vara i linje med
+              1,5 grader skulle utsläppen i Sverige behöva minska med drygt 35
+              procent från och med 2024, eller 13,5 procent för 2 grader.
+            </p>
+            <p>
+              Klimatkollen har fördelat ut den nya nationella koldioxidbudgeten
+              (80 miljoner ton, som även inkluderar utrikes flyg och sjöfart) på
+              landets kommuner med samma fördelningsnyckel som använts för att
+              bryta ner den globala budgeten nationellt.
+            </p>
+            <p>
+              De lokala koldioxidbudgetarna gör det möjligt att jämföra hur det
+              går med utsläppen med hur det borde gå. På Klimatkollen visas
+              koldioxidbudgetar för kommunerna både med siffror och som
+              utvecklingskurva över hur utsläppen behöver minska för att vara i
+              linje med Parisavtalet.
+            </p>
+            <p>
+              Förutom den så kallade Tyndall-modellen som Klimatkollen använder
+              finns även andra sätt att beräkna en nationell koldioxidbudget, se
+              exempelvis{" "}
+              <a
+                href="https://research.chalmers.se/publication/530543/file/530543_Fulltext.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                Chalmers här
+              </a>{" "}
+              .
+            </p>
+          </div>
+        </AccordionGroup>
+        <AccordionGroup title="Om olika typer av utsläpp">
+          <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
+            <p>
+              Klimatkollen är en oberoende faktaplattform som följer allmän och
+              vedertagen standard för hur utsläpp redovisas. Den klimatdata vi
+              visar speglar de avgränsningar som följer av hur koldioxidbudgeten
+              är beräknad. Exempelvis går det inte att rakt av koppla
+              koldioxidbudgetar till utsläpp av alla växthusgaser, där även
+              metan, lustgas, vattenånga med flera inkluderas.
+            </p>
+            <p>
+              Utsläpp från cementproduktion är exkluderat i IPCC:s globala
+              koldioxidbudget och därmed även i koldioxidbudgeten för Sverige
+              och i utsläppsstatistiken för de tre kommunerna Gotland, Skövde
+              och Mörbylånga, där cementproduktion sker idag eller skett
+              tidigare under perioden.
+            </p>
+            <p>
+              Sverige har även hög klimatbelastning från varor vi importerar
+              från andra länder och orsakar därför utsläpp i andra delar av
+              världen. Dessa konsumtionsbaserade utsläpp inkluderas inte i
+              koldioxidbudgeten.
+            </p>
+            <p>
+              Inte heller utsläpp från skog och mark (så kallade biogena
+              utsläpp) inkluderas i koldioxidbudgeten.
+            </p>
+            <p>
+              Egentligen är alltså de klimatpåverkande utsläppen mycket större
+              än de territoriella fossila koldioxidutsläpp som vanligtvis
+              rapporteras av myndigheter och i media och som idag visas på
+              Klimatkollen.
+            </p>
+            <p>
+              Klimatkollen undersöker nu hur även andra växthusgasutsläpp skulle
+              kunna visas på webbplatsen framöver, samtidigt som möjligheten att
+              jämföra dagens utsläpp med koldioxidbudgetar behålls.
+            </p>
           </div>
         </AccordionGroup>
       </Accordion>
