@@ -7,7 +7,11 @@ interface StatCardProps {
   valueClassName?: string;
 }
 
-export function StatCard({ title, value, valueClassName }: StatCardProps) {
+export function MunicipalityStatCard({
+  title,
+  value,
+  valueClassName,
+}: StatCardProps) {
   return (
     <div>
       <Text className="text-lg md:text-xl">{title}</Text>

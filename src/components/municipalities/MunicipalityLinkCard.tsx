@@ -25,7 +25,7 @@ export function MunicipalityLinkCard({
       <div className="flex items-center justify-between">
         <div className="space-y-2">
           <Text className="text-2xl md:text-4xl">{title}</Text>
-          <Text variant="body" className={cn(descriptionClassName)}>
+          <Text className={cn("text-lg md:text-xl", descriptionClassName)}>
             {description}
           </Text>
         </div>

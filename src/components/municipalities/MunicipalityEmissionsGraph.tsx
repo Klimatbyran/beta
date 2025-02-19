@@ -91,7 +91,6 @@ export const MunicipalityEmissionsGraph: FC<
             domain={[0, "auto"]}
             padding={{ top: 0, bottom: 0 }}
           />
-
           <Area
             type="monotone"
             dataKey="gap"
