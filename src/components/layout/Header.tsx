@@ -19,9 +19,6 @@ const NAV_LINKS = [
     path: "/companies",
     sublinks: [
       { path: "/companies", label: "Alla företag", shortcut: "⌘F" },
-      { path: "/companies?category=omx", label: "Large Cap (OMX)" },
-      { path: "/companies?category=midcap", label: "Mid Cap" },
-      { path: "/companies?category=sme", label: "Small Cap" },
       { path: "/companies/insights", label: "Insikter", shortcut: "⌘I" },
     ],
   },
@@ -29,13 +26,6 @@ const NAV_LINKS = [
     label: "Kommuner",
     icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
     path: "/municipalities",
-    sublinks: [
-      { path: "/municipalities", label: "Alla kommuner", shortcut: "⌘K" },
-      { path: "/municipalities?sort=top", label: "Topplista" },
-      { path: "/municipalities?sort=emissions", label: "Högst utsläpp" },
-      { path: "/municipalities?sort=reduction", label: "Störst minskning" },
-      { path: "/municipalities/insights", label: "Insikter", shortcut: "⌘I" },
-    ],
   },
   { path: "/about", label: "Om oss" },
   { path: "/insights", label: "Insikter" },
@@ -85,7 +75,7 @@ export function Header() {
                   <MenubarTrigger
                     aria-expanded={location.pathname.startsWith(item.path)}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors",
+                      "flex items-center gap-2 px-3 py-1.5 transition-colors",
                       location.pathname.startsWith(item.path)
                         ? "bg-black-1 text-white"
                         : "text-grey hover:text-white"
@@ -118,7 +108,7 @@ export function Header() {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-level-2 transition-colors text-sm",
+                    "flex items-center gap-2 px-3 py-1.5 transition-colors text-sm",
                     matchPath(item.path, location.pathname)
                       ? "bg-black-1 text-white"
                       : "text-grey hover:text-white"
