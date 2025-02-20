@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: frontend
   annotations:
-    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
   tls:
