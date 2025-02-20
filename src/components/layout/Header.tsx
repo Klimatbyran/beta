@@ -17,25 +17,11 @@ const NAV_LINKS = [
     label: "Företag",
     icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
     path: "/companies",
-    sublinks: [
-      { path: "/companies", label: "Alla företag", shortcut: "⌘F" },
-      { path: "/companies?category=omx", label: "Large Cap (OMX)" },
-      { path: "/companies?category=midcap", label: "Mid Cap" },
-      { path: "/companies?category=sme", label: "Small Cap" },
-      { path: "/companies/insights", label: "Insikter", shortcut: "⌘I" },
-    ],
   },
   {
     label: "Kommuner",
     icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
     path: "/municipalities",
-    sublinks: [
-      { path: "/municipalities", label: "Alla kommuner", shortcut: "⌘K" },
-      { path: "/municipalities?sort=top", label: "Topplista" },
-      { path: "/municipalities?sort=emissions", label: "Högst utsläpp" },
-      { path: "/municipalities?sort=reduction", label: "Störst minskning" },
-      { path: "/municipalities/insights", label: "Insikter", shortcut: "⌘I" },
-    ],
   },
   { path: "/about", label: "Om oss" },
   { path: "/insights", label: "Insikter" },
@@ -58,7 +44,7 @@ export function Header() {
         menuOpen && "h-full"
       )}
     >
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between py-0">
         <Link
           to="/"
           className={cn(
@@ -79,7 +65,6 @@ export function Header() {
         >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-
         <nav
           className={cn(
             "hidden md:flex items-center gap-8 transition-all",
@@ -95,7 +80,7 @@ export function Header() {
                   <MenubarTrigger
                     aria-expanded={location.pathname.startsWith(item.path)}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-4 rounded-level-2 transition-all",
+                      "flex items-center gap-2 px-3 py-4 transition-colors transition-all",
                       location.pathname.startsWith(item.path)
                         ? "bg-black-1 text-white"
                         : "text-grey hover:text-white"
@@ -128,10 +113,11 @@ export function Header() {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-2 px-3 py-4 transition-colors text-sm",
+                    "flex items-center gap-2 p-3 transition-colors text-sm",
                     matchPath(item.path, location.pathname)
                       ? "bg-black-1 text-white"
-                      : "text-grey hover:text-white"
+                      : "text-grey hover:text-white",
+                    isMinimized && "scale-75 -translate-x-4"
                   )}
                 >
                   {item.icon}
@@ -141,40 +127,40 @@ export function Header() {
             )}
           </Menubar>
         </nav>
-      </div>
 
-      {menuOpen && (
-        <div className="fixed inset-0 bg-black-2 w-full h-full z-100 flex  mt-12 p-8">
-          <div className="flex flex-col gap-6 text-lg">
-            {NAV_LINKS.map((link) => (
-              <div key={link.path} className="flex flex-col">
-                <Link
-                  to={link.path}
-                  onClick={toggleMenu}
-                  className="flex items-center gap-2"
-                >
-                  {link.icon}
-                  {link.label}
-                </Link>
+        {menuOpen && (
+          <div className="fixed inset-0 w-full h-full z-100 flex p-8 mt-12">
+            <div className="flex flex-col gap-6 text-lg">
+              {NAV_LINKS.map((link) => (
+                <div key={link.path} className="flex flex-col">
+                  <Link
+                    to={link.path}
+                    onClick={toggleMenu}
+                    className="flex items-center gap-2"
+                  >
+                    {link.icon}
+                    {link.label}
+                  </Link>
 
-                {link.sublinks && (
-                  <div className="flex flex-col gap-2 pl-4 mt-2">
-                    {link.sublinks.map((sublink) => (
-                      <Link
-                        key={sublink.path}
-                        to={sublink.path}
-                        className="flex items-center gap-2 text-sm text-gray-400"
-                      >
-                        {sublink.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                  {link.sublinks && (
+                    <div className="flex flex-col gap-2 pl-4 mt-2">
+                      {link.sublinks.map((sublink) => (
+                        <Link
+                          key={sublink.path}
+                          to={sublink.path}
+                          className="flex items-center gap-2 text-sm text-gray-400"
+                        >
+                          {sublink.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }
