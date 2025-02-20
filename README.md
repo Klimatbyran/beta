@@ -2,7 +2,7 @@
 
 This is the new version of [klimatkollen.se](https://klimatkollen.se). You can find our legacy code [here](https://github.com/Klimatbyran/klimatkollen).
 
-We are rebuilding our site to be faster, better, and stronger using TypeScript, React, Vite, and Tailwind CSS. This is also where our new UX/UI is implemented.
+We are rebuilding our site to be faster, better, and stronger using TypeScript, React, Vite, and Tailwind CSS. This is also where our new UX/UI is implemented
 
 ## 🚀 Project Structure
 
@@ -14,12 +14,12 @@ We are rebuilding our site to be faster, better, and stronger using TypeScript, 
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Builds your production site to `./dist/`         |
-| `npm run preview`         | Previews your build locally, before deploying    |
+| Command           | Action                                        |
+| :---------------- | :-------------------------------------------- |
+| `npm install`     | Installs dependencies                         |
+| `npm run dev`     | Starts local dev server at `localhost:4321`   |
+| `npm run build`   | Builds your production site to `./dist/`      |
+| `npm run preview` | Previews your build locally, before deploying |
 
 ## 👩‍💻 Contributing
 
