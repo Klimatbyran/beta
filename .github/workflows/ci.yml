@@ -10,8 +10,9 @@ on:
   push:
     branches:
       - main
+      - staging
     paths-ignore:
-      - 'k8s/**'
+      - "k8s/**"
 
 jobs:
   version:
