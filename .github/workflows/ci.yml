@@ -24,11 +24,11 @@ jobs:
         with:
           progress: false
 
-      - name: 🧹 Clean Install Dependencies
+      - name: 🛠️ Commit `package-lock.json`
         run: |
-          rm -rf node_modules package-lock.json
-          npm install --legacy-peer-deps
-          npm rebuild
+          git add package-lock.json
+          git commit -m "Update package-lock.json [skip ci]"
+          git push origin main || echo "No changes to commit"
 
       - name: 📌 Show Node.js & NPM versions
         run: |
