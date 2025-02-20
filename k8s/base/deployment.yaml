@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/klimatbyran/frontend:0.0.1-rc.0
+          image: ghcr.io/klimatbyran/frontend
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -47,7 +47,7 @@ spec:
             periodSeconds: 10
           env:
             - name: NODE_ENV
-              value: 'production'
+              value: "production"
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d
