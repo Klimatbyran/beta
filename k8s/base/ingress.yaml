@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend
+  namespace: frontend-stage
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
@@ -19,5 +20,6 @@ spec:
             backend:
               service:
                 name: frontend
+                namespace: frontend-stage
                 port:
                   number: 80
