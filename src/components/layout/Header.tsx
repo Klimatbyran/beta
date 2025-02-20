@@ -39,9 +39,8 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2 md:py-0",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2 md:py-0 bg-black-2 overflow-hidden",
         isMinimized ? "h-9" : "h-10",
-        isMinimized ? "bg-black-2/90" : "bg-black-2",
         menuOpen && "h-full"
       )}
     >
@@ -50,21 +49,30 @@ export function Header() {
           to="/"
           className={cn(
             "flex items-center gap-2 transition-all",
-            isMinimized && "scale-75 -translate-x-4"
+            isMinimized ? "scale-75 translate-y-[-6px]" : "translate-y-0"
           )}
         >
           Klimatkollen
         </Link>
 
         <button
-          className="md:hidden text-white"
+          className={cn(
+            "md:hidden text-white transition-transform duration-300",
+            isMinimized ? "-translate-y-1 scale-90" : "scale-100"
+          )}
           onClick={toggleMenu}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-
-        <nav className={cn("hidden md:flex gap-8")}>
+        <nav
+          className={cn(
+            "hidden md:flex items-center gap-8 transition-all",
+            isMinimized
+              ? "scale-90 translate-y-[-6px]"
+              : "scale-100 translate-y-0"
+          )}
+        >
           <Menubar className="border-none bg-transparent">
             {NAV_LINKS.map((item) =>
               item.sublinks ? (
@@ -72,7 +80,7 @@ export function Header() {
                   <MenubarTrigger
                     aria-expanded={location.pathname.startsWith(item.path)}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-4 transition-colors",
+                      "flex items-center gap-2 px-3 py-4 transition-colors transition-all",
                       location.pathname.startsWith(item.path)
                         ? "bg-black-1 text-white"
                         : "text-grey hover:text-white"

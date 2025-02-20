@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { SECTORS, SECTOR_NAMES } from "@/lib/constants/sectors";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 type CompanySector = (typeof SECTORS)[number]["value"];
 type SortOption = (typeof SORT_OPTIONS)[number]["value"];
@@ -273,35 +274,27 @@ export function CompaniesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-2 z-10 bg-black pt-6 pb-4 space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-light">Företagsrapporter</h1>
-            <p className="text-sm text-grey">
-              Översikt över företagens klimatpåverkan och hållbarhetsarbete
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Input
-              type="text"
-              placeholder="Sök (separera med ,)"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 w-[200px]"
-            />
-            <FilterPopover
-              filterOpen={filterOpen}
-              setFilterOpen={setFilterOpen}
-              sectors={sectors}
-              setSectors={setSectors}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-            />
-          </div>
-        </div>
-
+      <PageHeader
+        title="Företagsrapporter"
+        description="Översikt över företagens klimatpåverkan och hållbarhetsarbete"
+      >
+        <Input
+          type="text"
+          placeholder="Sök (separera med ,)"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 w-[200px]"
+        />
+        <FilterPopover
+          filterOpen={filterOpen}
+          setFilterOpen={setFilterOpen}
+          sectors={sectors}
+          setSectors={setSectors}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+        />
         {activeFilters.length > 0 && <FilterBadges filters={activeFilters} />}
-      </div>
+      </PageHeader>
 
       {filteredCompanies.length === 0 ? (
         <div className="text-center py-12">

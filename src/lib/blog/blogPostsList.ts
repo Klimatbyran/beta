@@ -74,7 +74,7 @@ export const blogMetadata: BlogPostMeta[] = [
       "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop",
     language: LangEnum.SE,
     author: {
-      name: "Alexandra Palmqvist",
+      name: "Alexandra Palmquist",
       avatar: "/people/alex.jpg",
     },
     relatedPosts: ["metod", "ai-process-del-1"],

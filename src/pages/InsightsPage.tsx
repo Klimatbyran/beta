@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Text } from "@/components/ui/text";
 import { blogMetadata } from "../lib/blog/blogPostsList";
 import { isMobile } from "react-device-detect";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 // Component for blog metadata (category, date, read time)
 function BlogMeta({
@@ -16,12 +17,17 @@ function BlogMeta({
 }) {
   return (
     <div className="flex items-center gap-4">
-      <span aria-label="Category" className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm">
+      <span
+        aria-label="Category"
+        className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm"
+      >
         {category}
       </span>
       <div className="flex items-center gap-2 text-grey text-sm">
         <CalendarDays className="w-4 h-4" />
-        <span aria-label="Date Published" >{new Date(date).toLocaleDateString("sv-SE")}</span>
+        <span aria-label="Date Published">
+          {new Date(date).toLocaleDateString("sv-SE")}
+        </span>
       </div>
       <div className="flex items-center gap-2 text-grey text-sm">
         <Clock className="w-4 h-4" />
@@ -73,13 +79,10 @@ export function InsightsPage() {
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-16">
-      {/* Hero Section */}
-      <div className="space-y-4">
-        <Text variant="display">Insikter</Text>
-        <Text variant="body" className="text-grey max-w-2xl">
-          Fördjupande analyser och rapporter om klimatomställningen i Sverige
-        </Text>
-      </div>
+      <PageHeader
+        title="Insikter"
+        description="Fördjupande analyser och rapporter om klimatomställningen i Sverige"
+      />
 
       {/* Featured Post */}
       {featuredPost && (
