@@ -1,10 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: klimatkollen-frontend
-  namespace: klimatkollen
-  labels:
-    app: klimatkollen-frontend
+  name: frontend
 spec:
   type: ClusterIP
   ports:
@@ -13,4 +10,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: klimatkollen-frontend
+    app: frontend
