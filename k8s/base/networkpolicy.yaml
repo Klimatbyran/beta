@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: klimatkollen-frontend-network-policy
-  namespace: klimatkollen
+  name: frontend-network-policy
+  namespace: frontend
 spec:
   podSelector:
     matchLabels:
-      app: klimatkollen-frontend
+      app: frontend
   policyTypes:
     - Ingress
     - Egress
