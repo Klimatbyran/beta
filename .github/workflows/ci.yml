@@ -19,22 +19,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛎️ Checkout
-        uses: actions/checkout@v4
-        with:
-          progress: false
-
-      - name: 🛠️ Commit `package-lock.json`
+      - name: 🛠️ Install dependencies and update lock file
         run: |
-          git add package-lock.json
-          git commit -m "Update package-lock.json [skip ci]"
-          git push origin main || echo "No changes to commit"
+          rm -rf node_modules package-lock.json  # Ensure fresh install
+          npm install --legacy-peer-deps
+          npm rebuild
+
+      - name: 🛠️ Commit `package-lock.json` if changed
+        run: |
+          if [[ `git status --porcelain package-lock.json` ]]; then
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add package-lock.json
+            git commit -m "Update package-lock.json [skip ci]"
+            git push origin main
+          else
+            echo "No changes in package-lock.json"
+          fi
 
       - name: 📌 Show Node.js & NPM versions
         run: |
           node -v
           npm -v
           npx vite -v
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v4
+        with:
+          progress: false
 
       - name: 🎫 Update patch version
         run: |
