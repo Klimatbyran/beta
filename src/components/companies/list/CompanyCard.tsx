@@ -72,7 +72,7 @@ export function CompanyCard({
     <div className="relative rounded-level-2">
       <Link
         to={`/companies/${wikidataId}`}
-        className="block bg-black-2 rounded-level-2 p-5 space-y-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
+        className="block bg-black-2 rounded-level-2 p-10 xxs:p-4 xs:p-4 2xl:p-10 space-y-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
       >
         <div className="flex items-start justify-between rounded-level-2">
           <div className="space-y-2">
@@ -127,8 +127,8 @@ export function CompanyCard({
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2 ">
-            <div className="flex items-center gap-2 text-grey mb-2 text-lg">
-              <TrendingDown className="w-4 h-4" />
+            <div className="flex items-center text-center gap-2 text-grey mb-2 text-lg">
+              <TrendingDown className="w- h-4" />
               <span>Utsläpp</span>
               <TooltipProvider>
                 <Tooltip>
@@ -141,7 +141,7 @@ export function CompanyCard({
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="text-2xl font-light">
+            <div className="xxs:text-xl xs:text-2xl text-2xl font-light">
               {currentEmissions ? (
                 <span className="text-orange-3">
                   {Math.ceil(currentEmissions).toLocaleString("sv-SE")}
@@ -170,7 +170,7 @@ export function CompanyCard({
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="text-2xl font-light text-center">
+            <div className="xxs:text-xl xs:text-2xl font-light xxs:text-center xs:text-center sm:text-left lg:text-left">
               {emissionsChange !== null ? (
                 <span
                   className={
