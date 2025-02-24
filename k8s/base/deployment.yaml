@@ -1,15 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: klimatkollen-frontend
-  namespace: klimatkollen
+  name: frontend
   labels:
-    app: klimatkollen-frontend
+    app: frontend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: klimatkollen-frontend
+      app: frontend
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,11 +17,11 @@ spec:
   template:
     metadata:
       labels:
-        app: klimatkollen-frontend
+        app: frontend
     spec:
       containers:
-        - name: klimatkollen-frontend
-          image: klimatkollen/frontend:latest
+        - name: frontend
+          image: ghcr.io/klimatbyran/frontend
           imagePullPolicy: Always
           ports:
             - containerPort: 80

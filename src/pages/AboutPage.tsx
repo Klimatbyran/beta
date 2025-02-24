@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
 import { teamMembers, boardMembers } from "@/lib/constants/about";
 import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
+import { LinkButton } from "@/components/layout/LinkButton";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export function AboutPage() {
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(
@@ -13,14 +14,11 @@ export function AboutPage() {
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-20">
-      {/* Hero Section */}
-      <div className="space-y-8">
-        <Text variant="display">Om oss</Text>
-        <Text variant="body" className="text-grey max-w-3xl">
-          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata.
-          Klicka på rubrikerna för att läsa mer.
-        </Text>
-      </div>
+      <PageHeader
+        title="Om oss"
+        description="Klimatkollen är en medborgarplattform som tillgängliggör klimatdata.
+            Klicka på rubrikerna för att läsa mer."
+      />
       <Accordion type="single" collapsible className="space-y-6">
         {/* Main Content */}
         <AccordionGroup title="Vad är Klimatkollen?">
@@ -213,37 +211,16 @@ export function AboutPage() {
                 projekt:
               </p>
               <div className="space-y-6 max-w-3xl">
-                {/* TODO: Update this link once the content has been
-                  modified/moved to the blog, original link
-                  https://www.klimatkollen.se/partierna */}
-                <a
-                  href="/insights/klimatmal"
-                  className="block bg-black-1 rounded-level-2 p-6 hover:bg-black-1/80 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Text variant="body">Klimatmål</Text>
-                      <Text className="text-grey">
-                        En analys av riksdagspartiernas
-                      </Text>
-                    </div>
-                    <ArrowUpRight className="w-6 h-6" />
-                  </div>
-                </a>
-                <a
-                  href="/insights/utslappsberakning"
-                  className="block bg-black-1 rounded-level-2 p-6 hover:bg-black-1/80 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Text variant="body">Utsläppsberäkning</Text>
-                      <Text className="text-grey">
-                        Beräkning av partiernas klimatåtgärder
-                      </Text>
-                    </div>
-                    <ArrowUpRight className="w-6 h-6" />
-                  </div>
-                </a>
+                <LinkButton
+                  title="Klimatmål"
+                  text="En analys av riksdagspartiernas"
+                  link="/insights/klimatmal"
+                />
+                <LinkButton
+                  title="Utsläppsberäkning"
+                  text="Beräkning av partiernas klimatåtgärder"
+                  link="/insights/utslappsberakning"
+                />
               </div>
             </div>
           </div>

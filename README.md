@@ -1,32 +1,29 @@
 # Klimatkollen Beta
 
-This is the new version of [klimatkollen.se](https://klimatkollen.se). You'll find our legacy code [here](https://github.com/Klimatbyran/klimatkollen).
-This is where we rebuild our site to be faster, better and stronger using TypeScript, Svelte, Astro and Tailwind. Also, this is the place where our new UX/UI is implemented.
+This is the new version of [klimatkollen.se](https://klimatkollen.se). You can find our legacy code [here](https://github.com/Klimatbyran/klimatkollen).
+
+We are rebuilding our site to be faster, better, and stronger using TypeScript, React, Vite, and Tailwind CSS. This is also where our new UX/UI is implemented
 
 ## 🚀 Project Structure
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-Any static assets, like images, can be placed in the `public/` directory.
+- **`src/pages/`**: Contains `.tsx` files for each page, exposed as routes based on their file names.
+- **`src/components/`**: Contains React components used throughout the site.
+- **`public/`**: Contains static assets like images.
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-We're using [shadcn](https://www.shadcn-svelte.com/) for our components. [Learn how to add new components](https://www.shadcn-svelte.com/docs/installation/astro#thats-it) you then can customize.
+| Command           | Action                                        |
+| :---------------- | :-------------------------------------------- |
+| `npm install`     | Installs dependencies                         |
+| `npm run dev`     | Starts local dev server at `localhost:4321`   |
+| `npm run build`   | Builds your production site to `./dist/`      |
+| `npm run preview` | Previews your build locally, before deploying |
 
 ## 👩‍💻 Contributing
 
-Do you have an idea for a feature? Jump into the code or head to our [Discord server](https://discord.gg/N5P64QPQ6v) discuss your thoughts. You can also submit an [issue](https://github.com/Klimatbyran/beta/issues) explaining your suggestion.
+Do you have an idea for a feature? Jump into the code or head to our [Discord server](https://discord.gg/N5P64QPQ6v) to discuss your thoughts. You can also submit an [issue](https://github.com/Klimatbyran/beta/issues) explaining your suggestion.
 
 ### How to Contribute
 

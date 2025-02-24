@@ -10,8 +10,9 @@ on:
   push:
     branches:
       - main
+      - staging
     paths-ignore:
-      - 'k8s/**'
+      - "k8s/**"
 
 jobs:
   version:
@@ -22,6 +23,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           progress: false
+
+      - name: 🧹 Clean Install Dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+          npm rebuild
+
+      - name: 📌 Show Node.js & NPM versions
+        run: |
+          node -v
+          npm -v
+          npx vite -v
 
       - name: 🎫 Update patch version
         run: |
