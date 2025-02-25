@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
-import { teamMembers, boardMembers } from "@/lib/constants/about";
+import { useTeamMembers, useBoardMembers } from "@/lib/constants/about";
 import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
 import { LinkButton } from "@/components/layout/LinkButton";
@@ -13,6 +13,8 @@ export function AboutPage() {
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(
     null
   );
+  const teamMembers = useTeamMembers();
+  const boardMembers = useBoardMembers();
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-20">
