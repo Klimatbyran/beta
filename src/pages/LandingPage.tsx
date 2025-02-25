@@ -7,6 +7,7 @@ import { ContentBlock } from "@/components/ContentBlock";
 import { Typewriter } from "@/components/ui/typewriter";
 import { useCompanies } from "@/hooks/useCompanies";
 import { useMunicipalities } from "@/hooks/useMunicipalities";
+import { useTranslation } from "react-i18next";
 
 const companyTypewriterTexts = [
   "minska sina utsläpp",
@@ -30,6 +31,7 @@ const tabName = {
 };
 
 export function LandingPage() {
+  const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState("companies");
   const { companies } = useCompanies();
   const { getTopMunicipalities, getMunicipalitiesForMap } = useMunicipalities();
@@ -79,13 +81,13 @@ export function LandingPage() {
                 value="companies"
                 className="data-[state=active]:bg-black-2"
               >
-                Företag
+                {t("landingPage.tabs.companies")}
               </TabsTrigger>
               <TabsTrigger
                 value="municipalities"
                 className="data-[state=active]:bg-black-2"
               >
-                Kommuner
+                {t("landingPage.tabs.municipalities")}
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -93,7 +95,9 @@ export function LandingPage() {
 
         <div className="max-w-lg md:max-w-4xl mx-auto space-y-4">
           <h1 className="text-4xl md:text-7xl font-light tracking-tight">
-            Hur går det för {tabName[selectedTab]} att
+            {t("landingPage.title", {
+              tabName: t(`landingPage.tabName.${selectedTab}`),
+            })}
           </h1>
 
           <div className="h-[80px] md:h-[120px] flex items-center justify-center text-4xl md:text-7xl font-light">
@@ -121,7 +125,7 @@ export function LandingPage() {
               selectedTab === "companies" ? "/companies" : "/municipalities"
             }
           >
-            Se resultat
+            {t("landingPage.seeResults")}
             <ArrowRight className="ml-2 h-5 w-5" />
           </a>
         </Button>
@@ -148,18 +152,18 @@ export function LandingPage() {
       <div className="py-8 md:py-24">
         <div className="container mx-auto">
           <h2 className="text-4xl md:text-5xl font-light text-center mb-8 md:mb-16">
-            Vilka gör det bäst?
+            {t("landingPage.bestPerformers")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <RankedList
-              title="Sveriges bästa kommuner"
-              description="Årlig utsläppsminskning sedan Parisavtalet 2015"
+              title={t("landingPage.bestMunicipalities")}
+              description={t("landingPage.municipalitiesDescription")}
               items={topMunicipalities}
               type="municipality"
             />
             <RankedList
-              title="Företag som minskat utsläppen mest"
-              description="Utsläppsminskning mellan 2023 och 2024"
+              title={t("landingPage.bestCompanies")}
+              description={t("landingPage.companiesDescription")}
               items={topCompanies}
               type="company"
             />
@@ -170,8 +174,8 @@ export function LandingPage() {
       <div className="pb-8 md:pb-16">
         <div className="container mx-auto">
           <ContentBlock
-            title="Vilka är vi?"
-            content="Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och bygger stöd för minskade utsläpp enligt Parisavtalet. Vi tror på kraften i enkel och tilltalande datavisualisering för att öka kunskapen och engagemanget kring klimatdebatten."
+            title={t("landingPage.aboutUsTitle")}
+            content={t("landingPage.aboutUsContent")}
           />
         </div>
       </div>

@@ -1,3 +1,4 @@
+import "./i18n";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
 import { LandingPage } from "./pages/LandingPage";

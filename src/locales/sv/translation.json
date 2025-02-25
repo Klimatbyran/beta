@@ -1,0 +1,74 @@
+{
+  "header": {
+    "home": "Hem",
+    "about": "Om",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "contact": "Kontakta oss på {{email}}"
+  },
+  "landingPage": {
+    "tabs": {
+      "companies": "Företag",
+      "municipalities": "Kommuner"
+    },
+    "title": "Hur går det för {{tabName}} att",
+    "seeResults": "Se resultat",
+    "bestPerformers": "Vilka gör det bäst?",
+    "bestMunicipalities": "Sveriges bästa kommuner",
+    "municipalitiesDescription": "Årlig utsläppsminskning sedan Parisavtalet 2015",
+    "bestCompanies": "Företag som minskat utsläppen mest",
+    "companiesDescription": "Utsläppsminskning mellan 2023 och 2024",
+    "aboutUsTitle": "Vilka är vi?",
+    "aboutUsContent": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och bygger stöd för minskade utsläpp enligt Parisavtalet. Vi tror på kraften i enkel och tilltalande datavisualisering för att öka kunskapen och engagemanget kring klimatdebatten.",
+    "tabName": {
+      "companies": "företagen",
+      "municipalities": "kommunerna"
+    }
+  },
+  "aboutPage": {
+    "header": {
+      "title": "Om oss",
+      "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata. Klicka på rubrikerna för att läsa mer."
+    },
+    "mainContent": {
+      "title": "Vad är Klimatkollen?",
+      "paragraph1": "Klimatkollen är en medborgarplattform som hjälper medborgare, företag och organisationer att få koll på klimatomställningen, genom att samla in och visualisera klimatdata.",
+      "paragraph2": "Vi visar hur det går med utsläppen, jämfört med hur det borde gå, så att det blir begripligt för allmänheten, bidrar till en faktabaserad debatt och stärker opinionen för klimatåtgärder.",
+      "paragraph3": "Vår vision är att beslutsfattare i politik och näringsliv ska påverkas av en välinformerad och växande opinion till att genomföra åtgärder som sänker utsläppen i linje med Parisavtalet."
+    },
+    "teamSection": {
+      "title": "Vårt team"
+    },
+    "boardSection": {
+      "title": "Vår styrelse",
+      "links": {
+        "stadgar": "Här hittar du våra",
+        "stadgarLink": "stadgar",
+        "uppforandekodLink": "uppförandekod",
+        "and": "och",
+        "antikorruptionspolicyLink": "antikorruptionspolicy"
+      }
+    },
+    "financingSection": {
+      "title": "Så finansieras vi",
+      "paragraph1": "Under 2024 och 2025 får Klimatkollen finansiell uppbackning av Google.org som en av två svenska mottagare av Google.org Impact Challenge: Tech for Social Good.",
+      "paragraph2": "Under 2023 drevs Klimatkollen med stöd från Postkodstiftelsen. Uppstarten 2022 finansierades av Världsnaturfonden WWF, ClimateView, We Don't Have Time och Argand Partners.",
+      "paragraph3": "Mycket av arbetet är ideellt, därför välkomnar vi fler samarbetspartners och ekonomiskt stöd för att kunna skala upp!",
+      "donate": "Skänk gärna en slant!",
+      "donateDescription": "Varje krona ger oss muskler att visa upp mer data.",
+      "bankgiro": "Bankgiro: 5793-3178"
+    },
+    "previousProjectsSection": {
+      "title": "Tidigare projekt",
+      "kommunprojektetTitle": "Kommunprojektet 2023",
+      "kommunprojektetDescription": "Under 2023 fick Klimatkollen stöd av Postkodstiftelsen för att ta tempen på hur det går med klimatomställningen i kommunerna. I dag kan du se hur det går med koldioxidutsläppen. Nu visar vi även vad kommunerna gör för att minska dem.",
+      "riksdagsvaletTitle": "Riksdagsvalet 2022",
+      "riksdagsvaletDescription": "Inför riksdagsvalet 2022 ansvarade Klimatkollen för två unika projekt:",
+      "klimatmalTitle": "Klimatmål",
+      "klimatmalText": "En analys av riksdagspartiernas",
+      "utslappsberakningTitle": "Utsläppsberäkning",
+      "utslappsberakningText": "Beräkning av partiernas klimatåtgärder"
+    }
+  }
+}
