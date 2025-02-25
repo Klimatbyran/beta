@@ -1,15 +1,17 @@
-import { useState } from 'react';
-import { useMunicipalities } from '@/hooks/useMunicipalities';
-import { MunicipalityList } from '@/components/municipalities/list/MunicipalityList';
+import { useState } from "react";
+import { useMunicipalities } from "@/hooks/useMunicipalities";
+import { MunicipalityList } from "@/components/municipalities/list/MunicipalityList";
 import { Text } from "@/components/ui/text";
+import { useTranslation } from "react-i18next";
 
-type SortOption = 'emissions' | 'reduction' | 'name';
+type SortOption = "emissions" | "reduction" | "name";
 
 export function MunicipalitiesPage() {
+  const { t } = useTranslation();
   const { municipalities, loading, error } = useMunicipalities();
-  const [selectedRegion, setSelectedRegion] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('emissions');
+  const [selectedRegion, setSelectedRegion] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<SortOption>("emissions");
 
   if (loading) {
     return (
@@ -28,9 +30,9 @@ export function MunicipalitiesPage() {
     return (
       <div className="text-center py-24">
         <Text variant="h3" className="text-red-500 mb-4">
-          Det gick inte att hämta kommuninformation
+          {t("municipalitiesPage.errorTitle")}
         </Text>
-        <Text variant="muted">Försök igen senare</Text>
+        <Text variant="muted">{t("municipalitiesPage.errorDescription")}</Text>
       </div>
     );
   }
@@ -38,9 +40,9 @@ export function MunicipalitiesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-light">Kommunrapporter</h1>
+        <h1 className="text-2xl font-light">{t("municipalitiesPage.title")}</h1>
         <p className="text-sm text-grey">
-          Översikt över kommunernas klimatpåverkan och hållbarhetsarbete
+          {t("municipalitiesPage.description")}
         </p>
       </div>
 

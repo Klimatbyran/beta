@@ -6,8 +6,10 @@ import { CompanyHistory } from "@/components/companies/detail/CompanyHistory";
 import { CompanyScope3 } from "@/components/companies/detail/CompanyScope3";
 import { CompanySectorComparison } from "@/components/companies/detail/CompanySectorComparison";
 import { Text } from "@/components/ui/text";
+import { useTranslation } from "react-i18next";
 
 export function CompanyDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { company, loading, error } = useCompanyDetails(id!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
@@ -25,9 +27,9 @@ export function CompanyDetailPage() {
     return (
       <div className="text-center py-24">
         <Text variant="h3" className="text-red-500 mb-4">
-          Det gick inte att hämta företagsinformation
+          {t("companyDetailPage.errorTitle")}
         </Text>
-        <Text variant="body">Försök igen senare</Text>
+        <Text variant="body">{t("companyDetailPage.errorDescription")}</Text>
       </div>
     );
   }
@@ -36,9 +38,9 @@ export function CompanyDetailPage() {
     return (
       <div className="text-center py-24">
         <Text variant="h3" className="text-red-500 mb-4">
-          Företaget kunde inte hittas
+          {t("companyDetailPage.notFoundTitle")}
         </Text>
-        <Text variant="body">Kontrollera att företags-ID:t är korrekt</Text>
+        <Text variant="body">{t("companyDetailPage.notFoundDescription")}</Text>
       </div>
     );
   }
@@ -72,8 +74,7 @@ export function CompanyDetailPage() {
         selectedYear={selectedYear}
       />
 
-       <CompanyHistory company={company} />
-{/*
+      <CompanyHistory company={company} />
       <CompanyScope3
         emissions={selectedPeriod.emissions!}
         year={new Date(selectedPeriod.endDate).getFullYear()}
@@ -87,7 +88,7 @@ export function CompanyDetailPage() {
           .sort((a, b) => a.year - b.year)}
       />
 
-      <CompanySectorComparison company={company} /> */}
+      <CompanySectorComparison company={company} />
     </div>
   );
 }

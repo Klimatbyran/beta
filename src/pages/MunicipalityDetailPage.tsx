@@ -7,21 +7,23 @@ import { MunicipalityEmissionsGraph } from "@/components/municipalities/Municipa
 import { MunicipalitySection } from "@/components/municipalities/MunicipalitySection";
 import { MunicipalityStatCard } from "@/components/municipalities/MunicipalityStatCard";
 import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLinkCard";
+import { useTranslation } from "react-i18next";
 
 export function MunicipalityDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { municipality, loading, error } = useMunicipalityDetails(id || "");
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error loading data</Text>;
-  if (!municipality) return <Text>No data available</Text>;
+  if (loading) return <Text>{t("municipalityDetailPage.loading")}</Text>;
+  if (error) return <Text>{t("municipalityDetailPage.error")}</Text>;
+  if (!municipality) return <Text>{t("municipalityDetailPage.noData")}</Text>;
 
   const requirementsInProcurement =
     municipality.procurementScore === "2"
-      ? "Kommunen ställer klimatkrav i upphandlingar"
+      ? t("municipalityDetailPage.procurementScore.high")
       : municipality.procurementScore === "1"
-      ? "Kommunen ställer kanske klimatkrav i upphandlingar"
-      : "Kommunen ställer inte klimatkrav i upphandlingar";
+      ? t("municipalityDetailPage.procurementScore.medium")
+      : t("municipalityDetailPage.procurementScore.low");
 
   const emissionsData = transformEmissionsData(municipality);
 
@@ -38,24 +40,27 @@ export function MunicipalityDetailPage() {
         <Text className="text-grey">{municipality.region}</Text>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mt-8">
           <MunicipalityStatCard
-            title={`Totala utsläpp ${lastYear} i tusen ton CO₂`}
+            title={t("municipalityDetailPage.totalEmissions", {
+              year: lastYear,
+            })}
             value={lastYearEmissionsKTon}
             valueClassName="text-orange-2"
           />
           <MunicipalityStatCard
-            title="Koldioxidbudgeten tar slut"
+            title={t("municipalityDetailPage.budgetRunsOut")}
             value={municipality.budgetRunsOut.toString()}
             valueClassName={
-              municipality.budgetRunsOut === "Håller budget"
+              municipality.budgetRunsOut ===
+              t("municipalityDetailPage.budgetHolds")
                 ? "text-green-3"
                 : "text-pink-3"
             }
           />
           <MunicipalityStatCard
-            title="Når nettonoll"
+            title={t("municipalityDetailPage.hitNetZero")}
             value={municipality.hitNetZero.toString()}
             valueClassName={cn(
-              municipality.hitNetZero === "Aldrig" ||
+              municipality.hitNetZero === t("municipalityDetailPage.never") ||
                 new Date(municipality.hitNetZero) > new Date("2050-01-01")
                 ? "text-pink-3"
                 : "text-green-3"
@@ -66,8 +71,12 @@ export function MunicipalityDetailPage() {
 
       <div className={cn("bg-black-2 rounded-level-1 py-8 md:py-16")}>
         <div className="px-8 md:px-16">
-          <Text className="text-2xl md:text-4xl">Utsläppsutveckling</Text>
-          <Text className="text-grey">I tusen ton CO₂</Text>
+          <Text className="text-2xl md:text-4xl">
+            {t("municipalityDetailPage.emissionsDevelopment")}
+          </Text>
+          <Text className="text-grey">
+            {t("municipalityDetailPage.inThousandTons")}
+          </Text>
         </div>
         <div className="mt-8 mr-8">
           <MunicipalityEmissionsGraph projectedData={emissionsData} />
@@ -75,10 +84,10 @@ export function MunicipalityDetailPage() {
       </div>
 
       <MunicipalitySection
-        title="Framtida utsläpp"
+        title={t("municipalityDetailPage.futureEmissions")}
         items={[
           {
-            title: "Årlig utsläppsförändring sedan 2015",
+            title: t("municipalityDetailPage.annualChangeSince2015"),
             value: `${municipality.historicalEmissionChangePercent.toFixed(
               1
             )}%`,
@@ -90,12 +99,12 @@ export function MunicipalityDetailPage() {
             ),
           },
           {
-            title: "Utsläppsminskning för att klara Parisavtalet",
+            title: t("municipalityDetailPage.reductionToMeetParis"),
             value: `-${municipality.neededEmissionChangePercent.toFixed(1)}%`,
             valueClassName: "text-green-3",
           },
           {
-            title: "Konsumtionsutsläpp per invånare i ton CO₂",
+            title: t("municipalityDetailPage.consumptionEmissionsPerCapita"),
             value: (municipality.totalConsumptionEmission / 1000).toFixed(1),
             valueClassName: "text-orange-2",
           },
@@ -104,25 +113,27 @@ export function MunicipalityDetailPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <MunicipalityLinkCard
-          title="Klimatplan"
+          title={t("municipalityDetailPage.climatePlan")}
           description={
-            municipality.climatePlanYear === "Saknar plan"
-              ? "Saknar klimatplan"
-              : `Antagen ${municipality.climatePlanYear}`
+            municipality.climatePlanYear === t("municipalityDetailPage.noPlan")
+              ? t("municipalityDetailPage.noClimatePlan")
+              : t("municipalityDetailPage.adopted", {
+                  year: municipality.climatePlanYear,
+                })
           }
           link={
-            municipality.climatePlanLink !== "Saknar plan"
+            municipality.climatePlanLink !== t("municipalityDetailPage.noPlan")
               ? municipality.climatePlanLink
               : undefined
           }
           descriptionClassName={
-            municipality.climatePlanYear === "Saknar plan"
+            municipality.climatePlanYear === t("municipalityDetailPage.noPlan")
               ? "text-pink-3"
               : "text-green-3"
           }
         />
         <MunicipalityLinkCard
-          title="Klimatkrav i upphandlingar"
+          title={t("municipalityDetailPage.procurementRequirements")}
           description={requirementsInProcurement}
           link={municipality.procurementLink || undefined}
           descriptionClassName={
@@ -134,26 +145,26 @@ export function MunicipalityDetailPage() {
       </div>
 
       <MunicipalitySection
-        title="Hållbar transport"
+        title={t("municipalityDetailPage.sustainableTransport")}
         items={[
           {
-            title: "Förändring i elbilsandel",
+            title: t("municipalityDetailPage.electricCarChange"),
             value: `${(municipality.electricCarChangePercent * 100).toFixed(
               1
             )}%`,
             valueClassName: "text-orange-2",
           },
           {
-            title: "Elbilar per laddpunkt",
+            title: t("municipalityDetailPage.electricCarsPerChargePoint"),
             value: municipality.electricVehiclePerChargePoints
               ? municipality.electricVehiclePerChargePoints.toFixed(1)
-              : "Inga laddpunkter",
+              : t("municipalityDetailPage.noChargePoints"),
             valueClassName: municipality.electricVehiclePerChargePoints
               ? "text-green-3"
               : "text-pink-3",
           },
           {
-            title: "Cykelmeter per capita",
+            title: t("municipalityDetailPage.bicycleMetrePerCapita"),
             value: municipality.bicycleMetrePerCapita.toFixed(1),
             valueClassName: "text-orange-2",
           },
