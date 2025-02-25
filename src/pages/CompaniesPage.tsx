@@ -277,6 +277,7 @@ export function CompaniesPage() {
       <PageHeader
         title="Företagsrapporter"
         description="Översikt över företagens klimatpåverkan och hållbarhetsarbete"
+        className="-ml-4"
       >
         <Input
           type="text"

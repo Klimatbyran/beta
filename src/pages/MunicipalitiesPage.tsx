@@ -38,7 +38,9 @@ export function MunicipalitiesPage() {
   if (error) {
     return (
       <div className="text-center py-24">
-        <h3 className="text-red-500 mb-4 text-xl">Det gick inte att hämta kommuninformation</h3>
+        <h3 className="text-red-500 mb-4 text-xl">
+          Det gick inte att hämta kommuninformation
+        </h3>
         <p className="text-grey">Försök igen senare</p>
       </div>
     );
@@ -49,6 +51,7 @@ export function MunicipalitiesPage() {
       <PageHeader
         title="Kommunrapporter"
         description="Översikt över kommunernas klimatpåverkan och hållbarhetsarbete"
+        className="-ml-4"
       >
         <div className="flex flex-col md:flex-row items-center gap-4 w-full flex-wrap">
           {/* Search Input */}
@@ -79,7 +82,10 @@ export function MunicipalitiesPage() {
           </Select>
 
           {/* Sorting Select */}
-          <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
+          <Select
+            value={sortBy}
+            onValueChange={(value) => setSortBy(value as SortOption)}
+          >
             <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
               <SelectValue placeholder="Sortera efter" />
             </SelectTrigger>
