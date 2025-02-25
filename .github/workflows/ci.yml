@@ -4,7 +4,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: klimatbyran/frontend # FIXME restore to ${{ github.repository }} as soon as repos are merged
 
 on:
   push:
@@ -83,4 +83,5 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ steps.imagename.outputs.lowercase  }}:${{ steps.package-version.outputs.current-version}}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version}}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
