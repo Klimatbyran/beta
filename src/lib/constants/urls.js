@@ -1,6 +1,8 @@
+const nodeEnv = process.env.NODE_ENV;
+
 export const API_BASE_URL =
-  process.env.NODE_ENV === "production"
+  nodeEnv === "production"
     ? "https://api.klimatkollen.se"
-    : process.env.NODE_ENV === "staging"
+    : nodeEnv === "staging"
     ? "https://stage.api.klimatkollen.se"
     : "http://localhost:3000";
