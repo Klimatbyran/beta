@@ -4,14 +4,8 @@ import { Text } from "@/components/ui/text";
 import { blogMetadata } from "../lib/blog/blogPostsList";
 import { isMobile } from "react-device-detect";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import { X } from "lucide-react";
+import { NewsletterPopover } from "@/components/NewsletterPopover";
 
 // Component for blog metadata (category, date, read time)
 function BlogMeta({
@@ -92,51 +86,8 @@ export function InsightsPage() {
         title="Insikter"
         description="Fördjupande analyser och rapporter om klimatomställningen i Sverige"
       >
-        {/* Newsletter Sign-Up Modal */}
-        <Popover open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
-          <PopoverTrigger asChild>
-            <Button className="bg-blue-5 text-white px-4 py-2 rounded-lg hover:bg-blue-6 transition">
-              Prenumerera på nyhetsbrev
-            </Button>
-          </PopoverTrigger>
-
-          <PopoverContent className="relative w-80 p-6 text-center bg-black-2 rounded-lg">
-            {/* Close Button */}
-            <button
-              className="absolute top-2 right-2 text-grey hover:text-white transition"
-              aria-label="Stäng"
-              onClick={() => setIsSignUpOpen(false)}
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Newsletter Content */}
-            <h2 className="text-2xl mb-4">Prenumerera på vårt nyhetsbrev</h2>
-            <p className="text-grey mb-6">
-              Med vårt nyhetsbrev får du uppdateringar om hur det går med
-              utsläppen och omställningen direkt i din mejl.
-            </p>
-            <input
-              type="email"
-              placeholder="Din e-postadress"
-              className="w-full p-2 mb-4 border border-gray-300 rounded"
-            />
-            <Button className="bg-blue-5 text-white w-full">Prenumerera</Button>
-            <p className="text-xs text-grey mt-2">
-              När du lämnat dina uppgifter kommer de att behandlas av
-              Klimatbyrån ideell förening som står bakom Klimatkollen. Du har
-              rätt till information om hur {" "}
-              <a
-                href="/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-white"
-              >
-                dina personuppgifter behandlas.
-              </a>
-            </p>
-          </PopoverContent>
-        </Popover>
+        {/* Newsletter Popover */}
+        <NewsletterPopover isOpen={isSignUpOpen} setIsOpen={setIsSignUpOpen} buttonText="Prenumerera på nyhetsbrev" />
       </PageHeader>
 
       {/* Featured Post */}

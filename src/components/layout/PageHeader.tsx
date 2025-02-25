@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useScreenSize } from "@/hooks/useScreenSize"; // Import your helper hook
 
 interface PageHeaderProps {
   title: string;
@@ -9,8 +10,10 @@ interface PageHeaderProps {
 }
 
 export function PageHeader({ title, description, children, className }: PageHeaderProps) {
+  const isMobile = useScreenSize();
+
   return (
-    <div className="sticky top-6 z-10">
+    <div className={cn(isMobile ? "relative" : "sticky top-6 z-10")}>
       {/* Full-Width Background Layer */}
       <div className="absolute inset-0 w-screen bg-black left-0 right-0 -z-10 h-full" />
 

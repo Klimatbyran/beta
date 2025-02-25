@@ -1,9 +1,6 @@
 import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
-import { teamMembers, boardMembers } from "@/lib/constants/about";
-import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
-import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 
 export function PrivacyPage() {

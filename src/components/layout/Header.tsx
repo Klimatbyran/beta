@@ -11,8 +11,16 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { NewsletterPopover } from "../NewsletterPopover";
 
-const NAV_LINKS = [
+interface NavLink {
+  label: string;
+  icon?: JSX.Element;
+  path: string;
+  sublinks?: { label: string; path: string; shortcut?: string }[];
+}
+
+const NAV_LINKS: NavLink[] = [
   {
     label: "Företag",
     icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
@@ -23,9 +31,18 @@ const NAV_LINKS = [
     icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
     path: "/municipalities",
   },
-  { path: "/about", label: "Om oss" },
-  { path: "/insights", label: "Insikter" },
-  { path: "/methodology", label: "Källor och metod" },
+  {
+    path: "/about",
+    label: "Om oss",
+  },
+  {
+    path: "/insights",
+    label: "Insikter",
+  },
+  {
+    path: "/methodology",
+    label: "Källor och metod",
+  },
 ];
 
 export function Header() {
@@ -33,6 +50,7 @@ export function Header() {
   const { scrollDirection, scrollY } = useScrollDirection();
   const isMinimized = scrollDirection === "down" && scrollY > 100;
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false); // Newsletter popover state
 
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
 
@@ -45,6 +63,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between py-0">
+        {/* Logo */}
         <Link
           to="/"
           className={cn(
@@ -55,6 +74,7 @@ export function Header() {
           Klimatkollen
         </Link>
 
+        {/* Mobile Menu Toggle */}
         <button
           className={cn(
             "md:hidden text-white transition-transform duration-300",
@@ -65,6 +85,8 @@ export function Header() {
         >
           {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
+
+        {/* Desktop Navigation */}
         <nav
           className={cn(
             "hidden md:flex items-center gap-8 transition-all",
@@ -125,9 +147,18 @@ export function Header() {
                 </Link>
               )
             )}
+            {/* Adjust Spacing of Newsletter Button Separately */}
+            <div className="ml-4">
+              <NewsletterPopover
+                isOpen={isSignUpOpen}
+                setIsOpen={setIsSignUpOpen}
+                buttonText="Nyhetsbrev"
+              />
+            </div>
           </Menubar>
         </nav>
 
+        {/* Mobile Fullscreen Menu */}
         {menuOpen && (
           <div className="fixed inset-0 w-full h-full z-100 flex p-8 mt-12">
             <div className="flex flex-col gap-6 text-lg">
