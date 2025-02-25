@@ -7,6 +7,7 @@ import {
 import { CompanyCard } from "./CompanyCard";
 import type { RankedCompany } from "@/types/company";
 import { SECTOR_NAMES, SECTOR_ORDER } from "@/lib/constants/sectors";
+import { useTranslation } from "react-i18next";
 
 interface SectionedCompanyListProps {
   companies: Omit<RankedCompany, "rankings" | "goals" | "initiatives">[];
@@ -17,6 +18,8 @@ export function SectionedCompanyList({
   companies,
   sortBy,
 }: SectionedCompanyListProps) {
+  const { t } = useTranslation();
+
   // Group companies by sector
   const companiesBySector = companies.reduce((acc, company) => {
     const sectorCode = company.industry?.industryGics?.sectorCode || "unknown";
@@ -29,8 +32,8 @@ export function SectionedCompanyList({
 
   // Sort sectors by predefined order
   const sortedSectors = Object.keys(companiesBySector).sort((a, b) => {
-    const indexA = SECTOR_ORDER.indexOf(a as typeof SECTOR_ORDER[number]);
-    const indexB = SECTOR_ORDER.indexOf(b as typeof SECTOR_ORDER[number]);
+    const indexA = SECTOR_ORDER.indexOf(a as (typeof SECTOR_ORDER)[number]);
+    const indexB = SECTOR_ORDER.indexOf(b as (typeof SECTOR_ORDER)[number]);
     if (indexA === -1) return 1;
     if (indexB === -1) return -1;
     return indexA - indexB;
@@ -82,7 +85,7 @@ export function SectionedCompanyList({
               <AccordionTrigger className="rounded-level-2 p-6 hover:no-underline hover:bg-black-2 data-[state=open]:hover:bg-black-2">
                 <div className="flex items-center gap-4">
                   <h2 className="text-2xl font-light">
-                    {SECTOR_NAMES[sectorCode] || "Övriga företag"}
+                    {t(SECTOR_NAMES[sectorCode]) || "Övriga företag"}
                   </h2>
                   <span className="text-grey">
                     {sectorCompanies.length} företag
@@ -97,9 +100,7 @@ export function SectionedCompanyList({
                       className="group overflow-hidden rounded-level-2"
                     >
                       <div className="transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(153,207,255,0.15)]">
-                        <CompanyCard
-                          {...company}
-                        />
+                        <CompanyCard {...company} />
                       </div>
                     </div>
                   ))}

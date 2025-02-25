@@ -18,6 +18,7 @@ import { getCategoryColor } from "@/lib/constants/emissions";
 import { SECTOR_NAMES } from "@/lib/constants/sectors";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
+import { useTranslation } from "react-i18next";
 
 type CompanyCardProps = Pick<
   RankedCompany,
@@ -37,6 +38,8 @@ export function CompanyCard({
   industry,
   reportingPeriods,
 }: CompanyCardProps) {
+  const { t } = useTranslation();
+
   const latestPeriod = reportingPeriods[0];
   const previousPeriod = reportingPeriods[1];
 
@@ -53,7 +56,7 @@ export function CompanyCard({
     : "N/A";
 
   const sectorName = industry?.industryGics?.sectorCode
-    ? SECTOR_NAMES[industry.industryGics.sectorCode]
+    ? t(SECTOR_NAMES[industry.industryGics.sectorCode])
     : "Okänd sektor";
 
   // Find the largest scope 3 category

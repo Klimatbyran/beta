@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 type ComparisonView = "emissions" | "reporting" | "scope3";
 
@@ -27,6 +28,7 @@ export function SectorComparison({
   className,
 }: SectorComparisonProps) {
   const [view, setView] = useState<ComparisonView>("emissions");
+  const { t } = useTranslation();
 
   // Sort companies by emissions reduction (best to worst)
   const sortedCompanies = [...sectorCompanies].sort(
@@ -60,7 +62,7 @@ export function SectorComparison({
   });
 
   const sectorCode = currentCompany.industry?.industryGics?.sectorCode;
-  const sectorName = sectorCode ? SECTOR_NAMES[sectorCode] : "Okänd sektor";
+  const sectorName = sectorCode ? t(SECTOR_NAMES[sectorCode]) : "Okänd sektor";
 
   if (!sectorCode) {
     return null;

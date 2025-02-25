@@ -58,6 +58,7 @@ function FilterPopover({
   setSortBy,
 }: FilterPopoverProps) {
   const { t } = useTranslation();
+
   return (
     <Popover open={filterOpen} onOpenChange={setFilterOpen}>
       <PopoverTrigger asChild>
@@ -223,7 +224,7 @@ export function CompaniesPage() {
             (term) =>
               company.name.toLowerCase().includes(term) ||
               (company.industry?.industryGics?.sectorCode &&
-                SECTOR_NAMES[company.industry.industryGics.sectorCode]
+                t(SECTOR_NAMES[company.industry.industryGics.sectorCode])
                   ?.toLowerCase()
                   .includes(term))
           );

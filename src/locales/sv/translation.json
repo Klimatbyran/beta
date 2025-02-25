@@ -219,5 +219,18 @@
     "electricCarsPerChargePoint": "Elbilar per laddpunkt",
     "noChargePoints": "Inga laddpunkter",
     "bicycleMetrePerCapita": "Cykelmeter per capita"
+  },
+  "sector": {
+    "energy": "Energi",
+    "materials": "Material",
+    "industrials": "Industri",
+    "consumerDiscretionary": "Sällanköpsvaror",
+    "consumerStaples": "Dagligvaror",
+    "healthCare": "Hälsovård",
+    "financials": "Finans",
+    "informationTechnology": "IT",
+    "communicationServices": "Kommunikation",
+    "utilities": "Kraftförsörjning",
+    "realEstate": "Fastigheter"
   }
 }
