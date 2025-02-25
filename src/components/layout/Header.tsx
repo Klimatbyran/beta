@@ -89,7 +89,7 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav
           className={cn(
-            "hidden md:flex items-center gap-8 transition-all",
+            "hidden md:flex items-center gap-8 transition-all ml-auto",
             isMinimized
               ? "scale-90 translate-y-[-6px]"
               : "scale-100 translate-y-0"
@@ -148,7 +148,7 @@ export function Header() {
               )
             )}
             {/* Adjust Spacing of Newsletter Button Separately */}
-            <div className="ml-4">
+            <div className="ml-6">
               <NewsletterPopover
                 isOpen={isSignUpOpen}
                 setIsOpen={setIsSignUpOpen}

@@ -26,7 +26,7 @@ export function NewsletterPopover({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button className="bg-blue-5 text-white px-4 py-2 rounded-lg hover:bg-blue-6 transition">
+        <Button className="bg-blue-5 text-white px-4 py-1 rounded-lg hover:bg-blue-6 transition">
           {buttonText}
         </Button>
       </PopoverTrigger>
