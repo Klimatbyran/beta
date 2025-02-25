@@ -4,6 +4,14 @@ import { Text } from "@/components/ui/text";
 import { blogMetadata } from "../lib/blog/blogPostsList";
 import { isMobile } from "react-device-detect";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { X } from "lucide-react";
 
 // Component for blog metadata (category, date, read time)
 function BlogMeta({
@@ -44,7 +52,7 @@ function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
       to={`/insights/${post.id}`}
       className="group bg-black-2 rounded-level-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
     >
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-36 overflow-hidden">
         <img
           src={post.image}
           alt={post.title}
@@ -58,7 +66,7 @@ function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
           readTime={post.readTime}
         />
         <Text
-          variant="h3"
+          variant="h4"
           className="group-hover:text-blue-2 transition-colors"
         >
           {post.title}
@@ -76,13 +84,60 @@ function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
 export function InsightsPage() {
   const featuredPost = isMobile ? undefined : blogMetadata[0];
   const otherPosts = isMobile ? blogMetadata.slice(0) : blogMetadata.slice(1);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-16">
       <PageHeader
         title="Insikter"
         description="Fördjupande analyser och rapporter om klimatomställningen i Sverige"
-      />
+      >
+        {/* Newsletter Sign-Up Modal */}
+        <Popover open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
+          <PopoverTrigger asChild>
+            <Button className="bg-blue-5 text-white px-4 py-2 rounded-lg hover:bg-blue-6 transition">
+              Prenumerera på nyhetsbrev
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent className="relative w-80 p-6 text-center bg-black-2 rounded-lg">
+            {/* Close Button */}
+            <button
+              className="absolute top-2 right-2 text-grey hover:text-white transition"
+              aria-label="Stäng"
+              onClick={() => setIsSignUpOpen(false)}
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Newsletter Content */}
+            <h2 className="text-2xl mb-4">Prenumerera på vårt nyhetsbrev</h2>
+            <p className="text-grey mb-6">
+              Med vårt nyhetsbrev får du uppdateringar om hur det går med
+              utsläppen och omställningen direkt i din mejl.
+            </p>
+            <input
+              type="email"
+              placeholder="Din e-postadress"
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+            <Button className="bg-blue-5 text-white w-full">Prenumerera</Button>
+            <p className="text-xs text-grey mt-2">
+              När du lämnat dina uppgifter kommer de att behandlas av
+              Klimatbyrån ideell förening som står bakom Klimatkollen. Du har
+              rätt till information om hur {" "}
+              <a
+                href="/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                dina personuppgifter behandlas.
+              </a>
+            </p>
+          </PopoverContent>
+        </Popover>
+      </PageHeader>
 
       {/* Featured Post */}
       {featuredPost && (
@@ -98,7 +153,7 @@ export function InsightsPage() {
                 alt={featuredPost.title}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black-3 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-16 space-y-4">
                 <BlogMeta
                   category={featuredPost.category}

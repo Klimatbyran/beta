@@ -40,7 +40,7 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2 md:py-0 bg-black-2 overflow-hidden",
-        isMinimized ? "h-9" : "h-10",
+        isMinimized ? "h-6" : "h-10",
         menuOpen && "h-full"
       )}
     >

@@ -73,7 +73,7 @@ export function PrivacyPage() {
         <Text variant="h4">Kontakt Oss</Text>
         <Text className="text-grey">
           Har du frågor eller önskemål kring hantering av dina personuppgifter,
-          vänligen kontakta os.
+          vänligen kontakta oss.
         </Text>
         <Text className="text-grey">
           If you have questions or requests about your personal data, please
