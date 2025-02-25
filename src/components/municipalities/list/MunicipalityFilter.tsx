@@ -9,8 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { regions } from "@/lib/constants/regions";
+import { useTranslation } from "react-i18next";
 
-interface MunicipalityFilterProps {
+interface municipalities.filterProps {
   selectedRegion: string;
   onRegionChange: (region: string) => void;
   searchQuery: string;
@@ -34,14 +35,16 @@ const sortOptions = [
   { value: "name", label: "Namn" },
 ] as const;
 
-export function MunicipalityFilter({
+export function municipalities.filter({
   selectedRegion,
   onRegionChange,
   searchQuery,
   onSearchChange,
   sortBy,
   onSortChange,
-}: MunicipalityFilterProps) {
+}: municipalities.filterProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -49,7 +52,7 @@ export function MunicipalityFilter({
           <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-grey w-4 h-4" />
           <Input
             type="text"
-            placeholder="Sök kommun (separera med komma)"
+            placeholder={t("municipalities.filter.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="pl-8 py-1 h-8 bg-black-1 border-none text-sm"
@@ -58,10 +61,12 @@ export function MunicipalityFilter({
 
         <Select value={selectedRegion} onValueChange={onRegionChange}>
           <SelectTrigger className="w-[200px] bg-black-1">
-            <SelectValue placeholder="Välj län" />
+            <SelectValue placeholder={t("municipalities.filter.selectRegion")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Alla län</SelectItem>
+            <SelectItem value="all">
+              {t("municipalities.filter.allRegions")}
+            </SelectItem>
             {Object.keys(regions).map((region) => (
               <SelectItem key={region} value={region}>
                 {region}
@@ -75,12 +80,12 @@ export function MunicipalityFilter({
           onValueChange={(value) => onSortChange(value as typeof sortBy)}
         >
           <SelectTrigger className="w-[200px] bg-black-1">
-            <SelectValue placeholder="Sortera efter" />
+            <SelectValue placeholder={t("municipalities.filter.sortBy")} />
           </SelectTrigger>
           <SelectContent>
             {sortOptions.map((option) => (
               <SelectItem key={option.value} value={option.value}>
-                {option.label}
+                {t(`municipalities.filter.sortOptions.${option.value}`)}
               </SelectItem>
             ))}
           </SelectContent>

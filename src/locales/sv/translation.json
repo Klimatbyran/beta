@@ -303,5 +303,21 @@
     "downstream": "Nedströms",
     "notReported": "Ej rapporterat",
     "biogenicEmissions": "Biogena utsläpp"
+  },
+  "municipalities": {
+    "filter": {
+      "searchPlaceholder": "Sök kommun (separera med komma)",
+      "selectRegion": "Välj län",
+      "allRegions": "Alla län",
+      "sortBy": "Sortera efter",
+      "sortOptions": {
+        "reduction": "Utsläppsminskning",
+        "emissions": "Totala utsläpp",
+        "climate_plan": "Klimatplan",
+        "bicycle": "Cykelvägar",
+        "charging": "Laddinfrastruktur",
+        "name": "Namn"
+      }
+    }
   }
 }
