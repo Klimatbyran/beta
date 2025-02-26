@@ -314,6 +314,23 @@
     "biogenicEmissions": "Biogena utsläpp"
   },
   "companies": {
+    "categories": {
+      "purchasedGoodsAndServices": "Inköpta varor & tjänster",
+      "capitalGoods": "Kapitalvaror",
+      "fuelAndEnergy": "Bränsle & energi",
+      "upstreamTransport": "Uppströms transport",
+      "waste": "Avfall",
+      "businessTravel": "Tjänsteresor",
+      "commuting": "Pendling",
+      "upstreamLeasing": "Uppströms leasing",
+      "downstreamTransport": "Nedströms transport",
+      "processing": "Bearbetning",
+      "use": "Användning",
+      "endOfLifeTreatment": "Slutbehandling",
+      "downstreamLeasing": "Nedströms leasing",
+      "franchises": "Franchiser",
+      "investments": "Investeringar"
+    },
     "card": {
       "noData": "Ingen data",
       "unknownSector": "Okänd sektor",
@@ -325,6 +342,19 @@
       "employees": "Anställda",
       "companyReport": "Företagsrapport",
       "missingReport": "Saknar report"
+    },
+    "dataView": {
+      "overview": "Översikt",
+      "scopes": "Scope 1-3",
+      "categories": "Scope 3-kategorier",
+      "selectView": "Välj visning"
+    },
+    "emissionsHistory": {
+      "noReportingPeriods": "Inga rapporteringsperioder tillgängliga",
+      "title": "Historiska utsläpp",
+      "tooltip": "Historiska utsläpp och trend mot 2030. Klicka på en punkt för att ta bort linjen från grafen. Hovra över punkten för att se värdena för rapporteringsperioden.",
+      "unit": "Ton CO₂e per år",
+      "totalEmissions": "Totala utsläpp"
     },
     "list": {
       "error": {
@@ -345,9 +375,59 @@
         "readAnnualReport": "Läs årsredovisning"
       }
     },
+    "overview": {
+      "unknownSector": "Okänd sektor",
+      "sector": "Sektor",
+      "selectYear": "Välj år",
+      "latestYear": "Senaste året",
+      "totalEmissions": "Totala utsläpp",
+      "tonsCO2e": "ton CO₂e",
+      "changeSinceLastYear": "Förändring sedan förra året",
+      "noData": "Ingen data",
+      "turnover": "Omsättning",
+      "employees": "Anställda",
+      "notReported": "Ej rapporterat",
+      "readAnnualReport": "Läs årsredovisning"
+    },
+    "realEstateScope3History": {
+      "title": "Historiska Scope 3-utsläpp per kategori",
+      "tooltip": "Utveckling av Scope 3-utsläpp över tid per kategori",
+      "tonsCO2e": "ton CO₂e",
+      "keyTrendsTitle": "Viktiga trender för fastighetssektorn",
+      "keyTrendsDescription": "Scope 3-utsläpp i fastighetssektorn domineras ofta av kategorierna 'Inköpta varor & tjänster' (1), 'Kapitalvaror' (2) och 'Energirelaterade aktiviteter' (3). Dessa kategorier inkluderar byggmaterial, renoveringar och energianvändning i fastigheter."
+    },
     "sectionedCompanyList": {
       "otherCompanies": "Övriga företag",
       "companies": "företag"
+    },
+    "scope3Chart": {
+      "category": "Kategori",
+      "tonsCO2e": "ton CO₂e",
+      "clickToFilter": "Klicka för att filtrera bort",
+      "resetAll": "Återställ alla",
+      "showingCategories": "Visar {shown} av {total} kategorier. Filtrerade kategorier:"
+    },
+    "scope3Data": {
+      "categories": "Scope 3-kategorier",
+      "selectYear": "Välj år",
+      "latestYear": "Senaste året",
+      "visualization": "Visualisering",
+      "data": "Data",
+      "historicalDevelopment": "Historisk utveckling"
+    },
+    "scopeReportingList": {
+      "category": "Kategori"
+    },
+    "sectorComparison": {
+      "sectorUnknown": "Okänd sektor",
+      "emissionsReduction": "Utsläppsminskning",
+      "reportingYears": "Rapporterade år",
+      "reportedCategories": "Rapporterade scope 3-kategorier",
+      "comparisonIn": "Jämförelse inom {{sectorName}}"
+    },
+    "tooltip": {
+      "noDataAvailable": "Ingen data tillgänglig",
+      "tonsCO2e": "ton CO₂e"
     }
   },
   "municipalities": {
