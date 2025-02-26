@@ -28,7 +28,6 @@ export function Header() {
 
   const LanguageButtons = ({ className }: { className?: string }) => (
     <div className={cn("flex items-center gap-4", className)}>
-      |
       <button
         onClick={() => changeLanguage("en")}
         className={cn(
@@ -47,7 +46,6 @@ export function Header() {
       >
         SV
       </button>
-      |
     </div>
   );
 
