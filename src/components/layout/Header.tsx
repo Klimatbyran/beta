@@ -3,6 +3,7 @@ import { Link, useLocation, matchPath } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Menubar,
   MenubarContent,
@@ -12,29 +13,30 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 
-const NAV_LINKS = [
-  {
-    label: "Företag",
-    icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
-    path: "/companies",
-  },
-  {
-    label: "Kommuner",
-    icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
-    path: "/municipalities",
-  },
-  { path: "/about", label: "Om oss" },
-  { path: "/insights", label: "Insikter" },
-  { path: "/methodology", label: "Källor och metod" },
-];
-
 export function Header() {
+  const { t } = useTranslation();
   const location = useLocation();
   const { scrollDirection, scrollY } = useScrollDirection();
   const isMinimized = scrollDirection === "down" && scrollY > 100;
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+
+  const NAV_LINKS = [
+    {
+      label: t("header.companies"),
+      icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
+      path: "/companies",
+    },
+    {
+      label: t("header.municipalities"),
+      icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
+      path: "/municipalities",
+    },
+    { path: "/about", label: t("header.about") },
+    { path: "/insights", label: t("header.insights") },
+    { path: "/methodology", label: t("header.methodology") },
+  ];
 
   return (
     <header

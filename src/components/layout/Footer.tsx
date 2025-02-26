@@ -1,14 +1,17 @@
 import { Github, Linkedin, Twitter, Disc as Discord, Copy } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-black-2 py-12 md:py-24">
       <div className="container mx-auto px-4 space-y-8 md:space-y-16">
         <div className="space-y-2 md:space-y-4">
           <Text variant="body" className="text-sm text-grey md:text-base">
-            Kontakta oss
+            {t("footer.contactUs")}
           </Text>
           <div className="flex flex-col md:flex-row md:items-center align-left gap-2 md:gap-4">
             <Text variant="display" className="text-3xl md:text-5xl">
@@ -23,7 +26,7 @@ export function Footer() {
               }}
             >
               <Copy className="w-4 h-4" />
-              Kopiera
+              {t("footer.copy")}
             </Button>
           </div>
         </div>
@@ -71,19 +74,18 @@ export function Footer() {
           variant="body"
           className="text-sm md:text-base max-w-full md:max-w-2xl"
         >
-          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata
-          och är utvecklad med öppen källkod.
+          {t("footer.description")}
         </Text>
 
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 text-grey">
           <a href="/privacy" className="hover:text-white transition-colors">
-            Privacy & Terms
+            {t("footer.privacyTerms")}
           </a>
           <a href="/license" className="hover:text-white transition-colors">
-            International license
+            {t("footer.internationalLicense")}
           </a>
           <a href="/cc" className="hover:text-white transition-colors">
-            CC BY-SA - Attribution-ShareAlike 4.0
+            {t("footer.ccBySa")}
           </a>
         </div>
       </div>

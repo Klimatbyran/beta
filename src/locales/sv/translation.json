@@ -1,11 +1,20 @@
 {
   "header": {
-    "home": "Hem",
-    "about": "Om",
-    "contact": "Kontakt"
+    "companies": "Företag",
+    "municipalities": "Kommuner",
+    "about": "Om oss",
+    "insights": "Insikter",
+    "methodology": "Källor och metod",
+    "openMenu": "Öppna meny",
+    "closeMenu": "Stäng meny"
   },
   "footer": {
-    "contact": "Kontakta oss på {{email}}"
+    "contactUs": "Kontakta oss",
+    "copy": "Kopiera",
+    "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen källkod.",
+    "privacyTerms": "Privacy & Terms",
+    "internationalLicense": "International license",
+    "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
   },
   "landingPage": {
     "tabs": {
