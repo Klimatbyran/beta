@@ -85,16 +85,18 @@ export function SectionedCompanyList({
               <AccordionTrigger className="rounded-level-2 p-6 hover:no-underline hover:bg-black-2 data-[state=open]:hover:bg-black-2">
                 <div className="flex items-center gap-4">
                   <h2 className="text-2xl font-light">
-                    {t(SECTOR_NAMES[sectorCode]) || "Övriga företag"}
+                    {t(SECTOR_NAMES[sectorCode]) ||
+                      t("sectionedCompanyList.otherCompanies")}
                   </h2>
                   <span className="text-grey">
-                    {sectorCompanies.length} företag
+                    {sectorCompanies.length}{" "}
+                    {t("sectionedCompanyList.companies")}
                   </span>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pt-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {sectorCompanies.map((company, index) => (
+                  {sectorCompanies.map((company) => (
                     <div
                       key={company.wikidataId}
                       className="group overflow-hidden rounded-level-2"

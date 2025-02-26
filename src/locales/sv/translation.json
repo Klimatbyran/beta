@@ -313,6 +313,12 @@
     "notReported": "Ej rapporterat",
     "biogenicEmissions": "Biogena utsläpp"
   },
+  "companies": {
+    "sectionedCompanyList": {
+      "otherCompanies": "Övriga företag",
+      "companies": "företag"
+    }
+  },
   "municipalities": {
     "card": {
       "meetsParis": "Håller {{name}} Parisavtalet?",
