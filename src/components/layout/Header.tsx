@@ -11,6 +11,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { NewsletterPopover } from "../NewsletterPopover";
+import { useScreenSize } from "@/hooks/useScreenSize";
 
 interface NavLink {
   label: string;
@@ -32,10 +33,11 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+  const isMobile = useScreenSize();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black-2 h-14">
-      <div className="container mx-auto px-4 flex items-center justify-between">
+    <header className={cn("fixed top-0 left-0 right-0 z-50 bg-black-2", isMobile ? "h-10" : "h-14")}>
+      <div className="container mx-auto px-4 flex items-center justify-between pt-2 md:pt-0">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 text-base font-medium">
           Klimatkollen
