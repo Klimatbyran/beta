@@ -321,6 +321,17 @@
       "noPlan": "Saknar plan",
       "adopted": "Antagen {{year}}"
     },
+    "graph": {
+      "noData": "Inga data tillgängliga",
+      "gap": "Gap",
+      "historical": "Historiskt",
+      "trend": "Trend",
+      "parisAgreement": "Parisavtalet",
+      "paris": "Parisavtalet",
+      "unit": "ton CO₂e",
+      "total": "Totalt",
+      "year": "År"
+    },
     "filter": {
       "searchPlaceholder": "Sök kommun (separera med komma)",
       "selectRegion": "Välj län",
