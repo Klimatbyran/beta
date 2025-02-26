@@ -305,6 +305,22 @@
     "biogenicEmissions": "Biogena utsläpp"
   },
   "municipalities": {
+    "card": {
+      "meetsParis": "Håller {{name}} Parisavtalet?",
+      "yes": "Ja",
+      "no": "Nej",
+      "netZero": "Kommunen når nollutsläpp",
+      "budgetRunsOut": "Koldioxidbudgeten tar slut",
+      "emissionRanking": "UTSLÄPPSRANKING",
+      "emission": "Utsläpp {{year}}",
+      "emissionInfo": "Kommunens utsläpp av CO₂e för år {year}.",
+      "kTCO2": "tCO₂e",
+      "changeRate": "Förändringstakt",
+      "changeRateInfo": "Förändringstakt för utsläppen sedan Parisavtalet tecknades 2015.",
+      "climatePlan": "Klimatplan",
+      "noPlan": "Saknar plan",
+      "adopted": "Antagen {{year}}"
+    },
     "filter": {
       "searchPlaceholder": "Sök kommun (separera med komma)",
       "selectRegion": "Välj län",

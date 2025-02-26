@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, FileText, Info, TrendingDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import type { Municipality } from "@/types/municipality";
@@ -15,6 +16,7 @@ interface MunicipalityCardProps {
 }
 
 export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
+  const { t } = useTranslation();
   const meetsParis = municipality.budgetRunsOut === "Håller budget";
 
   const lastYearEmission = municipality.approximatedHistoricalEmission.at(-1);
@@ -26,7 +28,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
   const emissionsChange = municipality.historicalEmissionChangePercent;
 
   const noClimatePlan =
-    municipality.climatePlanLink === "Saknar plan" ||
+    municipality.climatePlanLink === t("municipality.card.noPlan") ||
     municipality.climatePlanLink === undefined;
 
   return (
@@ -51,7 +53,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
 
       <div className="space-y-2">
         <div className="text-sm text-grey">
-          Håller {municipality.name} Parisavtalet?
+          {t("municipalities.card.meetsParis", { name: municipality.name })}
         </div>
         <div
           className={cn(
@@ -62,14 +64,14 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
           {meetsParis ? "Ja" : "Nej"}
           {meetsParis ? (
             <div className="flex items-center text-sm text-grey mt-2">
-              Kommunen når nollutsläpp
+              {t("municipalities.card.netZero")}
               <Text variant="body" className="text-green-3 ml-1">
                 {municipality.hitNetZero.toString()}
               </Text>
             </div>
           ) : (
             <div className="flex items-center text-sm text-grey mt-2">
-              Koldioxidbudgeten tar slut
+              {t("municipalities.card.budgetRunsOut")}
               <Text variant="body" className="text-pink-3 ml-1">
                 {municipality.budgetRunsOut.toString()}
               </Text>
@@ -82,14 +84,16 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-grey mb-2 text-lg">
             <TrendingDown className="w-4 h-4" />
-            <span>Utsläpp {lastYear}</span>
+            <span>{t("municipalities.card.emission", { year: lastYear })}</span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="w-4 h-4" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Kommunens utsläpp av CO₂e för år {lastYear}.</p>
+                  <p>
+                    {t("municipalities.card.emissionInfo", { year: lastYear })}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -98,27 +102,28 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
             {lastYearEmissionsKtons ? (
               <span className="text-orange-3">
                 {lastYearEmissionsKtons}
-                <span className="text-lg text-grey ml-1">tCO₂e</span>
+                <span className="text-lg text-grey ml-1">
+                  {t("municipalities.card.kTCO2")}
+                </span>
               </span>
             ) : (
-              <span className="text-grey">Ingen data</span>
+              <span className="text-grey">
+                {t("municipalities.card.noData")}
+              </span>
             )}
           </div>
         </div>
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-grey mb-2 text-lg">
             <TrendingDown className="w-4 h-4" />
-            <span>Förändringstakt</span>
+            <span>{t("municipalities.card.changeRate")}</span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="w-4 h-4" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>
-                    Förändringstakt för utsläppen sedan Parisavtalet tecknades
-                    2015.
-                  </p>
+                  <p>{t("municipalities.card.changeRateInfo")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -130,7 +135,9 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
                 {Math.ceil(emissionsChange).toLocaleString("sv-SE")}%
               </span>
             ) : (
-              <span className="text-grey">Ingen data</span>
+              <span className="text-grey">
+                {t("municipalities.card.noData")}
+              </span>
             )}
           </div>
         </div>
@@ -154,7 +161,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
               className="flex items-center gap-2 text-white mb-2"
             >
               <FileText className="w-6 h-6 text-white" />
-              <span>Klimatplan</span>
+              <span>{t("municipalities.card.climatePlan")}</span>
             </Text>
             <Text
               variant="body"
@@ -162,7 +169,9 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
             >
               {noClimatePlan
                 ? "Saknar plan"
-                : `Antagen ${municipality.climatePlanYear}`}
+                : t("municipalities.card.adopted", {
+                    year: municipality.climatePlanYear,
+                  })}
             </Text>
           </div>
           {municipality.climatePlanLink &&
