@@ -167,10 +167,13 @@ export function LandingPage() {
         </div>
       </div>
 
-      <div className="pb-8 md:pb-16">
+      <div
+        className="pb-8 md:pb-16"
+        onClick={() => console.log(process.env.NODE_ENV)}
+      >
         <div className="container mx-auto">
           <ContentBlock
-            title="Vilka är vi ?"
+            title="Vilka är vi?"
             content="Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och bygger stöd för minskade utsläpp enligt Parisavtalet. Vi tror på kraften i enkel och tilltalande datavisualisering för att öka kunskapen och engagemanget kring klimatdebatten."
           />
         </div>
