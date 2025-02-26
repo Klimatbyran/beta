@@ -3,6 +3,7 @@ import { MunicipalityCard } from "./MunicipalityCard";
 import type { Municipality } from "@/types/municipality";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 import {
   Select,
   SelectContent,
@@ -17,14 +18,15 @@ interface MunicipalityListProps {
 }
 
 export function MunicipalityList({ municipalities }: MunicipalityListProps) {
+  const { t } = useTranslation();
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<"meets_paris" | "name">("meets_paris");
   const [sortDirection, setSortDirection] = useState<"best" | "worst">("best");
 
   const sortOptions = [
-    { value: "meets_paris", label: "Möter Parisavtalet" },
-    { value: "name", label: "Namn" },
+    { value: "meets_paris", label: t("municipalities.list.sort.meetsParis") },
+    { value: "name", label: t("municipalities.list.sort.name") },
   ];
 
   const filteredMunicipalities = municipalities.filter((municipality) => {
@@ -39,12 +41,9 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
         .map((term) => term.trim())
         .filter((term) => term.length > 0);
 
-      return searchTerms.some((term) => {
-        if (term.endsWith(",")) {
-          return municipality.name.toLowerCase() === term.slice(0, -1);
-        }
-        return municipality.name.toLowerCase().startsWith(term);
-      });
+      return searchTerms.some((term) =>
+        municipality.name.toLowerCase().startsWith(term)
+      );
     }
 
     return true;
@@ -66,7 +65,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
         if (aMeetsParis) {
           return -1 * directionMultiplier;
         }
-        if (b.budgetRunsOut === "Håller budget") {
+        if (bMeetsParis) {
           return 1 * directionMultiplier;
         }
         return (
@@ -90,7 +89,7 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-grey w-4 h-4" />
             <Input
               type="text"
-              placeholder="Sök kommun (separera med komma)"
+              placeholder={t("municipalities.list.search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-8 py-1 h-10 bg-black-1 border-none text-sm w-full"
@@ -99,10 +98,14 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
 
           <Select value={selectedRegion} onValueChange={setSelectedRegion}>
             <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
-              <SelectValue placeholder="Välj län" />
+              <SelectValue
+                placeholder={t("municipalities.list.selectRegion")}
+              />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Alla län</SelectItem>
+              <SelectItem value="all">
+                {t("municipalities.list.allRegions")}
+              </SelectItem>
               {Object.keys(regions).map((region) => (
                 <SelectItem key={region} value={region}>
                   {region}
@@ -116,7 +119,9 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             onValueChange={(value) => setSortBy(value as typeof sortBy)}
           >
             <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
-              <SelectValue placeholder="Sortera efter" />
+              <SelectValue
+                placeholder={t("municipalities.list.sort.placeholder")}
+              />
             </SelectTrigger>
             <SelectContent>
               {sortOptions.map((option) => (
@@ -134,12 +139,16 @@ export function MunicipalityList({ municipalities }: MunicipalityListProps) {
             className="px-4 py-2 bg-gray-700 text-white text-sm rounded w-full md:w-[150px] h-10"
           >
             {sortBy === "name"
-              ? sortDirection === "best"
-                ? "A-Ö"
-                : "Ö-A"
-              : sortDirection === "best"
-              ? "Visar bäst först"
-              : "Visar sämst först"}
+              ? t(
+                  sortDirection === "best"
+                    ? "municipalities.list.sort.aToZ"
+                    : "municipalities.list.sort.zToA"
+                )
+              : t(
+                  sortDirection === "best"
+                    ? "municipalities.list.sort.bestFirst"
+                    : "municipalities.list.sort.worstFirst"
+                )}
           </button>
         </div>
       </div>

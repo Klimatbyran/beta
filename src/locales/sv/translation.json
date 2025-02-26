@@ -334,6 +334,20 @@
         "charging": "Laddinfrastruktur",
         "name": "Namn"
       }
+    },
+    "list": {
+      "search": "Sök kommun (separera med komma)",
+      "selectRegion": "Välj län",
+      "allRegions": "Alla län",
+      "sort": {
+        "placeholder": "Sortera efter",
+        "meetsParis": "Möter Parisavtalet",
+        "name": "Namn",
+        "aToZ": "A-Ö",
+        "zToA": "Ö-A",
+        "bestFirst": "Visar bäst först",
+        "worstFirst": "Visar sämst först"
+      }
     }
   }
 }
