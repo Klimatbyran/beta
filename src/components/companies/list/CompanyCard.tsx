@@ -53,11 +53,11 @@ export function CompanyCard({
   const employeeCount = latestPeriod?.economy?.employees?.value;
   const formattedEmployeeCount = employeeCount
     ? employeeCount.toLocaleString()
-    : t("company.noData");
+    : t("companies.card.noData");
 
   const sectorName = industry?.industryGics?.sectorCode
     ? t(SECTOR_NAMES[industry.industryGics.sectorCode])
-    : t("company.unknownSector");
+    : t("companies.card.unknownSector");
 
   // Find the largest scope 3 category
   const scope3Categories = latestPeriod?.emissions?.scope3?.categories || [];
@@ -132,14 +132,14 @@ export function CompanyCard({
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
-              <span>{t("company.emissions")}</span>
+              {t("companies.card.emissions")}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info className="w-4 h-4" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{t("company.totalEmissionsInfo")}</p>
+                    <p>{t("companies.card.totalEmissionsInfo")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -151,21 +151,21 @@ export function CompanyCard({
                   <span className="text-lg text-grey ml-1">tCO₂e</span>
                 </span>
               ) : (
-                <span className="text-grey">{t("company.noData")}</span>
+                <span className="text-grey">{t("companies.card.noData")}</span>
               )}
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
-              <span>{t("company.emissionsChangeRate")}</span>
+              <span>{t("companies.card.emissionsChangeRate")}</span>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info className="w-4 h-4" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{t("company.emissionsChangeRateInfo")}</p>
+                    <p>{t("companies.card.emissionsChangeRateInfo")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -181,7 +181,7 @@ export function CompanyCard({
                   {Math.ceil(emissionsChange).toLocaleString("sv-SE")}%
                 </span>
               ) : (
-                <span className="text-grey">{t("company.noData")}</span>
+                <span className="text-grey">{t("companies.card.noData")}</span>
               )}
             </div>
           </div>
@@ -194,12 +194,12 @@ export function CompanyCard({
                 className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
                 <Wallet className="w-4 h-4" />
-                <span>{t("company.turnover")}</span>
+                <span>{t("companies.card.turnover")}</span>
               </Text>
               <Text variant="h6">
                 {latestPeriod.economy.turnover.value
                   ? (latestPeriod.economy.turnover.value / 1e9).toFixed(1)
-                  : t("company.noData")}{" "}
+                  : t("companies.card.noData")}{" "}
                 mdr
                 <span className="text-lg text-grey ml-1">
                   {latestPeriod.economy.turnover.currency}
@@ -214,7 +214,7 @@ export function CompanyCard({
                 className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
                 <Users className="w-4 h-4" />{" "}
-                <span>{t("company.employees")}</span>
+                <span>{t("companies.card.employees")}</span>
               </Text>
               <Text variant="h6">{formattedEmployeeCount}</Text>
             </div>
@@ -235,11 +235,11 @@ export function CompanyCard({
                   className="flex items-center gap-2 text-white mb-2"
                 >
                   <FileText className="w-6 h-6 text-white" />
-                  <span>{t("company.companyReport")}</span>
+                  <span>{t("companies.card.companyReport")}</span>
                 </Text>
                 <Text variant="body" className=" text-grey">
                   {latestPeriod.reportURL === "Saknar report"
-                    ? t("company.missingReport")
+                    ? t("companies.card.missingReport")
                     : ``}
                 </Text>
               </div>

@@ -1,10 +1,13 @@
 {
+  "yes": "Ja",
+  "no": "Nej",
   "header": {
     "companies": "Företag",
     "municipalities": "Kommuner",
     "about": "Om oss",
     "insights": "Insikter",
     "methodology": "Källor och metod",
+    "newsletter": "Nyhetsbrev",
     "openMenu": "Öppna meny",
     "closeMenu": "Stäng meny"
   },
@@ -22,17 +25,17 @@
       "municipalities": "Kommuner"
     },
     "typewriter": {
-      "company": [
-        "minska utsläppen",
-        "scope 3-utsläppen",
-        "klara Parisavtalets"
-      ],
-      "municipality": [
-        "att minska utsläppen",
-        "att klara Parisavtalet",
-        "klimatåtgärderna",
-        "klimatplanerna"
-      ]
+      "company": {
+        "reduceEmissions": "att minska utsläppen",
+        "scope3Emissions": "scope 3-utsläppen",
+        "meetParisAgreement": "att klara Parisavtalet"
+      },
+      "municipality": {
+        "reduceEmissions": "att minska utsläppen",
+        "meetParisAgreement": "att klara Parisavtalet",
+        "climateActions": "klimatåtgärderna",
+        "climatePlans": "klimatplanerna"
+      }
     },
     "title": "Hur går det med",
     "seeResults": "Se resultat",
@@ -94,6 +97,13 @@
       "utslappsberakningText": "Beräkning av hur utsläppen skulle minska eller öka med partiernas politik"
     }
   },
+  "insightsPage": {
+    "title": "Insikter",
+    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige",
+    "newsletter": "Prenumerera på nyhetsbrev",
+    "readMore": "Läs mer",
+    "subscribeNewsletter": "Prenumerera på nyhetsbrev"
+  },
   "blogDetailPage": {
     "loading": "Laddar...",
     "postNotFound": "Inlägg hittades inte",
@@ -108,6 +118,12 @@
     "sortBy": "Sortera efter",
     "searchInFilter": "Sök i filter...",
     "noFiltersFound": "Inga filter hittades.",
+    "sortingOptions": {
+      "emissionsChange": "utsläppsförändring",
+      "totalEmissions": "Totala utsläpp",
+      "scope3Coverage": "Scope 3-utsläpp",
+      "name": "Namn"
+    },
     "sector": "Sektor",
     "errorTitle": "Det gick inte att hämta företagsinformation",
     "errorDescription": "Försök igen senare",
@@ -213,10 +229,10 @@
   "municipalitiesPage": {
     "errorTitle": "Det gick inte att hämta kommuninformation",
     "errorDescription": "Försök igen senare",
-    "title": "Kommunrapporter",
-    "description": "Översikt över kommunernas klimatpåverkan och hållbarhetsarbete",
+    "title": "Jämförelse kommuner",
+    "description": "Översikt över utsläpp och omställning i kommunerna",
     "filter": {
-      "searchPlaceholder": "Sök kommun (separera med komma)",
+      "searchPlaceholder": "Sök kommun (flera: separera med komma)",
       "selectRegion": "Välj län",
       "allRegions": "Alla län",
       "sortBy": "Sortera efter",
@@ -235,8 +251,8 @@
       "name": "Namn",
       "aToZ": "A-Ö",
       "zToA": "Ö-A",
-      "bestFirst": "Visar bäst först",
-      "worstFirst": "Visar sämst först"
+      "bestFirst": "Visa bäst först",
+      "worstFirst": "Visa sämst först"
     }
   },
   "municipalityDetailPage": {
@@ -244,9 +260,9 @@
     "error": "Fel vid inläsning av data",
     "noData": "Ingen data tillgänglig",
     "procurementScore": {
-      "high": "Kommunen ställer klimatkrav i upphandlingar",
-      "medium": "Kommunen ställer kanske klimatkrav i upphandlingar",
-      "low": "Kommunen ställer inte klimatkrav i upphandlingar"
+      "high": "Ja",
+      "medium": "Kanske",
+      "low": "Nej"
     },
     "totalEmissions": "Totala utsläpp {{year}}",
     "thousandTons": " tusen ton CO₂",
@@ -266,10 +282,10 @@
     "adopted": "Antagen {{year}}",
     "procurementRequirements": "Klimatkrav i upphandlingar",
     "sustainableTransport": "Hållbar transport",
-    "electricCarChange": "Förändring i elbilsandel",
+    "electricCarChange": "Ökning av andel elbilar",
     "electricCarsPerChargePoint": "Elbilar per laddpunkt",
     "noChargePoints": "Inga laddpunkter",
-    "bicycleMetrePerCapita": "Cykelmeter per capita"
+    "bicycleMetrePerCapita": "Cykelvägsmeter per invånare"
   },
   "sector": {
     "energy": "Energi",
@@ -474,7 +490,7 @@
   },
   "municipalities": {
     "card": {
-      "meetsParis": "Håller {{name}} Parisavtalet?",
+      "meetsParis": "Är {{name}} på väg att klara Parisavtalet?",
       "yes": "Ja",
       "no": "Nej",
       "netZero": "Kommunen når nollutsläpp",

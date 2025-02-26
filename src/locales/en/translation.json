@@ -1,0 +1,520 @@
+{
+  "yes": "Yes",
+  "no": "No",
+  "header": {
+    "companies": "Companies",
+    "municipalities": "Municipalities",
+    "about": "About Us",
+    "insights": "Insights",
+    "methodology": "Sources and Method",
+    "newsletter": "Newsletter",
+    "openMenu": "Open Menu",
+    "closeMenu": "Close Menu"
+  },
+  "footer": {
+    "contactUs": "Contact Us",
+    "description": "Klimatkollen is a citizen platform that provides climate data and is developed with open <0>source code</0>.",
+    "privacyTerms": "Privacy & Terms",
+    "supporters": "Supporters and Partners",
+    "internationalLicense": "International License",
+    "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
+  },
+  "landingPage": {
+    "tabs": {
+      "companies": "Companies",
+      "municipalities": "Municipalities"
+    },
+    "typewriter": {
+      "company": {
+        "reduceEmissions": "reducing emissions",
+        "scope3Emissions": "scope 3 emissions",
+        "meetParisAgreement": "meet the Paris Agreement"
+      },
+      "municipality": {
+        "reduceEmissions": "reducing emissions",
+        "meetParisAgreement": "meeting the Paris Agreement",
+        "climateActions": "the climate action",
+        "climatePlans": "the climate plans"
+      }
+    },
+    "title": "How is it going with",
+    "seeResults": "See results",
+    "bestPerformers": "Who are the best?",
+    "bestMunicipalities": "Sweden's best municipalities",
+    "municipalitiesDescription": "Annual emission reduction since the Paris Agreement in 2015",
+    "bestCompanies": "Companies that have reduced emissions the most",
+    "companiesDescription": "Emission reduction between 2023 and 2024",
+    "aboutUsTitle": "Who are we?",
+    "aboutUsContent": "Klimatkollen is a citizen platform that provides climate data and builds support for reduced emissions in line with the Paris Agreement. We believe in the power of simple and engaging data visualization to increase knowledge and engagement around the climate debate.",
+    "tabName": {
+      "companies": "the companies",
+      "municipalities": "the municipalities"
+    }
+  },
+  "aboutPage": {
+    "header": {
+      "title": "About Us",
+      "description": "Klimatkollen is a citizen platform that provides climate data. Click on the headings to read more."
+    },
+    "mainContent": {
+      "title": "What is Klimatkollen?",
+      "paragraph1": "Klimatkollen is a citizen platform that helps citizens, businesses, and organizations keep track of the climate transition by collecting and visualizing climate data.",
+      "paragraph2": "We show how emissions are progressing compared to how they should be, making it understandable for the public, contributing to a fact-based debate, and strengthening the opinion for climate actions.",
+      "paragraph3": "Our vision is for decision-makers in politics and business to be influenced by an informed and growing public to take actions that reduce emissions in line with the Paris Agreement.",
+      "paragraph4": "Klimatkollen was launched in March 2022 and is operated by the non-profit association Klimatbyrån. The initiators are Ola Spännar and Frida Berry Eklund. We started with local climate data for Swedish municipalities. From 2024, climate data will also be shown for companies."
+    },
+    "teamSection": {
+      "title": "Our Team"
+    },
+    "boardSection": {
+      "title": "Our Board",
+      "links": {
+        "stadgar": "Here you can find our",
+        "stadgarLink": "statutes",
+        "uppforandekodLink": "code of conduct",
+        "and": "and",
+        "antikorruptionspolicyLink": "anti-corruption policy"
+      }
+    },
+    "financingSection": {
+      "title": "How We Are Funded",
+      "paragraph1": "In 2024 and 2025, Klimatkollen will receive financial backing from Google.org as one of two Swedish recipients of the Google.org Impact Challenge: Tech for Social Good.",
+      "paragraph2": "In 2023, Klimatkollen was supported by Postkodstiftelsen. The 2022 startup was financed by WWF Sweden, ClimateView, We Don't Have Time, and Argand Partners.",
+      "paragraph3": "Much of the work is voluntary, so we welcome more partners and financial support to scale up!",
+      "donate": "Please donate!",
+      "donateDescription": "Every krona gives us the strength to show more data.",
+      "bankgiro": "Bankgiro: 5793-3178"
+    },
+    "previousProjectsSection": {
+      "title": "Previous Projects",
+      "kommunprojektetTitle": "Municipality Project 2023",
+      "kommunprojektetDescription": "In 2023, Klimatkollen received support from Postkodstiftelsen to assess the progress of the climate transition in municipalities. In addition to emission data, we also show what municipalities are doing to reduce them by presenting statistics on selected key figures for various sub-transitions.",
+      "riksdagsvaletTitle": "Parliamentary Election 2022",
+      "riksdagsvaletDescription": "Before the 2022 parliamentary election, Klimatkollen was responsible for two unique projects:",
+      "klimatmalTitle": "Climate Goals",
+      "klimatmalText": "An analysis of the political parties' climate goals for Sweden",
+      "utslappsberakningTitle": "Emission Calculation",
+      "utslappsberakningText": "Calculation of how emissions would decrease or increase with the parties' policies"
+    }
+  },
+  "insightsPage": {
+    "title": "Insights",
+    "description": "Deep dives and reports on the climate transition in Sweden",
+    "newsletter": "Subscribe to newsletter",
+    "readMore": "Read more",
+    "subscribeNewsletter": "Subscribe to newsletter"
+  },
+  "blogDetailPage": {
+    "loading": "Loading...",
+    "postNotFound": "Post not found",
+    "back": "Back",
+    "share": "Share",
+    "linkCopied": "Link copied!",
+    "shareText": "Check out this blog post!",
+    "relatedArticles": "Related Articles"
+  },
+  "companiesPage": {
+    "filter": "Filter",
+    "sortBy": "Sort By",
+    "searchInFilter": "Search in filter...",
+    "noFiltersFound": "No filters found.",
+    "sortingOptions": {
+      "emissionsChange": "Emissions change",
+      "totalEmissions": "Total emissions",
+      "scope3Coverage": "Scope 3 coverage",
+      "name": "Name"
+    },
+    "sector": "Sector",
+    "errorTitle": "Failed to retrieve company information",
+    "errorDescription": "Please try again later",
+    "title": "Company Reports",
+    "description": "Overview of companies' climate impact and sustainability work",
+    "searchPlaceholder": "Search (separate with ,)",
+    "noCompaniesFound": "No companies found",
+    "tryDifferentCriteria": "Try different search criteria",
+    "sorting": "Sorting:",
+    "filtering": "Filtering:"
+  },
+  "companyDetailPage": {
+    "errorTitle": "Failed to retrieve company information",
+    "errorDescription": "Please try again later",
+    "notFoundTitle": "Company not found",
+    "notFoundDescription": "Check if the company ID is correct"
+  },
+  "methodsPage": {
+    "header": {
+      "title": "Sources and Method",
+      "description": "Our starting point is the Paris Agreement's 1.5°C target, and our data sources are public. Click on the headings to read more."
+    },
+    "accordion": {
+      "parisAgreement": {
+        "title": "Klimatkollen is based on the Paris Agreement",
+        "paragraph1": "The Paris Agreement is a legally binding international treaty between the world's countries aimed at limiting global warming to well below 2°C, with a target of 1.5°C.",
+        "paragraph2": "To meet this target, the world's countries must halve greenhouse gas emissions by 2030 compared to 1990 levels and reach near-zero emissions by 2050. Currently, emissions are <0>still increasing</0> globally.",
+        "paragraph3": "According to the Paris Agreement, wealthy countries must take greater responsibility, as their significant historical emissions mean they have already used much of the remaining carbon space needed to curb global warming. Sweden is among these countries, which should lead the way in reducing emissions and also help other more vulnerable countries transition.",
+        "link": {
+          "title": "Paris Agreement",
+          "text": "Read more about the Paris Agreement on the Swedish Environmental Protection Agency's website."
+        }
+      },
+      "sources": {
+        "title": "About Our Sources",
+        "paragraph1": "Klimatkollen is based on public sources and verified data. We provide all sources so you can easily check and read more. If something is wrong, feel free to email us at hej@klimatkollen.se so we can make corrections.",
+        "paragraph2": "Company data is taken from the companies' own annual reports and sustainability reports.",
+        "links": {
+          "smhi": {
+            "title": "National Emissions Database",
+            "text": "Greenhouse gas emissions in municipalities"
+          },
+          "skr": {
+            "title": "Swedish Association of Local Authorities and Regions",
+            "text": "Political leadership in municipalities"
+          },
+          "wikidata": {
+            "title": "Wikidata",
+            "text": "Municipal coats of arms and population numbers"
+          },
+          "trafikanalys": {
+            "title": "Traffic Analysis",
+            "text": "Percentage of electric vehicles"
+          },
+          "nvdb": {
+            "title": "National Road Database",
+            "text": "Cycling paths per municipality"
+          },
+          "sei": {
+            "title": "Stockholm Environment Institute",
+            "text": "Household consumption-based emissions"
+          },
+          "powerCircles": {
+            "title": "Power Circles database ELIS",
+            "text": "Charging infrastructure data from the industry organization"
+          },
+          "klimatplaner": {
+            "title": "Climate Plans",
+            "text": "Collected by members of Klimatklubben and the Swedish Society for Nature Conservation"
+          },
+          "upphandlingsmyndigheten": {
+            "title": "Procurement Authority",
+            "text": "Information on climate requirements in municipal procurements"
+          },
+          "greenpeace": {
+            "title": "Greenpeace",
+            "text": "Mapping of climate requirements in public procurement"
+          }
+        }
+      },
+      "co2Budgets": {
+        "title": "About Carbon Budgets",
+        "paragraph1": "A carbon budget indicates how much carbon dioxide can be released before the atmospheric CO2 level becomes high enough to exceed the 1.5°C target of the Paris Agreement.",
+        "paragraph2": "According to a <0>calculation</0> by researchers at Uppsala University and the Tyndall Centre in the UK, there are approximately 340 gigatons of CO2 left globally as of 2024, for a 50% chance of keeping the temperature increase under 1.5°C. At the current rate of emissions, the global budget will run out in about eight years.",
+        "paragraph3": "Based on the global budget, the researchers have also calculated how a national carbon budget for a fair climate transition would look for Sweden.",
+        "paragraph4": "The calculation shows that from January 2024, Sweden has a national carbon space of 80 million tons to align with the 1.5°C target. For an 83% chance of staying under a 2°C increase, the budget is 285 million tons. By comparison, Sweden's total greenhouse gas emissions in 2022 were 45.2 million tons.",
+        "paragraph5": "At Sweden's current emission rate, there are 1.8 years left of the 1.5°C budget and 6.4 years for 2°C. To align with 1.5°C, emissions in Sweden need to decrease by over 35% starting in 2024, or by 13.5% for 2°C.",
+        "paragraph6": "Klimatkollen has allocated the new national carbon budget (80 million tons, which also includes international aviation and shipping) to the country's municipalities using the same allocation method used to break down the global budget nationally.",
+        "paragraph7": "The local carbon budgets allow for comparisons of how emissions are progressing with how they should progress. Klimatkollen displays carbon budgets for municipalities both in numbers and as a development curve showing how emissions need to decrease to align with the Paris Agreement.",
+        "paragraph8": "In addition to the so-called Tyndall model that Klimatkollen uses, there are other ways to calculate a national carbon budget, for example, see Chalmers <0>here</0>."
+      },
+      "emissionTypes": {
+        "title": "About Different Types of Emissions",
+        "paragraph1": "Klimatkollen is an independent fact platform that follows the general and established standards for how emissions are reported. The climate data we present reflects the delimitations based on how the carbon budget is calculated. For example, it is not possible to directly link carbon budgets to all greenhouse gas emissions, where methane, nitrous oxide, water vapor, and others are also included.",
+        "paragraph2": "Emissions from cement production are excluded in the IPCC's global carbon budget and therefore also in the carbon budget for Sweden and in the emission statistics for the three municipalities Gotland, Skövde, and Mörbylånga, where cement production currently occurs or has occurred in the past.",
+        "paragraph3": "Sweden also has a high climate impact from goods we import from other countries, causing emissions in other parts of the world. These consumption-based emissions are not included in the carbon budget.",
+        "paragraph4": "Nor are emissions from forests and land (so-called biogenic emissions) included in the carbon budget.",
+        "paragraph5": "In fact, the climate-impacting emissions are much larger than the territorial fossil carbon emissions usually reported by authorities and in the media, which are currently displayed on Klimatkollen.",
+        "paragraph6": "Klimatkollen is now investigating how other greenhouse gas emissions could be displayed on the website in the future, while keeping the possibility of comparing current emissions with carbon budgets."
+      }
+    }
+  },
+  "municipalitiesPage": {
+    "errorTitle": "Failed to retrieve municipality information",
+    "errorDescription": "Please try again later",
+    "title": "Municipality Comparison",
+    "description": "Overview of emissions and transition in municipalities",
+    "filter": {
+      "searchPlaceholder": "Search municipality (multiple: separate with commas)",
+      "selectRegion": "Select region",
+      "allRegions": "All regions",
+      "sortBy": "Sort by",
+      "sortOptions": {
+        "reduction": "Emission Reduction",
+        "emissions": "Total Emissions",
+        "climate_plan": "Climate Plan",
+        "bicycle": "Cycling Paths",
+        "charging": "Charging Infrastructure",
+        "name": "Name"
+      }
+    },
+    "sort": {
+      "placeholder": "Sort by",
+      "meetsParis": "Meets the Paris Agreement",
+      "name": "Name",
+      "aToZ": "A-Z",
+      "zToA": "Z-A",
+      "bestFirst": "Show best first",
+      "worstFirst": "Show worst first"
+    }
+  },
+  "municipalityDetailPage": {
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "noData": "No data available",
+    "procurementScore": {
+      "high": "Yes",
+      "medium": "Maybe",
+      "low": "No"
+    },
+    "totalEmissions": "Total emissions {{year}}",
+    "thousandTons": " thousand tons CO₂",
+    "budgetRunsOut": "Carbon budget runs out",
+    "budgetHolds": "Budget holds",
+    "hitNetZero": "Hits net zero",
+    "never": "Never",
+    "emissionsDevelopment": "Emissions development",
+    "inThousandTons": "In thousand tons CO₂",
+    "futureEmissions": "Future emissions",
+    "annualChangeSince2015": "Annual emission change since 2015",
+    "reductionToMeetParis": "Emission reduction to meet the Paris Agreement",
+    "consumptionEmissionsPerCapita": "Consumption emissions per capita in tons CO₂",
+    "climatePlan": "Climate plan",
+    "noPlan": "No plan",
+    "noClimatePlan": "No climate plan",
+    "adopted": "Adopted {{year}}",
+    "procurementRequirements": "Climate requirements in procurements",
+    "sustainableTransport": "Sustainable transport",
+    "electricCarChange": "Increase in electric car share",
+    "electricCarsPerChargePoint": "Electric cars per charging point",
+    "noChargePoints": "No charging points",
+    "bicycleMetrePerCapita": "Bicycle path meters per capita"
+  },
+  "sector": {
+    "energy": "Energy",
+    "materials": "Materials",
+    "industrials": "Industrials",
+    "consumerDiscretionary": "Consumer Discretionary",
+    "consumerStaples": "Consumer Staples",
+    "healthCare": "Healthcare",
+    "financials": "Financials",
+    "informationTechnology": "Information Technology",
+    "communicationServices": "Communication",
+    "utilities": "Utilities",
+    "realEstate": "Real Estate"
+  },
+  "scope": {
+    "scope1": "Emissions from owned or controlled sources by the organization.",
+    "scope2": "Indirect emissions from the production of purchased electricity, steam, heat, and cooling consumed by the organization.",
+    "scope3": "Indirect emissions from the organization’s value chain.",
+    "biogenic": "Biogenic emissions are carbon dioxide emissions from non-fossil (i.e., renewable) sources, such as the combustion of biofuels or by-products in paper production. According to the GHG protocol, these emissions are reported separately from scope 1-3, as they are an active part of the carbon cycle."
+  },
+  "team": {
+    "ola": {
+      "role": "Co-founder",
+      "description": "Opinion leader, co-founder of Klimatkollen, former communications manager at the Centre Party, and client manager at Forsman & Bodenfors."
+    },
+    "frida": {
+      "role": "Co-founder",
+      "description": "Climate specialist and co-founder of Klimatkollen. Initiator of Our Kids' Climate and author of the book 'Talking to Children about Climate Change' (Natur & Kultur). EU Climate Pact Ambassador and Climate Reality Leader."
+    },
+    "elvira": {
+      "role": "Tech Lead",
+      "description": "Tech lead and technical physicist at Klimatkollen and Precisit. Extensive experience in green and circular tech at several award-winning startups and part of the leadership team at IT consultancy firm Precisit."
+    },
+    "christian": {
+      "role": "Tech Advisor",
+      "description": "Award-winning developer, digital entrepreneur, and one of Sweden's most influential figures in tech. Founder of the digital innovation agency Iteam and co-founder of Open School Platform. Speaker on AI and digital innovation, advisor to the government."
+    },
+    "hugo": {
+      "role": "Developer",
+      "description": "Entrepreneurial climate enthusiast with a strong interest in how AI and technology can help solve future challenges."
+    },
+    "kayla": {
+      "role": "Developer",
+      "description": "Frontend developer with a passion for sustainability and user-friendly digital solutions. Previously worked as an environmental consultant focused on interpreting regulations and calculating greenhouse gas emissions for companies."
+    }
+  },
+  "board": {
+    "ola": {
+      "role": "Chairman of the Board",
+      "description": "Opinion leader, co-founder of Klimatkollen, former communications manager at the Centre Party, and client manager at Forsman & Bodenfors."
+    },
+    "frida": {
+      "role": "Vice Chairman of the Board",
+      "description": "Climate specialist and co-founder of Klimatkollen. Initiator of Our Kids' Climate and author of the book 'Talking to Children about Climate Change' (Natur & Kultur). EU Climate Pact Ambassador and Climate Reality Leader."
+    },
+    "christian": {
+      "role": "Board Member",
+      "description": "Digital entrepreneur and one of Sweden's most influential figures in tech. CEO and founder of Iteam and Open School Platform."
+    },
+    "anna": {
+      "role": "Board Member",
+      "description": "Digital strategist and former head of social media at Spotify and H&M. CEO and founder of Better Odds."
+    },
+    "maria": {
+      "role": "Board Member",
+      "description": "Journalist, author, speaker, and founder of Klimatklubben. Named one of Sweden's 101 most influential sustainability figures in 2021."
+    },
+    "carlJohan": {
+      "role": "Board Member",
+      "description": "Sustainability strategist at Diamant & Schulz, previously at Doings and Forsman & Bodenfors, author of the book 'Sustainability Transformation', awarded Marketing Book of the Year 2022."
+    }
+  },
+  "emissionsBreakdown": {
+    "scope1": "Scope 1",
+    "scope2": "Scope 2",
+    "scope3": "Scope 3",
+    "title": "Emission Breakdown {{year}}",
+    "tooltip": "Breakdown of emissions by different scopes according to the GHG Protocol",
+    "unit": "tons CO₂e",
+    "scope3Categories": "Scope 3 Categories",
+    "upstream": "Upstream",
+    "downstream": "Downstream",
+    "notReported": "Not Reported",
+    "biogenicEmissions": "Biogenic Emissions"
+  },
+  "companies": {
+    "categories": {
+      "purchasedGoodsAndServices": "Purchased Goods & Services",
+      "capitalGoods": "Capital Goods",
+      "fuelAndEnergy": "Fuel & Energy",
+      "upstreamTransport": "Upstream Transport",
+      "waste": "Waste",
+      "businessTravel": "Business Travel",
+      "commuting": "Commuting",
+      "upstreamLeasing": "Upstream Leasing",
+      "downstreamTransport": "Downstream Transport",
+      "processing": "Processing",
+      "use": "Use",
+      "endOfLifeTreatment": "End-of-Life Treatment",
+      "downstreamLeasing": "Downstream Leasing",
+      "franchises": "Franchises",
+      "investments": "Investments"
+    },
+    "card": {
+      "noData": "No Data",
+      "unknownSector": "Unknown Sector",
+      "emissions": "Emissions",
+      "totalEmissionsInfo": "Total Emissions (Scope 1 & 2)",
+      "emissionsChangeRate": "Change Rate",
+      "emissionsChangeRateInfo": "Change rate of emissions compared to the previous reporting period.",
+      "turnover": "Turnover",
+      "employees": "Employees",
+      "companyReport": "Company Report",
+      "missingReport": "Missing Report"
+    },
+    "dataView": {
+      "overview": "Overview",
+      "scopes": "Scopes 1-3",
+      "categories": "Scope 3 Categories",
+      "selectView": "Select View"
+    },
+    "emissionsHistory": {
+      "noReportingPeriods": "No reporting periods available",
+      "title": "Historical Emissions",
+      "tooltip": "Historical emissions and trend towards 2030. Click on a point to remove the line from the graph. Hover over a point to see the values for the reporting period.",
+      "unit": "Tons CO₂e per year",
+      "totalEmissions": "Total Emissions"
+    },
+    "list": {
+      "error": {
+        "fetchingCompanyInfo": "Failed to fetch company information",
+        "tryAgainLater": "Please try again later"
+      },
+      "sort": {
+        "placeholder": "Sort by",
+        "emissions": "Emissions",
+        "turnover": "Turnover",
+        "employees": "Number of Employees",
+        "name": "Company Name"
+      },
+      "company": {
+        "turnover": "Turnover",
+        "employees": "Employees",
+        "emissions": "Emissions",
+        "readAnnualReport": "Read Annual Report"
+      }
+    },
+    "overview": {
+      "unknownSector": "Unknown Sector",
+      "sector": "Sector",
+      "selectYear": "Select Year",
+      "latestYear": "Latest Year",
+      "totalEmissions": "Total Emissions",
+      "tonsCO2e": "tons CO₂e",
+      "changeSinceLastYear": "Change Since Last Year",
+      "noData": "No Data",
+      "turnover": "Turnover",
+      "employees": "Employees",
+      "notReported": "Not Reported",
+      "readAnnualReport": "Read Annual Report"
+    },
+    "realEstateScope3History": {
+      "title": "Historical Scope 3 Emissions per Category",
+      "tooltip": "Development of Scope 3 emissions over time by category",
+      "tonsCO2e": "tons CO₂e",
+      "keyTrendsTitle": "Key Trends for the Real Estate Sector",
+      "keyTrendsDescription": "Scope 3 emissions in the real estate sector are often dominated by the categories 'Purchased Goods & Services' (1), 'Capital Goods' (2), and 'Energy-Related Activities' (3). These categories include construction materials, renovations, and energy use in buildings."
+    },
+    "sectionedCompanyList": {
+      "otherCompanies": "other Companies",
+      "companies": "companies"
+    },
+    "scope3Chart": {
+      "category": "Category",
+      "tonsCO2e": "tons CO₂e",
+      "clickToFilter": "Click to filter out",
+      "resetAll": "Reset All",
+      "showingCategories": "Showing {shown} of {total} categories. Filtered categories:"
+    },
+    "scope3Data": {
+      "categories": "Scope 3 Categories",
+      "selectYear": "Select Year",
+      "latestYear": "Latest Year",
+      "visualization": "Visualization",
+      "data": "Data",
+      "historicalDevelopment": "Historical Development"
+    },
+    "scopeReportingList": {
+      "category": "Category"
+    },
+    "sectorComparison": {
+      "sectorUnknown": "Unknown Sector",
+      "emissionsReduction": "Emissions Reduction",
+      "reportingYears": "Reported Years",
+      "reportedCategories": "Reported Scope 3 Categories",
+      "comparisonIn": "Comparison within {{sectorName}}"
+    },
+    "tooltip": {
+      "noDataAvailable": "No Data Available",
+      "tonsCO2e": "tons CO₂e"
+    }
+  },
+  "municipalities": {
+    "card": {
+      "meetsParis": "Is {{name}} on track to meet the Paris Agreement?",
+      "yes": "Yes",
+      "no": "No",
+      "netZero": "The municipality reaches net zero emissions",
+      "budgetRunsOut": "Carbon budget runs out",
+      "emissionRanking": "EMISSION RANKING",
+      "emission": "Emissions {{year}}",
+      "emissionInfo": "The municipality's CO₂e emissions for the year {year}.",
+      "kTCO2": "kT CO₂e",
+      "changeRate": "Change Rate",
+      "changeRateInfo": "Change rate of emissions since the Paris Agreement was signed in 2015.",
+      "climatePlan": "Climate Plan",
+      "noPlan": "No Plan",
+      "adopted": "Adopted {{year}}"
+    },
+    "graph": {
+      "noData": "No data available",
+      "gap": "Gap",
+      "historical": "Historical",
+      "trend": "Trend",
+      "parisAgreement": "Paris Agreement",
+      "paris": "Paris Agreement",
+      "unit": "tons CO₂e",
+      "total": "Total",
+      "year": "Year"
+    }
+  }
+}

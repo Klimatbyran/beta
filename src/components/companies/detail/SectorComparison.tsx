@@ -1,3 +1,5 @@
+// FIXME ADD TRANSLATIONS
+
 import { useState } from "react";
 import { Building2 } from "lucide-react";
 import { Text } from "@/components/ui/text";
@@ -168,7 +170,9 @@ export function SectorComparison({
     <div className={cn("bg-black-2 rounded-level-1 p-16", className)}>
       <div className="flex items-center justify-between mb-12">
         <div className="space-y-2">
-          <Text variant="h3">{t("companies.sect", { sectorName })}</Text>
+          <Text variant="h3">
+            {t("companies.sectorComparison.comparisonIn", { sectorName })}
+          </Text>
           <Text variant="body">
             Plats {currentCompanyRank} av {sectorCompanies.length} företag i
             sektorn

@@ -61,7 +61,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
             meetsParis ? "text-green-3" : "text-pink-3"
           )}
         >
-          {meetsParis ? "Ja" : "Nej"}
+          {meetsParis ? t("yes") : t("no")}
           {meetsParis ? (
             <div className="flex items-center text-sm text-grey mt-2">
               {t("municipalities.card.netZero")}

@@ -15,12 +15,41 @@ import { NewsletterPopover } from "../NewsletterPopover";
 import { useScreenSize } from "@/hooks/useScreenSize";
 
 export function Header() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
   const isMobile = useScreenSize();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const LanguageButtons = ({ className }: { className?: string }) => (
+    <div className={cn("flex items-center gap-4", className)}>
+      |
+      <button
+        onClick={() => changeLanguage("en")}
+        className={cn(
+          "text-sm font-medium",
+          i18n.language === "en" ? "text-white" : "text-grey"
+        )}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => changeLanguage("sv")}
+        className={cn(
+          "text-sm font-medium",
+          i18n.language === "sv" ? "text-white" : "text-grey"
+        )}
+      >
+        SV
+      </button>
+      |
+    </div>
+  );
 
   interface NavLink {
     label: string;
@@ -53,12 +82,10 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between pt-2 md:pt-0">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 text-base font-medium">
           Klimatkollen
         </Link>
 
-        {/* Mobile Menu Toggle */}
         <button
           className="md:hidden text-white"
           onClick={toggleMenu}
@@ -120,10 +147,11 @@ export function Header() {
               )
             )}
             <div className="ml-4 h-full flex items-center">
+              <LanguageButtons className={"hidden md:flex mx-4 "} />
               <NewsletterPopover
                 isOpen={isSignUpOpen}
                 setIsOpen={setIsSignUpOpen}
-                buttonText="Nyhetsbrev"
+                buttonText={t("header.newsletter")}
               />
             </div>
           </Menubar>
@@ -131,8 +159,9 @@ export function Header() {
 
         {/* Mobile Fullscreen Menu */}
         {menuOpen && (
-          <div className="fixed inset-0 w-full h-full z-100 flex p-8 mt-12">
+          <div className="fixed inset-0 w-full h-full z-100 flex p-8 mt-10 bg-black-2">
             <div className="flex flex-col gap-6 text-lg">
+              <LanguageButtons />
               {NAV_LINKS.map((link) => (
                 <div key={link.path} className="flex flex-col">
                   <Link

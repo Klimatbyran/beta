@@ -15,9 +15,17 @@ export function LandingPage() {
   const { companies } = useCompanies();
   const { getTopMunicipalities } = useMunicipalities();
 
-  const companyTypewriterTexts = [t("landingPage.typewriter.company")];
+  const companyTypewriterTexts = [
+    t("landingPage.typewriter.company.reduceEmissions"),
+    t("landingPage.typewriter.company.scope3Emissions"),
+    t("landingPage.typewriter.company.meetParisAgreement"),
+  ];
+
   const municipalityTypewriterTexts = [
-    t("landingPage.typewriter.municipality"),
+    t("landingPage.typewriter.municipality.reduceEmissions"),
+    t("landingPage.typewriter.municipality.meetParisAgreement"),
+    t("landingPage.typewriter.municipality.climateActions"),
+    t("landingPage.typewriter.municipality.climatePlans"),
   ];
 
   // Get top 5 companies by emissions reduction

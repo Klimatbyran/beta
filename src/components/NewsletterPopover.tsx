@@ -1,3 +1,5 @@
+// FIXME ADD TRANSLATIONS
+
 import { useState } from "react";
 import {
   Popover,

@@ -86,11 +86,11 @@ export function SectionedCompanyList({
                 <div className="flex items-center gap-4">
                   <h2 className="text-2xl font-light">
                     {t(SECTOR_NAMES[sectorCode]) ||
-                      t("sectionedCompanyList.otherCompanies")}
+                      t("companies.sectionedCompanyList.otherCompanies")}
                   </h2>
                   <span className="text-grey">
                     {sectorCompanies.length}{" "}
-                    {t("sectionedCompanyList.companies")}
+                    {t("companies.sectionedCompanyList.companies")}
                   </span>
                 </div>
               </AccordionTrigger>
