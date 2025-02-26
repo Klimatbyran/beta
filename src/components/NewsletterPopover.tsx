@@ -7,17 +7,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import MailchimpSubscribe from "react-mailchimp-subscribe";
+import { cn } from "@/lib/utils";
 
 interface NewsletterPopoverProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   buttonText: string;
+  isMinimized: boolean;
 }
 
 export function NewsletterPopover({
   isOpen,
   setIsOpen,
   buttonText,
+  isMinimized,
 }: NewsletterPopoverProps) {
   const [email, setEmail] = useState("");
 
@@ -26,7 +29,12 @@ export function NewsletterPopover({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button className="bg-blue-5 text-white px-4 py-1 rounded-lg hover:bg-blue-6 transition">
+        <Button
+          className={cn(
+            "bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium",
+            isMinimized ? "text-sm" : "text-base"
+          )}
+        >
           {buttonText}
         </Button>
       </PopoverTrigger>
@@ -44,8 +52,8 @@ export function NewsletterPopover({
         {/* Newsletter Content */}
         <h2 className="text-2xl mb-4">Prenumerera på vårt nyhetsbrev</h2>
         <p className="text-grey mb-6">
-          Med vårt nyhetsbrev får du uppdateringar om hur det går med
-          utsläppen och omställningen direkt i din mejl.
+          Med vårt nyhetsbrev får du uppdateringar om hur det går med utsläppen
+          och omställningen direkt i din mejl.
         </p>
 
         <MailchimpSubscribe

@@ -12,6 +12,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { regions } from "@/lib/constants/regions";
+import { useScreenSize } from "@/hooks/useScreenSize";
+import { cn } from "@/lib/utils";
 
 type SortOption = "meets_paris" | "name";
 
@@ -21,6 +23,7 @@ export function MunicipalitiesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("meets_paris");
   const [sortDirection, setSortDirection] = useState<"best" | "worst">("best");
+  const isMobile = useScreenSize();
 
   if (loading) {
     return (
@@ -51,8 +54,19 @@ export function MunicipalitiesPage() {
       <PageHeader
         title="Kommunrapporter"
         description="Översikt över kommunernas klimatpåverkan och hållbarhetsarbete"
-        className="-ml-4"
+         className="-ml-4"
+      />
+
+      {/* Filters & Sorting Section */}
+      <div
+        className={cn(
+          isMobile ? "relative" : "sticky top-0 z-10",
+          "bg-black px-4 pt-12 md:pt-16 pb-4 shadow-md" 
+        )}
       >
+        {/* Extending background to header */}
+        <div className="absolute inset-0 w-full bg-black -z-10" />
+
         <div className="flex flex-col md:flex-row items-center gap-4 w-full flex-wrap">
           {/* Search Input */}
           <div className="relative w-full md:w-[350px]">
@@ -111,7 +125,7 @@ export function MunicipalitiesPage() {
               : "Visar sämst först"}
           </button>
         </div>
-      </PageHeader>
+      </div>
 
       <MunicipalityList
         municipalities={municipalities}

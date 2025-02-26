@@ -50,15 +50,15 @@ export function Header() {
   const { scrollDirection, scrollY } = useScrollDirection();
   const isMinimized = scrollDirection === "down" && scrollY > 100;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false); // Newsletter popover state
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2 md:py-0 bg-black-2 overflow-hidden",
-        isMinimized ? "h-6" : "h-10",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-black-2 overflow-hidden",
+        isMinimized ? "h-9" : "h-12",
         menuOpen && "h-full"
       )}
     >
@@ -67,8 +67,10 @@ export function Header() {
         <Link
           to="/"
           className={cn(
-            "flex items-center gap-2 transition-all",
-            isMinimized ? "scale-75 translate-y-[-6px]" : "translate-y-0"
+            "flex items-center gap-2 transition-all font-medium",
+            isMinimized
+              ? "text-sm translate-y-[-2px]"
+              : "text-base translate-y-0"
           )}
         >
           Klimatkollen
@@ -78,7 +80,7 @@ export function Header() {
         <button
           className={cn(
             "md:hidden text-white transition-transform duration-300",
-            isMinimized ? "-translate-y-1 scale-90" : "scale-100"
+            isMinimized ? "-translate-y-1 scale-100" : "scale-100"
           )}
           onClick={toggleMenu}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -89,27 +91,27 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav
           className={cn(
-            "hidden md:flex items-center gap-8 transition-all ml-auto",
-            isMinimized
-              ? "scale-90 translate-y-[-6px]"
-              : "scale-100 translate-y-0"
+            "hidden md:flex items-center gap-6 transition-all ml-auto",
+            isMinimized ? "translate-y-[-2px]" : "translate-y-0"
           )}
         >
-          <Menubar className="border-none bg-transparent">
+          <Menubar className="border-none bg-transparent h-full">
             {NAV_LINKS.map((item) =>
               item.sublinks ? (
                 <MenubarMenu key={item.label}>
                   <MenubarTrigger
                     aria-expanded={location.pathname.startsWith(item.path)}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-4 transition-colors transition-all",
+                      "flex items-center gap-2 px-3 py-3 h-full transition-all",
                       location.pathname.startsWith(item.path)
                         ? "bg-black-1 text-white"
                         : "text-grey hover:text-white"
                     )}
                   >
                     {item.icon}
-                    <span>{item.label}</span>
+                    <span className={isMinimized ? "text-sm" : "text-base"}>
+                      {item.label}
+                    </span>
                     <ChevronDown className="w-4 h-4" aria-hidden="true" />
                   </MenubarTrigger>
                   <MenubarContent>
@@ -135,11 +137,11 @@ export function Header() {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-2 p-3 transition-colors text-sm",
+                    "flex items-center gap-2 px-3 py-3 h-full font-medium transition-colors",
                     matchPath(item.path, location.pathname)
                       ? "bg-black-1 text-white"
                       : "text-grey hover:text-white",
-                    isMinimized && "scale-75 -translate-x-4"
+                    isMinimized ? "text-sm" : "text-base"
                   )}
                 >
                   {item.icon}
@@ -147,12 +149,12 @@ export function Header() {
                 </Link>
               )
             )}
-            {/* Adjust Spacing of Newsletter Button Separately */}
-            <div className="ml-6">
+            <div className="ml-4 h-full flex items-center mb-2">
               <NewsletterPopover
                 isOpen={isSignUpOpen}
                 setIsOpen={setIsSignUpOpen}
                 buttonText="Nyhetsbrev"
+                isMinimized={isMinimized}
               />
             </div>
           </Menubar>
