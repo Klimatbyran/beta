@@ -28,7 +28,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
   const emissionsChange = municipality.historicalEmissionChangePercent;
 
   const noClimatePlan =
-    municipality.climatePlanLink === t("municipality.card.noPlan") ||
+    municipality.climatePlanLink === "Saknar plan" ||
     municipality.climatePlanLink === undefined;
 
   return (

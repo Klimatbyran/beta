@@ -1,82 +1,75 @@
-import { Github, Linkedin, Twitter, Disc as Discord, Copy } from "lucide-react";
+import { socialLinks, partners } from "../../lib/constants/footer";
 import { Text } from "@/components/ui/text";
-import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+
+function SocialLinks() {
+  return (
+    <div className="flex gap-2 md:gap-4 justify-center">
+      {socialLinks.map(({ href, icon: Icon, title }) => (
+        <a
+          key={title}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 md:p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
+          title={title}
+        >
+          <Icon className="w-5 h-5 md:w-6 md:h-6" aria-label={title} />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+function PartnerLogos() {
+  return (
+    <div className="flex flex-wrap justify-center items-center gap-4 px-2 md:px-6">
+      {partners.map(({ href, src, alt }) => (
+        <a key={alt} href={href} target="_blank" rel="noreferrer">
+          <img className="w-28 max-h-12 object-contain" src={src} alt={alt} />
+        </a>
+      ))}
+    </div>
+  );
+}
 
 export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-black-2 py-12 md:py-24">
-      <div className="container mx-auto px-4 space-y-8 md:space-y-16">
+    <footer className="bg-black-2 py-4 md:py-8">
+      <div className="container mx-auto px-4 space-y-4 md:space-y-8 flex flex-col items-center text-center">
+        {/* Contact Section */}
         <div className="space-y-2 md:space-y-4">
-          <Text variant="body" className="text-sm text-grey md:text-base">
+          <Text variant="h6" className="text-grey md:text-base">
             {t("footer.contactUs")}
           </Text>
-          <div className="flex flex-col md:flex-row md:items-center align-left gap-2 md:gap-4">
-            <Text variant="display" className="text-3xl md:text-5xl">
-              hej@klimatkollen.se
-            </Text>
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-[110px] bg-black-1 border-none hover:bg-black-1/80 transition-colors gap-2"
-              onClick={() => {
-                navigator.clipboard.writeText("hej@klimatkollen.se");
-              }}
-            >
-              <Copy className="w-4 h-4" />
-              {t("footer.copy")}
-            </Button>
+          <SocialLinks />
+          <div className="text-sm md:text-base max-w-full md:max-w-2xl font-light text-grey">
+            <Trans
+              i18nKey="footer.description"
+              components={[
+                <a
+                  title="Klimatkollen's Github"
+                  className="underline hover:text-white transition-colors"
+                  href="https://github.com/Klimatbyran/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />,
+              ]}
+            />
           </div>
         </div>
 
-        <div className="flex gap-2 md:gap-4">
-          <a
-            href="https://github.com/klimatbyran"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 md:p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
-            title="GitHub"
-          >
-            <Github className="w-5 h-5 md:w-6 md:h-6" aria-label="GitHub" />
-          </a>
-          <a
-            href="https://linkedin.com/company/klimatkollen"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 md:p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
-            title="LinkedIn"
-          >
-            <Linkedin className="w-5 h-5 md:w-6 md:h-6" aria-label="LinkedIn" />
-          </a>
-          <a
-            href="https://twitter.com/klimatkollen"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 md:p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
-            title="Twitter"
-          >
-            <Twitter className="w-5 h-5 md:w-6 md:h-6" aria-label="Twitter" />
-          </a>
-          <a
-            href="https://discord.gg/klimatkollen"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 md:p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
-            title="Discord"
-          >
-            <Discord className="w-5 h-5 md:w-6 md:h-6" aria-label="Discord" />
-          </a>
+        {/* Partners Section */}
+        <div className="space-y-2">
+          <Text variant="h6" className="text-blue-3">
+            {t("footer.supporters")}
+          </Text>
+          <PartnerLogos />
         </div>
 
-        <Text
-          variant="body"
-          className="text-sm md:text-base max-w-full md:max-w-2xl"
-        >
-          {t("footer.description")}
-        </Text>
-
+        {/* Footer Links */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 text-grey">
           <a href="/privacy" className="hover:text-white transition-colors">
             {t("footer.privacyTerms")}
@@ -84,7 +77,10 @@ export function Footer() {
           <a href="/license" className="hover:text-white transition-colors">
             {t("footer.internationalLicense")}
           </a>
-          <a href="/cc" className="hover:text-white transition-colors">
+          <a
+            href="https://creativecommons.org/licenses/by-sa/4.0/"
+            className="hover:text-white transition-colors"
+          >
             {t("footer.ccBySa")}
           </a>
         </div>

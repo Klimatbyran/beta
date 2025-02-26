@@ -4,5 +4,5 @@ export const API_BASE_URL =
   nodeEnv === "production"
     ? "https://api.klimatkollen.se"
     : nodeEnv === "staging"
-    ? "https://stage.api.klimatkollen.se"
-    : "https://api.klimatkollen.se";
+    ? "https://stage-api.klimatkollen.se"
+    : "http://localhost:3000";

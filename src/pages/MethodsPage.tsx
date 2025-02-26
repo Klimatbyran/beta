@@ -2,7 +2,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
 import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 export function MethodsPage() {
   const { t } = useTranslation();
@@ -18,7 +18,20 @@ export function MethodsPage() {
         <AccordionGroup title={t("methodsPage.accordion.parisAgreement.title")}>
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
             <p>{t("methodsPage.accordion.parisAgreement.paragraph1")}</p>
-            <p>{t("methodsPage.accordion.parisAgreement.paragraph2")}</p>
+            <p>
+              <Trans
+                i18nKey="methodsPage.accordion.parisAgreement.paragraph2"
+                components={[
+                  <a
+                    title="IEA"
+                    className="underline hover:text-white transition-colors"
+                    href="https://www.iea.org/reports/co2-emissions-in-2023"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />,
+                ]}
+              />
+            </p>
             <p>{t("methodsPage.accordion.parisAgreement.paragraph3")}</p>
             <div className="space-y-6 max-w-3xl">
               <LinkButton
@@ -113,13 +126,39 @@ export function MethodsPage() {
         <AccordionGroup title={t("methodsPage.accordion.co2Budgets.title")}>
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <p>{t("methodsPage.accordion.co2Budgets.paragraph1")}</p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph2")}</p>
+            <p>
+              <Trans
+                i18nKey="methodsPage.accordion.co2Budgets.paragraph2"
+                components={[
+                  <a
+                    title="Uppsala universitet"
+                    className="underline hover:text-white transition-colors"
+                    href="https://www.cemus.uu.se/wp-content/uploads/2023/12/Paris-compliant-carbon-budgets-for-Swedens-counties-.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />,
+                ]}
+              />
+            </p>
             <p>{t("methodsPage.accordion.co2Budgets.paragraph3")}</p>
             <p>{t("methodsPage.accordion.co2Budgets.paragraph4")}</p>
             <p>{t("methodsPage.accordion.co2Budgets.paragraph5")}</p>
             <p>{t("methodsPage.accordion.co2Budgets.paragraph6")}</p>
             <p>{t("methodsPage.accordion.co2Budgets.paragraph7")}</p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph8")}</p>
+            <p>
+              <Trans
+                i18nKey="methodsPage.accordion.co2Budgets.paragraph8"
+                components={[
+                  <a
+                    title="Chalmers"
+                    className="underline hover:text-white transition-colors"
+                    href="https://research.chalmers.se/publication/530543/file/530543_Fulltext.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />,
+                ]}
+              />
+            </p>
           </div>
         </AccordionGroup>
         <AccordionGroup title={t("methodsPage.accordion.emissionTypes.title")}>

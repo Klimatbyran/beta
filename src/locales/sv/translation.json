@@ -10,9 +10,9 @@
   },
   "footer": {
     "contactUs": "Kontakta oss",
-    "copy": "Kopiera",
-    "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen källkod.",
+    "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen <0>källkod</0>.",
     "privacyTerms": "Privacy & Terms",
+    "supporters": "Stöd och partners",
     "internationalLicense": "International license",
     "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
   },
@@ -120,7 +120,7 @@
       "parisAgreement": {
         "title": "Klimatkollen utgår från Parisavtalet",
         "paragraph1": "Parisavtalet är ett internationellt bindande avtal mellan världens länder om att vidta åtgärder för att begränsa den globala uppvärmningen till väl under 2 grader, med sikte på 1,5 grader.",
-        "paragraph2": "För att nå målet måste världens länder halvera växthusgasutsläppen till 2030 jämfört med 1990 och nå nära noll utsläpp senast 2050. I dag ökar fortfarande utsläppen globalt.",
+        "paragraph2": "För att nå målet måste världens länder halvera växthusgasutsläppen till 2030 jämfört med 1990 och nå nära noll utsläpp senast 2050. I dag <0>ökar</0> fortfarande utsläppen globalt.",
         "paragraph3": "Enligt Parisavtalet ska rika länder ta ett större ansvar, eftersom deras stora historiska utsläpp innebär att de redan använt mycket av det utsläppsutrymme som återstår för att hejda uppvärmningen. Bland dessa länder ingår Sverige, som både ska gå före med att minska utsläppen och även hjälpa andra mer sårbara länder att ställa om.",
         "link": {
           "title": "Parisavtalet",
@@ -173,13 +173,13 @@
       "co2Budgets": {
         "title": "Om koldioxidbudgetar",
         "paragraph1": "En koldioxidbudget anger hur mycket koldioxid som kan släppas ut innan koldioxidhalten i atmosfären blir så hög att uppvärmningen överstiger Parisavtalets 1,5-gradersmål.",
-        "paragraph2": "Enligt en beräkning av forskare vid Uppsala universitet och Tyndall Centre i Storbritannien, återstår globalt cirka 340 gigaton koldioxid från och med år 2024 för 50 procents chans att hålla uppvärmningen under 1,5 grader. Med dagens utsläppstakt tar den globala budgeten slut om cirka åtta år.",
+        "paragraph2": "Enligt en <0>beräkning</0> av forskare vid Uppsala universitet och Tyndall Centre i Storbritannien, återstår globalt cirka 340 gigaton koldioxid från och med år 2024 för 50 procents chans att hålla uppvärmningen under 1,5 grader. Med dagens utsläppstakt tar den globala budgeten slut om cirka åtta år.",
         "paragraph3": "Utifrån den globala budgeten har forskarna även gjort en beräkning av hur en nationel koldioxidbudget för en rättvis klimatomställning skulle se ut för Sverige.",
         "paragraph4": "Beräkningen visar att från och med januari 2024 återstår ett nationellt utsläppsutrymme på 80 miljoner ton för att ligga i linje med 1,5 grader. För 83 procents chans att inte överskrida 2 grader är budgeten 285 miljoner ton. Som jämförelse uppgick de totala växthusgasutsläppen för Sverige år 2022 till 45,2 miljoner ton.",
         "paragraph5": "Med Sveriges nuvarande utsläppstakt återstår 1,8 år av 1,5-gradersbudgeten, 6,4 år för 2 grader. För att vara i linje med 1,5 grader skulle utsläppen i Sverige behöva minska med drygt 35 procent från och med 2024, eller 13,5 procent för 2 grader.",
         "paragraph6": "Klimatkollen har fördelat ut den nya nationella koldioxidbudgeten (80 miljoner ton, som även inkluderar utrikes flyg och sjöfart) på landets kommuner med samma fördelningsnyckel som använts för att bryta ner den globala budgeten nationellt.",
         "paragraph7": "De lokala koldioxidbudgetarna gör det möjligt att jämföra hur det går med utsläppen med hur det borde gå. På Klimatkollen visas koldioxidbudgetar för kommunerna både med siffror och som utvecklingskurva över hur utsläppen behöver minska för att vara i linje med Parisavtalet.",
-        "paragraph8": "Förutom den så kallade Tyndall-modellen som Klimatkollen använder finns även andra sätt att beräkna en nationell koldioxidbudget, se exempelvis Chalmers här."
+        "paragraph8": "Förutom den så kallade Tyndall-modellen som Klimatkollen använder finns även andra sätt att beräkna en nationell koldioxidbudget, se exempelvis Chalmers <0>här</0>."
       },
       "emissionTypes": {
         "title": "Om olika typer av utsläpp",
@@ -196,7 +196,30 @@
     "errorTitle": "Det gick inte att hämta kommuninformation",
     "errorDescription": "Försök igen senare",
     "title": "Kommunrapporter",
-    "description": "Översikt över kommunernas klimatpåverkan och hållbarhetsarbete"
+    "description": "Översikt över kommunernas klimatpåverkan och hållbarhetsarbete",
+    "filter": {
+      "searchPlaceholder": "Sök kommun (separera med komma)",
+      "selectRegion": "Välj län",
+      "allRegions": "Alla län",
+      "sortBy": "Sortera efter",
+      "sortOptions": {
+        "reduction": "Utsläppsminskning",
+        "emissions": "Totala utsläpp",
+        "climate_plan": "Klimatplan",
+        "bicycle": "Cykelvägar",
+        "charging": "Laddinfrastruktur",
+        "name": "Namn"
+      }
+    },
+    "sort": {
+      "placeholder": "Sortera efter",
+      "meetsParis": "Möter Parisavtalet",
+      "name": "Namn",
+      "aToZ": "A-Ö",
+      "zToA": "Ö-A",
+      "bestFirst": "Visar bäst först",
+      "worstFirst": "Visar sämst först"
+    }
   },
   "municipalityDetailPage": {
     "loading": "Laddar...",
@@ -457,34 +480,6 @@
       "unit": "ton CO₂e",
       "total": "Totalt",
       "year": "År"
-    },
-    "filter": {
-      "searchPlaceholder": "Sök kommun (separera med komma)",
-      "selectRegion": "Välj län",
-      "allRegions": "Alla län",
-      "sortBy": "Sortera efter",
-      "sortOptions": {
-        "reduction": "Utsläppsminskning",
-        "emissions": "Totala utsläpp",
-        "climate_plan": "Klimatplan",
-        "bicycle": "Cykelvägar",
-        "charging": "Laddinfrastruktur",
-        "name": "Namn"
-      }
-    },
-    "list": {
-      "search": "Sök kommun (separera med komma)",
-      "selectRegion": "Välj län",
-      "allRegions": "Alla län",
-      "sort": {
-        "placeholder": "Sortera efter",
-        "meetsParis": "Möter Parisavtalet",
-        "name": "Namn",
-        "aToZ": "A-Ö",
-        "zToA": "Ö-A",
-        "bestFirst": "Visar bäst först",
-        "worstFirst": "Visar sämst först"
-      }
     }
   }
 }

@@ -171,7 +171,10 @@ export function LandingPage() {
         </div>
       </div>
 
-      <div className="pb-8 md:pb-16">
+      <div
+        className="pb-8 md:pb-16"
+        onClick={() => console.log(process.env.NODE_ENV)}
+      >
         <div className="container mx-auto">
           <ContentBlock
             title={t("landingPage.aboutUsTitle")}
