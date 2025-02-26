@@ -38,12 +38,13 @@ export function MunicipalityDetailPage() {
       <div className="bg-black-2 rounded-level-1 p-8 md:p-16">
         <Text className="text-4xl md:text-8xl">{municipality.name}</Text>
         <Text className="text-grey">{municipality.region}</Text>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 mt-8">
           <MunicipalityStatCard
             title={t("municipalityDetailPage.totalEmissions", {
               year: lastYear,
             })}
             value={lastYearEmissionsKTon}
+            unit={t("municipalityDetailPage.thousandTons")}
             valueClassName="text-orange-2"
           />
           <MunicipalityStatCard

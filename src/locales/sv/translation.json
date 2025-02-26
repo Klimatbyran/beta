@@ -21,9 +21,22 @@
       "companies": "Företag",
       "municipalities": "Kommuner"
     },
-    "title": "Hur går det för {{tabName}} att",
+    "typewriter": {
+      "company": [
+        "minska utsläppen",
+        "scope 3-utsläppen",
+        "klara Parisavtalets"
+      ],
+      "municipality": [
+        "att minska utsläppen",
+        "att klara Parisavtalet",
+        "klimatåtgärderna",
+        "klimatplanerna"
+      ]
+    },
+    "title": "Hur går det med",
     "seeResults": "Se resultat",
-    "bestPerformers": "Vilka gör det bäst?",
+    "bestPerformers": "Vilka är bäst?",
     "bestMunicipalities": "Sveriges bästa kommuner",
     "municipalitiesDescription": "Årlig utsläppsminskning sedan Parisavtalet 2015",
     "bestCompanies": "Företag som minskat utsläppen mest",
@@ -44,7 +57,8 @@
       "title": "Vad är Klimatkollen?",
       "paragraph1": "Klimatkollen är en medborgarplattform som hjälper medborgare, företag och organisationer att få koll på klimatomställningen, genom att samla in och visualisera klimatdata.",
       "paragraph2": "Vi visar hur det går med utsläppen, jämfört med hur det borde gå, så att det blir begripligt för allmänheten, bidrar till en faktabaserad debatt och stärker opinionen för klimatåtgärder.",
-      "paragraph3": "Vår vision är att beslutsfattare i politik och näringsliv ska påverkas av en välinformerad och växande opinion till att genomföra åtgärder som sänker utsläppen i linje med Parisavtalet."
+      "paragraph3": "Vår vision är att beslutsfattare i politik och näringsliv ska påverkas av en välinformerad och växande opinion till att genomföra åtgärder som sänker utsläppen i linje med Parisavtalet.",
+      "paragraph4": "Klimatkollen lanserades i mars 2022 och drivs av den ideella föreningen Klimatbyrån. Initiativtagare är Ola Spännar och Frida Berry Eklund. Vi började med lokal klimatdata för Sveriges kommuner. Från 2024 visas klimatdata även för företag."
     },
     "teamSection": {
       "title": "Vårt team"
@@ -71,13 +85,13 @@
     "previousProjectsSection": {
       "title": "Tidigare projekt",
       "kommunprojektetTitle": "Kommunprojektet 2023",
-      "kommunprojektetDescription": "Under 2023 fick Klimatkollen stöd av Postkodstiftelsen för att ta tempen på hur det går med klimatomställningen i kommunerna. I dag kan du se hur det går med koldioxidutsläppen. Nu visar vi även vad kommunerna gör för att minska dem.",
+      "kommunprojektetDescription": "Under 2023 fick Klimatkollen stöd av Postkodstiftelsen för att ta tempen på hur det går med klimatomställningen i kommunerna. Förutom utsläppsdata visar vi även vad kommunerna gör för att minska dem, genom att presentera statistik om utvalda nyckeltal för olika delomställningar.",
       "riksdagsvaletTitle": "Riksdagsvalet 2022",
       "riksdagsvaletDescription": "Inför riksdagsvalet 2022 ansvarade Klimatkollen för två unika projekt:",
       "klimatmalTitle": "Klimatmål",
-      "klimatmalText": "En analys av riksdagspartiernas",
+      "klimatmalText": "En analys av riksdagspartiernas klimatmål för Sverige",
       "utslappsberakningTitle": "Utsläppsberäkning",
-      "utslappsberakningText": "Beräkning av partiernas klimatåtgärder"
+      "utslappsberakningText": "Beräkning av hur utsläppen skulle minska eller öka med partiernas politik"
     }
   },
   "blogDetailPage": {
@@ -132,25 +146,29 @@
         "paragraph1": "Klimatkollen baseras på offentliga källor och verifierad data. Vi anger alla källor så att du enkelt kan kolla upp och läsa mer. Om något blivit fel, mejla oss gärna på hej@klimatkollen.se så att vi kan ändra.",
         "paragraph2": "Företagsdata hämtas från bolagens egna årsredovisningar och hållbarhetsrapporter.",
         "links": {
+          "smhi": {
+            "title": "Nationella emissionsdatabasen",
+            "text": "Utsläpp av växthusgaser i kommunerna"
+          },
           "skr": {
             "title": "Sveriges Kommuner och Regioner",
-            "text": "Uppgifter om politiskt styre i kommunerna hämtas"
+            "text": "Politiskt styre i kommunerna"
           },
           "wikidata": {
             "title": "Wikidata",
-            "text": "Hämtar vi kommunernas invånarantal och kommunvapen"
+            "text": "Kommunvapen och invånarantal"
           },
           "trafikanalys": {
             "title": "Trafikanalys",
-            "text": "Statistiken om andel laddbara bilar"
+            "text": "Andel laddbara bilar"
           },
           "nvdb": {
             "title": "Nationella vägdatabas",
-            "text": "Cykelvägsdata tas från Trafikverket"
+            "text": "Cykelvägar meter per kommun"
           },
           "sei": {
             "title": "Stockholm Environment Institute",
-            "text": "För hushållens konsumtionsbaserade utsläpp kommer data"
+            "text": "Hushållens konsumtionsbaserade utsläpp"
           },
           "powerCircles": {
             "title": "Power Circles databas ELIS",
@@ -158,15 +176,15 @@
           },
           "klimatplaner": {
             "title": "Klimatplaner",
-            "text": "Har vi samlat in med hjälp av allmänheten och Klimatklubbens och Naturskyddsföreningens medlemmar"
+            "text": "Insamlade av Klimatklubbens och Naturskyddsföreningens medlemmar"
           },
           "upphandlingsmyndigheten": {
             "title": "Upphandlingsmyndigheten",
-            "text": "Information om klimatkrav vid kommunernas upphandlingar"
+            "text": "nformation om klimatkrav vid kommunernas upphandlingar"
           },
           "greenpeace": {
             "title": "Greenpeace",
-            "text": "Information om klimatkrav vid kommunernas upphandlingar"
+            "text": "Kartläggning av klimatkrav inom offentlig upphandling"
           }
         }
       },
@@ -230,7 +248,8 @@
       "medium": "Kommunen ställer kanske klimatkrav i upphandlingar",
       "low": "Kommunen ställer inte klimatkrav i upphandlingar"
     },
-    "totalEmissions": "Totala utsläpp {{year}} i tusen ton CO₂",
+    "totalEmissions": "Totala utsläpp {{year}}",
+    "thousandTons": " tusen ton CO₂",
     "budgetRunsOut": "Koldioxidbudgeten tar slut",
     "budgetHolds": "Håller budget",
     "hitNetZero": "Når nettonoll",
@@ -303,7 +322,7 @@
       "description": "Opinionsbildare, medgrundare av Klimatkollen, tidigare kommunikationschef på Centerpartiet och kundansvarig på Forsman & Bodenfors."
     },
     "frida": {
-      "role": "Styrelseledamot",
+      "role": "Vice styrelseordförande",
       "description": "Klimatspecialist och medgrundare till Klimatkollen. Initiativtagare till Our Kids' Climate och författare till boken \"Prata med barn om klimatet\" (Natur & Kultur). EU Climate Pact Ambassador och Climate Reality Leader."
     },
     "christian": {
@@ -320,7 +339,7 @@
     },
     "carlJohan": {
       "role": "Styrelseledamot",
-      "description": "Hållbarhetsstrateg på Doings, tidigare planner på Forsman & Bodenfors, författare till boken \"Hållbariseringen\", Årets marknadsföringsbok 2022."
+      "description": "Hållbarhetsstrateg på Diamant & Schulz, tidigare på Doings och Forsman & Bodenfors, författare till boken \"Hållbariseringen\", Årets marknadsföringsbok 2022."
     }
   },
   "emissionsBreakdown": {

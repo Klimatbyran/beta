@@ -51,6 +51,11 @@ export function MethodsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
               {[
                 {
+                  title: t("methodsPage.accordion.sources.links.smhi.title"),
+                  text: t("methodsPage.accordion.sources.links.smhi.text"),
+                  link: "https://nationellaemissionsdatabasen.smhi.se/",
+                },
+                {
                   title: t("methodsPage.accordion.sources.links.skr.title"),
                   text: t("methodsPage.accordion.sources.links.skr.text"),
                   link: "https://skr.se/skr/demokratiledningstyrning/valmaktfordelning/valresultatstyren/styrekommunereftervalet2022.69547.html",

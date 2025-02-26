@@ -9,32 +9,16 @@ import { useCompanies } from "@/hooks/useCompanies";
 import { useMunicipalities } from "@/hooks/useMunicipalities";
 import { useTranslation } from "react-i18next";
 
-const companyTypewriterTexts = [
-  "minska sina utsläpp",
-  "rapportera scope 3",
-  "nå Parisavtalets mål",
-  "jämföra sig med andra",
-  "följa upp sina klimatmål",
-];
-
-const municipalityTypewriterTexts = [
-  "minska sina utsläpp",
-  "nå klimatmålen",
-  "jämföra sig med andra",
-  "följa upp sina åtgärder",
-  "engagera medborgarna",
-];
-
-const tabName = {
-  companies: "företagen",
-  municipalities: "kommunerna",
-};
-
 export function LandingPage() {
   const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState("companies");
   const { companies } = useCompanies();
-  const { getTopMunicipalities, getMunicipalitiesForMap } = useMunicipalities();
+  const { getTopMunicipalities } = useMunicipalities();
+
+  const companyTypewriterTexts = [t("landingPage.typewriter.company")];
+  const municipalityTypewriterTexts = [
+    t("landingPage.typewriter.municipality"),
+  ];
 
   // Get top 5 companies by emissions reduction
   const topCompanies = companies

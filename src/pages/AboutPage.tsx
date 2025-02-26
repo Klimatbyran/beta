@@ -29,6 +29,7 @@ export function AboutPage() {
             <p>{t("aboutPage.mainContent.paragraph1")}</p>
             <p>{t("aboutPage.mainContent.paragraph2")}</p>
             <p>{t("aboutPage.mainContent.paragraph3")}</p>
+            <p>{t("aboutPage.mainContent.paragraph4")}</p>
           </div>
         </AccordionGroup>
 
