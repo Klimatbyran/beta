@@ -80,6 +80,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🔧 Build and push Docker Image
+        run: |
+          export NODE_ENV=${{ github.ref == 'refs/heads/staging' && 'staging' || 'production' }}
+          echo "Building with NODE_ENV=$NODE_ENV"
         uses: docker/build-push-action@v4
         with:
           push: true
