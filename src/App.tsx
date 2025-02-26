@@ -11,6 +11,7 @@ import { BlogDetailPage } from "./pages/BlogDetailPage";
 import { EmissionsTestPage } from "./pages/EmissionsTestPage";
 import { MethodsPage } from "./pages/MethodsPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
+import { LearnMorePage } from "./pages/LearnMorePage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="methodology" element={<MethodsPage />} />
           <Route path="privacy" element={<PrivacyPage />} />
           <Route path="emissions-test" element={<EmissionsTestPage />} />
+          <Route path="learn-more" element={<LearnMorePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
