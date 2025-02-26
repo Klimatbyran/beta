@@ -80,7 +80,7 @@ export function Header() {
         <button
           className={cn(
             "md:hidden text-white transition-transform duration-300",
-            isMinimized ? "-translate-y-1 scale-100" : "scale-100"
+            isMinimized ? "translate-y-[1px] scale-90" : "scale-100"
           )}
           onClick={toggleMenu}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
