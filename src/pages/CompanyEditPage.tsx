@@ -3,11 +3,21 @@ import { useState } from 'react';
 import { useCompanyDetails } from '@/hooks/useCompanyDetails';
 import { Text } from "@/components/ui/text";
 import { CompanyEditHeader } from '@/components/companies/edit/CompanyEditHeader';
+import { CompanyEditPeriod } from '@/components/companies/edit/CompanyEditPeriod';
+import { CompanyEditScope1 } from '@/components/companies/edit/CompanyEditScope1';
+import { CompanyEditScope2 } from '@/components/companies/edit/CompanyEditScope2';
+import { CompanyEditScope3 } from '@/components/companies/edit/CompanyEditScope3';
 
 export function CompanyEditPage() {
   const { id } = useParams<{ id: string }>();
   const { company, loading, error } = useCompanyDetails(id!);
-  const [selectedYear, setSelectedYear] = useState<string>('latest');
+  const [selectedYear, setSelectedYear] = useState<string>('');
+  
+  const selectPeriod = selectedYear !== '' && company !== undefined ?
+  [...company.reportingPeriods].find(
+      (reportingPeriod) =>
+        new Date(reportingPeriod.endDate).getFullYear().toString() ===
+        selectedYear) : null;
 
   if (loading) {
     return (
@@ -52,11 +62,21 @@ export function CompanyEditPage() {
 
   return (
     <div className="space-y-16 max-w-[1400px] mx-auto">
+      <div className="bg-black-2 rounded-level-1 p-16">
       <CompanyEditHeader 
         company={company} 
         selectedYear={selectedYear}
         onYearSelect={setSelectedYear}
       />
+      {selectPeriod !== null && (
+        <>
+        <CompanyEditPeriod periods={[selectPeriod]}></CompanyEditPeriod>
+        <CompanyEditScope1 periods={[selectPeriod]}></CompanyEditScope1>
+        <CompanyEditScope2 periods={[selectPeriod]}></CompanyEditScope2>
+        <CompanyEditScope3 periods={[selectPeriod]}></CompanyEditScope3>
+        </>
+      )}
+      </div>
     </div>
   );
 }
