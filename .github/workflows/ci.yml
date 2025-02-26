@@ -81,12 +81,14 @@ jobs:
 
       - name: 🔧 Set NODE_ENV
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+          if [[ "${GITHUB_REF}" == "refs/heads/staging" ]]; then
             echo "NODE_ENV=staging" >> $GITHUB_ENV
           else
             echo "NODE_ENV=production" >> $GITHUB_ENV
           fi
-          echo "Using NODE_ENV=${{ env.NODE_ENV }}"
+
+      - name: 📝 Debug NODE_ENV
+        run: echo "Using NODE_ENV=${NODE_ENV}"
 
       - name: 🔧 Build and push Docker Image
         uses: docker/build-push-action@v4
