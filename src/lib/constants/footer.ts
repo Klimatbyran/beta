@@ -46,7 +46,7 @@ export const socialLinks = [
     },
     {
       href: "https://www.climateainordics.com/",
-      src: "/logos/partners/climateAiNordics.png",
+      src: "/logos/partners/climateAiNordics-removebg.png",
       alt: "ClimateAiNordics logo",
     },
   ];
