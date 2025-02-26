@@ -7,4 +7,4 @@ patches:
   - path: ingress-patch.yaml
 images:
   - name: ghcr.io/klimatbyran/frontend
-    newTag: '3.0.7' # {"$imagepolicy": "flux-system:frontend:tag"}
+    newTag: '3.0.8' # {"$imagepolicy": "flux-system:frontend:tag"}
