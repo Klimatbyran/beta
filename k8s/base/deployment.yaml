@@ -47,7 +47,7 @@ spec:
             periodSeconds: 10
           env:
             - name: NODE_ENV
-              value: "production"
+              value: "staging"
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d
