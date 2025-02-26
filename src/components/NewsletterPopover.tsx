@@ -7,20 +7,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import MailchimpSubscribe from "react-mailchimp-subscribe";
-import { cn } from "@/lib/utils";
 
 interface NewsletterPopoverProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   buttonText: string;
-  isMinimized: boolean;
 }
 
 export function NewsletterPopover({
   isOpen,
   setIsOpen,
   buttonText,
-  isMinimized,
 }: NewsletterPopoverProps) {
   const [email, setEmail] = useState("");
 
@@ -29,12 +26,7 @@ export function NewsletterPopover({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button
-          className={cn(
-            "bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium",
-            isMinimized ? "text-sm" : "text-base"
-          )}
-        >
+        <Button className="bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium">
           {buttonText}
         </Button>
       </PopoverTrigger>
