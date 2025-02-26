@@ -22,6 +22,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SECTORS, SECTOR_NAMES } from "@/lib/constants/sectors";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { useScreenSize } from "@/hooks/useScreenSize";
+import { cn } from "@/lib/utils";
 
 type CompanySector = (typeof SECTORS)[number]["value"];
 type SortOption = (typeof SORT_OPTIONS)[number]["value"];
@@ -65,7 +67,7 @@ function FilterPopover({
           className="h-8 bg-black-1 border-none gap-2"
         >
           <Filter className="w-4 h-4" />
-          Filter
+          Filter och Sortera
           {sectors.length > 0 && (
             <Badge
               variant="secondary"
@@ -180,6 +182,7 @@ export function CompaniesPage() {
   const [sortBy, setSortBy] = useState<SortOption>("emissions_reduction");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
+  const isMobile = useScreenSize();
 
   const activeFilters: FilterBadge[] = [
     ...sectors.map((sec) => ({
@@ -277,24 +280,56 @@ export function CompaniesPage() {
       <PageHeader
         title="Företagsrapporter"
         description="Översikt över företagens klimatpåverkan och hållbarhetsarbete"
+        className="-ml-4"
+      />
+      {/* Filters & Sorting Section */}
+      <div
+        className={cn(
+          isMobile ? "relative" : "sticky top-0 z-10",
+          "bg-black px-4 pt-12 md:pt-16 pb-4 shadow-md"
+        )}
       >
-        <Input
-          type="text"
-          placeholder="Sök (separera med ,)"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 w-[200px]"
-        />
-        <FilterPopover
-          filterOpen={filterOpen}
-          setFilterOpen={setFilterOpen}
-          sectors={sectors}
-          setSectors={setSectors}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
-        {activeFilters.length > 0 && <FilterBadges filters={activeFilters} />}
-      </PageHeader>
+        <div className="absolute inset-0 w-full bg-black -z-10" />
+
+        {/* Wrapper for Filters, Search, and Badges */}
+        <div
+          className={cn(
+            "flex flex-wrap items-start gap-4",
+            isMobile ? "flex-col" : "items-center"
+          )}
+        >
+          {/* Search Input */}
+          <Input
+            type="text"
+            placeholder="Sök företag (separera med komma)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 relative w-full md:w-[350px]"
+          />
+
+          {/* Filter Button */}
+          <FilterPopover
+            filterOpen={filterOpen}
+            setFilterOpen={setFilterOpen}
+            sectors={sectors}
+            setSectors={setSectors}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
+
+          {/* Badges - Stay inline on desktop, wrap on mobile */}
+          {activeFilters.length > 0 && (
+            <div
+              className={cn(
+                "flex flex-wrap gap-2",
+                isMobile ? "w-full" : "flex-1"
+              )}
+            >
+              <FilterBadges filters={activeFilters} />
+            </div>
+          )}
+        </div>
+      </div>
 
       {filteredCompanies.length === 0 ? (
         <div className="text-center py-12">
