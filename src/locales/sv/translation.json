@@ -314,6 +314,37 @@
     "biogenicEmissions": "Biogena utsläpp"
   },
   "companies": {
+    "card": {
+      "noData": "Ingen data",
+      "unknownSector": "Okänd sektor",
+      "emissions": "Utsläpp",
+      "totalEmissionsInfo": "Totala utsläpp (Scope 1 & 2)",
+      "emissionsChangeRate": "Förändringstakt",
+      "emissionsChangeRateInfo": "Förändringstakt för utsläpp jämfört med föregående rapporteringsperiod.",
+      "turnover": "Omsättning",
+      "employees": "Anställda",
+      "companyReport": "Företagsrapport",
+      "missingReport": "Saknar report"
+    },
+    "list": {
+      "error": {
+        "fetchingCompanyInfo": "Det gick inte att hämta företagsinformation",
+        "tryAgainLater": "Försök igen senare"
+      },
+      "sort": {
+        "placeholder": "Sortera efter",
+        "emissions": "Utsläpp",
+        "turnover": "Omsättning",
+        "employees": "Antal anställda",
+        "name": "Företagsnamn"
+      },
+      "company": {
+        "turnover": "Omsättning",
+        "employees": "Anställda",
+        "emissions": "Utsläpp",
+        "readAnnualReport": "Läs årsredovisning"
+      }
+    },
     "sectionedCompanyList": {
       "otherCompanies": "Övriga företag",
       "companies": "företag"
