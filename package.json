@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-api": "node scripts/generate-api.js"
+    "generate-api": "npx openapi-typescript http://localhost:3000/api/openapi.json -o src/lib/api-types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
