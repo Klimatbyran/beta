@@ -20,7 +20,6 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
-  const isMobile = useScreenSize();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -67,19 +66,14 @@ export function Header() {
   ];
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 bg-black-2",
-        isMobile ? "h-10" : "h-12"
-      )}
-    >
-      <div className="container mx-auto px-4 flex items-center justify-between pt-2 md:pt-0">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black-2 h-10 lg:h-12">
+      <div className="container mx-auto px-4 flex items-center justify-between pt-2 lg:pt-0">
         <Link to="/" className="flex items-center gap-2 text-base font-medium">
           Klimatkollen
         </Link>
 
         <button
-          className="md:hidden text-white"
+          className="lg:hidden text-white"
           onClick={toggleMenu}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
@@ -87,7 +81,7 @@ export function Header() {
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6 ml-auto">
+        <nav className="hidden lg:flex items-center gap-6 ml-auto">
           <Menubar className="border-none bg-transparent h-full">
             {NAV_LINKS.map((item) =>
               item.sublinks ? (
