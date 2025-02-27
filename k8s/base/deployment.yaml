@@ -46,8 +46,9 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
           env:
-            - name: NODE_ENV
-              value: "staging"
+            - name: API_BASE_URL
+              value: "https://stage-api.klimatkollen.se"
+
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/conf.d

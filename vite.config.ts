@@ -35,7 +35,6 @@ export default defineConfig({
         target: API_BASE_URL,
         changeOrigin: true,
         secure: true,
-        rewrite: (p) => p.replace(/^\/api/, "/api"),
         configure: (proxy) => {
           proxy.on("proxyReq", (proxyReq, req) => {
             // Generate cache key from request URL and method
