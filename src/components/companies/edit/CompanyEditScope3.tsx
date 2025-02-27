@@ -1,39 +1,48 @@
 import { IconCheckbox } from "@/components/ui/icon-checkbox";
 import { Input } from "@/components/ui/input";
 import { categoryMetadata } from "@/lib/constants/categories";
+import { CompanyEditRow } from "./CompanyEditRow";
+import { CompanyEditInputField, CompanyEmptyField } from "./CompanyEditField";
 
 export function CompanyEditScope3({ periods }) {
-
-  if(periods.length <= 0 || periods[0].emissions.scope3 === undefined || periods[0].emissions.scope3.categories === undefined) {
+  if (
+    periods.length <= 0 ||
+    periods[0].emissions.scope3 === undefined ||
+    periods[0].emissions.scope3.categories === undefined
+  ) {
     return <></>;
   }
 
+  const getCategoryValue = (index: number, categories) => {
+    const category = categories.find((category) => category.category === index);
+    return category !== undefined ? category.total : 0;
+  };
   return (
     <>
-      <div className="flex justify-between my-2 py-2 px-4 items-center">
-        <h2 className="text-lg font-bold">Scope 3</h2>
-      </div>
+      <CompanyEditRow
+        headerName
+        noHover
+        name="Scope 3"
+        fields={periods.map((_period => CompanyEmptyField()))}
+      ></CompanyEditRow>
 
-      {periods[0].emissions.scope3.categories.map((category, index) => (
+      {Object.values(categoryMetadata).map((category, index) => (
         <div>
-        {category.category !== 16 && (
-          <div className="flex justify-between my-1 px-6 py-3 rounded-lg hover:bg-[#1F1F1F] items-center">
-          <h3 className="text-md">{categoryMetadata[category.category].name}</h3>
-          {periods.map(period => (
-            <div>
-              <div className="flex items-center">
-                <Input
-                  type="number"
-                  className="w-[150px] bg-black-1"
-                  value={period.emissions.scope3.categories[index].total ?? 0}
-                ></Input>
-                <IconCheckbox></IconCheckbox>
-              </div>
-            </div>
-          ))}
+          {index !== 15 && (
+            <CompanyEditRow
+              name={category.name}
+              fields={periods.map((period) =>
+                CompanyEditInputField({
+                  type: "number",
+                  value: getCategoryValue(
+                    index,
+                    period.emissions.scope3.categories
+                  ),
+                })
+              )}
+            ></CompanyEditRow>
+          )}
         </div>
-        )}
-        </div>        
       ))}
     </>
   );

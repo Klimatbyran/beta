@@ -1,19 +1,18 @@
 import { Pen } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import type { CompanyDetails } from "@/types/company";
-import React from "react";
 import Select from "react-select";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
-  selectedYear: string;
-  onYearSelect: (year: string) => void;
+  selectedYears: string[];
+  onYearsSelect: (year: string[]) => void;
 }
 
 export function CompanyEditHeader({
   company,
-  selectedYear,
-  onYearSelect,
+  selectedYears,
+  onYearsSelect,
 }: CompanyOverviewProps) {
   const periods = [...company.reportingPeriods].map((period) => {
     return {
@@ -22,6 +21,10 @@ export function CompanyEditHeader({
     };
   });
   periods.sort();
+
+  const selected = (options, action) => {
+    onYearsSelect(options.map(option => option.value));
+  }
 
   return (
     <div className="flex items-start justify-between mb-12">
@@ -36,6 +39,7 @@ export function CompanyEditHeader({
           <Select
             options={periods}
             isMulti
+            onChange={selected}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -51,11 +55,15 @@ export function CompanyEditHeader({
                 ...baseStyles,
                 backgroundColor: isFocused ? "#3A3A3A" : "#2E2E2E",
               }),
-              multiValue: (baseStyles) => ({
+              multiValueLabel: (baseStyles) => ({
                 ...baseStyles,
-                backgroundColor: "#3A3A3A",
+                backgroundColor: "#878787",
                 color: "white"
               }),
+              multiValueRemove: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: "#878787"
+              })
             }}
           ></Select>
         </div>
