@@ -505,7 +505,7 @@
       "budgetRunsOut": "Koldioxidbudgeten tar slut",
       "emissionRanking": "UTSLÄPPSRANKING",
       "emission": "Utsläpp {{year}}",
-      "emissionInfo": "Kommunens utsläpp av CO₂e för år {year}.",
+      "emissionInfo": "Kommunens utsläpp av CO₂e för år {{year}}.",
       "kTCO2": "tCO₂e",
       "changeRate": "Förändringstakt",
       "changeRateInfo": "Förändringstakt för utsläppen sedan Parisavtalet tecknades 2015.",

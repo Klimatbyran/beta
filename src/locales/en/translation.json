@@ -505,7 +505,7 @@
       "budgetRunsOut": "Carbon budget runs out",
       "emissionRanking": "EMISSION RANKING",
       "emission": "Emissions {{year}}",
-      "emissionInfo": "The municipality's CO₂e emissions for the year {year}.",
+      "emissionInfo": "The municipality's CO₂e emissions for the year {{year}}.",
       "kTCO2": "kT CO₂e",
       "changeRate": "Change Rate",
       "changeRateInfo": "Change rate of emissions since the Paris Agreement was signed in 2015.",
