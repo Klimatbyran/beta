@@ -19,6 +19,14 @@
     "internationalLicense": "International License",
     "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
   },
+  "newsletter": {
+    "subscribe": "Subscribe to our newsletter",
+    "description": "With our newsletter, you will receive updates on emissions and the transition directly in your email.",
+    "emailPlaceholder": "Your email address",
+    "subscribeButton": "Subscribe",
+    "privacyNotice": "When you submit your details, they will be processed by Klimatbyrån, the non-profit association behind Klimatkollen. You have the right to information on how",
+    "privacyLink": "your personal data is processed."
+  },
   "landingPage": {
     "tabs": {
       "companies": "Companies",

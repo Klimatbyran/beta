@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import MailchimpSubscribe from "react-mailchimp-subscribe";
+import { useTranslation } from "react-i18next";
 
 interface NewsletterPopoverProps {
   isOpen: boolean;
@@ -22,7 +23,7 @@ export function NewsletterPopover({
   buttonText,
 }: NewsletterPopoverProps) {
   const [email, setEmail] = useState("");
-
+  const { t } = useTranslation();
   const MAILCHIMP_URL = import.meta.env.VITE_MAILCHIMP_URL || "https://";
 
   return (
@@ -37,18 +38,15 @@ export function NewsletterPopover({
         {/* Close Button */}
         <button
           className="absolute top-2 right-2 text-grey hover:text-white transition"
-          aria-label="Stäng"
+          aria-label="Close"
           onClick={() => setIsOpen(false)}
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Newsletter Content */}
-        <h2 className="text-2xl mb-4">Prenumerera på vårt nyhetsbrev</h2>
-        <p className="text-grey mb-6">
-          Med vårt nyhetsbrev får du uppdateringar om hur det går med utsläppen
-          och omställningen direkt i din mejl.
-        </p>
+        <h2 className="text-2xl mb-4">{t("newsletter.subscribe")}</h2>
+        <p className="text-grey mb-6">{t("newsletter.description")}</p>
 
         <MailchimpSubscribe
           url={MAILCHIMP_URL}
@@ -63,30 +61,28 @@ export function NewsletterPopover({
             >
               <input
                 type="email"
-                placeholder="Din e-postadress"
+                placeholder={t("newsletter.emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-2 mb-4 border border-gray-300 rounded text-black bg-white"
                 required
               />
               <Button className="bg-blue-5 text-white w-full" type="submit">
-                Prenumerera
+                {t("newsletter.subscribeButton")}
               </Button>
             </form>
           )}
         />
 
         <p className="text-xs text-grey mt-2">
-          När du lämnat dina uppgifter kommer de att behandlas av Klimatbyrån
-          ideell förening som står bakom Klimatkollen. Du har rätt till
-          information om hur{" "}
+          {t("newsletter.privacyNotice")}{" "}
           <a
             href="/privacy"
             target="_blank"
             rel="noopener noreferrer"
             className="underline hover:text-white"
           >
-            dina personuppgifter behandlas.
+            {t("newsletter.privacyLink")}{" "}
           </a>
         </p>
       </PopoverContent>

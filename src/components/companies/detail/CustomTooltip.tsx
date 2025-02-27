@@ -33,9 +33,9 @@ export const CustomTooltip = ({
           // Correctly display "No Data Available" if original value was null
           const displayValue =
             originalValue === null
-              ? t("tooltip.noDataAvailable")
+              ? t("companies.tooltip.noDataAvailable")
               : `${Math.round(entry.value).toLocaleString()} ${t(
-                  "tooltip.tonsCO2e"
+                  "companies.tooltip.tonsCO2e"
                 )}`;
 
           return (
