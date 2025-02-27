@@ -10,6 +10,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import { BlogPostMeta, blogMetadata } from "../lib/blog/blogPostsList";
+import { useTranslation } from "react-i18next";
 
 // Import Markdown files
 const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md", {
@@ -18,6 +19,7 @@ const markdownFiles = import.meta.glob("/src/lib/blog/posts/*.md", {
 });
 
 export function BlogDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [blogPost, setBlogPost] = useState<{
     metadata: BlogPostMeta;
@@ -69,7 +71,7 @@ export function BlogDetailPage() {
       try {
         await navigator.share({
           title: blogPost?.metadata.title,
-          text: "Kolla in det här blogginlägget!",
+          text: t("blogDetailPage.shareText"),
           url: shareUrl,
         });
       } catch (error) {
@@ -86,8 +88,8 @@ export function BlogDetailPage() {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (!blogPost) return <div>Post not found</div>;
+  if (loading) return <div>{t("blogDetailPage.loading")}</div>;
+  if (!blogPost) return <div>{t("blogDetailPage.postNotFound")}</div>;
 
   const relatedPosts = blogPost.metadata.relatedPosts
     ? blogPost.metadata.relatedPosts
@@ -102,7 +104,7 @@ export function BlogDetailPage() {
         <Button variant="ghost" size="sm" className="gap-2" asChild>
           <a href="/insights">
             <ArrowLeft className="w-4 h-4" />
-            Tillbaka
+            {t("blogDetailPage.back")}
           </a>
         </Button>
         <Button
@@ -116,7 +118,7 @@ export function BlogDetailPage() {
           ) : (
             <Share2 className="w-4 h-4" />
           )}
-          {copied ? "Länk kopierad!" : "Dela"}
+          {copied ? t("blogDetailPage.linkCopied") : t("blogDetailPage.share")}
         </Button>
       </div>
 
@@ -196,7 +198,7 @@ export function BlogDetailPage() {
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <div className="space-y-8">
-          <Text variant="h3">Relaterade artiklar</Text>
+          <Text variant="h3">{t("blogDetailPage.relatedArticles")}</Text>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {relatedPosts.map(
               (post) =>

@@ -22,6 +22,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SECTORS, SECTOR_NAMES } from "@/lib/constants/sectors";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { useTranslation } from "react-i18next";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { cn } from "@/lib/utils";
 
@@ -58,16 +59,19 @@ function FilterPopover({
   sortBy,
   setSortBy,
 }: FilterPopoverProps) {
+  const { t } = useTranslation();
+
   return (
     <Popover open={filterOpen} onOpenChange={setFilterOpen}>
       <PopoverTrigger asChild>
         <Button
+          type="button"
           variant="outline"
           size="sm"
           className="h-8 bg-black-1 border-none gap-2"
         >
           <Filter className="w-4 h-4" />
-          Filter och Sortera
+          {t("companiesPage.filter")}
           {sectors.length > 0 && (
             <Badge
               variant="secondary"
@@ -129,8 +133,9 @@ interface SortGroupProps {
 }
 
 function SortGroup({ sortBy, setSortBy }: SortGroupProps) {
+  const { t } = useTranslation();
   return (
-    <CommandGroup heading="Sortera efter">
+    <CommandGroup heading={t("companiesPage.sortBy")}>
       {SORT_OPTIONS.map((option) => (
         <CommandItem
           key={option.value}
@@ -158,13 +163,14 @@ function FilterCommands({
   sortBy,
   setSortBy,
 }: FilterCommandsProps) {
+  const { t } = useTranslation();
   return (
     <Command>
-      <CommandInput placeholder="Sök i filter..." />
+      <CommandInput placeholder={t("companiesPage.searchInFilter")} />
       <CommandList>
-        <CommandEmpty>Inga filter hittades.</CommandEmpty>
+        <CommandEmpty>{t("companiesPage.noFiltersFound")}</CommandEmpty>
         <FilterGroup
-          title="Sektor"
+          title={t("companiesPage.sector")}
           items={SECTORS}
           selected={sectors}
           onSelect={setSectors}
@@ -177,6 +183,7 @@ function FilterCommands({
 }
 
 export function CompaniesPage() {
+  const { t } = useTranslation();
   const { companies, loading, error } = useCompanies();
   const [sectors, setSectors] = useState<CompanySector[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>("emissions_reduction");
@@ -220,7 +227,7 @@ export function CompaniesPage() {
             (term) =>
               company.name.toLowerCase().includes(term) ||
               (company.industry?.industryGics?.sectorCode &&
-                SECTOR_NAMES[company.industry.industryGics.sectorCode]
+                t(SECTOR_NAMES[company.industry.industryGics.sectorCode])
                   ?.toLowerCase()
                   .includes(term))
           );
@@ -240,12 +247,13 @@ export function CompaniesPage() {
             (b.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0) -
             (a.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0)
           );
-        case "scope3_coverage":
+        case "scope3_coverage": {
           const bCoverage =
             b.reportingPeriods[0]?.emissions?.scope3?.categories?.length || 0;
           const aCoverage =
             a.reportingPeriods[0]?.emissions?.scope3?.categories?.length || 0;
           return bCoverage - aCoverage;
+        }
         case "name":
           return a.name.localeCompare(b.name);
         default:
@@ -268,9 +276,9 @@ export function CompaniesPage() {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-light text-red-500">
-          Det gick inte att hämta företagsinformation
+          {t("companiesPage.errorTitle")}
         </h2>
-        <p className="text-grey mt-2">Försök igen senare</p>
+        <p className="text-grey mt-2">{t("companiesPage.errorDescription")}</p>
       </div>
     );
   }
@@ -278,8 +286,8 @@ export function CompaniesPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Företagsrapporter"
-        description="Översikt över företagens klimatpåverkan och hållbarhetsarbete"
+        title={t("companiesPage.title")}
+        description={t("companiesPage.description")}
         className="-ml-4"
       />
       {/* Filters & Sorting Section */}
@@ -301,7 +309,7 @@ export function CompaniesPage() {
           {/* Search Input */}
           <Input
             type="text"
-            placeholder="Sök företag (separera med komma)"
+            placeholder={t("companiesPage.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 relative w-full md:w-[350px]"
@@ -334,9 +342,11 @@ export function CompaniesPage() {
       {filteredCompanies.length === 0 ? (
         <div className="text-center py-12">
           <h3 className="text-xl font-light text-grey">
-            Inga företag hittades
+            {t("companiesPage.noCompaniesFound")}
           </h3>
-          <p className="text-grey mt-2">Försök med andra sökkriterier</p>
+          <p className="text-grey mt-2">
+            {t("companiesPage.tryDifferentCriteria")}
+          </p>
         </div>
       ) : sectors.length === 0 && !searchQuery ? (
         <SectionedCompanyList
@@ -368,6 +378,7 @@ export function CompaniesPage() {
 }
 
 function FilterBadges({ filters }: { filters: FilterBadge[] }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-wrap gap-2">
       {filters.map((filter, index) => (
@@ -377,11 +388,15 @@ function FilterBadges({ filters }: { filters: FilterBadge[] }) {
           className="bg-blue-5/30 text-blue-2 pl-2 pr-1 flex items-center gap-1"
         >
           <span className="text-grey text-xs mr-1">
-            {filter.type === "sort" ? "Sorterar:" : "Filter:"}
+            {filter.type === "sort"
+              ? t("companiesPage.sorting")
+              : t("companiesPage.filtering")}
           </span>
           {filter.label}
           {filter.type === "filter" && filter.onRemove && (
             <button
+              type="button"
+              title={t("companiesPage.removeFilter")}
               onClick={(e) => {
                 e.preventDefault();
                 filter.onRemove?.();

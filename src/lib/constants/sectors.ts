@@ -1,3 +1,5 @@
+// FIXME ADD TRANSLATIONS
+
 // GICS sector names and metadata
 export const SECTOR_NAMES: Record<string, string> = {
   "10": "Energi",

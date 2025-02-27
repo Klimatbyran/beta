@@ -23,6 +23,7 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import { getChartData } from "../../../utils/getChartData";
 import { CustomTooltip } from "./CustomTooltip";
 import { DataViewSelector } from "./DataViewSelector";
+import { useTranslation } from "react-i18next";
 
 export function EmissionsHistory({
   reportingPeriods,
@@ -35,11 +36,15 @@ export function EmissionsHistory({
     outlierDetection: true,
   },
 }: EmissionsHistoryProps) {
+  const { t } = useTranslation();
+
   // Validate input data
   if (!reportingPeriods?.length) {
     return (
       <div className="text-center py-12">
-        <Text variant="body">Inga rapporteringsperioder tillgängliga</Text>
+        <Text variant="body">
+          {t("companies.emissionsHistory.noReportingPeriods")}
+        </Text>
       </div>
     );
   }
@@ -113,23 +118,19 @@ export function EmissionsHistory({
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-12 gap-4 md:gap-0">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Text variant="h3">Historiska utsläpp</Text>
+            <Text variant="h3">{t("companies.emissionsHistory.title")}</Text>
             <TooltipProvider>
               <UITooltip>
                 <TooltipTrigger>
                   <Info className="w-4 h-4 text-grey" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>
-                    Historiska utsläpp och trend mot 2030. Klicka på en punkt
-                    för att ta bort linjen från grafen. Hovra över punkten för
-                    att se värdena för rapporteringsperioden.
-                  </p>
+                  <p>{t("companies.emissionsHistory.tooltip")}</p>
                 </TooltipContent>
               </UITooltip>
             </TooltipProvider>
           </div>
-          <Text variant="body">Ton CO₂e per år</Text>
+          <Text variant="body">{t("companies.emissionsHistory.unit")}</Text>
         </div>
         {/* Switch between Tabs and Dropdown based on screen size */}
         <DataViewSelector
@@ -175,7 +176,7 @@ export function EmissionsHistory({
                   dot={{ r: 4, fill: "white", cursor: "pointer" }}
                   activeDot={{ r: 6, fill: "white", cursor: "pointer" }}
                   connectNulls
-                  name="Totala utsläpp"
+                  name={t("companies.emissionsHistory.totalEmissions")}
                 />
               </>
             )}

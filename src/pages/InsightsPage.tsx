@@ -6,6 +6,7 @@ import { isMobile } from "react-device-detect";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useState } from "react";
 import { NewsletterPopover } from "@/components/NewsletterPopover";
+import { useTranslation } from "react-i18next";
 
 // Component for blog metadata (category, date, read time)
 function BlogMeta({
@@ -41,6 +42,8 @@ function BlogMeta({
 
 // Component for blog post cards
 function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
+  const { t } = useTranslation();
+
   return (
     <Link
       to={`/insights/${post.id}`}
@@ -67,7 +70,9 @@ function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
         </Text>
         <Text className="text-grey">{post.excerpt}</Text>
         <div className="flex items-center gap-2 text-blue-2 group-hover:gap-3 transition-all">
-          <span aria-label="Click to read full article">Läs mer</span>
+          <span aria-label="Click to read full article">
+            {t("insightsPage.readMore")}
+          </span>
           <ArrowUpRight className="w-4 h-4" />
         </div>
       </div>
@@ -79,17 +84,18 @@ export function InsightsPage() {
   const featuredPost = isMobile ? undefined : blogMetadata[0];
   const otherPosts = isMobile ? blogMetadata.slice(0) : blogMetadata.slice(1);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="w-full max-w-[1200px] mx-auto space-y-8">
       <PageHeader
-        title="Insikter"
-        description="Fördjupande analyser och rapporter om klimatomställningen i Sverige"
+        title={t("insightsPage.title")}
+        description={t("insightsPage.description")}
       >
         <NewsletterPopover
           isOpen={isSignUpOpen}
           setIsOpen={setIsSignUpOpen}
-          buttonText="Prenumerera på nyhetsbrev"
+          buttonText={t("insightsPage.subscribeNewsletter")}
         />
       </PageHeader>
       <div className="max-w-[1150px] mx-auto space-y-8">

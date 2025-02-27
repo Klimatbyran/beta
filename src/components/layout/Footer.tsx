@@ -1,5 +1,6 @@
 import { socialLinks, partners } from "../../lib/constants/footer";
 import { Text } from "@/components/ui/text";
+import { Trans, useTranslation } from "react-i18next";
 
 function SocialLinks() {
   return (
@@ -33,35 +34,37 @@ function PartnerLogos() {
 }
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-black-2 py-4 md:py-8">
       <div className="container mx-auto px-4 space-y-4 md:space-y-8 flex flex-col items-center text-center">
         {/* Contact Section */}
         <div className="space-y-2 md:space-y-4">
           <Text variant="h6" className="text-grey md:text-base">
-            Kontakta oss
+            {t("footer.contactUs")}
           </Text>
           <SocialLinks />
-          <Text
-            variant="body"
-            className="text-sm md:text-base max-w-full md:max-w-2xl text-grey"
-          >
-            Klimatkollen är en medborgarplattform som tillgängliggör klimatdata
-            och är utvecklad med öppen{" "}
-            <a
-              href="https://github.com/Klimatbyran/"
-              className="hover:text-white transition-colors underline"
-            >
-              källkod
-            </a>
-            .
-          </Text>
+          <div className="text-sm md:text-base max-w-full md:max-w-2xl font-light text-grey">
+            <Trans
+              i18nKey="footer.description"
+              components={[
+                <a
+                  title="Klimatkollen's Github"
+                  className="underline hover:text-white transition-colors"
+                  href="https://github.com/Klimatbyran/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />,
+              ]}
+            />
+          </div>
         </div>
 
         {/* Partners Section */}
         <div className="space-y-2">
           <Text variant="h6" className="text-blue-3">
-            Supporters och partners
+            {t("footer.supporters")}
           </Text>
           <PartnerLogos />
         </div>
@@ -69,16 +72,16 @@ export function Footer() {
         {/* Footer Links */}
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 text-grey">
           <a href="/privacy" className="hover:text-white transition-colors">
-            Privacy & Terms
+            {t("footer.privacyTerms")}
           </a>
           <a href="/license" className="hover:text-white transition-colors">
-            International license
+            {t("footer.internationalLicense")}
           </a>
           <a
             href="https://creativecommons.org/licenses/by-sa/4.0/"
             className="hover:text-white transition-colors"
           >
-            CC BY-SA - Attribution-ShareAlike 4.0
+            {t("footer.ccBySa")}
           </a>
         </div>
       </div>
