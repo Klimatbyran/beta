@@ -75,7 +75,7 @@ export function CompanyDetailPage() {
       />
 
       <CompanyHistory company={company} />
-      <CompanyScope3
+      {/* <CompanyScope3
         emissions={selectedPeriod.emissions!}
         year={new Date(selectedPeriod.endDate).getFullYear()}
         isRealEstate={company.industry?.industryGics?.sectorCode === "60"}
@@ -88,7 +88,7 @@ export function CompanyDetailPage() {
           .sort((a, b) => a.year - b.year)}
       />
 
-      <CompanySectorComparison company={company} />
+      <CompanySectorComparison company={company} /> */}
     </div>
   );
 }
