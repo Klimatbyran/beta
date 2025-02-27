@@ -27,24 +27,18 @@ export function Header() {
   };
 
   const LanguageButtons = ({ className }: { className?: string }) => (
-    <div className={cn("flex items-center gap-4", className)}>
+    <div className={cn("flex items-center gap-2", className)}>
       <button
         onClick={() => changeLanguage("en")}
-        className={cn(
-          "text-sm font-medium",
-          i18n.language === "en" ? "text-white" : "text-grey"
-        )}
+        className={cn(i18n.language === "en" && "bg-black-1 rounded-full px-1")}
       >
-        EN
+        🇬🇧
       </button>
       <button
         onClick={() => changeLanguage("sv")}
-        className={cn(
-          "text-sm font-medium",
-          i18n.language === "sv" ? "text-white" : "text-grey"
-        )}
+        className={cn(i18n.language === "sv" && "bg-black-1 rounded-full px-1")}
       >
-        SV
+        🇸🇪
       </button>
     </div>
   );
@@ -76,7 +70,7 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 bg-black-2",
-        isMobile ? "h-10" : "h-14"
+        isMobile ? "h-10" : "h-12"
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between pt-2 md:pt-0">
@@ -100,7 +94,7 @@ export function Header() {
                 <MenubarMenu key={item.label}>
                   <MenubarTrigger
                     className={cn(
-                      "flex items-center gap-2 px-3 py-3 h-full transition-all",
+                      "flex items-center gap-2 px-3 py-3 h-full transition-all text-sm",
                       location.pathname.startsWith(item.path)
                         ? "bg-black-1 text-white"
                         : "text-grey hover:text-white"
@@ -133,7 +127,7 @@ export function Header() {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-2 px-3 py-3 h-full font-medium",
+                    "flex items-center gap-2 px-3 py-3 h-full text-sm",
                     matchPath(item.path, location.pathname)
                       ? "bg-black-1 text-white"
                       : "text-grey hover:text-white"

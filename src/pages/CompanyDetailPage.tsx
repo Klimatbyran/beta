@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useCompanyDetails } from "@/hooks/useCompanyDetails";
 import { CompanyOverview } from "@/components/companies/detail/CompanyOverview";
 import { CompanyHistory } from "@/components/companies/detail/CompanyHistory";
-import { CompanyScope3 } from "@/components/companies/detail/CompanyScope3";
-import { CompanySectorComparison } from "@/components/companies/detail/CompanySectorComparison";
 import { Text } from "@/components/ui/text";
 import { useTranslation } from "react-i18next";
 
