@@ -99,7 +99,7 @@ export function Footer() {
           )}     
           {isAuthentificated() && (
             <div className='hover:text-white ms-auto flex items-center'>
-              <span>Välkommen, {userinfo!.name}</span>
+              <span>Välkommen, {userinfo?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">
                 <AvatarImage className='w-[45px] h-[45px] border border-grey rounded-full' src={userinfo!.githubImageUrl || ""} />
                 <AvatarFallback>
