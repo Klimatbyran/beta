@@ -1,3 +1,5 @@
+// FIXME ADD TRANSLATIONS
+
 import {
   Building2,
   Package,
