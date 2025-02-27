@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
-import { useTeamMembers, useBoardMembers } from "@/lib/constants/about";
+import { useTeamMembers } from "@/hooks/useTeamMembers";
+import { useBoardMembers } from "@/hooks/useBoardMembers";
 import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
 import { LinkButton } from "@/components/layout/LinkButton";
