@@ -13,7 +13,7 @@ import { MethodsPage } from "./pages/MethodsPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import AuthProvider from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
-import { AuthCallback } from './pages/AuthCallback';
+import { AuthCallback } from "./pages/AuthCallback";
 
 function App() {
   return (
