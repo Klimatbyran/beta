@@ -48,11 +48,3 @@ spec:
           env:
             - name: API_BASE_URL
               value: "http://garbo.garbo-stage.svc.cluster.local"
-
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-      volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config
