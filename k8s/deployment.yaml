@@ -14,7 +14,7 @@ spec:
         app: beta
     spec:
       containers:
-        - image: ghcr.io/klimatbyran/beta:3.0.1 # {"$imagepolicy": "flux-system:beta"}
+        - image: ghcr.io/klimatbyran/beta:0.0.114
           resources: {}
           name: beta
           ports:
