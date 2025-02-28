@@ -72,7 +72,7 @@ export function CompanyCard({
     <div className="relative rounded-level-2">
       <Link
         to={`/companies/${wikidataId}`}
-        className="block bg-black-2 rounded-level-2 p-8 space-y-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
+        className="block bg-black-2 rounded-level-2 p-10 xxs:p-4 xs:p-4 2xl:p-10 space-y-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
       >
         <div className="flex items-start justify-between rounded-level-2">
           <div className="space-y-2">
@@ -125,11 +125,11 @@ export function CompanyCard({
             <Building2 className="w-6 h-6" />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-grey mb-2 text-lg">
+        <div className="xxs:flex xxs:flex-col xxs:gap-4 xs:grid xs:grid-cols-2">
+          <div className="space-y-2 ">
+            <div className="flex items-center text-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
-              <span>Utsläpp</span>
+              <span className="sm:text-xl xxs:text-lg">Utsläpp</span>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -141,11 +141,11 @@ export function CompanyCard({
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="text-3xl font-light">
+            <div className="sm:text-2xl xxs:text-xl font-light">
               {currentEmissions ? (
                 <span className="text-orange-3">
                   {Math.ceil(currentEmissions).toLocaleString("sv-SE")}
-                  <span className="text-lg text-grey ml-1">tCO₂e</span>
+                  <span className="sm:text-xl xxs:text-lg text-grey ml-1">tCO₂e</span>
                 </span>
               ) : (
                 <span className="text-grey">Ingen data</span>
@@ -155,7 +155,7 @@ export function CompanyCard({
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
-              <span>Förändringstakt</span>
+              <span className="sm:text-xl xxs:text-lg">Förändringstakt</span>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -170,11 +170,11 @@ export function CompanyCard({
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="text-3xl font-light">
+            <div className="sm:text-2xl xxs:text-xl font-light">
               {emissionsChange !== null ? (
                 <span
                   className={
-                    emissionsChange < 0 ? "text-green-3" : "text-pink-3"
+                    emissionsChange < 0 ? "text-green-3" : "text-pink-3" 
                   }
                 >
                   {emissionsChange > 0 ? "+" : ""}
@@ -194,9 +194,9 @@ export function CompanyCard({
                 className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
                 <Wallet className="w-4 h-4" />
-                <span> Omsättning</span>
+                <span className="sm:text-xl xxs:text-lg"> Omsättning</span>
               </Text>
-              <Text variant="h6">
+              <Text className="sm:text-2xl xxs:text-xl" variant="h6">
                 {latestPeriod.economy.turnover.value
                   ? (latestPeriod.economy.turnover.value / 1e9).toFixed(1)
                   : "N/A"}{" "}
@@ -213,9 +213,9 @@ export function CompanyCard({
                 variant="body"
                 className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
-                <Users className="w-4 h-4" /> <span>Anställda</span>
+                <Users className="w-4 h-4" /> <span className="sm:text-xl xxs:text-lg">Anställda</span>
               </Text>
-              <Text variant="h6">{formattedEmployeeCount}</Text>
+              <Text className="sm:text-2xl xxs:text-xl" variant="h6">{formattedEmployeeCount}</Text>
             </div>
           )}
         </div>

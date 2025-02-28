@@ -11,9 +11,6 @@ export default {
     container: {
       center: true,
       padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
     },
     extend: {
       fontFamily: {
@@ -25,6 +22,11 @@ export default {
           letterSpacing: '-0.02em',
           fontWeight: '300',
         }],
+      },
+      screens: {
+        'xxs': '375px',
+        'xs': '430px',
+        '2xl': '1400px'
       },
       borderRadius: {
         'level-1': '48px',
