@@ -1,5 +1,4 @@
 import { defineConfig } from "vite";
-import { API_BASE_URL } from "./src/lib/constants/urls.js";
 import react from "@vitejs/plugin-react";
 import { plugin as markdown } from "vite-plugin-markdown";
 import { Mode } from "vite-plugin-markdown";
@@ -32,7 +31,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: `${API_BASE_URL}`,
+        target: "http://localhost:3000", // Note NGINX will handle this in production/staging
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {
