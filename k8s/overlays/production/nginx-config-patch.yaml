@@ -23,11 +23,11 @@ data:
         add_header X-XSS-Protection "1; mode=block";
         add_header X-Content-Type-Options "nosniff";
         add_header Referrer-Policy "strict-origin-when-cross-origin";
-        add_header Content-Security-Policy "default-src 'self' https://stage-api.klimatkollen.se https://images.unsplash.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval';";
+        add_header Content-Security-Policy "default-src 'self' https://api.klimatkollen.se https://images.unsplash.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval';";
 
         # API proxy
         location /api/ {
-            proxy_pass https://stage-api.klimatkollen.se/;
+            proxy_pass https://api.klimatkollen.se/;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection 'upgrade';
