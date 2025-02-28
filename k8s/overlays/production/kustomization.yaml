@@ -9,4 +9,4 @@ patches:
   - path: nginx-config-patch.yaml
 images:
   - name: ghcr.io/klimatbyran/frontend
-    newTag: "3.0.12" # {"$imagepolicy": "flux-system:frontend:tag"}
+    newTag: "3.0.13" # {"$imagepolicy": "flux-system:frontend:tag"}
