@@ -9,4 +9,4 @@ spec:
         - name: frontend
           env:
             - name: API_BASE_URL
-              value: "https://api.klimatkollen.se"
+              value: "http://garbo.garbo.svc.cluster.local"
