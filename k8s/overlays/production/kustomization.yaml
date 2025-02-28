@@ -6,7 +6,6 @@ resources:
 patches:
   - path: ingress-patch.yaml
   - path: env-patch.yaml
-  - path: nginx-config-patch.yaml
 images:
   - name: ghcr.io/klimatbyran/frontend
     newTag: "3.0.15" # {"$imagepolicy": "flux-system:frontend:tag"}
