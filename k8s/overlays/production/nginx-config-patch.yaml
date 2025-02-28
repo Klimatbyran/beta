@@ -11,6 +11,6 @@ data:
         index index.html;
 
         location /api/ {
-            proxy_pass http://garbo.garbo.svc.cluster.local/; # Production service name
+            proxy_pass http://garbo.garbo.svc.cluster.local/api/; # Production service name
         }
     }
