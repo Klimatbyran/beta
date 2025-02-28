@@ -45,6 +45,3 @@ spec:
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 10
-          env:
-            - name: API_BASE_URL
-              value: "http://garbo.garbo-stage.svc.cluster.local"
