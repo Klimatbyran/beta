@@ -57,7 +57,7 @@ export function AboutPage() {
         </div>
 
         {/* Team Section */}
-        <AccordionGroup title={t("aboutPage.teamSection.title")}>
+        <AccordionGroup title={t("aboutPage.teamSection.title")} value="teamSection">
           <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamMembers.map((member) => (
@@ -94,7 +94,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Board Section */}
-        <AccordionGroup title={t("aboutPage.boardSection.title")}>
+        <AccordionGroup title={t("aboutPage.boardSection.title")} value="boardSection">
           <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {boardMembers.map((member) => (
@@ -155,7 +155,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Financing Section */}
-        <AccordionGroup title={t("aboutPage.financingSection.title")}>
+        <AccordionGroup title={t("aboutPage.financingSection.title")} value="financingSection">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
             <p>{t("aboutPage.financingSection.paragraph1")}</p>
             <p>{t("aboutPage.financingSection.paragraph2")}</p>
@@ -175,7 +175,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Previous Projects Section */}
-        <AccordionGroup title={t("aboutPage.previousProjectsSection.title")}>
+        <AccordionGroup title={t("aboutPage.previousProjectsSection.title")} value="previousProjects">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <div className="space-y-4">
               <Text variant="h4">
