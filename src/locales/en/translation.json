@@ -86,35 +86,35 @@
     },
     "financingSection": {
       "title": "How We Are Funded",
-      "paragraph1": "In 2024 and 2025, Klimatkollen will receive financial backing from Google.org as one of two Swedish recipients of the Google.org Impact Challenge: Tech for Social Good.",
-      "paragraph2": "In 2023, Klimatkollen was supported by Postkodstiftelsen. The 2022 startup was financed by WWF Sweden, ClimateView, We Don't Have Time, and Argand Partners.",
-      "paragraph3": "Much of the work is voluntary, so we welcome more partners and financial support to scale up!",
-      "donate": "Please donate!",
-      "donateDescription": "Every krona gives us the strength to show more data.",
+      "paragraph1": "In 2024 and 2025, Klimatkollen will receive financial support from Google.org as one of two Swedish recipients of the Google.org Impact Challenge: Tech for Social Good.",
+      "paragraph2": "In 2023, Klimatkollen was funded by Postkodstiftelsen. Our 2022 launch was made possible through support from WWF Sweden, ClimateView, We Don’t Have Time, and Argand Partners.",
+      "paragraph3": "Much of our work relies on voluntary efforts, and we welcome new partners and financial support to help us scale up!",
+      "donate": "Would you like to support our work?",
+      "donateDescription": "Every donation helps us expand and share more data.",
       "bankgiro": "Bankgiro: 5793-3178"
     },
     "previousProjectsSection": {
       "title": "Previous Projects",
       "kommunprojektetTitle": "Municipality Project 2023",
-      "kommunprojektetDescription": "In 2023, Klimatkollen received support from Postkodstiftelsen to assess the progress of the climate transition in municipalities. In addition to emission data, we also show what municipalities are doing to reduce them by presenting statistics on selected key figures for various sub-transitions.",
+      "kommunprojektetDescription": "In 2023, Klimatkollen received support from Postkodstiftelsen to evaluate the progress of the climate transition in municipalities. In addition to emissions data, we also highlight the actions municipalities are taking to reduce them by presenting key statistics on various transition areas.",
       "riksdagsvaletTitle": "Parliamentary Election 2022",
       "riksdagsvaletDescription": "Before the 2022 parliamentary election, Klimatkollen was responsible for two unique projects:",
       "klimatmalTitle": "Climate Goals",
       "klimatmalText": "An analysis of the political parties' climate goals for Sweden",
       "utslappsberakningTitle": "Emission Calculation",
-      "utslappsberakningText": "Calculation of how emissions would decrease or increase with the parties' policies"
+      "utslappsberakningText": "A projection of how emissions would increase or decrease under each party’s policies."
     }
   },
   "insightsPage": {
     "title": "Insights",
-    "description": "Deep dives and reports on the climate transition in Sweden",
-    "newsletter": "Subscribe to newsletter",
+    "description": "In-depth analyses and reports on Sweden’s climate transition.",
+    "newsletter": "Subscribe to our newsletter",
     "readMore": "Read more",
-    "subscribeNewsletter": "Subscribe to newsletter"
+    "subscribeNewsletter": "Subscribe to our newsletter"
   },
   "blogDetailPage": {
     "loading": "Loading...",
-    "postNotFound": "Post not found",
+    "postNotFound": "Article not found",
     "back": "Back",
     "share": "Share",
     "linkCopied": "Link copied!",
@@ -124,10 +124,10 @@
   "companiesPage": {
     "filter": "Filter",
     "sortBy": "Sort By",
-    "searchInFilter": "Search in filter...",
-    "noFiltersFound": "No filters found.",
+    "searchInFilter": "Search filters",
+    "noFiltersFound": "No matching filters found.",
     "sortingOptions": {
-      "emissionsChange": "Emissions change",
+      "emissionsChange": "Change in Emissions (%)",
       "totalEmissions": "Total emissions",
       "scope3Coverage": "Scope 3 coverage",
       "name": "Name"
