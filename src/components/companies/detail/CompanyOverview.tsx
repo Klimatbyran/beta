@@ -168,7 +168,7 @@ export function CompanyOverview({
             </Text>
           </div>
 
-          {selectedPeriod.reportURL && (
+          {selectedPeriod?.reportURL && (
             <div className="flex items-end">
               <a
                 href={selectedPeriod.reportURL}
