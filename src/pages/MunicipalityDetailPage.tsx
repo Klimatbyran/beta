@@ -62,9 +62,9 @@ export function MunicipalityDetailPage() {
           />
           <MunicipalityStatCard
             title={t("municipalityDetailPage.hitNetZero")}
-            value={municipality.hitNetZero.toString()}
+            value={municipality.hitNetZero === "Aldrig" ? t("municipalityDetailPage.never") : municipality.hitNetZero.toString()}
             valueClassName={cn(
-              municipality.hitNetZero === t("municipalityDetailPage.never") ||
+              municipality.hitNetZero === "Aldrig" ||
                 new Date(municipality.hitNetZero) > new Date("2050-01-01")
                 ? "text-pink-3"
                 : "text-green-3"
@@ -119,19 +119,19 @@ export function MunicipalityDetailPage() {
         <MunicipalityLinkCard
           title={t("municipalityDetailPage.climatePlan")}
           description={
-            municipality.climatePlanYear === t("municipalityDetailPage.noPlan")
+            municipality.climatePlanYear === "Saknar plan"
               ? t("municipalityDetailPage.noClimatePlan")
               : t("municipalityDetailPage.adopted", {
                   year: municipality.climatePlanYear,
                 })
           }
           link={
-            municipality.climatePlanLink !== t("municipalityDetailPage.noPlan")
+            municipality.climatePlanLink !== "Saknar plan"
               ? municipality.climatePlanLink
               : undefined
           }
           descriptionClassName={
-            municipality.climatePlanYear === t("municipalityDetailPage.noPlan")
+            municipality.climatePlanYear === "Saknar plan"
               ? "text-pink-3"
               : "text-green-3"
           }
