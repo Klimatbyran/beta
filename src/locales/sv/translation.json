@@ -1,0 +1,529 @@
+{
+  "yes": "Ja",
+  "no": "Nej",
+  "header": {
+    "companies": "Företag",
+    "municipalities": "Kommuner",
+    "about": "Om oss",
+    "insights": "Insikter",
+    "methodology": "Källor och metod",
+    "newsletter": "Nyhetsbrev",
+    "openMenu": "Öppna meny",
+    "closeMenu": "Stäng meny"
+  },
+  "footer": {
+    "contactUs": "Kontakta oss",
+    "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen <0>källkod</0>.",
+    "privacyTerms": "Privacy & Terms",
+    "supporters": "Stöd och partners",
+    "internationalLicense": "International license",
+    "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
+  },
+  "newsletter": {
+    "subscribe": "Prenumerera på vårt nyhetsbrev",
+    "description": "Med vårt nyhetsbrev får du uppdateringar om hur det går med utsläppen och omställningen direkt i din mejl.",
+    "emailPlaceholder": "Din e-postadress",
+    "subscribeButton": "Prenumerera",
+    "privacyNotice": "När du lämnat dina uppgifter kommer de att behandlas av Klimatbyrån ideell förening som står bakom Klimatkollen. Du har rätt till information om hur",
+    "privacyLink": "dina personuppgifter behandlas."
+  },
+  "landingPage": {
+    "tabs": {
+      "companies": "Företag",
+      "municipalities": "Kommuner"
+    },
+    "typewriter": {
+      "company": {
+        "reduceEmissions": "att minska utsläppen",
+        "scope3Emissions": "scope 3-utsläppen",
+        "meetParisAgreement": "att klara Parisavtalet"
+      },
+      "municipality": {
+        "reduceEmissions": "att minska utsläppen",
+        "meetParisAgreement": "att klara Parisavtalet",
+        "climateActions": "klimatåtgärderna",
+        "climatePlans": "klimatplanerna"
+      }
+    },
+    "title": "Hur går det med",
+    "seeResults": "Se resultat",
+    "bestPerformers": "Vilka är bäst?",
+    "bestMunicipalities": "Sveriges bästa kommuner",
+    "municipalitiesDescription": "Årlig utsläppsminskning sedan Parisavtalet 2015",
+    "bestCompanies": "Företag som minskat utsläppen mest",
+    "companiesDescription": "Utsläppsminskning mellan 2023 och 2024",
+    "aboutUsTitle": "Vilka är vi?",
+    "aboutUsContent": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och bygger stöd för minskade utsläpp enligt Parisavtalet. Vi tror på kraften i enkel och tilltalande datavisualisering för att öka kunskapen och engagemanget kring klimatdebatten.",
+    "tabName": {
+      "companies": "företagen",
+      "municipalities": "kommunerna"
+    }
+  },
+  "aboutPage": {
+    "header": {
+      "title": "Om oss",
+      "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata. Klicka på rubrikerna för att läsa mer."
+    },
+    "mainContent": {
+      "title": "Vad är Klimatkollen?",
+      "paragraph1": "Klimatkollen är en medborgarplattform som hjälper medborgare, företag och organisationer att få koll på klimatomställningen, genom att samla in och visualisera klimatdata.",
+      "paragraph2": "Vi visar hur det går med utsläppen, jämfört med hur det borde gå, så att det blir begripligt för allmänheten, bidrar till en faktabaserad debatt och stärker opinionen för klimatåtgärder.",
+      "paragraph3": "Vår vision är att beslutsfattare i politik och näringsliv ska påverkas av en välinformerad och växande opinion till att genomföra åtgärder som sänker utsläppen i linje med Parisavtalet.",
+      "paragraph4": "Klimatkollen lanserades i mars 2022 och drivs av den ideella föreningen Klimatbyrån. Initiativtagare är Ola Spännar och Frida Berry Eklund. Vi började med lokal klimatdata för Sveriges kommuner. Från 2024 visas klimatdata även för företag."
+    },
+    "teamSection": {
+      "title": "Vårt team"
+    },
+    "boardSection": {
+      "title": "Vår styrelse",
+      "links": {
+        "stadgar": "Här hittar du våra",
+        "stadgarLink": "stadgar",
+        "uppforandekodLink": "uppförandekod",
+        "and": "och",
+        "antikorruptionspolicyLink": "antikorruptionspolicy"
+      }
+    },
+    "financingSection": {
+      "title": "Så finansieras vi",
+      "paragraph1": "Under 2024 och 2025 får Klimatkollen finansiell uppbackning av Google.org som en av två svenska mottagare av Google.org Impact Challenge: Tech for Social Good.",
+      "paragraph2": "Under 2023 drevs Klimatkollen med stöd från Postkodstiftelsen. Uppstarten 2022 finansierades av Världsnaturfonden WWF, ClimateView, We Don't Have Time och Argand Partners.",
+      "paragraph3": "Mycket av arbetet är ideellt, därför välkomnar vi fler samarbetspartners och ekonomiskt stöd för att kunna skala upp!",
+      "donate": "Skänk gärna en slant!",
+      "donateDescription": "Varje krona ger oss muskler att visa upp mer data.",
+      "bankgiro": "Bankgiro: 5793-3178"
+    },
+    "previousProjectsSection": {
+      "title": "Tidigare projekt",
+      "kommunprojektetTitle": "Kommunprojektet 2023",
+      "kommunprojektetDescription": "Under 2023 fick Klimatkollen stöd av Postkodstiftelsen för att ta tempen på hur det går med klimatomställningen i kommunerna. Förutom utsläppsdata visar vi även vad kommunerna gör för att minska dem, genom att presentera statistik om utvalda nyckeltal för olika delomställningar.",
+      "riksdagsvaletTitle": "Riksdagsvalet 2022",
+      "riksdagsvaletDescription": "Inför riksdagsvalet 2022 ansvarade Klimatkollen för två unika projekt:",
+      "klimatmalTitle": "Klimatmål",
+      "klimatmalText": "En analys av riksdagspartiernas klimatmål för Sverige",
+      "utslappsberakningTitle": "Utsläppsberäkning",
+      "utslappsberakningText": "Beräkning av hur utsläppen skulle minska eller öka med partiernas politik"
+    }
+  },
+  "insightsPage": {
+    "title": "Insikter",
+    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige",
+    "newsletter": "Prenumerera på nyhetsbrev",
+    "readMore": "Läs mer",
+    "subscribeNewsletter": "Prenumerera på nyhetsbrev"
+  },
+  "blogDetailPage": {
+    "loading": "Laddar...",
+    "postNotFound": "Inlägg hittades inte",
+    "back": "Tillbaka",
+    "share": "Dela",
+    "linkCopied": "Länk kopierad!",
+    "shareText": "Kolla in det här blogginlägget!",
+    "relatedArticles": "Relaterade artiklar"
+  },
+  "companiesPage": {
+    "filter": "Filter",
+    "sortBy": "Sortera efter",
+    "searchInFilter": "Sök i filter...",
+    "noFiltersFound": "Inga filter hittades.",
+    "sortingOptions": {
+      "emissionsChange": "utsläppsförändring",
+      "totalEmissions": "Totala utsläpp",
+      "scope3Coverage": "Scope 3-utsläpp",
+      "name": "Namn"
+    },
+    "sector": "Sektor",
+    "errorTitle": "Det gick inte att hämta företagsinformation",
+    "errorDescription": "Försök igen senare",
+    "title": "Företagsrapporter",
+    "description": "Översikt över företagens klimatpåverkan och hållbarhetsarbete",
+    "searchPlaceholder": "Sök (separera med ,)",
+    "noCompaniesFound": "Inga företag hittades",
+    "tryDifferentCriteria": "Försök med andra sökkriterier",
+    "sorting": "Sorterar:",
+    "filtering": "Filter:"
+  },
+  "companyDetailPage": {
+    "errorTitle": "Det gick inte att hämta företagsinformation",
+    "errorDescription": "Försök igen senare",
+    "notFoundTitle": "Företaget kunde inte hittas",
+    "notFoundDescription": "Kontrollera att företags-ID:t är korrekt"
+  },
+  "methodsPage": {
+    "header": {
+      "title": "Källor och Metod",
+      "description": "Vår utgångspunkt är Parisavtalets 1,5-gradersmål och våra datakällor är offentliga. Klicka på rubrikerna för att läsa mer."
+    },
+    "accordion": {
+      "parisAgreement": {
+        "title": "Klimatkollen utgår från Parisavtalet",
+        "paragraph1": "Parisavtalet är ett internationellt bindande avtal mellan världens länder om att vidta åtgärder för att begränsa den globala uppvärmningen till väl under 2 grader, med sikte på 1,5 grader.",
+        "paragraph2": "För att nå målet måste världens länder halvera växthusgasutsläppen till 2030 jämfört med 1990 och nå nära noll utsläpp senast 2050. I dag <0>ökar</0> fortfarande utsläppen globalt.",
+        "paragraph3": "Enligt Parisavtalet ska rika länder ta ett större ansvar, eftersom deras stora historiska utsläpp innebär att de redan använt mycket av det utsläppsutrymme som återstår för att hejda uppvärmningen. Bland dessa länder ingår Sverige, som både ska gå före med att minska utsläppen och även hjälpa andra mer sårbara länder att ställa om.",
+        "link": {
+          "title": "Parisavtalet",
+          "text": "Läs mer om Parisavtalet på Naturvårdsverkets webbplats."
+        }
+      },
+      "sources": {
+        "title": "Om våra källor",
+        "paragraph1": "Klimatkollen baseras på offentliga källor och verifierad data. Vi anger alla källor så att du enkelt kan kolla upp och läsa mer. Om något blivit fel, mejla oss gärna på hej@klimatkollen.se så att vi kan ändra.",
+        "paragraph2": "Företagsdata hämtas från bolagens egna årsredovisningar och hållbarhetsrapporter.",
+        "links": {
+          "smhi": {
+            "title": "Nationella emissionsdatabasen",
+            "text": "Utsläpp av växthusgaser i kommunerna"
+          },
+          "skr": {
+            "title": "Sveriges Kommuner och Regioner",
+            "text": "Politiskt styre i kommunerna"
+          },
+          "wikidata": {
+            "title": "Wikidata",
+            "text": "Kommunvapen och invånarantal"
+          },
+          "trafikanalys": {
+            "title": "Trafikanalys",
+            "text": "Andel laddbara bilar"
+          },
+          "nvdb": {
+            "title": "Nationella vägdatabas",
+            "text": "Cykelvägar meter per kommun"
+          },
+          "sei": {
+            "title": "Stockholm Environment Institute",
+            "text": "Hushållens konsumtionsbaserade utsläpp"
+          },
+          "powerCircles": {
+            "title": "Power Circles databas ELIS",
+            "text": "Uppgifter om laddinfrastrukturen kommer från branschorganisationen"
+          },
+          "klimatplaner": {
+            "title": "Klimatplaner",
+            "text": "Insamlade av Klimatklubbens och Naturskyddsföreningens medlemmar"
+          },
+          "upphandlingsmyndigheten": {
+            "title": "Upphandlingsmyndigheten",
+            "text": "nformation om klimatkrav vid kommunernas upphandlingar"
+          },
+          "greenpeace": {
+            "title": "Greenpeace",
+            "text": "Kartläggning av klimatkrav inom offentlig upphandling"
+          }
+        }
+      },
+      "co2Budgets": {
+        "title": "Om koldioxidbudgetar",
+        "paragraph1": "En koldioxidbudget anger hur mycket koldioxid som kan släppas ut innan koldioxidhalten i atmosfären blir så hög att uppvärmningen överstiger Parisavtalets 1,5-gradersmål.",
+        "paragraph2": "Enligt en <0>beräkning</0> av forskare vid Uppsala universitet och Tyndall Centre i Storbritannien, återstår globalt cirka 340 gigaton koldioxid från och med år 2024 för 50 procents chans att hålla uppvärmningen under 1,5 grader. Med dagens utsläppstakt tar den globala budgeten slut om cirka åtta år.",
+        "paragraph3": "Utifrån den globala budgeten har forskarna även gjort en beräkning av hur en nationel koldioxidbudget för en rättvis klimatomställning skulle se ut för Sverige.",
+        "paragraph4": "Beräkningen visar att från och med januari 2024 återstår ett nationellt utsläppsutrymme på 80 miljoner ton för att ligga i linje med 1,5 grader. För 83 procents chans att inte överskrida 2 grader är budgeten 285 miljoner ton. Som jämförelse uppgick de totala växthusgasutsläppen för Sverige år 2022 till 45,2 miljoner ton.",
+        "paragraph5": "Med Sveriges nuvarande utsläppstakt återstår 1,8 år av 1,5-gradersbudgeten, 6,4 år för 2 grader. För att vara i linje med 1,5 grader skulle utsläppen i Sverige behöva minska med drygt 35 procent från och med 2024, eller 13,5 procent för 2 grader.",
+        "paragraph6": "Klimatkollen har fördelat ut den nya nationella koldioxidbudgeten (80 miljoner ton, som även inkluderar utrikes flyg och sjöfart) på landets kommuner med samma fördelningsnyckel som använts för att bryta ner den globala budgeten nationellt.",
+        "paragraph7": "De lokala koldioxidbudgetarna gör det möjligt att jämföra hur det går med utsläppen med hur det borde gå. På Klimatkollen visas koldioxidbudgetar för kommunerna både med siffror och som utvecklingskurva över hur utsläppen behöver minska för att vara i linje med Parisavtalet.",
+        "paragraph8": "Förutom den så kallade Tyndall-modellen som Klimatkollen använder finns även andra sätt att beräkna en nationell koldioxidbudget, se exempelvis Chalmers <0>här</0>."
+      },
+      "emissionTypes": {
+        "title": "Om olika typer av utsläpp",
+        "paragraph1": "Klimatkollen är en oberoende faktaplattform som följer allmän och vedertagen standard för hur utsläpp redovisas. Den klimatdata vi visar speglar de avgränsningar som följer av hur koldioxidbudgeten är beräknad. Exempelvis går det inte att rakt av koppla koldioxidbudgetar till utsläpp av alla växthusgaser, där även metan, lustgas, vattenånga med flera inkluderas.",
+        "paragraph2": "Utsläpp från cementproduktion är exkluderat i IPCC:s globala koldioxidbudget och därmed även i koldioxidbudgeten för Sverige och i utsläppsstatistiken för de tre kommunerna Gotland, Skövde och Mörbylånga, där cementproduktion sker idag eller skett tidigare under perioden.",
+        "paragraph3": "Sverige har även hög klimatbelastning från varor vi importerar från andra länder och orsakar därför utsläpp i andra delar av världen. Dessa konsumtionsbaserade utsläpp inkluderas inte i koldioxidbudgeten.",
+        "paragraph4": "Inte heller utsläpp från skog och mark (så kallade biogena utsläpp) inkluderas i koldioxidbudgeten.",
+        "paragraph5": "Egentligen är alltså de klimatpåverkande utsläppen mycket större än de territoriella fossila koldioxidutsläpp som vanligtvis rapporteras av myndigheter och i media och som idag visas på Klimatkollen.",
+        "paragraph6": "Klimatkollen undersöker nu hur även andra växthusgasutsläpp skulle kunna visas på webbplatsen framöver, samtidigt som möjligheten att jämföra dagens utsläpp med koldioxidbudgetar behålls."
+      }
+    }
+  },
+  "municipalitiesPage": {
+    "errorTitle": "Det gick inte att hämta kommuninformation",
+    "errorDescription": "Försök igen senare",
+    "title": "Jämförelse kommuner",
+    "description": "Översikt över utsläpp och omställning i kommunerna",
+    "filter": {
+      "searchPlaceholder": "Sök kommun (flera: separera med komma)",
+      "selectRegion": "Välj län",
+      "allRegions": "Alla län",
+      "sortBy": "Sortera efter",
+      "sortOptions": {
+        "reduction": "Utsläppsminskning",
+        "emissions": "Totala utsläpp",
+        "climate_plan": "Klimatplan",
+        "bicycle": "Cykelvägar",
+        "charging": "Laddinfrastruktur",
+        "name": "Namn"
+      }
+    },
+    "sort": {
+      "placeholder": "Sortera efter",
+      "meetsParis": "Möter Parisavtalet",
+      "name": "Namn",
+      "aToZ": "A-Ö",
+      "zToA": "Ö-A",
+      "bestFirst": "Visa bäst först",
+      "worstFirst": "Visa sämst först"
+    }
+  },
+  "municipalityDetailPage": {
+    "loading": "Laddar...",
+    "error": "Fel vid inläsning av data",
+    "noData": "Ingen data tillgänglig",
+    "procurementScore": {
+      "high": "Ja",
+      "medium": "Kanske",
+      "low": "Nej"
+    },
+    "totalEmissions": "Totala utsläpp {{year}}",
+    "thousandTons": " tusen ton CO₂",
+    "budgetRunsOut": "Koldioxidbudgeten tar slut",
+    "budgetKept": "Koldioxidbudgeten tar slut",
+    "budgetHolds": "Håller budget",
+    "hitNetZero": "Når nettonoll",
+    "never": "Aldrig",
+    "emissionsDevelopment": "Utsläppsutveckling",
+    "inThousandTons": "I tusen ton CO₂",
+    "futureEmissions": "Framtida utsläpp",
+    "annualChangeSince2015": "Årlig utsläppsförändring sedan 2015",
+    "reductionToMeetParis": "Utsläppsminskning för att klara Parisavtalet",
+    "consumptionEmissionsPerCapita": "Konsumtionsutsläpp per invånare i ton CO₂",
+    "climatePlan": "Klimatplan",
+    "noPlan": "Saknar plan",
+    "noClimatePlan": "Saknar klimatplan",
+    "adopted": "Antagen {{year}}",
+    "procurementRequirements": "Klimatkrav i upphandlingar",
+    "sustainableTransport": "Hållbar transport",
+    "electricCarChange": "Ökning av andel elbilar",
+    "electricCarsPerChargePoint": "Elbilar per laddpunkt",
+    "noChargePoints": "Inga laddpunkter",
+    "bicycleMetrePerCapita": "Cykelvägsmeter per invånare"
+  },
+  "sector": {
+    "energy": "Energi",
+    "materials": "Material",
+    "industrials": "Industri",
+    "consumerDiscretionary": "Sällanköpsvaror",
+    "consumerStaples": "Dagligvaror",
+    "healthCare": "Hälsovård",
+    "financials": "Finans",
+    "informationTechnology": "IT",
+    "communicationServices": "Kommunikation",
+    "utilities": "Kraftförsörjning",
+    "realEstate": "Fastigheter"
+  },
+  "scope": {
+    "scope1": "Utsläpp från egna källor eller kontrollerade av organisationen.",
+    "scope2": "Indirekta utsläpp från produktion av köpt el, ånga, värme och kyla som konsumeras av organisationen.",
+    "scope3": "Indirekta utsläpp från organisationens värdekedja.",
+    "biogenic": "Biogena utsläpp är koldioxidutsläpp som uppstår från icke-fossila (sk. förnybara) källor, som tex förbränning av biobränslen eller biprodukter vid pappersmasatillverkning. Enligt GHG-protokollet redovisas dessa utsläpp separat från scope 1-3, eftersom de är aktiv del av kolets kretslopp."
+  },
+  "team": {
+    "ola": {
+      "role": "Medgrundare",
+      "description": "Opinionsbildare, medgrundare av Klimatkollen, tidigare kommunikationschef på Centerpartiet och kundansvarig på Forsman & Bodenfors."
+    },
+    "frida": {
+      "role": "Medgrundare",
+      "description": "Klimatspecialist och medgrundare till Klimatkollen. Initiativtagare till Our Kids' Climate och författare till boken \"Prata med barn om klimatet\" (Natur & Kultur). EU Climate Pact Ambassador och Climate Reality Leader."
+    },
+    "elvira": {
+      "role": "Tech Lead",
+      "description": "Tech lead och teknisk fysiker på Klimatkollen och Precisit. Lång erfarenhet av grön och cirkulär tech vid flera prisbelönta startups och del av ledarteamet på IT-konsultbyrån Precisit."
+    },
+    "christian": {
+      "role": "Tech Advisor",
+      "description": "Prisbelönt utvecklare, digital entreprenör och en av Sveriges mest inflytelserika personer inom tech. Grundare av digitala innovationsbyrån Iteam och medgrundare av Öppna skolplattformen. Talare inom AI och digital innovation och rådgivare till regeringen."
+    },
+    "hugo": {
+      "role": "Utvecklare",
+      "description": "Entreprenöriell klimatentusiast med stort intresse för hur man kan lösa framtidens utmaningar med hjälp av AI och teknik."
+    },
+    "kayla": {
+      "role": "Utvecklare",
+      "description": "Frontendutvecklare med passion för hållbarhet och användarvänliga digitala lösningar. Har tidigare arbetat som miljökonsult med fokus på att tolka regleringar och beräkna växthusgasutsläpp för företag."
+    }
+  },
+  "board": {
+    "ola": {
+      "role": "Styrelseleordförande",
+      "description": "Opinionsbildare, medgrundare av Klimatkollen, tidigare kommunikationschef på Centerpartiet och kundansvarig på Forsman & Bodenfors."
+    },
+    "frida": {
+      "role": "Vice styrelseordförande",
+      "description": "Klimatspecialist och medgrundare till Klimatkollen. Initiativtagare till Our Kids' Climate och författare till boken \"Prata med barn om klimatet\" (Natur & Kultur). EU Climate Pact Ambassador och Climate Reality Leader."
+    },
+    "christian": {
+      "role": "Styrelseledamot",
+      "description": "Digital entreprenör och en av Sveriges mest inflytelserika personer inom tech. VD och grundare av Iteam och Öppna skolplattformen."
+    },
+    "anna": {
+      "role": "Styrelseledamot",
+      "description": "Digital strateg och tidigare chef för sociala medier på Spotify och H&M. VD och grundare av Better Odds."
+    },
+    "maria": {
+      "role": "Styrelseledamot",
+      "description": "Journalist, författare, föreläsare och grundare av Klimatklubben. Utsedd till en av Sveriges 101 hållbarhetsmäktigaste 2021."
+    },
+    "carlJohan": {
+      "role": "Styrelseledamot",
+      "description": "Hållbarhetsstrateg på Diamant & Schulz, tidigare på Doings och Forsman & Bodenfors, författare till boken \"Hållbariseringen\", Årets marknadsföringsbok 2022."
+    }
+  },
+  "emissionsBreakdown": {
+    "scope1": "Scope 1",
+    "scope2": "Scope 2",
+    "scope3": "Scope 3",
+    "title": "Fördelning av utsläpp {{year}}",
+    "tooltip": "Fördelning av utsläpp mellan olika scope enligt GHG-protokollet",
+    "unit": "ton CO₂e",
+    "scope3Categories": "Scope 3-kategorier",
+    "upstream": "Uppströms",
+    "downstream": "Nedströms",
+    "notReported": "Ej rapporterat",
+    "biogenicEmissions": "Biogena utsläpp"
+  },
+  "companies": {
+    "categories": {
+      "purchasedGoodsAndServices": "Inköpta varor & tjänster",
+      "capitalGoods": "Kapitalvaror",
+      "fuelAndEnergy": "Bränsle & energi",
+      "upstreamTransport": "Uppströms transport",
+      "waste": "Avfall",
+      "businessTravel": "Tjänsteresor",
+      "commuting": "Pendling",
+      "upstreamLeasing": "Uppströms leasing",
+      "downstreamTransport": "Nedströms transport",
+      "processing": "Bearbetning",
+      "use": "Användning",
+      "endOfLifeTreatment": "Slutbehandling",
+      "downstreamLeasing": "Nedströms leasing",
+      "franchises": "Franchiser",
+      "investments": "Investeringar"
+    },
+    "card": {
+      "noData": "Ingen data",
+      "unknownSector": "Okänd sektor",
+      "emissions": "Utsläpp",
+      "totalEmissionsInfo": "Totala utsläpp (Scope 1 & 2)",
+      "emissionsChangeRate": "Förändringstakt",
+      "emissionsChangeRateInfo": "Förändringstakt för utsläpp jämfört med föregående rapporteringsperiod.",
+      "turnover": "Omsättning",
+      "employees": "Anställda",
+      "companyReport": "Företagsrapport",
+      "missingReport": "Saknar report"
+    },
+    "dataView": {
+      "overview": "Översikt",
+      "scopes": "Scope 1-3",
+      "categories": "Scope 3-kategorier",
+      "selectView": "Välj visning"
+    },
+    "emissionsHistory": {
+      "noReportingPeriods": "Inga rapporteringsperioder tillgängliga",
+      "title": "Historiska utsläpp",
+      "tooltip": "Historiska utsläpp och trend mot 2030. Klicka på en punkt för att ta bort linjen från grafen. Hovra över punkten för att se värdena för rapporteringsperioden.",
+      "unit": "Ton CO₂e per år",
+      "totalEmissions": "Totala utsläpp"
+    },
+    "list": {
+      "error": {
+        "fetchingCompanyInfo": "Det gick inte att hämta företagsinformation",
+        "tryAgainLater": "Försök igen senare"
+      },
+      "sort": {
+        "placeholder": "Sortera efter",
+        "emissions": "Utsläpp",
+        "turnover": "Omsättning",
+        "employees": "Antal anställda",
+        "name": "Företagsnamn"
+      },
+      "company": {
+        "turnover": "Omsättning",
+        "employees": "Anställda",
+        "emissions": "Utsläpp",
+        "readAnnualReport": "Läs årsredovisning"
+      }
+    },
+    "overview": {
+      "unknownSector": "Okänd sektor",
+      "sector": "Sektor",
+      "selectYear": "Välj år",
+      "latestYear": "Senaste året",
+      "totalEmissions": "Totala utsläpp",
+      "tonsCO2e": "ton CO₂e",
+      "changeSinceLastYear": "Förändring sedan förra året",
+      "noData": "Ingen data",
+      "turnover": "Omsättning",
+      "employees": "Anställda",
+      "notReported": "Ej rapporterat",
+      "readAnnualReport": "Läs årsredovisning"
+    },
+    "realEstateScope3History": {
+      "title": "Historiska Scope 3-utsläpp per kategori",
+      "tooltip": "Utveckling av Scope 3-utsläpp över tid per kategori",
+      "tonsCO2e": "ton CO₂e",
+      "keyTrendsTitle": "Viktiga trender för fastighetssektorn",
+      "keyTrendsDescription": "Scope 3-utsläpp i fastighetssektorn domineras ofta av kategorierna 'Inköpta varor & tjänster' (1), 'Kapitalvaror' (2) och 'Energirelaterade aktiviteter' (3). Dessa kategorier inkluderar byggmaterial, renoveringar och energianvändning i fastigheter."
+    },
+    "sectionedCompanyList": {
+      "otherCompanies": "Övriga företag",
+      "companies": "företag"
+    },
+    "scope3Chart": {
+      "category": "Kategori",
+      "tonsCO2e": "ton CO₂e",
+      "clickToFilter": "Klicka för att filtrera bort",
+      "resetAll": "Återställ alla",
+      "showingCategories": "Visar {shown} av {total} kategorier. Filtrerade kategorier:"
+    },
+    "scope3Data": {
+      "categories": "Scope 3-kategorier",
+      "selectYear": "Välj år",
+      "latestYear": "Senaste året",
+      "visualization": "Visualisering",
+      "data": "Data",
+      "historicalDevelopment": "Historisk utveckling"
+    },
+    "scopeReportingList": {
+      "category": "Kategori"
+    },
+    "sectorComparison": {
+      "sectorUnknown": "Okänd sektor",
+      "emissionsReduction": "Utsläppsminskning",
+      "reportingYears": "Rapporterade år",
+      "reportedCategories": "Rapporterade scope 3-kategorier",
+      "comparisonIn": "Jämförelse inom {{sectorName}}"
+    },
+    "tooltip": {
+      "noDataAvailable": "Ingen data tillgänglig",
+      "tonsCO2e": "ton CO₂e"
+    }
+  },
+  "municipalities": {
+    "card": {
+      "meetsParis": "Är {{name}} på väg att klara Parisavtalet?",
+      "yes": "Ja",
+      "no": "Nej",
+      "netZero": "Kommunen når nollutsläpp",
+      "budgetRunsOut": "Koldioxidbudgeten tar slut",
+      "emissionRanking": "UTSLÄPPSRANKING",
+      "emission": "Utsläpp {{year}}",
+      "emissionInfo": "Kommunens utsläpp av CO₂e för år {{year}}.",
+      "kTCO2": "tCO₂e",
+      "changeRate": "Förändringstakt",
+      "changeRateInfo": "Förändringstakt för utsläppen sedan Parisavtalet tecknades 2015.",
+      "climatePlan": "Klimatplan",
+      "noPlan": "Saknar plan",
+      "adopted": "Antagen {{year}}"
+    },
+    "graph": {
+      "noData": "Inga data tillgängliga",
+      "gap": "Gap",
+      "historical": "Historiskt",
+      "trend": "Trend",
+      "parisAgreement": "Parisavtalet",
+      "paris": "Parisavtalet",
+      "unit": "ton CO₂e",
+      "total": "Totalt",
+      "year": "År"
+    }
+  }
+}

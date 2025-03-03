@@ -28,12 +28,9 @@ export function MunicipalityList({
         .map((term) => term.trim())
         .filter((term) => term.length > 0);
 
-      return searchTerms.some((term) => {
-        if (term.endsWith(",")) {
-          return municipality.name.toLowerCase() === term.slice(0, -1);
-        }
-        return municipality.name.toLowerCase().startsWith(term);
-      });
+      return searchTerms.some((term) =>
+        municipality.name.toLowerCase().startsWith(term)
+      );
     }
 
     return true;
@@ -75,7 +72,10 @@ export function MunicipalityList({
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {sortedMunicipalities.map((municipality) => (
-          <MunicipalityCard key={municipality.name} municipality={municipality} />
+          <MunicipalityCard
+            key={municipality.name}
+            municipality={municipality}
+          />
         ))}
       </div>
     </div>

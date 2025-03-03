@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMunicipalities } from "@/hooks/useMunicipalities";
 import { MunicipalityList } from "@/components/municipalities/list/MunicipalityList";
+import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -18,6 +19,7 @@ import { cn } from "@/lib/utils";
 type SortOption = "meets_paris" | "name";
 
 export function MunicipalitiesPage() {
+  const { t } = useTranslation();
   const { municipalities, loading, error } = useMunicipalities();
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,9 +44,9 @@ export function MunicipalitiesPage() {
     return (
       <div className="text-center py-24">
         <h3 className="text-red-500 mb-4 text-xl">
-          Det gick inte att hämta kommuninformation
+          {t("municipalitiesPage.errorTitle")}
         </h3>
-        <p className="text-grey">Försök igen senare</p>
+        <p className="text-grey">{t("municipalitiesPage.errorDescription")}</p>
       </div>
     );
   }
@@ -53,15 +55,15 @@ export function MunicipalitiesPage() {
     <div className="space-y-8">
       <PageHeader
         title="Kommunrapporter"
-        description="Översikt över kommunernas klimatpåverkan och hållbarhetsarbete"
-         className="-ml-4"
+        description={t("municipalitiesPage.description")}
+        className="-ml-4"
       />
 
       {/* Filters & Sorting Section */}
       <div
         className={cn(
           isMobile ? "relative" : "sticky top-0 z-10",
-          "bg-black px-4 pt-12 md:pt-16 pb-4 shadow-md" 
+          "bg-black px-4 pt-12 md:pt-16 pb-4 shadow-md"
         )}
       >
         {/* Extending background to header */}
@@ -73,7 +75,7 @@ export function MunicipalitiesPage() {
             <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-grey w-4 h-4" />
             <Input
               type="text"
-              placeholder="Sök kommun (separera med komma)"
+              placeholder={t("municipalitiesPage.filter.searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-8 py-1 h-10 bg-black-1 border-none text-sm w-full"
@@ -83,10 +85,14 @@ export function MunicipalitiesPage() {
           {/* Region Select */}
           <Select value={selectedRegion} onValueChange={setSelectedRegion}>
             <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
-              <SelectValue placeholder="Välj län" />
+              <SelectValue
+                placeholder={t("municipalitiesPage.filter.selectRegion")}
+              />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Alla län</SelectItem>
+              <SelectItem value="all">
+                {t("municipalitiesPage.filter.allRegions")}
+              </SelectItem>
               {Object.keys(regions).map((region) => (
                 <SelectItem key={region} value={region}>
                   {region}
@@ -101,11 +107,17 @@ export function MunicipalitiesPage() {
             onValueChange={(value) => setSortBy(value as SortOption)}
           >
             <SelectTrigger className="w-full md:w-[250px] h-10 bg-black-1">
-              <SelectValue placeholder="Sortera efter" />
+              <SelectValue
+                placeholder={t("municipalitiesPage.sort.placeholder")}
+              />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="meets_paris">Möter Parisavtalet</SelectItem>
-              <SelectItem value="name">Namn</SelectItem>
+              <SelectItem value="meets_paris">
+                {t("municipalitiesPage.sort.meetsParis")}
+              </SelectItem>
+              <SelectItem value="name">
+                {t("municipalitiesPage.sort.name")}
+              </SelectItem>
             </SelectContent>
           </Select>
 
@@ -118,11 +130,11 @@ export function MunicipalitiesPage() {
           >
             {sortBy === "name"
               ? sortDirection === "best"
-                ? "A-Ö"
-                : "Ö-A"
+                ? t("municipalitiesPage.sort.aToZ")
+                : t("municipalitiesPage.sort.zToA")
               : sortDirection === "best"
-              ? "Visar bäst först"
-              : "Visar sämst först"}
+              ? t("municipalitiesPage.sort.bestFirst")
+              : t("municipalitiesPage.sort.worstFirst")}
           </button>
         </div>
       </div>

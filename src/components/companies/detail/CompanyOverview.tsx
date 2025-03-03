@@ -7,8 +7,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { EmissionsComparison } from "./EmissionsComparison";
 import type { CompanyDetails, ReportingPeriod } from "@/types/company";
+import { useTranslation } from "react-i18next";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -25,11 +25,13 @@ export function CompanyOverview({
   onYearSelect,
   selectedYear,
 }: CompanyOverviewProps) {
+  const { t } = useTranslation();
+
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   const sectorName =
     company.industry?.industryGics?.sv?.sectorName ||
     company.industry?.industryGics?.en?.sectorName ||
-    "Okänd sektor";
+    t("company.unknownSector");
 
   const yearOverYearChange =
     previousPeriod && selectedPeriod.emissions?.calculatedTotalEmissions
@@ -66,7 +68,7 @@ export function CompanyOverview({
               variant="body"
               className="text-grey text-lg md:text-base sm:text-sm"
             >
-              Sektor:
+              {t("companies.overview.sector")}:
             </Text>
             <Text variant="body" className="text-lg md:text-base sm:text-sm">
               {sectorName}
@@ -75,10 +77,12 @@ export function CompanyOverview({
           <div className="mt-4 w-full max-w-[180px]">
             <Select value={selectedYear} onValueChange={onYearSelect}>
               <SelectTrigger className="w-full bg-black-1 text-white px-3 py-2 rounded-md">
-                <SelectValue placeholder="Välj år" />
+                <SelectValue placeholder={t("companies.overview.selectYear")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="latest">Senaste året</SelectItem>
+                <SelectItem value="latest">
+                  {t("companies.overview.latestYear")}
+                </SelectItem>
                 {sortedPeriods.map((period) => {
                   const year = new Date(period.endDate)
                     .getFullYear()
@@ -101,7 +105,7 @@ export function CompanyOverview({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         <div>
           <Text variant="body" className="mb-2 text-lg md:text-base sm:text-sm">
-            Totala utsläpp {periodYear}
+            {t("companies.overview.totalEmissions")} {periodYear}
           </Text>
           <div className="flex items-baseline gap-4">
             <Text className="text-6xl md:text-4xl sm:text-2xl font-light text-orange-2 tracking-tighter leading-none">
@@ -109,7 +113,7 @@ export function CompanyOverview({
                 selectedPeriod.emissions?.calculatedTotalEmissions || 0
               ).toLocaleString("sv-SE")}
               <span className="text-2xl md:text-lg sm:text-sm ml-2 text-grey">
-                ton CO₂e
+                {t("companies.overview.tonsCO2e")}
               </span>
             </Text>
           </div>
@@ -117,7 +121,7 @@ export function CompanyOverview({
 
         <div>
           <Text className="mb-2 text-lg md:text-base sm:text-sm">
-            Förändring sedan förra året
+            {t("companies.overview.changeSinceLastYear")}
           </Text>
           <Text className="text-6xl md:text-4xl sm:text-2xl font-light tracking-tighter leading-none">
             {yearOverYearChange !== null ? (
@@ -130,7 +134,9 @@ export function CompanyOverview({
                 {Math.ceil(yearOverYearChange).toLocaleString("sv-SE")}%
               </span>
             ) : (
-              <span className="text-grey">Ingen data</span>
+              <span className="text-grey">
+                {t("companies.overview.noData")}
+              </span>
             )}
           </Text>
         </div>
@@ -140,25 +146,25 @@ export function CompanyOverview({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Text className="mb-2 text-lg md:text-base sm:text-sm">
-              Omsättning ({periodYear})
+              {t("companies.overview.turnover")} ({periodYear})
             </Text>
             <Text className="text-lg md:text-base sm:text-sm">
               {selectedPeriod.economy?.turnover?.value
                 ? `${(selectedPeriod.economy.turnover.value / 1e9).toFixed(
                     1
                   )} mdr ${selectedPeriod.economy.turnover.currency}`
-                : "Ej rapporterat"}
+                : t("company.notReported")}
             </Text>
           </div>
 
           <div>
             <Text className="text-lg md:text-base sm:text-sm mb-2">
-              Antal anställda ({periodYear})
+              {t("companies.overview.employees")} ({periodYear})
             </Text>
             <Text className="text-lg md:text-base sm:text-sm">
               {selectedPeriod.economy?.employees?.value
                 ? selectedPeriod.economy.employees.value.toLocaleString("sv-SE")
-                : "Ej rapporterat"}
+                : t("company.notReported")}
             </Text>
           </div>
 
@@ -170,7 +176,7 @@ export function CompanyOverview({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-blue-2 hover:text-blue-1 transition-colors"
               >
-                Läs årsredovisning
+                {t("companies.overview.readAnnualReport")}
                 <ArrowUpRight className="w-4 h-4 sm:w-3 sm:h-3" />
               </a>
             </div>
