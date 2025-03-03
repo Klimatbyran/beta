@@ -48,15 +48,24 @@ export function CompanyOverview({
       <div className="flex flex-col md:flex-row items-start justify-between mb-12">
         <div className="space-y-4 w-full">
           <div className="flex flex-wrap items-center gap-4">
-            <Text variant="display" className="text-4xl md:text-3xl sm:text-2xl">
+            <Text
+              variant="display"
+              className="text-4xl md:text-3xl sm:text-2xl"
+            >
               {company.name}
             </Text>
           </div>
-          <Text variant="body" className="text-lg md:text-base sm:text-sm max-w-3xl">
+          <Text
+            variant="body"
+            className="text-lg md:text-base sm:text-sm max-w-3xl"
+          >
             {company.description}
           </Text>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-4">
-            <Text variant="body" className="text-grey text-lg md:text-base sm:text-sm">
+            <Text
+              variant="body"
+              className="text-grey text-lg md:text-base sm:text-sm"
+            >
               Sektor:
             </Text>
             <Text variant="body" className="text-lg md:text-base sm:text-sm">
@@ -99,13 +108,17 @@ export function CompanyOverview({
               {(
                 selectedPeriod.emissions?.calculatedTotalEmissions || 0
               ).toLocaleString("sv-SE")}
-              <span className="text-2xl md:text-lg sm:text-sm ml-2 text-grey">ton CO₂e</span>
+              <span className="text-2xl md:text-lg sm:text-sm ml-2 text-grey">
+                ton CO₂e
+              </span>
             </Text>
           </div>
         </div>
 
         <div>
-          <Text className="mb-2 text-lg md:text-base sm:text-sm">Förändring sedan förra året</Text>
+          <Text className="mb-2 text-lg md:text-base sm:text-sm">
+            Förändring sedan förra året
+          </Text>
           <Text className="text-6xl md:text-4xl sm:text-2xl font-light tracking-tighter leading-none">
             {yearOverYearChange !== null ? (
               <span
@@ -126,7 +139,9 @@ export function CompanyOverview({
       <div className="mt-12 bg-black-1 rounded-level-2 p-8 md:p-6 sm:p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Text className="mb-2 text-lg md:text-base sm:text-sm">Omsättning ({periodYear})</Text>
+            <Text className="mb-2 text-lg md:text-base sm:text-sm">
+              Omsättning ({periodYear})
+            </Text>
             <Text className="text-lg md:text-base sm:text-sm">
               {selectedPeriod.economy?.turnover?.value
                 ? `${(selectedPeriod.economy.turnover.value / 1e9).toFixed(
@@ -147,7 +162,7 @@ export function CompanyOverview({
             </Text>
           </div>
 
-          {selectedPeriod.reportURL && (
+          {selectedPeriod?.reportURL && (
             <div className="flex items-end">
               <a
                 href={selectedPeriod.reportURL}
