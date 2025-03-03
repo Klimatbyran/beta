@@ -135,16 +135,16 @@
     "sector": "Sector",
     "errorTitle": "Failed to retrieve company information",
     "errorDescription": "Please try again later",
-    "title": "Company Reports",
-    "description": "Overview of companies' climate impact and sustainability work",
-    "searchPlaceholder": "Search (separate with ,)",
+    "title": "Company Emissions",
+    "description": "Overview of companies’ climate impact and sustainability efforts",
+    "searchPlaceholder": "Search (separate with a comma)",
     "noCompaniesFound": "No companies found",
-    "tryDifferentCriteria": "Try different search criteria",
-    "sorting": "Sorting:",
-    "filtering": "Filtering:"
+    "tryDifferentCriteria": "Try adjusting your search criteria.",
+    "sorting": "Sorting By:",
+    "filtering": "Filter:"
   },
   "companyDetailPage": {
-    "errorTitle": "Failed to retrieve company information",
+    "errorTitle": "Unable to retrieve company information",
     "errorDescription": "Please try again later",
     "notFoundTitle": "Company not found",
     "notFoundDescription": "Check if the company ID is correct"
@@ -152,14 +152,14 @@
   "methodsPage": {
     "header": {
       "title": "Sources and Method",
-      "description": "Our starting point is the Paris Agreement's 1.5°C target, and our data sources are public. Click on the headings to read more."
+      "description": "Our starting point is the Paris Agreement’s 1.5°C target, and all our data sources are publicly available. Click on the headings to learn more."
     },
     "accordion": {
       "parisAgreement": {
-        "title": "Klimatkollen is based on the Paris Agreement",
-        "paragraph1": "The Paris Agreement is a legally binding international treaty between the world's countries aimed at limiting global warming to well below 2°C, with a target of 1.5°C.",
-        "paragraph2": "To meet this target, the world's countries must halve greenhouse gas emissions by 2030 compared to 1990 levels and reach near-zero emissions by 2050. Currently, emissions are <0>still increasing</0> globally.",
-        "paragraph3": "According to the Paris Agreement, wealthy countries must take greater responsibility, as their significant historical emissions mean they have already used much of the remaining carbon space needed to curb global warming. Sweden is among these countries, which should lead the way in reducing emissions and also help other more vulnerable countries transition.",
+        "title": "Klimatkollen and the Paris Agreement",
+        "paragraph1": "The Paris Agreement is a legally binding international treaty between the world’s nations, aimed at limiting global warming to well below 2°C, with a target of 1.5°C.",
+        "paragraph2": "To meet this target, global greenhouse gas emissions must be halved by 2030 (compared to 1990 levels) and reduced to near-zero by 2050. However, emissions are <0>still increasing</0> worldwide.",
+        "paragraph3": "Under the Paris Agreement, wealthier nations must take greater responsibility, as their historically high emissions mean they have already used a significant share of the remaining carbon budget needed to limit global warming. Sweden is among these countries and should lead the way in reducing emissions while also supporting more vulnerable nations in their transition.",
         "link": {
           "title": "Paris Agreement",
           "text": "Read more about the Paris Agreement on the Swedish Environmental Protection Agency's website."
@@ -167,8 +167,8 @@
       },
       "sources": {
         "title": "About Our Sources",
-        "paragraph1": "Klimatkollen is based on public sources and verified data. We provide all sources so you can easily check and read more. If something is wrong, feel free to email us at hej@klimatkollen.se so we can make corrections.",
-        "paragraph2": "Company data is taken from the companies' own annual reports and sustainability reports.",
+        "paragraph1": "Klimatkollen is based on publicly available sources and verified data. We provide all sources so you can easily review and explore them further. If you notice any errors, please email us at hej@klimatkollen.se so we can make corrections.",
+        "paragraph2": "Company data is sourced from their own annual reports and sustainability reports.",
         "links": {
           "smhi": {
             "title": "National Emissions Database",
@@ -418,7 +418,7 @@
     "emissionsHistory": {
       "noReportingPeriods": "No reporting periods available",
       "title": "Historical Emissions",
-      "tooltip": "Historical emissions and trend towards 2030. Click on a point to remove the line from the graph. Hover over a point to see the values for the reporting period.",
+      "tooltip": "Historical emissions; click on a point to remove the line from the graph. Hover over a point to see the values for the reporting period.",
       "unit": "Tons CO₂e per year",
       "totalEmissions": "Total Emissions"
     },
