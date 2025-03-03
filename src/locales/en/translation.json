@@ -49,11 +49,11 @@
     "seeResults": "See results",
     "bestPerformers": "Who is the best?",
     "bestMunicipalities": "Sweden's best municipalities",
-    "municipalitiesDescription": "Annual emission reduction since the Paris Agreement in 2015",
-    "bestCompanies": "Companies that have reduced emissions the most",
-    "companiesDescription": "Emission reduction between 2023 and 2024",
+    "municipalitiesDescription": "By average annual reduction in emissions since the Paris Agreement (2015)",
+    "bestCompanies": "Top Companies in Emission Reduction",
+    "companiesDescription": "Emissions reduction between 2023 and 2024",
     "aboutUsTitle": "Who are we?",
-    "aboutUsContent": "Klimatkollen is a citizen platform that provides climate data and builds support for reduced emissions in line with the Paris Agreement. We believe in the power of simple and engaging data visualization to increase knowledge and engagement around the climate debate.",
+    "aboutUsContent": "Klimatkollen is a citizen platform that provides climate data and builds support for reducing emissions in line with the Paris Agreement. We believe in the power of simple, engaging data visualization to enhance knowledge and drive participation in the climate conversation.",
     "tabName": {
       "companies": "the companies",
       "municipalities": "the municipalities"
@@ -62,14 +62,14 @@
   "aboutPage": {
     "header": {
       "title": "About Us",
-      "description": "Klimatkollen is a citizen platform that provides climate data. Click on the headings to read more."
+      "description": "Klimatkollen is a citizen platform that provides climate data. Click on the headings to learn more."
     },
     "mainContent": {
       "title": "What is Klimatkollen?",
-      "paragraph1": "Klimatkollen is a citizen platform that helps citizens, businesses, and organizations keep track of the climate transition by collecting and visualizing climate data.",
-      "paragraph2": "We show how emissions are progressing compared to how they should be, making it understandable for the public, contributing to a fact-based debate, and strengthening the opinion for climate actions.",
-      "paragraph3": "Our vision is for decision-makers in politics and business to be influenced by an informed and growing public to take actions that reduce emissions in line with the Paris Agreement.",
-      "paragraph4": "Klimatkollen was launched in March 2022 and is operated by the non-profit association Klimatbyrån. The initiators are Ola Spännar and Frida Berry Eklund. We started with local climate data for Swedish municipalities. From 2024, climate data will also be shown for companies."
+      "paragraph1": "Klimatkollen is a citizen platform that helps individuals, businesses, and organisations track the climate transition by collecting and visualising key climate data.",
+      "paragraph2": "We provide a clear picture of how emissions are progressing compared to where they need to be. By making this information accessible, we empower the public, contribute to fact-based discussions, and strengthen support for climate action.",
+      "paragraph3": "Our vision is for decision-makers in politics and business to be guided by an informed and engaged public, leading to actions that reduce emissions in line with the Paris Agreement.",
+      "paragraph4": "Launched in March 2022, Klimatkollen is operated by the non-profit association Klimatbyrån. It was founded by Ola Spännar and Frida Berry Eklund. Initially focused on local climate data for Swedish municipalities, the platform expanded in 2024 to include corporate climate data."
     },
     "teamSection": {
       "title": "Our Team"
