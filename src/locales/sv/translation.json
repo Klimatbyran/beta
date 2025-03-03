@@ -275,6 +275,7 @@
     "totalEmissions": "Totala utsläpp {{year}}",
     "thousandTons": " tusen ton CO₂",
     "budgetRunsOut": "Koldioxidbudgeten tar slut",
+    "budgetKept": "Koldioxidbudgeten tar slut",
     "budgetHolds": "Håller budget",
     "hitNetZero": "Når nettonoll",
     "never": "Aldrig",

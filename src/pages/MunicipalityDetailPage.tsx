@@ -48,11 +48,14 @@ export function MunicipalityDetailPage() {
             valueClassName="text-orange-2"
           />
           <MunicipalityStatCard
-            title={t("municipalityDetailPage.budgetRunsOut")}
-            value={municipality.budgetRunsOut.toString()}
+            title={municipality.budgetRunsOut.toString() !== "Håller budget" ? t("municipalityDetailPage.budgetRunsOut") : t("municipalityDetailPage.budgetKept")}
+            value={
+              municipality.budgetRunsOut.toString() === "Håller budget"
+                ? t("municipalityDetailPage.budgetHolds")
+                : municipality.budgetRunsOut.toString()
+            }
             valueClassName={
-              municipality.budgetRunsOut ===
-              t("municipalityDetailPage.budgetHolds")
+              municipality.budgetRunsOut === "Håller budget"
                 ? "text-green-3"
                 : "text-pink-3"
             }

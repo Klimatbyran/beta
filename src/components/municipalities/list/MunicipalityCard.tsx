@@ -168,7 +168,7 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
               className={cn(noClimatePlan ? "text-pink-3" : "text-green-3")}
             >
               {noClimatePlan
-                ? "Saknar plan"
+                ? t("municipalities.card.noPlan")
                 : t("municipalities.card.adopted", {
                     year: municipality.climatePlanYear,
                   })}
