@@ -4,8 +4,6 @@ import { Text } from "@/components/ui/text";
 import { blogMetadata } from "../lib/blog/blogPostsList";
 import { isMobile } from "react-device-detect";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { useState } from "react";
-import { NewsletterPopover } from "@/components/NewsletterPopover";
 import { useTranslation } from "react-i18next";
 
 // Component for blog metadata (category, date, read time)
@@ -83,7 +81,6 @@ function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
 export function InsightsPage() {
   const featuredPost = isMobile ? undefined : blogMetadata[0];
   const otherPosts = isMobile ? blogMetadata.slice(0) : blogMetadata.slice(1);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -92,11 +89,6 @@ export function InsightsPage() {
         title={t("insightsPage.title")}
         description={t("insightsPage.description")}
       >
-        <NewsletterPopover
-          isOpen={isSignUpOpen}
-          setIsOpen={setIsSignUpOpen}
-          buttonText={t("insightsPage.subscribeNewsletter")}
-        />
       </PageHeader>
       <div className="max-w-[1150px] mx-auto space-y-8">
         {/* Featured Post */}

@@ -13,9 +13,10 @@ export function MethodsPage() {
         title={t("methodsPage.header.title")}
         description={t("methodsPage.header.description")}
       />
-      <Accordion type="single" collapsible className="space-y-6">
-        {/* Main Content */}
-        <AccordionGroup title={t("methodsPage.accordion.parisAgreement.title")}>
+
+      <Accordion type="single" collapsible defaultValue="parisAgreement" className="space-y-6">
+        {/* Paris Agreement Section - Open by Default */}
+        <AccordionGroup title={t("methodsPage.accordion.parisAgreement.title")} value="parisAgreement">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
             <p>{t("methodsPage.accordion.parisAgreement.paragraph1")}</p>
             <p>
@@ -42,138 +43,40 @@ export function MethodsPage() {
             </div>
           </div>
         </AccordionGroup>
-        <AccordionGroup title={t("methodsPage.accordion.sources.title")}>
+
+        {/* Sources Section */}
+        <AccordionGroup title={t("methodsPage.accordion.sources.title")} value="sources">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <p>{t("methodsPage.accordion.sources.paragraph1")}</p>
             <p>{t("methodsPage.accordion.sources.paragraph2")}</p>
-
-            {/* Grid Layout for Links */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-              {[
-                {
-                  title: t("methodsPage.accordion.sources.links.smhi.title"),
-                  text: t("methodsPage.accordion.sources.links.smhi.text"),
-                  link: "https://nationellaemissionsdatabasen.smhi.se/",
-                },
-                {
-                  title: t("methodsPage.accordion.sources.links.skr.title"),
-                  text: t("methodsPage.accordion.sources.links.skr.text"),
-                  link: "https://skr.se/skr/demokratiledningstyrning/valmaktfordelning/valresultatstyren/styrekommunereftervalet2022.69547.html",
-                },
-                {
-                  title: t(
-                    "methodsPage.accordion.sources.links.wikidata.title"
-                  ),
-                  text: t("methodsPage.accordion.sources.links.wikidata.text"),
-                  link: "https://www.wikidata.org/wiki/Wikidata:Country_subdivision_task_force/Sweden/Municipalities",
-                },
-                {
-                  title: t(
-                    "methodsPage.accordion.sources.links.trafikanalys.title"
-                  ),
-                  text: t(
-                    "methodsPage.accordion.sources.links.trafikanalys.text"
-                  ),
-                  link: "https://www.trafa.se/vagtrafik/fordon/",
-                },
-                {
-                  title: t("methodsPage.accordion.sources.links.nvdb.title"),
-                  text: t("methodsPage.accordion.sources.links.nvdb.text"),
-                  link: "https://nvdb2012.trafikverket.se/SeTransportnatverket",
-                },
-                {
-                  title: t("methodsPage.accordion.sources.links.sei.title"),
-                  text: t("methodsPage.accordion.sources.links.sei.text"),
-                  link: "https://www.sei.org/tools/konsumtionskompassen/",
-                },
-                {
-                  title: t(
-                    "methodsPage.accordion.sources.links.powerCircles.title"
-                  ),
-                  text: t(
-                    "methodsPage.accordion.sources.links.powerCircles.text"
-                  ),
-                  link: "https://powercircle.org/elbilsstatistik/",
-                },
-                {
-                  title: t(
-                    "methodsPage.accordion.sources.links.klimatplaner.title"
-                  ),
-                  text: t(
-                    "methodsPage.accordion.sources.links.klimatplaner.text"
-                  ),
-                  link: "https://docs.google.com/spreadsheets/d/13CMqmfdd6QUD6agKFyVhwZUol4PKzvy253_EwtsFyvw/edit#gid=0",
-                },
-                {
-                  title: t(
-                    "methodsPage.accordion.sources.links.upphandlingsmyndigheten.title"
-                  ),
-                  text: t(
-                    "methodsPage.accordion.sources.links.upphandlingsmyndigheten.text"
-                  ),
-                  link: "https://www.klimatkollen.se/data/procurements/NUE2022_DATA_2023-12-20.xlsx",
-                },
-                {
-                  title: t(
-                    "methodsPage.accordion.sources.links.greenpeace.title"
-                  ),
-                  text: t(
-                    "methodsPage.accordion.sources.links.greenpeace.text"
-                  ),
-                  link: "https://docs.google.com/spreadsheets/d/1EdHUa49HJZn0rXqM-6tChdim4TJzXnwA/edit#gid=1040317160",
-                },
-              ].map((item) => (
-                <LinkButton key={item.title} {...item} />
+              {["smhi", "skr", "wikidata", "trafikanalys", "nvdb", "sei", "powerCircles", "klimatplaner", "upphandlingsmyndigheten", "greenpeace"].map((key) => (
+                <LinkButton
+                  key={key}
+                  title={t(`methodsPage.accordion.sources.links.${key}.title`)}
+                  text={t(`methodsPage.accordion.sources.links.${key}.text`)}
+                  link={t(`methodsPage.accordion.sources.links.${key}.link`)}
+                />
               ))}
             </div>
           </div>
         </AccordionGroup>
-        <AccordionGroup title={t("methodsPage.accordion.co2Budgets.title")}>
+
+        {/* CO2 Budgets Section */}
+        <AccordionGroup title={t("methodsPage.accordion.co2Budgets.title")} value="co2Budgets">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph1")}</p>
-            <p>
-              <Trans
-                i18nKey="methodsPage.accordion.co2Budgets.paragraph2"
-                components={[
-                  <a
-                    title="Uppsala universitet"
-                    className="underline hover:text-white transition-colors"
-                    href="https://www.cemus.uu.se/wp-content/uploads/2023/12/Paris-compliant-carbon-budgets-for-Swedens-counties-.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />,
-                ]}
-              />
-            </p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph3")}</p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph4")}</p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph5")}</p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph6")}</p>
-            <p>{t("methodsPage.accordion.co2Budgets.paragraph7")}</p>
-            <p>
-              <Trans
-                i18nKey="methodsPage.accordion.co2Budgets.paragraph8"
-                components={[
-                  <a
-                    title="Chalmers"
-                    className="underline hover:text-white transition-colors"
-                    href="https://research.chalmers.se/publication/530543/file/530543_Fulltext.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />,
-                ]}
-              />
-            </p>
+            {[...Array(8).keys()].map((i) => (
+              <p key={i}>{t(`methodsPage.accordion.co2Budgets.paragraph${i + 1}`)}</p>
+            ))}
           </div>
         </AccordionGroup>
-        <AccordionGroup title={t("methodsPage.accordion.emissionTypes.title")}>
+
+        {/* Emission Types Section */}
+        <AccordionGroup title={t("methodsPage.accordion.emissionTypes.title")} value="emissionTypes">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
-            <p>{t("methodsPage.accordion.emissionTypes.paragraph1")}</p>
-            <p>{t("methodsPage.accordion.emissionTypes.paragraph2")}</p>
-            <p>{t("methodsPage.accordion.emissionTypes.paragraph3")}</p>
-            <p>{t("methodsPage.accordion.emissionTypes.paragraph4")}</p>
-            <p>{t("methodsPage.accordion.emissionTypes.paragraph5")}</p>
-            <p>{t("methodsPage.accordion.emissionTypes.paragraph6")}</p>
+            {[...Array(6).keys()].map((i) => (
+              <p key={i}>{t(`methodsPage.accordion.emissionTypes.paragraph${i + 1}`)}</p>
+            ))}
           </div>
         </AccordionGroup>
       </Accordion>

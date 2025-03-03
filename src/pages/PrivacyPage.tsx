@@ -44,7 +44,7 @@ export function PrivacyPage() {
       </div>
       <Accordion type="single" collapsible className="space-y-6">
         {/* Main Content */}
-        <AccordionGroup title="Varför behandlar vi personuppgifterna?">
+        <AccordionGroup title="Varför behandlar vi personuppgifterna?" value="why">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
             <p>
               Vi behandlar uppgifterna för att kunna fullfölja de åtaganden som

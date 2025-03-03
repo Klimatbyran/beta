@@ -25,17 +25,39 @@ export function AboutPage() {
       />
       <Accordion type="single" collapsible className="space-y-6">
         {/* Main Content */}
-        <AccordionGroup title={t("aboutPage.mainContent.title")}>
-          <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
-            <p>{t("aboutPage.mainContent.paragraph1")}</p>
-            <p>{t("aboutPage.mainContent.paragraph2")}</p>
-            <p>{t("aboutPage.mainContent.paragraph3")}</p>
-            <p>{t("aboutPage.mainContent.paragraph4")}</p>
+        <div className="bg-black-2 rounded-level-1 p-16 md:p-8 sm:p-4">
+          <div className="flex flex-col md:flex-row items-start justify-between mb-12">
+            <div className="space-y-4 w-full">
+              {/* Header */}
+              <div className="flex flex-wrap items-center gap-4">
+                <Text variant="h3" className="text-4xl md:text-3xl sm:text-2xl">
+                  {t("aboutPage.mainContent.title")}
+                </Text>
+              </div>
+
+              <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                <img
+                  className="w-48 md:w-64 lg:w-80 max-h-48 object-contain flex-shrink-0"
+                  src={"./images/social-picture.png"}
+                  alt={"klimatkollen-social-image"}
+                />
+
+                <div className="prose prose-invert w-full max-w-5xl space-y-4">
+                  <p>{t("aboutPage.mainContent.paragraph1")}</p>
+                  <p>{t("aboutPage.mainContent.paragraph2")}</p>
+                  <p>{t("aboutPage.mainContent.paragraph3")}</p>
+                </div>
+              </div>
+
+              <div className="prose prose-invert w-full max-w-5xl space-y-4">
+                <p>{t("aboutPage.mainContent.paragraph4")}</p>
+              </div>
+            </div>
           </div>
-        </AccordionGroup>
+        </div>
 
         {/* Team Section */}
-        <AccordionGroup title={t("aboutPage.teamSection.title")}>
+        <AccordionGroup title={t("aboutPage.teamSection.title")} value="teamSection">
           <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamMembers.map((member) => (
@@ -59,6 +81,7 @@ export function AboutPage() {
                     />
                     <div>
                       <Text variant="body">{member.name}</Text>
+                      <Text className="text-grey">{member.role}</Text>
                     </div>
                   </div>
                   {expandedTeamMember === member.name && (
@@ -71,7 +94,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Board Section */}
-        <AccordionGroup title={t("aboutPage.boardSection.title")}>
+        <AccordionGroup title={t("aboutPage.boardSection.title")} value="boardSection">
           <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {boardMembers.map((member) => (
@@ -132,7 +155,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Financing Section */}
-        <AccordionGroup title={t("aboutPage.financingSection.title")}>
+        <AccordionGroup title={t("aboutPage.financingSection.title")} value="financingSection">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
             <p>{t("aboutPage.financingSection.paragraph1")}</p>
             <p>{t("aboutPage.financingSection.paragraph2")}</p>
@@ -152,7 +175,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Previous Projects Section */}
-        <AccordionGroup title={t("aboutPage.previousProjectsSection.title")}>
+        <AccordionGroup title={t("aboutPage.previousProjectsSection.title")} value="previousProjects">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <div className="space-y-4">
               <Text variant="h4">
