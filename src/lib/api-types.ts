@@ -4,66 +4,6 @@
  */
 
 export interface paths {
-    "/auth/github": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Auth User with Github Identity
-         * @description Authenticates a user using a Github access code
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        code: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            token: string;
-                        };
-                    };
-                };
-                /** @description Default Response */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/companies/": {
         parameters: {
             query?: never;
@@ -201,7 +141,6 @@ export interface paths {
                                     } | null;
                                 };
                             } | null;
-                            tags: string[];
                         }[];
                     };
                 };
@@ -518,22 +457,6 @@ export interface paths {
                                         subIndustryDescription: string;
                                     };
                                 };
-                                metadata: {
-                                    id: string;
-                                    comment: string | null;
-                                    source: string | null;
-                                    updatedAt: string;
-                                    user: {
-                                        name: string;
-                                    };
-                                    verifiedBy: {
-                                        name: string;
-                                    } | null;
-                                };
-                            } | null;
-                            baseYear: {
-                                id: string;
-                                year: number;
                                 metadata: {
                                     id: string;
                                     comment: string | null;
@@ -1320,85 +1243,6 @@ export interface paths {
         };
         trace?: never;
     };
-    "/companies/{wikidataId}/base-year": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Upsert company base year
-         * @description Upsert the base year for a company
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    wikidataId: string;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        baseYear: number;
-                        metadata?: {
-                            source?: string;
-                            comment?: string;
-                        };
-                    };
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            ok: boolean;
-                        };
-                    };
-                };
-                /** @description Default Response */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-                /** @description Default Response */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/companies/{wikidataId}/initiatives": {
         parameters: {
             query?: never;
@@ -2162,73 +2006,6 @@ export interface paths {
         trace?: never;
     };
     "/companies/scope3-category/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Delete a scope3 category
-         * @description Delete a scope3 category by id
-         */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Default Response */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-                /** @description Default Response */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-                /** @description Default Response */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/companies/base-year/{id}": {
         parameters: {
             query?: never;
             header?: never;
