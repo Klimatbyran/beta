@@ -65,24 +65,30 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getAuthUrl = () => {
-    const oauthState: string = nanoid(10);
-    const oauthStateKey: string = nanoid(5);
-
+    const oauthState = nanoid(10);
+    const oauthStateKey = nanoid(5);
     localStorage.setItem(oauthStateKey, oauthState);
+
     const redirectUri = `${window.location.origin}/auth/callback`;
+    const environment = import.meta.env.VITE_NODE_ENV;
 
-    const authUrl =
-      "https://github.com/login/oauth/authorize?" +
-      "client_id=Ov23liXxnsQCvlF3VVnH" +
-      "&redirect_uri=" +
-      encodeURIComponent(redirectUri) +
-      "&scope=user:email,%20read:org" +
-      "&state=" +
-      oauthStateKey +
-      ":" +
-      oauthState;
+    let app_client_id;
+    switch (environment) {
+      case "production":
+        app_client_id = "Ov23liRK6WrVG8jPDU5M";
+        break;
+      case "staging":
+        app_client_id = "Ov23liKHcV6ZlmTZqOtv";
+        break;
+      default:
+        app_client_id = "Ov23liXxnsQCvlF3VVnH";
+    }
 
-    return authUrl;
+    console.log("environment", environment);
+
+    return `https://github.com/login/oauth/authorize?client_id=${app_client_id}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&scope=user:email,%20read:org&state=${oauthStateKey}:${oauthState}`;
   };
 
   const logout = () => {
