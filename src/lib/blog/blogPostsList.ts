@@ -86,7 +86,7 @@ export const blogMetadata: BlogPostMeta[] = [
     date: '2022-09-01',
     readTime: '5 min',
     category: CategoryEnum.Analysis,
-    image: "/blogImages/image1-31.webp",
+    image: "/images/blogImages/image1-31.webp",
     language: LangEnum.SE,
     author: {
       name: "Ola Spännar",
@@ -101,7 +101,7 @@ export const blogMetadata: BlogPostMeta[] = [
     date: '2022-09-01',
     readTime: '5 min',
     category: CategoryEnum.Analysis,
-    image: "/blogImages/totala-utslapp-alla-partier.webp",
+    image: "/images/blogImages/totala-utslapp-alla-partier.webp",
     language: LangEnum.SE,
     author: {
       name: "Ola Spännar",
