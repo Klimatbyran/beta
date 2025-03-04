@@ -9,6 +9,8 @@ import {
 import { Text } from "@/components/ui/text";
 import type { CompanyDetails, ReportingPeriod } from "@/types/company";
 import { useTranslation } from "react-i18next";
+import { useScreenSize } from "@/hooks/useScreenSize";
+import { useState } from "react";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -26,6 +28,8 @@ export function CompanyOverview({
   selectedYear,
 }: CompanyOverviewProps) {
   const { t } = useTranslation();
+  const isMobile = useScreenSize();
+  const [showMore, setShowMore] = useState(false);
 
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   const sectorName =
@@ -57,12 +61,33 @@ export function CompanyOverview({
               {company.name}
             </Text>
           </div>
-          <Text
-            variant="body"
-            className="text-lg md:text-base sm:text-sm max-w-3xl"
-          >
-            {company.description}
-          </Text>
+          {isMobile ? (
+            <div>
+              <button
+                className="bg-black-1 text-white px-3 py-1 rounded-md mt-1 text-sm"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore
+                  ? t("companies.overview.readLess")
+                  : t("companies.overview.readMore")}
+              </button>
+              {showMore && (
+                <Text
+                  variant="body"
+                  className="text-lg md:text-base sm:text-sm max-w-3xl mt-2"
+                >
+                  {company.description}
+                </Text>
+              )}
+            </div>
+          ) : (
+            <Text
+              variant="body"
+              className="text-lg md:text-base sm:text-sm max-w-3xl"
+            >
+              {company.description}
+            </Text>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-4">
             <Text
               variant="body"
