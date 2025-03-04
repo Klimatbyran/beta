@@ -146,19 +146,23 @@ export function LandingPage() {
           <h2 className="text-4xl md:text-5xl font-light text-center mb-8 md:mb-16">
             {t("landingPage.bestPerformers")}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
+            {" "}
+            {/* FIXME add 2 columns for md when reintroducing company ranked list*/}
             <RankedList
               title={t("landingPage.bestMunicipalities")}
               description={t("landingPage.municipalitiesDescription")}
               items={topMunicipalities}
               type="municipality"
             />
+            {/* FIXME reintroduce at a later stage with replaced items since emissions change rate is missleading.
+            Could for instance be replaced with biggest emittiors in tCO2e
             <RankedList
               title={t("landingPage.bestCompanies")}
               description={t("landingPage.companiesDescription")}
               items={topCompanies}
               type="company"
-            />
+            /> */}
           </div>
         </div>
       </div>
