@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useCompanyDetails } from '@/hooks/useCompanyDetails';
 import { Text } from "@/components/ui/text";
 import { CompanyEditHeader } from '@/components/companies/edit/CompanyEditHeader';
@@ -8,11 +8,20 @@ import { CompanyEditScope1 } from '@/components/companies/edit/CompanyEditScope1
 import { CompanyEditScope2 } from '@/components/companies/edit/CompanyEditScope2';
 import { CompanyEditScope3 } from '@/components/companies/edit/CompanyEditScope3';
 import { CompanyDetails } from '@/types/company';
+import { mapCompanyEditFormToRequestBody } from '@/lib/company-edit';
+import { updateReportingPeriods } from '@/lib/api';
+import { useToast } from '@/contexts/ToastContext';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function CompanyEditPage() {
   const { id } = useParams<{ id: string }>();
-  const { company, loading, error } = useCompanyDetails(id!);
+  const { company, loading, error, refetch } = useCompanyDetails(id!);
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
+  const [formData, setFormData] = useState<Map<string, string>>(new Map<string, string>());
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const { showToast } = useToast();
+  const queryClient = useQueryClient();
 
   const selectedPeriods = company !== undefined ? selectedYears.reduce((periods, year) => {
     const period =  [...company.reportingPeriods].find(
@@ -22,10 +31,11 @@ export function CompanyEditPage() {
       if(period !== undefined) {
         periods.push(period);
       } 
+      periods.sort((a, b) => b.endDate > a.endDate ? -1 : 1)
       return periods;
   }, [] as CompanyDetails["reportingPeriods"]) : [];
 
-  if (loading) {
+  if (loading || isUpdating) {
     return (
       <div className="animate-pulse space-y-16">
         <div className="h-12 w-1/3 bg-black-1 rounded" />
@@ -58,9 +68,31 @@ export function CompanyEditPage() {
     );
   }
 
-  const sortedPeriods = [...company.reportingPeriods].sort(
-    (a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
-  );
+  const handleInputChange = async (name, value) => {
+    setFormData(formData.set(name, value));    
+  };
+
+  const handleSubmit = async (event: React.FormEvent<SubmitEvent>) => {  
+    setIsUpdating(true);  
+    event.preventDefault();
+    if(formRef.current !== null) {
+      const inputs = formRef.current.querySelectorAll("input");
+      for(const input of inputs) {
+        if(input.type === "checkbox") {
+          setFormData(formData.set(input.name, input.checked ? "true" : "false"));
+        } else {
+          setFormData(formData.set(input.name, input.value));
+        }
+      }
+    }
+    if(id !== undefined) {      
+      await updateReportingPeriods(id, mapCompanyEditFormToRequestBody(selectedPeriods, formData));
+      await refetch();
+      setSelectedYears(selectedYears);
+      setIsUpdating(false);
+      showToast("Changes Saved!", "Reporting Period was successfully updated");
+    }    
+  };
 
   return (
     <div className="space-y-16 max-w-[1400px] mx-auto">
@@ -71,12 +103,13 @@ export function CompanyEditPage() {
         onYearsSelect={setSelectedYears}
       />
       {selectedPeriods !== null && selectedPeriods.length > 0 && (
-        <>
-        <CompanyEditPeriod periods={selectedPeriods}></CompanyEditPeriod>
-        <CompanyEditScope1 periods={selectedPeriods}></CompanyEditScope1>
-        <CompanyEditScope2 periods={selectedPeriods}></CompanyEditScope2>
-        <CompanyEditScope3 periods={selectedPeriods}></CompanyEditScope3>
-        </>
+        <form onSubmit={handleSubmit} ref={formRef}>
+        <CompanyEditPeriod periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditPeriod>
+        <CompanyEditScope1 periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditScope1>
+        <CompanyEditScope2 periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditScope2>
+        <CompanyEditScope3 periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditScope3>
+        <button type="submit" className='inline-flex float-right mt-2 items-center justify-center text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white disabled:pointer-events-none hover:opacity-80 active:ring-1 active:ring-white disabled:opacity-50 h-10 bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium'>Save</button>
+        </form>
       )}
       </div>
     </div>

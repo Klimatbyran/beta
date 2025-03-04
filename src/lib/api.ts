@@ -57,6 +57,17 @@ export async function getMunicipalityDetails(id: string) {
   return data;
 }
 
+export async function updateReportingPeriods(wikidataId: string, body) {
+  const {data, error} = await POST('/companies/{wikidataId}/reporting-periods', {
+    params: {
+      path: {wikidataId}
+    },
+    body
+  });
+  if(error) throw error;
+  return data;
+}
+
 // Other API endpoints...
 export async function getCO2Level() {
   const { data, error } = await GET('/co2', {});
