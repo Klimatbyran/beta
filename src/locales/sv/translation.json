@@ -392,21 +392,70 @@
   },
   "companies": {
     "categories": {
-      "purchasedGoodsAndServices": "Inköpta varor & tjänster",
-      "capitalGoods": "Kapitalvaror",
-      "fuelAndEnergy": "Bränsle & energi",
-      "upstreamTransport": "Uppströms transport",
-      "waste": "Avfall",
-      "businessTravel": "Tjänsteresor",
-      "commuting": "Pendling",
-      "upstreamLeasing": "Uppströms leasing",
-      "downstreamTransport": "Nedströms transport",
-      "processing": "Bearbetning",
-      "use": "Användning",
-      "endOfLifeTreatment": "Slutbehandling",
-      "downstreamLeasing": "Nedströms leasing",
-      "franchises": "Franchiser",
-      "investments": "Investeringar"
+      "1": {
+        "name": "Inköpta varor och tjänster",
+        "description": "Utsläpp från produktion av varor och tjänster som köps av organisationen."
+      },
+      "2": {
+        "name": "Kapitalvaror",
+        "description": "Utsläpp från produktion av kapitalvaror som köps av organisationen."
+      },
+      "3": {
+        "name": "Bränsle- och energirelaterade aktiviteter",
+        "description": "Utsläpp från produktion av bränslen och energi som köps av organisationen, inklusive transport och distribution, som inte inkluderas i scope 2."
+      },
+      "4": {
+        "name": "Uppströms transport och distribution",
+        "description": "Utsläpp från transport och distribution av inköpta varor mellan leverantörer och/eller inom organisationen."
+      },
+      "5": {
+        "name": "Avfall genererat i verksamheten",
+        "description": "Utsläpp från behandling av avfall som genereras av organisationen."
+      },
+      "6": {
+        "name": "Tjänsteresor",
+        "description": "Utsläpp från resor i tjänsten med fordon som inte ägs av organisationen."
+      },
+      "7": {
+        "name": "Pendlingsresor",
+        "description": "Utsläpp från anställdas resor mellan hemmet och arbetsplatsen."
+      },
+      "8": {
+        "name": "Uppströms leasade tillgångar",
+        "description": "Utsläpp från verksamhet i leasade tillgångar som inte inkluderas i scope 1 och 2."
+      },
+      "9": {
+        "name": "Nedströms transport och distribution",
+        "description": "Utsläpp från transport och distribution av sålda varor mellan organisationen och kund."
+      },
+      "10": {
+        "name": "Bearbetning av sålda produkter",
+        "description": "Utsläpp från vidareförädling av sålda insatsvaror."
+      },
+      "11": {
+        "name": "Användning av sålda produkter",
+        "description": "Utsläpp från användning av sålda produkter av kunden."
+      },
+      "12": {
+        "name": "Slutbehandling av sålda produkter",
+        "description": "Utsläpp från avfallshantering av sålda produkter vid slutet av livscykeln."
+      },
+      "13": {
+        "name": "Nedströms leasade tillgångar",
+        "description": "Utsläpp från verksamhet i nedströms leasade tillgångar som inte inkluderas i scope 1 och 2."
+      },
+      "14": {
+        "name": "Franchiser",
+        "description": "Utsläpp från franchisetagares verksamhet som inte inkluderas i scope 1 och 2."
+      },
+      "15": {
+        "name": "Investeringar",
+        "description": "Utsläpp från organisationens investeringar i andra företag, samt andra finansierade utsläpp."
+      },
+      "16": {
+        "name": "Övrigt",
+        "description": "Utsläpp som inte är kopplade till de 15 Scope 3-kategorierna."
+      }
     },
     "card": {
       "noData": "Ingen data",
