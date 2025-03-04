@@ -1,19 +1,15 @@
-import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
 import { useTeamMembers } from "@/hooks/useTeamMembers";
 import { useBoardMembers } from "@/hooks/useBoardMembers";
-import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
 import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
+import { TeamMembers } from "@/components/TeamMember";
 
 export function AboutPage() {
   const { t } = useTranslation();
-  const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(
-    null
-  );
   const teamMembers = useTeamMembers();
   const boardMembers = useBoardMembers();
 
@@ -25,7 +21,7 @@ export function AboutPage() {
       />
       <Accordion type="single" collapsible className="space-y-6">
         {/* Main Content */}
-        <div className="bg-black-2 rounded-level-1 p-16 md:p-8 sm:p-4">
+        <div className="bg-black-2 rounded-level-1 p-8 sm:p-4">
           <div className="flex flex-col md:flex-row items-start justify-between mb-12">
             <div className="space-y-4 w-full">
               {/* Header */}
@@ -57,105 +53,58 @@ export function AboutPage() {
         </div>
 
         {/* Team Section */}
-        <AccordionGroup title={t("aboutPage.teamSection.title")} value="teamSection">
-          <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {teamMembers.map((member) => (
-                <div
-                  key={member.name}
-                  className={cn(
-                    "bg-black-1 rounded-level-2 p-8 space-y-6 cursor-pointer transition-all",
-                    expandedTeamMember === member.name ? "col-span-2" : ""
-                  )}
-                  onClick={() =>
-                    setExpandedTeamMember(
-                      expandedTeamMember === member.name ? null : member.name
-                    )
-                  }
-                >
-                  <div className="flex items-start gap-6">
-                    <img
-                      src={member.imageUrl}
-                      alt={member.name}
-                      className="w-16 h-16 rounded-full object-cover"
-                    />
-                    <div>
-                      <Text variant="body">{member.name}</Text>
-                      <Text className="text-grey">{member.role}</Text>
-                    </div>
-                  </div>
-                  {expandedTeamMember === member.name && (
-                    <Text className="text-grey">{member.description}</Text>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+        <AccordionGroup
+          title={t("aboutPage.teamSection.title")}
+          value="teamSection"
+        >
+          <TeamMembers members={teamMembers} />
         </AccordionGroup>
 
         {/* Board Section */}
-        <AccordionGroup title={t("aboutPage.boardSection.title")} value="boardSection">
-          <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {boardMembers.map((member) => (
-                <div
-                  key={member.name}
-                  className="bg-black-1 rounded-level-2 p-8 space-y-6"
-                >
-                  <div className="flex items-start gap-6">
-                    <img
-                      src={member.imageUrl}
-                      alt={member.name}
-                      className="w-16 h-16 rounded-full object-cover"
-                    />
-                    <div>
-                      <Text variant="body">{member.name}</Text>
-                      <Text variant="body">{member.role}</Text>
-                      <Text className="text-grey mt-4">
-                        {member.description}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="p-8 prose prose-invert">
-              <p>
-                {t("aboutPage.boardSection.links.stadgar")}{" "}
-                <a
-                  href="https://www.klimatkollen.se/stadgar.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  {t("aboutPage.boardSection.links.stadgarLink")}
-                </a>
-                {", "}{" "}
-                <a
-                  href="https://www.klimatkollen.se/uppforandekod.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  {t("aboutPage.boardSection.links.uppforandekodLink")}
-                </a>{" "}
-                {t("aboutPage.boardSection.links.and")}{" "}
-                <a
-                  href="https://www.klimatkollen.se/antikorruptionspolicy.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  {t("aboutPage.boardSection.links.antikorruptionspolicyLink")}
-                </a>{" "}
-                .
-              </p>
-            </div>
+        <AccordionGroup
+          title={t("aboutPage.boardSection.title")}
+          value="boardSection"
+        >
+          <TeamMembers members={boardMembers} />
+          <div className="p-8 prose prose-invert">
+            <p>
+              {t("aboutPage.boardSection.links.stadgar")}{" "}
+              <a
+                href="https://www.klimatkollen.se/stadgar.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                {t("aboutPage.boardSection.links.stadgarLink")}
+              </a>
+              {", "}{" "}
+              <a
+                href="https://www.klimatkollen.se/uppforandekod.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                {t("aboutPage.boardSection.links.uppforandekodLink")}
+              </a>{" "}
+              {t("aboutPage.boardSection.links.and")}{" "}
+              <a
+                href="https://www.klimatkollen.se/antikorruptionspolicy.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                {t("aboutPage.boardSection.links.antikorruptionspolicyLink")}
+              </a>{" "}
+              .
+            </p>
           </div>
         </AccordionGroup>
 
         {/* Financing Section */}
-        <AccordionGroup title={t("aboutPage.financingSection.title")} value="financingSection">
+        <AccordionGroup
+          title={t("aboutPage.financingSection.title")}
+          value="financingSection"
+        >
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
             <p>{t("aboutPage.financingSection.paragraph1")}</p>
             <p>{t("aboutPage.financingSection.paragraph2")}</p>
@@ -175,7 +124,10 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Previous Projects Section */}
-        <AccordionGroup title={t("aboutPage.previousProjectsSection.title")} value="previousProjects">
+        <AccordionGroup
+          title={t("aboutPage.previousProjectsSection.title")}
+          value="previousProjects"
+        >
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <div className="space-y-4">
               <Text variant="h4">
