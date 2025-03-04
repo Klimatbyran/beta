@@ -172,43 +172,53 @@
         "links": {
           "smhi": {
             "title": "Nationella emissionsdatabasen",
-            "text": "Utsläpp av växthusgaser i kommunerna"
+            "text": "Utsläpp av växthusgaser i kommunerna",
+            "link": "https://nationellaemissionsdatabasen.smhi.se/"
           },
           "skr": {
             "title": "Sveriges Kommuner och Regioner",
-            "text": "Politiskt styre i kommunerna"
+            "text": "Politiskt styre i kommunerna",
+            "link": "https://skr.se/skr/demokratiledningstyrning/valmaktfordelning/valresultatstyren/styrekommunereftervalet2022.69547.html"
           },
           "wikidata": {
             "title": "Wikidata",
-            "text": "Kommunvapen och invånarantal"
+            "text": "Kommunvapen och invånarantal",
+            "link": "https://www.wikidata.org/wiki/Wikidata:Country_subdivision_task_force/Sweden/Municipalities"
           },
           "trafikanalys": {
             "title": "Trafikanalys",
-            "text": "Andel laddbara bilar"
+            "text": "Andel laddbara bilar",
+            "link": "https://www.trafa.se/vagtrafik/fordon/"
           },
           "nvdb": {
             "title": "Nationella vägdatabas",
-            "text": "Cykelvägar meter per kommun"
+            "text": "Cykelvägar meter per kommun",
+            "link": "https://nvdb2012.trafikverket.se/SeTransportnatverket"
           },
           "sei": {
             "title": "Stockholm Environment Institute",
-            "text": "Hushållens konsumtionsbaserade utsläpp"
+            "text": "Hushållens konsumtionsbaserade utsläpp",
+            "link": "https://www.sei.org/tools/konsumtionskompassen/"
           },
           "powerCircles": {
             "title": "Power Circles databas ELIS",
-            "text": "Uppgifter om laddinfrastrukturen kommer från branschorganisationen"
+            "text": "Uppgifter om laddinfrastrukturen kommer från branschorganisationen",
+            "link": "https://powercircle.org/elbilsstatistik/"
           },
           "klimatplaner": {
             "title": "Klimatplaner",
-            "text": "Insamlade av Klimatklubbens och Naturskyddsföreningens medlemmar"
+            "text": "Insamlade av Klimatklubbens och Naturskyddsföreningens medlemmar",
+            "link": "https://docs.google.com/spreadsheets/d/13CMqmfdd6QUD6agKFyVhwZUol4PKzvy253_EwtsFyvw/edit#gid=0"
           },
           "upphandlingsmyndigheten": {
             "title": "Upphandlingsmyndigheten",
-            "text": "nformation om klimatkrav vid kommunernas upphandlingar"
+            "text": "nformation om klimatkrav vid kommunernas upphandlingar",
+            "link": "https://www.klimatkollen.se/data/procurements/NUE2022_DATA_2023-12-20.xlsx"
           },
           "greenpeace": {
             "title": "Greenpeace",
-            "text": "Kartläggning av klimatkrav inom offentlig upphandling"
+            "text": "Kartläggning av klimatkrav inom offentlig upphandling",
+            "link": "https://docs.google.com/spreadsheets/d/1EdHUa49HJZn0rXqM-6tChdim4TJzXnwA/edit#gid=1040317160"
           }
         }
       },
