@@ -1,50 +1,63 @@
 import { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import { Accordion } from "@/components/ui/accordion";
-import { teamMembers, boardMembers } from "@/lib/constants/about";
+import { useTeamMembers } from "@/hooks/useTeamMembers";
+import { useBoardMembers } from "@/hooks/useBoardMembers";
 import { cn } from "@/lib/utils";
 import { AccordionGroup } from "../components/layout/AccordionGroup";
+import { LinkButton } from "@/components/layout/LinkButton";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { useTranslation } from "react-i18next";
 
 export function AboutPage() {
+  const { t } = useTranslation();
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(
     null
   );
+  const teamMembers = useTeamMembers();
+  const boardMembers = useBoardMembers();
 
   return (
     <div className="max-w-[1200px] mx-auto space-y-20">
-      {/* Hero Section */}
-      <div className="space-y-8">
-        <Text variant="display">Om oss</Text>
-        <Text variant="body" className="text-grey max-w-3xl">
-          Klimatkollen är en medborgarplattform som tillgängliggör klimatdata.
-          Klicka på rubrikerna för att läsa mer.
-        </Text>
-      </div>
+      <PageHeader
+        title={t("aboutPage.header.title")}
+        description={t("aboutPage.header.description")}
+      />
       <Accordion type="single" collapsible className="space-y-6">
         {/* Main Content */}
-        <AccordionGroup title="Vad är Klimatkollen?">
-          <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
-            <p>
-              Klimatkollen är en medborgarplattform som hjälper medborgare,
-              företag och organisationer att få koll på klimatomställningen,
-              genom att samla in och visualisera klimatdata.
-            </p>
-            <p>
-              Vi visar hur det går med utsläppen, jämfört med hur det borde gå,
-              så att det blir begripligt för allmänheten, bidrar till en
-              faktabaserad debatt och stärker opinionen för klimatåtgärder.
-            </p>
-            <p>
-              Vår vision är att beslutsfattare i politik och näringsliv ska
-              påverkas av en välinformerad och växande opinion till att
-              genomföra åtgärder som sänker utsläppen i linje med Parisavtalet.
-            </p>
+        <div className="bg-black-2 rounded-level-1 p-16 md:p-8 sm:p-4">
+          <div className="flex flex-col md:flex-row items-start justify-between mb-12">
+            <div className="space-y-4 w-full">
+              {/* Header */}
+              <div className="flex flex-wrap items-center gap-4">
+                <Text variant="h3" className="text-4xl md:text-3xl sm:text-2xl">
+                  {t("aboutPage.mainContent.title")}
+                </Text>
+              </div>
+
+              <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                <img
+                  className="w-48 md:w-64 lg:w-80 max-h-48 object-contain flex-shrink-0"
+                  src={"./images/social-picture.png"}
+                  alt={"klimatkollen-social-image"}
+                />
+
+                <div className="prose prose-invert w-full max-w-5xl space-y-4">
+                  <p>{t("aboutPage.mainContent.paragraph1")}</p>
+                  <p>{t("aboutPage.mainContent.paragraph2")}</p>
+                  <p>{t("aboutPage.mainContent.paragraph3")}</p>
+                </div>
+              </div>
+
+              <div className="prose prose-invert w-full max-w-5xl space-y-4">
+                <p>{t("aboutPage.mainContent.paragraph4")}</p>
+              </div>
+            </div>
           </div>
-        </AccordionGroup>
+        </div>
 
         {/* Team Section */}
-        <AccordionGroup title="Vårt team">
+        <AccordionGroup title={t("aboutPage.teamSection.title")} value="teamSection">
           <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamMembers.map((member) => (
@@ -68,6 +81,7 @@ export function AboutPage() {
                     />
                     <div>
                       <Text variant="body">{member.name}</Text>
+                      <Text className="text-grey">{member.role}</Text>
                     </div>
                   </div>
                   {expandedTeamMember === member.name && (
@@ -80,7 +94,7 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Board Section */}
-        <AccordionGroup title="Vår styrelse">
+        <AccordionGroup title={t("aboutPage.boardSection.title")} value="boardSection">
           <div className="bg-black-2 rounded-level-2 p-16 space-y-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {boardMembers.map((member) => (
@@ -107,14 +121,14 @@ export function AboutPage() {
             </div>
             <div className="p-8 prose prose-invert">
               <p>
-                Här hittar du våra{" "}
+                {t("aboutPage.boardSection.links.stadgar")}{" "}
                 <a
                   href="https://www.klimatkollen.se/stadgar.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-white"
                 >
-                  stadgar
+                  {t("aboutPage.boardSection.links.stadgarLink")}
                 </a>
                 {", "}{" "}
                 <a
@@ -123,16 +137,16 @@ export function AboutPage() {
                   rel="noopener noreferrer"
                   className="underline hover:text-white"
                 >
-                  uppförandekod
+                  {t("aboutPage.boardSection.links.uppforandekodLink")}
                 </a>{" "}
-                och{" "}
+                {t("aboutPage.boardSection.links.and")}{" "}
                 <a
                   href="https://www.klimatkollen.se/antikorruptionspolicy.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-white"
                 >
-                  antikorruptionspolicy
+                  {t("aboutPage.boardSection.links.antikorruptionspolicyLink")}
                 </a>{" "}
                 .
               </p>
@@ -141,109 +155,63 @@ export function AboutPage() {
         </AccordionGroup>
 
         {/* Financing Section */}
-        <AccordionGroup title="Så finansieras vi">
+        <AccordionGroup title={t("aboutPage.financingSection.title")} value="financingSection">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-4">
-            <p>
-              Under 2024 och 2025 får Klimatkollen finansiell uppbackning av
-              Google.org som en av två svenska mottagare av{" "}
-              <a
-                href="https://impactchallenge.withgoogle.com/techforsocialgood-sv/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-white"
-              >
-                Google.org Impact Challenge: Tech for Social Good
-              </a>
-              .
-            </p>
-            <p>
-              Under 2023 drevs Klimatkollen med stöd från{" "}
-              <a
-                href="https://www.mynewsdesk.com/se/klimatbyraan/pressreleases/klimatkollen-faar-stoed-av-postkodstiftelsen-och-rekryterar-toppnamn-3223979"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-white"
-              >
-                Postkodstiftelsen
-              </a>
-              . Uppstarten 2022 finansierades av Världsnaturfonden WWF,
-              ClimateView, We Don't Have Time och Argand Partners.
-            </p>
-            <p>
-              Mycket av arbetet är ideellt, därför välkomnar vi fler
-              samarbetspartners och ekonomiskt stöd för att kunna skala upp!
-            </p>
+            <p>{t("aboutPage.financingSection.paragraph1")}</p>
+            <p>{t("aboutPage.financingSection.paragraph2")}</p>
+            <p>{t("aboutPage.financingSection.paragraph3")}</p>
             <div className="bg-blue-5/30 rounded-level-2 p-6 mt-8 max-w-3xl">
-              <Text variant="body">Skänk gärna en slant!</Text>
+              <Text variant="body">
+                {t("aboutPage.financingSection.donate")}
+              </Text>
               <Text className="text-grey">
-                Varje krona ger oss muskler att visa upp mer data.
+                {t("aboutPage.financingSection.donateDescription")}
               </Text>
               <Text variant="body" className="text-blue-2 mt-2">
-                Bankgiro: 5793-3178
+                {t("aboutPage.financingSection.bankgiro")}
               </Text>
             </div>
           </div>
         </AccordionGroup>
 
         {/* Previous Projects Section */}
-        <AccordionGroup title="Tidigare projekt">
+        <AccordionGroup title={t("aboutPage.previousProjectsSection.title")} value="previousProjects">
           <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
             <div className="space-y-4">
-              <Text variant="h4">Kommunprojektet 2023</Text>
+              <Text variant="h4">
+                {t("aboutPage.previousProjectsSection.kommunprojektetTitle")}
+              </Text>
               <p>
-                Under 2023 fick Klimatkollen stöd av{" "}
-                <a
-                  href="https://postkodstiftelsen.se/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-white"
-                >
-                  Postkodstiftelsen
-                </a>{" "}
-                för att ta tempen på hur det går med klimatomställningen i
-                kommunerna. I dag kan du se hur det går med koldioxidutsläppen.
-                Nu visar vi även vad kommunerna gör för att minska dem.
+                {t(
+                  "aboutPage.previousProjectsSection.kommunprojektetDescription"
+                )}
               </p>
             </div>
 
             <div className="space-y-4">
-              <Text variant="h1">Riksdagsvalet 2022</Text>
+              <Text variant="h1">
+                {t("aboutPage.previousProjectsSection.riksdagsvaletTitle")}
+              </Text>
               <p>
-                Inför riksdagsvalet 2022 ansvarade Klimatkollen för två unika
-                projekt:
+                {t(
+                  "aboutPage.previousProjectsSection.riksdagsvaletDescription"
+                )}
               </p>
               <div className="space-y-6 max-w-3xl">
-                {/* TODO: Update this link once the content has been
-                  modified/moved to the blog, original link
-                  https://www.klimatkollen.se/partierna */}
-                <a
-                  href="/insights/klimatmal"
-                  className="block bg-black-1 rounded-level-2 p-6 hover:bg-black-1/80 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Text variant="body">Klimatmål</Text>
-                      <Text className="text-grey">
-                        En analys av riksdagspartiernas
-                      </Text>
-                    </div>
-                    <ArrowUpRight className="w-6 h-6" />
-                  </div>
-                </a>
-                <a
-                  href="/insights/utslappsberakning"
-                  className="block bg-black-1 rounded-level-2 p-6 hover:bg-black-1/80 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Text variant="body">Utsläppsberäkning</Text>
-                      <Text className="text-grey">
-                        Beräkning av partiernas klimatåtgärder
-                      </Text>
-                    </div>
-                    <ArrowUpRight className="w-6 h-6" />
-                  </div>
-                </a>
+                <LinkButton
+                  title={t("aboutPage.previousProjectsSection.klimatmalTitle")}
+                  text={t("aboutPage.previousProjectsSection.klimatmalText")}
+                  link="/insights/klimatmal"
+                />
+                <LinkButton
+                  title={t(
+                    "aboutPage.previousProjectsSection.utslappsberakningTitle"
+                  )}
+                  text={t(
+                    "aboutPage.previousProjectsSection.utslappsberakningText"
+                  )}
+                  link="/insights/utslappsberakning"
+                />
               </div>
             </div>
           </div>

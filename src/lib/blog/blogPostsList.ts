@@ -74,7 +74,7 @@ export const blogMetadata: BlogPostMeta[] = [
       "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=800&h=400&fit=crop",
     language: LangEnum.SE,
     author: {
-      name: "Alexandra Palmqvist",
+      name: "Alexandra Palmquist",
       avatar: "/people/alex.jpg",
     },
     relatedPosts: ["metod", "ai-process-del-1"],
@@ -86,7 +86,7 @@ export const blogMetadata: BlogPostMeta[] = [
     date: '2022-09-01',
     readTime: '5 min',
     category: CategoryEnum.Analysis,
-    image: "/blogImages/image1-31.webp",
+    image: "/images/blogImages/image1-31.webp",
     language: LangEnum.SE,
     author: {
       name: "Ola Spännar",
@@ -101,7 +101,7 @@ export const blogMetadata: BlogPostMeta[] = [
     date: '2022-09-01',
     readTime: '5 min',
     category: CategoryEnum.Analysis,
-    image: "/blogImages/totala-utslapp-alla-partier.webp",
+    image: "/images/blogImages/totala-utslapp-alla-partier.webp",
     language: LangEnum.SE,
     author: {
       name: "Ola Spännar",

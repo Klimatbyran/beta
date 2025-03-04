@@ -10,13 +10,14 @@ import {
   Tooltip,
   TooltipProps,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 interface DataPoint {
   year: number;
   total?: number;
   trend?: number;
   paris?: number;
-  gap?: number; // fixme add to graph
+  gap?: number;
 }
 
 interface MunicipalityEmissionsGraphProps {
@@ -26,9 +27,10 @@ interface MunicipalityEmissionsGraphProps {
 export const MunicipalityEmissionsGraph: FC<
   MunicipalityEmissionsGraphProps
 > = ({ projectedData }) => {
-  // Add data validation
+  const { t } = useTranslation();
+
   if (!projectedData || projectedData.length === 0) {
-    return <div>No data available</div>;
+    return <div>{t("municipalities.graph.noData")}</div>;
   }
 
   const CustomTooltip: FC<TooltipProps<number, string>> = ({
@@ -46,9 +48,12 @@ export const MunicipalityEmissionsGraph: FC<
             }
             return (
               <div key={entry.dataKey} className="text-sm">
-                <span className="text-grey mr-2">{entry.name}:</span>
+                <span className="text-grey mr-2">
+                  {t(`municipalities.graph.${entry.dataKey}`)}:
+                </span>
                 <span style={{ color: entry.color }}>
-                  {((entry.value as number) / 1000).toFixed(1)} ton CO₂e
+                  {((entry.value as number) / 1000).toFixed(1)}{" "}
+                  {t("municipalities.graph.unit")}
                 </span>
               </div>
             );
@@ -62,9 +67,10 @@ export const MunicipalityEmissionsGraph: FC<
   return (
     <div className="h-[400px] pr-8">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={projectedData} margin={{ top: 20, bottom: 20 }}>
+        <LineChart data={projectedData}>
           <Legend
             verticalAlign="top"
+            align="right"
             height={36}
             iconType="line"
             wrapperStyle={{ fontSize: "12px", color: "#878787" }}
@@ -78,7 +84,7 @@ export const MunicipalityEmissionsGraph: FC<
             tick={{ fontSize: 12 }}
             padding={{ left: 0, right: 0 }}
             domain={[1990, 2050]}
-            ticks={[1990, 2015, 2020, 2030, 2040, 2050]} // fixme find better solution where years are not hardcoded
+            ticks={[1990, 2015, 2020, 2030, 2040, 2050]}
             tickFormatter={(year) => year}
           />
           <YAxis
@@ -91,7 +97,6 @@ export const MunicipalityEmissionsGraph: FC<
             domain={[0, "auto"]}
             padding={{ top: 0, bottom: 0 }}
           />
-
           <Area
             type="monotone"
             dataKey="gap"
@@ -99,7 +104,7 @@ export const MunicipalityEmissionsGraph: FC<
             stroke="none"
             fillOpacity={0.3}
             activeDot={false}
-            name="Gap"
+            name={t("municipalities.graph.gap")}
           />
           <Line
             type="monotone"
@@ -108,7 +113,7 @@ export const MunicipalityEmissionsGraph: FC<
             strokeWidth={2}
             dot={false}
             connectNulls
-            name="Historiskt"
+            name={t("municipalities.graph.historical")}
           />
           <Line
             type="monotone"
@@ -117,7 +122,7 @@ export const MunicipalityEmissionsGraph: FC<
             strokeWidth={2}
             strokeDasharray="4 4"
             dot={false}
-            name="Trend"
+            name={t("municipalities.graph.trend")}
           />
           <Line
             type="monotone"
@@ -126,7 +131,7 @@ export const MunicipalityEmissionsGraph: FC<
             strokeWidth={2}
             strokeDasharray="4 4"
             dot={false}
-            name="Parisavtalet"
+            name={t("municipalities.graph.parisAgreement")}
           />
         </LineChart>
       </ResponsiveContainer>

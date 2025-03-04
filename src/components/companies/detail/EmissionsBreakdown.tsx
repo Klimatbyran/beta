@@ -1,4 +1,4 @@
-import { Info } from 'lucide-react';
+import { Info } from "lucide-react";
 import { Text } from "@/components/ui/text";
 import {
   Tooltip,
@@ -6,18 +6,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { scopeDescriptions, upstreamCategories, downstreamCategories, getCategoryIcon, getCategoryName, getCategoryDescription } from '@/lib/constants/emissions';
-import { cn } from '@/lib/utils';
+import {
+  upstreamCategories,
+  downstreamCategories,
+  getCategoryIcon,
+  getCategoryName,
+  getCategoryDescription,
+} from "@/lib/constants/emissions";
+import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface EmissionsBreakdownProps {
   emissions: {
     scope1And2?: { total: number; unit: string } | null;
     scope1?: { total: number; unit: string } | null;
-    scope2?: { 
+    scope2?: {
       calculatedTotalEmissions: number;
     } | null;
-    scope3?: { 
-      total: number; 
+    scope3?: {
+      total: number;
       unit: string;
       categories?: Array<{
         category: number;
@@ -33,27 +40,34 @@ interface EmissionsBreakdownProps {
   showOnlyScope3?: boolean;
 }
 
-export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 = false }: EmissionsBreakdownProps) {
+export function EmissionsBreakdown({
+  emissions,
+  year,
+  className,
+  showOnlyScope3 = false,
+}: EmissionsBreakdownProps) {
+  const { t } = useTranslation();
+
   if (!emissions) return null;
 
   const scopeData = [
     {
-      name: 'Scope 1',
+      name: t("emissionsBreakdown.scope1"),
       value: emissions.scope1?.total || 0,
-      description: scopeDescriptions.scope1,
-      color: 'bg-orange-3',
+      description: t("scope.scope1"),
+      color: "bg-orange-3",
     },
     {
-      name: 'Scope 2',
+      name: t("emissionsBreakdown.scope2"),
       value: emissions.scope2?.calculatedTotalEmissions || 0,
-      description: scopeDescriptions.scope2,
-      color: 'bg-pink-3',
+      description: t("scope.scope2"),
+      color: "bg-pink-3",
     },
     {
-      name: 'Scope 3',
+      name: t("emissionsBreakdown.scope3"),
       value: emissions.scope3?.total || 0,
-      description: scopeDescriptions.scope3,
-      color: 'bg-blue-3',
+      description: t("scope.scope3"),
+      color: "bg-blue-3",
     },
   ];
 
@@ -65,22 +79,25 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
       {!showOnlyScope3 && (
         <>
           <div className="flex items-center gap-2 mb-12">
-            <Text variant="h3">Fördelning av utsläpp {year}</Text>
+            <Text variant="h3">{t("emissionsBreakdown.title", { year })}</Text>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="w-4 h-4 text-grey" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Fördelning av utsläpp mellan olika scope enligt GHG-protokollet</p>
+                  <p>{t("emissionsBreakdown.tooltip")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
 
           <div className="grid grid-cols-3 gap-8 mb-16">
-            {scopeData.map(scope => (
-              <div key={scope.name} className="bg-black-1 rounded-level-2 p-8 space-y-4">
+            {scopeData.map((scope) => (
+              <div
+                key={scope.name}
+                className="bg-black-1 rounded-level-2 p-8 space-y-4"
+              >
                 <div className="flex items-center gap-4">
                   <div className={cn("w-3 h-3 rounded-full", scope.color)} />
                   <Text variant="large">{scope.name}</Text>
@@ -88,13 +105,17 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
 
                 <Text className="text-4xl font-light">
                   {scope.value.toLocaleString()}
-                  <span className="text-sm text-grey ml-2">ton CO₂e</span>
+                  <span className="text-sm text-grey ml-2">
+                    {t("emissionsBreakdown.unit")}
+                  </span>
                 </Text>
 
                 <div className="h-2 bg-black-2 rounded-full overflow-hidden">
-                  <div 
+                  <div
                     className={cn("h-full rounded-full", scope.color)}
-                    style={{ width: `${(scope.value / totalEmissions) * 100}%` }}
+                    style={{
+                      width: `${(scope.value / totalEmissions) * 100}%`,
+                    }}
                   />
                 </div>
 
@@ -110,25 +131,36 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
       {/* Scope 3 Categories */}
       {scope3Categories.length > 0 && (
         <div className={cn(!showOnlyScope3 && "mt-16", "space-y-8")}>
-          {!showOnlyScope3 && <Text variant="h4">Scope 3-kategorier</Text>}
-          
+          {!showOnlyScope3 && (
+            <Text variant="h4">{t("emissionsBreakdown.scope3Categories")}</Text>
+          )}
+
           <div className="grid grid-cols-2 gap-16">
             {/* Upstream Categories */}
             <div className="space-y-8">
-              <Text variant="h5" className="text-grey">Uppströms</Text>
+              <Text variant="h5" className="text-grey">
+                {t("emissionsBreakdown.upstream")}
+              </Text>
               <div className="space-y-4">
-                {upstreamCategories.map(categoryId => {
-                  const reportedCategory = scope3Categories.find(c => c.category === categoryId);
+                {upstreamCategories.map((categoryId) => {
+                  const reportedCategory = scope3Categories.find(
+                    (c) => c.category === categoryId
+                  );
                   const Icon = getCategoryIcon(categoryId);
-                  
+
                   return (
-                    <div key={categoryId} className="flex items-center gap-6 bg-black-1 rounded-level-2 p-6">
+                    <div
+                      key={categoryId}
+                      className="flex items-center gap-6 bg-black-1 rounded-level-2 p-6"
+                    >
                       <div className="w-12 h-12 rounded-full bg-blue-5/30 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-6 h-6 text-blue-2" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <Text variant="large">{categoryId}. {getCategoryName(categoryId)}</Text>
+                          <Text variant="large">
+                            {categoryId}. {getCategoryName(categoryId)}
+                          </Text>
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger>
@@ -143,10 +175,14 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
                         {reportedCategory ? (
                           <Text variant="large" className="text-blue-2">
                             {reportedCategory.total.toLocaleString()}
-                            <span className="text-sm text-grey ml-2">{reportedCategory.unit}</span>
+                            <span className="text-sm text-grey ml-2">
+                              {reportedCategory.unit}
+                            </span>
                           </Text>
                         ) : (
-                          <Text variant="muted">Ej rapporterat</Text>
+                          <Text variant="muted">
+                            {t("emissionsBreakdown.notReported")}
+                          </Text>
                         )}
                       </div>
                     </div>
@@ -157,20 +193,29 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
 
             {/* Downstream Categories */}
             <div className="space-y-8">
-              <Text variant="h5" className="text-grey">Nedströms</Text>
+              <Text variant="h5" className="text-grey">
+                {t("emissionsBreakdown.downstream")}
+              </Text>
               <div className="space-y-4">
-                {downstreamCategories.map(categoryId => {
-                  const reportedCategory = scope3Categories.find(c => c.category === categoryId);
+                {downstreamCategories.map((categoryId) => {
+                  const reportedCategory = scope3Categories.find(
+                    (c) => c.category === categoryId
+                  );
                   const Icon = getCategoryIcon(categoryId);
-                  
+
                   return (
-                    <div key={categoryId} className="flex items-center gap-6 bg-black-1 rounded-level-2 p-6">
+                    <div
+                      key={categoryId}
+                      className="flex items-center gap-6 bg-black-1 rounded-level-2 p-6"
+                    >
                       <div className="w-12 h-12 rounded-full bg-blue-5/30 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-6 h-6 text-blue-2" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <Text variant="large">{categoryId}. {getCategoryName(categoryId)}</Text>
+                          <Text variant="large">
+                            {categoryId}. {getCategoryName(categoryId)}
+                          </Text>
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger>
@@ -185,10 +230,14 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
                         {reportedCategory ? (
                           <Text variant="large" className="text-blue-2">
                             {reportedCategory.total.toLocaleString()}
-                            <span className="text-sm text-grey ml-2">{reportedCategory.unit}</span>
+                            <span className="text-sm text-grey ml-2">
+                              {reportedCategory.unit}
+                            </span>
                           </Text>
                         ) : (
-                          <Text variant="muted">Ej rapporterat</Text>
+                          <Text variant="muted">
+                            {t("emissionsBreakdown.notReported")}
+                          </Text>
                         )}
                       </div>
                     </div>
@@ -203,14 +252,16 @@ export function EmissionsBreakdown({ emissions, year, className, showOnlyScope3 
       {emissions.biogenicEmissions && (
         <div className="mt-8 p-6 bg-black-1 rounded-level-2">
           <div className="flex items-center gap-2">
-            <Text variant="h4">Biogena utsläpp</Text>
+            <Text variant="h4">
+              {t("emissionsBreakdown.biogenicEmissions")}
+            </Text>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="w-4 h-4 text-grey" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{scopeDescriptions.biogenic}</p>
+                  <p>{t("scope.biogenic")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

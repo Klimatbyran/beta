@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useCompanies } from '@/hooks/useCompanies';
-import { EmissionsHistory } from '@/components/companies/detail/EmissionsHistory';
+import { useState, useEffect } from "react";
+import { useCompanies } from "@/hooks/useCompanies";
+import { EmissionsHistory } from "@/components/companies/detail/EmissionsHistory";
 import { Text } from "@/components/ui/text";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import type { Company } from '@/hooks/useCompanies';
+import type { Company } from "@/hooks/useCompanies";
 
 interface FeatureToggle {
   id: string;
@@ -26,55 +26,63 @@ interface TestCases {
 function findTestCases(companies: Company[]): TestCases {
   return {
     // Company with inconsistent scope 3 reporting
-    inconsistentScope3: companies.find(company => {
-      const scope3Reports = company.reportingPeriods
-        .filter(p => p.emissions?.scope3?.categories?.length > 0);
+    inconsistentScope3: companies.find((company) => {
+      const scope3Reports = company.reportingPeriods.filter(
+        (p) => p.emissions?.scope3?.categories?.length > 0
+      );
       const totalReports = company.reportingPeriods.length;
       return scope3Reports.length > 0 && scope3Reports.length < totalReports;
     }),
 
     // Company that starts with zero emissions
-    zeroToReporting: companies.find(company => {
+    zeroToReporting: companies.find((company) => {
       const periods = [...company.reportingPeriods].sort(
-        (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+        (a, b) =>
+          new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
       );
-      return periods.length >= 3 &&
-             periods[0].emissions?.calculatedTotalEmissions === 0 &&
-             periods[periods.length - 1].emissions?.calculatedTotalEmissions > 0;
+      return (
+        periods.length >= 3 &&
+        periods[0].emissions?.calculatedTotalEmissions === 0 &&
+        periods[periods.length - 1].emissions?.calculatedTotalEmissions > 0
+      );
     }),
 
     // Company with gaps in reporting years
-    missingYears: companies.find(company => {
+    missingYears: companies.find((company) => {
       const years = company.reportingPeriods
-        .map(p => new Date(p.startDate).getFullYear())
+        .map((p) => new Date(p.startDate).getFullYear())
         .sort();
-      return years.some((year, i) => 
-        i > 0 && year - years[i - 1] > 1
-      );
+      return years.some((year, i) => i > 0 && year - years[i - 1] > 1);
     }),
 
     // Company with many years of consistent reporting
-    manyYearsReporting: companies.find(company => {
-      const hasConsistentData = company.reportingPeriods.every(p => 
-        p.emissions?.calculatedTotalEmissions > 0 &&
-        p.emissions?.scope3?.categories?.length > 0
+    manyYearsReporting: companies.find((company) => {
+      const hasConsistentData = company.reportingPeriods.every(
+        (p) =>
+          p.emissions?.calculatedTotalEmissions > 0 &&
+          p.emissions?.scope3?.categories?.length > 0
       );
       return company.reportingPeriods.length >= 5 && hasConsistentData;
     }),
 
     // Company with no scope 3 data
-    noScope3: companies.find(company =>
-      company.reportingPeriods.length > 0 &&
-      company.reportingPeriods.every(p => 
-        p.emissions?.calculatedTotalEmissions > 0 &&
-        !p.emissions?.scope3?.categories?.length
-      )
+    noScope3: companies.find(
+      (company) =>
+        company.reportingPeriods.length > 0 &&
+        company.reportingPeriods.every(
+          (p) =>
+            p.emissions?.calculatedTotalEmissions > 0 &&
+            !p.emissions?.scope3?.categories?.length
+        )
     ),
 
     // Company with no emissions data
-    noEmissions: companies.find(company =>
-      company.reportingPeriods.length > 0 &&
-      company.reportingPeriods.every(p => !p.emissions?.calculatedTotalEmissions)
+    noEmissions: companies.find(
+      (company) =>
+        company.reportingPeriods.length > 0 &&
+        company.reportingPeriods.every(
+          (p) => !p.emissions?.calculatedTotalEmissions
+        )
     ),
   };
 }
@@ -85,27 +93,31 @@ export function EmissionsTestPage() {
   const [isFixed, setIsFixed] = useState(false);
   const [featureToggles, setFeatureToggles] = useState<FeatureToggle[]>([
     {
-      id: 'interpolateScope3',
-      label: 'Interpolate Scope 3',
-      description: 'Fill gaps in scope 3 reporting by interpolating between known values. This helps create smoother visualizations while clearly marking interpolated data points.',
+      id: "interpolateScope3",
+      label: "Interpolate Scope 3",
+      description:
+        "Fill gaps in scope 3 reporting by interpolating between known values. This helps create smoother visualizations while clearly marking interpolated data points.",
       enabled: true,
     },
     {
-      id: 'guessBaseYear',
-      label: 'Smart Base Year',
-      description: 'Intelligently determine the base year by finding the first year with non-zero emissions rather than using the earliest year. This prevents skewed trends from initial zero-reporting years.',
+      id: "guessBaseYear",
+      label: "Smart Base Year",
+      description:
+        "Intelligently determine the base year by finding the first year with non-zero emissions rather than using the earliest year. This prevents skewed trends from initial zero-reporting years.",
       enabled: true,
     },
     {
-      id: 'compositeTrend',
-      label: 'Composite Trend Analysis',
-      description: 'Combine multiple trend calculation methods (linear regression, moving averages, recent change) with weighted importance to create a more robust trend line.',
+      id: "compositeTrend",
+      label: "Composite Trend Analysis",
+      description:
+        "Combine multiple trend calculation methods (linear regression, moving averages, recent change) with weighted importance to create a more robust trend line.",
       enabled: true,
     },
     {
-      id: 'outlierDetection',
-      label: 'Outlier Detection',
-      description: 'Detect and handle statistical outliers using the Median Absolute Deviation (MAD) method, which is more robust than standard deviation for non-normal distributions.',
+      id: "outlierDetection",
+      label: "Outlier Detection",
+      description:
+        "Detect and handle statistical outliers using the Median Absolute Deviation (MAD) method, which is more robust than standard deviation for non-normal distributions.",
       enabled: true,
     },
   ]);
@@ -116,13 +128,13 @@ export function EmissionsTestPage() {
       setIsFixed(scrollPosition > 280);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleFeature = (id: string) => {
-    setFeatureToggles(prev => 
-      prev.map(toggle => 
+    setFeatureToggles((prev) =>
+      prev.map((toggle) =>
         toggle.id === id ? { ...toggle, enabled: !toggle.enabled } : toggle
       )
     );
@@ -148,21 +160,37 @@ export function EmissionsTestPage() {
     );
   }
 
-  const renderTestCase = (title: string, description: string, company: Company | undefined) => (
+  const renderTestCase = (
+    title: string,
+    description: string,
+    company: Company | undefined
+  ) => (
     <div className="bg-black-2 rounded-level-2 p-8">
-      <Text variant="h3" className="mb-4">{title}</Text>
-      <Text variant="muted" className="mb-8">{description}</Text>
+      <Text variant="h3" className="mb-4">
+        {title}
+      </Text>
+      <Text variant="muted" className="mb-8">
+        {description}
+      </Text>
       {company ? (
         <div className="space-y-4">
           <Text variant="large">{company.name}</Text>
-          <EmissionsHistory 
+          <EmissionsHistory
             reportingPeriods={company.reportingPeriods}
             className="bg-transparent p-0"
             features={{
-              interpolateScope3: featureToggles.find(t => t.id === 'interpolateScope3')?.enabled || false,
-              guessBaseYear: featureToggles.find(t => t.id === 'guessBaseYear')?.enabled || false,
-              compositeTrend: featureToggles.find(t => t.id === 'compositeTrend')?.enabled || false,
-              outlierDetection: featureToggles.find(t => t.id === 'outlierDetection')?.enabled || false,
+              interpolateScope3:
+                featureToggles.find((t) => t.id === "interpolateScope3")
+                  ?.enabled || false,
+              guessBaseYear:
+                featureToggles.find((t) => t.id === "guessBaseYear")?.enabled ||
+                false,
+              compositeTrend:
+                featureToggles.find((t) => t.id === "compositeTrend")
+                  ?.enabled || false,
+              outlierDetection:
+                featureToggles.find((t) => t.id === "outlierDetection")
+                  ?.enabled || false,
             }}
           />
         </div>
@@ -175,10 +203,12 @@ export function EmissionsTestPage() {
   return (
     <div className="relative">
       {/* Initial Feature Toggles */}
-      <div className={cn(
-        "bg-black-3 transition-all duration-300",
-        isFixed ? "h-[280px] invisible" : "h-auto visible"
-      )}>
+      <div
+        className={cn(
+          "bg-black-3 transition-all duration-300",
+          isFixed ? "h-[280px] invisible" : "h-auto visible"
+        )}
+      >
         <div className="max-w-[1400px] mx-auto p-8">
           <div className="space-y-4">
             <Text variant="h2">EmissionsHistory Test Cases</Text>
@@ -188,9 +218,11 @@ export function EmissionsTestPage() {
           </div>
 
           <div className="mt-8 bg-black-2 rounded-level-2 p-8">
-            <Text variant="h3" className="mb-8">Feature Toggles & Methods</Text>
+            <Text variant="h3" className="mb-8">
+              Feature Toggles & Methods
+            </Text>
             <div className="grid gap-8">
-              {featureToggles.map(toggle => (
+              {featureToggles.map((toggle) => (
                 <div key={toggle.id} className="flex items-start space-x-4">
                   <Switch
                     id={`initial-${toggle.id}`}
@@ -198,8 +230,12 @@ export function EmissionsTestPage() {
                     onCheckedChange={() => toggleFeature(toggle.id)}
                   />
                   <div className="space-y-1">
-                    <Label htmlFor={`initial-${toggle.id}`}>{toggle.label}</Label>
-                    <Text variant="muted" className="text-sm">{toggle.description}</Text>
+                    <Label htmlFor={`initial-${toggle.id}`}>
+                      {toggle.label}
+                    </Label>
+                    <Text variant="muted" className="text-sm">
+                      {toggle.description}
+                    </Text>
                   </div>
                 </div>
               ))}
@@ -209,15 +245,17 @@ export function EmissionsTestPage() {
       </div>
 
       {/* Fixed Feature Toggles */}
-      <div className={cn(
-        "fixed top-0 left-0 right-0 z-50 bg-black-3/95 backdrop-blur-sm transition-all duration-300",
-        isFixed ? "translate-y-0" : "-translate-y-full"
-      )}>
+      <div
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 bg-black-3/95 backdrop-blur-sm transition-all duration-300",
+          isFixed ? "translate-y-0" : "-translate-y-full"
+        )}
+      >
         <div className="max-w-[1400px] mx-auto p-4">
           <div className="flex items-center gap-8">
             <Text variant="h4">Feature Toggles</Text>
             <div className="flex flex-row gap-4">
-              {featureToggles.map(toggle => (
+              {featureToggles.map((toggle) => (
                 <div key={toggle.id} className="flex items-center gap-2">
                   <Switch
                     id={`fixed-${toggle.id}`}
