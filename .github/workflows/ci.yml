@@ -41,9 +41,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          build-args: NODE_ENV=${{ env.NODE_ENV }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version}}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: 🎫 Update patch version
