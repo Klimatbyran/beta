@@ -11,7 +11,6 @@ import { CompanyDetails } from '@/types/company';
 import { mapCompanyEditFormToRequestBody } from '@/lib/company-edit';
 import { updateReportingPeriods } from '@/lib/api';
 import { useToast } from '@/contexts/ToastContext';
-import { useQueryClient } from '@tanstack/react-query';
 
 export function CompanyEditPage() {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +20,8 @@ export function CompanyEditPage() {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const { showToast } = useToast();
-  const queryClient = useQueryClient();
+  
+  console.log(company)
 
   const selectedPeriods = company !== undefined ? selectedYears.reduce((periods, year) => {
     const period =  [...company.reportingPeriods].find(
