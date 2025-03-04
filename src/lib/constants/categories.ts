@@ -157,11 +157,6 @@ export const getCategoryFilterColors = (category: number) => {
   const color = getCategoryColor(category)
     .replace("var(--", "")
     .replace(")", "");
-  const [palette, shade] = color.split("-");
-  return {
-    bg: `bg-${palette}-5/30`,
-    text: `text-${palette}-${shade}`,
-  };
 };
 
 // Upstream and downstream category IDs for grouping

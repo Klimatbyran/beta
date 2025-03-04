@@ -177,7 +177,6 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
           </div>
         </div>
       )}
-
       <div className="h-[600px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>

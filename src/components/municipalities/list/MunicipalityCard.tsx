@@ -43,7 +43,6 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
         <h2 className="text-5xl font-light">{municipality.name}</h2>
 
         {/* <div className="space-y-2"> //fixme add!
->>>>>>> staging
           <div className="text-sm text-grey uppercase tracking-wide">
             UTSLÄPPSRANKING
           </div>
