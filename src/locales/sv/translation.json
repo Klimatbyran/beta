@@ -454,7 +454,9 @@
       "turnover": "Omsättning",
       "employees": "Anställda",
       "notReported": "Ej rapporterat",
-      "readAnnualReport": "Läs årsredovisning"
+      "readAnnualReport": "Läs årsredovisning",
+      "readMore": "Läs mer",
+      "readLess": "Läs mindre"
     },
     "realEstateScope3History": {
       "title": "Historiska Scope 3-utsläpp per kategori",

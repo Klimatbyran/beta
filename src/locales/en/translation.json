@@ -454,7 +454,9 @@
       "turnover": "Turnover",
       "employees": "Employees",
       "notReported": "Not Reported",
-      "readAnnualReport": "Read Annual Report"
+      "readAnnualReport": "Read Annual Report",
+      "readMore": "Read More",
+      "readLess": "Read Less"
     },
     "realEstateScope3History": {
       "title": "Historical Scope 3 Emissions per Category",
