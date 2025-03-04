@@ -14,36 +14,8 @@ on:
       - "k8s/**"
 
 jobs:
-  version:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 🛎️ Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: 🎫 Update patch version
-        run: |
-          git fetch
-          BRANCH=$(echo ${GITHUB_REF#refs/heads/})  # Extract branch name
-          git checkout $BRANCH
-          git pull origin $BRANCH
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          if [[ $GITHUB_REF == refs/tags/production* ]]; then
-            npm version major
-          elif [[ $GITHUB_REF == refs/tags/staging* ]]; then
-            npm version minor
-          else
-            npm version patch
-          fi
-          git fetch --all
-          git push origin $BRANCH  # Push to the correct branch
-
   ci:
     runs-on: ubuntu-latest
-    needs: version
 
     steps:
       - name: 🛎️ Checkout
