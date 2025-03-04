@@ -19,6 +19,7 @@ i18n
         translation: sv,
       },
     },
+    lng: "sv",
     fallbackLng: "sv",
     interpolation: {
       escapeValue: false,
