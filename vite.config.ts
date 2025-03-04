@@ -24,7 +24,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "s", // Default to local, override in CI/CD
+        target: "http://localhost:3000/", // Default to local, override in CI/CD
         changeOrigin: true,
         secure: false,
       },
