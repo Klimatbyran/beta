@@ -17,13 +17,13 @@ import {
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { interpolateScope3Categories } from "@/lib/calculations/emissions";
-import { getCategoryColor, getCategoryName } from "@/lib/constants/emissions";
 import type { EmissionsHistoryProps, DataView } from "@/types/emissions";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { getChartData } from "../../../utils/getChartData";
 import { CustomTooltip } from "./CustomTooltip";
 import { DataViewSelector } from "./DataViewSelector";
 import { useTranslation } from "react-i18next";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 
 export function EmissionsHistory({
   reportingPeriods,
@@ -37,6 +37,7 @@ export function EmissionsHistory({
   },
 }: EmissionsHistoryProps) {
   const { t } = useTranslation();
+  const { getCategoryName, getCategoryColor } = useCategoryMetadata();
 
   // Validate input data
   if (!reportingPeriods?.length) {

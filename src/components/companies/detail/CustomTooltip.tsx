@@ -1,4 +1,4 @@
-import { getCategoryName } from "@/lib/constants/emissions";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 import { useTranslation } from "react-i18next";
 
 interface CustomTooltipProps {
@@ -13,6 +13,7 @@ export const CustomTooltip = ({
   label,
 }: CustomTooltipProps) => {
   const { t } = useTranslation();
+  const { getCategoryName } = useCategoryMetadata();
 
   if (active && payload && payload.length) {
     return (
