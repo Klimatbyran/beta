@@ -104,15 +104,15 @@ export function CompanyOverview({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         <div>
-          <Text variant="body" className="mb-2 text-lg md:text-base sm:text-sm">
+          <Text variant="body" className="mb-2 lg:text-lg md:text-base sm:text-sm">
             {t("companies.overview.totalEmissions")} {periodYear}
           </Text>
           <div className="flex items-baseline gap-4">
-            <Text className="text-6xl md:text-4xl sm:text-2xl font-light text-orange-2 tracking-tighter leading-none">
+            <Text className="lg:text-6xl md:text-4xl sm:text-3xl font-light text-orange-2 tracking-tighter leading-none">
               {(
                 selectedPeriod.emissions?.calculatedTotalEmissions || 0
               ).toLocaleString("sv-SE")}
-              <span className="text-2xl md:text-lg sm:text-sm ml-2 text-grey">
+              <span className="lg:text-2xl md:text-lg sm:text-sm ml-2 text-grey">
                 {t("companies.overview.tonsCO2e")}
               </span>
             </Text>
@@ -120,10 +120,10 @@ export function CompanyOverview({
         </div>
 
         <div>
-          <Text className="mb-2 text-lg md:text-base sm:text-sm">
+          <Text className="mb-2 lg:text-lg md:text-base sm:text-sm">
             {t("companies.overview.changeSinceLastYear")}
           </Text>
-          <Text className="text-6xl md:text-4xl sm:text-2xl font-light tracking-tighter leading-none">
+          <Text className="lg:text-6xl md:text-4xl sm:text-3xl font-light tracking-tighter leading-none">
             {yearOverYearChange !== null ? (
               <span
                 className={
