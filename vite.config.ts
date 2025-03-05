@@ -12,7 +12,7 @@ function customSitemapPlugin() {
     closeBundle: async () => {
       try {
         // Dynamically import the sitemap generator
-        const { generateSitemap } = await import('./src/lib/sitemap-generator');
+        const { generateSitemap } = await import('./src/lib/sitemap-generator.js');
         const outputPath = path.resolve(process.cwd(), 'dist/sitemap.xml');
         await generateSitemap(outputPath);
       } catch (error) {

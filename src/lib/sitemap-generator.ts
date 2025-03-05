@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { getCompanies, getMunicipalities } from './api';
+import { fileURLToPath } from 'url';
+import { getCompanies, getMunicipalities } from './api.js';
 
 interface SitemapEntry {
   loc: string;
