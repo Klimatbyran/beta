@@ -10,14 +10,9 @@ import { Helmet } from "react-helmet-async";
 export function CompanyDetailPage() {
   const { t } = useTranslation();
   const { id, slug } = useParams<{ id: string; slug?: string }>();
-  // Extract Wikidata ID (Q-number) from URL parameters
-  // For /companies/:id routes, the id is already the Wikidata ID
-  // For /foretag/:slug-:id routes, we need to extract the ID from the combined parameter
-  const wikidataId = id?.includes('Q') 
-    ? id.substring(id.indexOf('Q')) // Extract Q-number if it's part of a string
-    : id;
-  
-  const { company, loading, error } = useCompanyDetails(wikidataId!);
+  // The id parameter is always the Wikidata ID (Q-number)
+  // It's either directly from /companies/:id or extracted from /foretag/:slug-:id
+  const { company, loading, error } = useCompanyDetails(id!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
   
   useEffect(() => {
@@ -103,8 +98,8 @@ export function CompanyDetailPage() {
           industry: industry
         })} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${actualId}`} />
-        <link rel="canonical" href={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${actualId}`} />
+        <meta property="og:url" content={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${id}`} />
+        <link rel="canonical" href={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${id}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
