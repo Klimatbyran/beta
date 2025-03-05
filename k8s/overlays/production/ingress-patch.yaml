@@ -5,10 +5,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - v3.klimatkollen.se
+        - klimatkollen.se
       secretName: frontend-klimatkollen-tls
   rules:
-    - host: v3.klimatkollen.se
+    - host: klimatkollen.se
       http:
         paths:
           - path: /
