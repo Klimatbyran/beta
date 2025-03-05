@@ -3,12 +3,38 @@ import { AccordionGroup } from "../components/layout/AccordionGroup";
 import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Trans, useTranslation } from "react-i18next";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { useEffect } from "react";
 
 export function MethodsPage() {
   const { t } = useTranslation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Prepare SEO data
+  const canonicalUrl = "https://klimatkollen.se/methodology";
+  const pageTitle = `${t("methodsPage.header.title")} - Klimatkollen`;
+  const pageDescription = t("methodsPage.header.description");
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t("methodsPage.header.title"),
+    "description": pageDescription,
+    "url": canonicalUrl
+  };
 
   return (
-    <div className="max-w-[1200px] mx-auto space-y-20">
+    <>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      />
+      <div className="max-w-[1200px] mx-auto space-y-20">
       <PageHeader
         title={t("methodsPage.header.title")}
         description={t("methodsPage.header.description")}
@@ -141,6 +167,7 @@ export function MethodsPage() {
           </div>
         </AccordionGroup>
       </Accordion>
-    </div>
+      </div>
+    </>
   );
 }
