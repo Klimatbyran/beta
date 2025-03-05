@@ -5,7 +5,7 @@ import type { paths } from './api-types';
 // For sitemap generation (Node.js environment), use the public API
 // For browser environment, use the relative path
 const baseUrl = typeof window === 'undefined' 
-  ? 'https://api.klimatkollen.se' 
+  ? 'https://api.klimatkollen.se/api' 
   : '/api';
 
 const { GET, POST } = createClient<paths>({ baseUrl });
