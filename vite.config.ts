@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { plugin as markdown } from "vite-plugin-markdown";
 import { Mode } from "vite-plugin-markdown";
+import { IncomingMessage } from "http";
 
 export default defineConfig({
   plugins: [

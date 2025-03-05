@@ -38,7 +38,7 @@ function PartnerLogos() {
 
 export function Footer() {
   const { t } = useTranslation();
-  const { getAuthUrl, isAuthentificated, parseToken, logout } = useAuth()
+  const { getAuthUrl, isAuthenticated, parseToken, logout } = useAuth()
   const userinfo = parseToken();
   const navigate = useNavigate()
 
@@ -89,17 +89,17 @@ export function Footer() {
           >
             {t("footer.ccBySa")}
           </a>
-          {!isAuthentificated() && (
+          {!isAuthenticated() && (
             <a onClick={() => {window.location.href = getAuthUrl()}} className="hover:text-white transition-colors cursor-pointer">
               Login
             </a>
           )}
-          { isAuthentificated() && (
+          { isAuthenticated() && (
             <a onClick={() => {logout(); navigate("/")}} className="hover:text-white cursor-pointer transition-colors">
               Logout
             </a>    
           )}     
-          {isAuthentificated() && (
+          {isAuthenticated() && (
             <div className='hover:text-white ms-auto flex items-center'>
               <span>Välkommen, {userinfo?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">

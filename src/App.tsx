@@ -15,6 +15,9 @@ import { PrivacyPage } from "./pages/PrivacyPage";
 import AuthProvider from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { AuthCallback } from "./pages/AuthCallback";
+import { UnauthorizedErrorPage } from './pages/error/UnauthorizedErrorPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import { CompanyEditPage } from './pages/CompanyEditPage';
 
 function App() {
   return (
@@ -24,6 +27,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<LandingPage />} />
+              <Route element={<ProtectedRoute/>}>
+                  <Route path="companies/:id/edit" element={<CompanyEditPage/>}/>
+              </Route>             
+              <Route path="403" element={<UnauthorizedErrorPage/>} />
               <Route path="auth/callback" element={<AuthCallback />} />
               <Route path="companies" element={<CompaniesPage />} />
               <Route path="companies/:id" element={<CompanyDetailPage />} />
