@@ -6,9 +6,9 @@ import fs from 'fs';
 import path from 'path';
 
 // Custom plugin for sitemap generation
-function customSitemapPlugin() {
+function sitemapPlugin() {
   return {
-    name: 'vite-plugin-custom-sitemap',
+    name: 'vite-plugin-sitemap',
     closeBundle: async () => {
       try {
         // Dynamically import the sitemap generator
@@ -46,7 +46,7 @@ export default defineConfig({
       },
     }),
     markdown({ mode: ["html", "toc", "meta", "react"] as Mode[] }),
-    customSitemapPlugin(),
+    sitemapPlugin(),
   ],
   resolve: {
     alias: {
