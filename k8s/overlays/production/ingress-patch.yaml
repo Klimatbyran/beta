@@ -21,13 +21,3 @@ spec:
                 name: frontend
                 port:
                   number: 80
-    - host: www.klimatkollen.se
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend
-                port:
-                  number: 80
