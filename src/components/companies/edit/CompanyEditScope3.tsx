@@ -1,10 +1,12 @@
 import { IconCheckbox } from "@/components/ui/icon-checkbox";
 import { Input } from "@/components/ui/input";
-import { categoryMetadata } from "@/lib/constants/categories";
 import { CompanyEditRow } from "./CompanyEditRow";
 import { CompanyEditInputField, CompanyEmptyField } from "./CompanyEditField";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 
 export function CompanyEditScope3({ periods, onInputChange }) {
+  const {categoryMetadata} = useCategoryMetadata();
+
   if (
     periods.length <= 0 ||
     periods[0].emissions.scope3 === undefined ||

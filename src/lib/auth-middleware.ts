@@ -1,18 +1,15 @@
-import { useAuth } from "@/contexts/AuthContext";
 import { Middleware } from "openapi-fetch";
 
-const authMiddleware: Middleware = {
+export const authMiddleware: Middleware = {
     async onRequest(req, options) {
-        const {isAuthenticated, token} = useAuth();
-        if(isAuthenticated()) {
-            req.headers.append("authorization", "Bearer " + token);
+        if(localStorage.getItem("token")) {
+            req.headers.append("authorization", "Bearer " + localStorage.getItem("token"));
         }
         return req;
     },
     async onResponse(res, options, req) {
-        const {updateToken} = useAuth();
         if(res.headers.has("x-auth-token")) {
-            updateToken(res.headers.get("x-auth-token"));
+            localStorage.setItem("token", res.headers.get("x-auth-token") || "");
         }
         return res;
     },

@@ -4,6 +4,66 @@
  */
 
 export interface paths {
+    "/auth/github": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Auth User with Github Identity
+         * @description Authenticates a user using a Github access code
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        code: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            token: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            code: string;
+                            message?: string;
+                            details?: unknown;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/companies/": {
         parameters: {
             query?: never;
@@ -970,7 +1030,6 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
-                                    verified?: boolean;
                                 };
                                 scope2?: {
                                     /** @description Market-based scope 2 emissions */
@@ -984,7 +1043,6 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
-                                    verified?: boolean;
                                 };
                                 scope3?: {
                                     categories?: {
@@ -995,7 +1053,6 @@ export interface paths {
                                          * @enum {string}
                                          */
                                         unit?: "tCO2e" | "tCO2";
-                                        verified?: boolean;
                                     }[];
                                     statedTotalEmissions?: {
                                         total: number;
@@ -1004,7 +1061,6 @@ export interface paths {
                                          * @enum {string}
                                          */
                                         unit?: "tCO2e" | "tCO2";
-                                        verified?: boolean;
                                     };
                                 };
                                 biogenic?: {
@@ -1014,7 +1070,6 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
-                                    verified?: boolean;
                                 };
                                 statedTotalEmissions?: {
                                     total: number;
@@ -1023,7 +1078,6 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
-                                    verified?: boolean;
                                 };
                                 scope1And2?: {
                                     total: number;
@@ -1032,19 +1086,16 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
-                                    verified?: boolean;
                                 };
                             };
                             economy?: {
                                 turnover?: {
                                     value?: number;
                                     currency?: string;
-                                    verified?: boolean;
                                 };
                                 employees?: {
                                     value?: number;
                                     unit?: string;
-                                    verified?: boolean;
                                 };
                             };
                         }[];
@@ -2239,79 +2290,6 @@ export interface paths {
                 };
             };
         };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/wikidata/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Create or update a company
-         * @description Creates a new company or updates an existing one based on wikidataId
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        wikidataId: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            ok: boolean;
-                        };
-                    };
-                };
-                /** @description Default Response */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-                /** @description Default Response */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            code: string;
-                            message?: string;
-                            details?: unknown;
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;

@@ -21,8 +21,6 @@ export function CompanyEditPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const { showToast } = useToast();
   
-  console.log(company)
-
   const selectedPeriods = company !== undefined ? selectedYears.reduce((periods, year) => {
     const period =  [...company.reportingPeriods].find(
       (reportingPeriod) =>
