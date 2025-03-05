@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, FileText, Info, TrendingDown } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import type { Municipality } from "@/types/municipality";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { CardInfo } from "./MunicipalityCardInfo";
 
 interface MunicipalityCardProps {
   municipality: Municipality;
@@ -22,10 +17,16 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
   const lastYearEmission = municipality.approximatedHistoricalEmission.at(-1);
   const lastYearEmissionsKtons = lastYearEmission
     ? (lastYearEmission.value / 1000).toFixed(1)
-    : "N/A";
+    : t("municipalities.card.noData");
   const lastYear = lastYearEmission?.year.toString();
 
-  const emissionsChange = municipality.historicalEmissionChangePercent;
+  const emissionsChangeExists = municipality.historicalEmissionChangePercent;
+  const positiveEmissionsChange = emissionsChangeExists > 0 ? "+" : "";
+  const emissionsChange = emissionsChangeExists
+    ? positiveEmissionsChange +
+      Math.ceil(emissionsChangeExists).toLocaleString("sv-SE") +
+      "%"
+    : t("municipalities.card.noData");
 
   const noClimatePlan =
     municipality.climatePlanLink === "Saknar plan" ||
@@ -79,67 +80,20 @@ export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-black-1">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-grey mb-2 text-lg">
-            <TrendingDown className="w-4 h-4" />
-            <span>{t("municipalities.card.emission", { year: lastYear })}</span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Info className="w-4 h-4" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>
-                    {t("municipalities.card.emissionInfo", { year: lastYear })}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="text-3xl font-light">
-            {lastYearEmissionsKtons ? (
-              <span className="text-orange-3">
-                {lastYearEmissionsKtons}
-                <span className="text-lg text-grey ml-1">
-                  {t("municipalities.card.kTCO2")}
-                </span>
-              </span>
-            ) : (
-              <span className="text-grey">
-                {t("municipalities.card.noData")}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-grey mb-2 text-lg">
-            <TrendingDown className="w-4 h-4" />
-            <span>{t("municipalities.card.changeRate")}</span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Info className="w-4 h-4" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t("municipalities.card.changeRateInfo")}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="text-3xl font-light">
-            {emissionsChange !== null ? (
-              <span className={meetsParis ? "text-green-3" : "text-pink-3"}>
-                {emissionsChange > 0 ? "+" : ""}
-                {Math.ceil(emissionsChange).toLocaleString("sv-SE")}%
-              </span>
-            ) : (
-              <span className="text-grey">
-                {t("municipalities.card.noData")}
-              </span>
-            )}
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-black-1">
+        <CardInfo
+          title={t("municipalities.card.emission", { year: lastYear })}
+          tooltip={t("municipalities.card.emissionInfo", { year: lastYear })}
+          value={lastYearEmissionsKtons}
+          textColor="text-orange-3"
+          unit={t("municipalities.card.kTCO2")}
+        />
+        <CardInfo
+          title={t("municipalities.card.changeRate")}
+          tooltip={t("municipalities.card.changeRateInfo")}
+          value={emissionsChange}
+          textColor={meetsParis ? "text-green-3" : "text-pink-3"}
+        />
       </div>
       <a
         href={
