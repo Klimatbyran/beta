@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-api": "npx openapi-typescript http://localhost:3000/api/openapi.json -o src/lib/api-types.ts",
-    "generate-sitemap": "NODE_OPTIONS='--no-warnings' tsx scripts/generate-sitemap.ts"
+    "generate-sitemap": "NODE_OPTIONS='--no-warnings' tsx scripts/generate-sitemap.ts || echo 'Sitemap generation failed, continuing build'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -13,6 +13,9 @@ RUN npm ci
 # Copy source files
 COPY . .
 
+# Generate sitemap before building
+RUN npm run generate-sitemap
+
 # Build the app
 RUN npm run build
 

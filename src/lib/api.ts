@@ -8,7 +8,26 @@ const baseUrl = typeof window === 'undefined'
   ? 'https://api.klimatkollen.se/api' 
   : '/api';
 
-const { GET, POST } = createClient<paths>({ baseUrl });
+// Set a timeout for API requests during sitemap generation
+const timeout = typeof window === 'undefined' ? 10000 : undefined;
+
+const { GET, POST } = createClient<paths>({ 
+  baseUrl,
+  fetch: (url, init) => {
+    // Add timeout for Node.js environment
+    if (typeof window === 'undefined' && timeout) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+      
+      return fetch(url, {
+        ...init,
+        signal: controller.signal
+      }).finally(() => clearTimeout(timeoutId));
+    }
+    
+    return fetch(url, init);
+  }
+});
 
 // Auth API
 export async function authenticateWithGithub(code: string) {
