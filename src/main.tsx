@@ -17,7 +17,9 @@ import { MethodsPage } from './pages/MethodsPage';
 import { InsightsPage } from './pages/InsightsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
+// Create routes for both Swedish (default) and English versions
 const router = createBrowserRouter([
+  // Swedish routes (default)
   {
     path: "/",
     element: <Layout />,
@@ -64,6 +66,57 @@ const router = createBrowserRouter([
       },
       {
         path: "/insights/:slug",
+        element: <InsightsPage />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
+    ],
+  },
+  // English routes
+  {
+    path: "/en",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <LandingPage />,
+      },
+      {
+        path: "companies",
+        element: <CompaniesPage />,
+      },
+      {
+        path: "companies/:id",
+        element: <CompanyDetailPage />,
+      },
+      {
+        path: "companies/:id/:slug",
+        element: <CompanyDetailPage />,
+      },
+      {
+        path: "municipalities",
+        element: <MunicipalitiesPage />,
+      },
+      {
+        path: "municipalities/:id",
+        element: <MunicipalityDetailPage />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
+      },
+      {
+        path: "methodology",
+        element: <MethodsPage />,
+      },
+      {
+        path: "insights",
+        element: <InsightsPage />,
+      },
+      {
+        path: "insights/:slug",
         element: <InsightsPage />,
       },
       {
