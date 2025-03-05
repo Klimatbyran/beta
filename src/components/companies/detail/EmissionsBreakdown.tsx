@@ -6,15 +6,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  upstreamCategories,
-  downstreamCategories,
-  getCategoryIcon,
-  getCategoryName,
-  getCategoryDescription,
-} from "@/lib/constants/emissions";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 
 interface EmissionsBreakdownProps {
   emissions: {
@@ -47,6 +41,13 @@ export function EmissionsBreakdown({
   showOnlyScope3 = false,
 }: EmissionsBreakdownProps) {
   const { t } = useTranslation();
+  const {
+    getCategoryName,
+    getCategoryDescription,
+    getCategoryIcon,
+    upstreamCategories,
+    downstreamCategories,
+  } = useCategoryMetadata();
 
   if (!emissions) return null;
 
@@ -100,7 +101,7 @@ export function EmissionsBreakdown({
               >
                 <div className="flex items-center gap-4">
                   <div className={cn("w-3 h-3 rounded-full", scope.color)} />
-                  <Text variant="large">{scope.name}</Text>
+                  <Text variant="body">{scope.name}</Text>
                 </div>
 
                 <Text className="text-4xl font-light">
@@ -119,7 +120,7 @@ export function EmissionsBreakdown({
                   />
                 </div>
 
-                <Text variant="muted" className="text-sm">
+                <Text variant="body" className="text-sm">
                   {scope.description}
                 </Text>
               </div>
@@ -158,7 +159,7 @@ export function EmissionsBreakdown({
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <Text variant="large">
+                          <Text variant="body">
                             {categoryId}. {getCategoryName(categoryId)}
                           </Text>
                           <TooltipProvider>
@@ -173,14 +174,14 @@ export function EmissionsBreakdown({
                           </TooltipProvider>
                         </div>
                         {reportedCategory ? (
-                          <Text variant="large" className="text-blue-2">
+                          <Text variant="body" className="text-blue-2">
                             {reportedCategory.total.toLocaleString()}
                             <span className="text-sm text-grey ml-2">
                               {reportedCategory.unit}
                             </span>
                           </Text>
                         ) : (
-                          <Text variant="muted">
+                          <Text variant="body">
                             {t("emissionsBreakdown.notReported")}
                           </Text>
                         )}
@@ -213,7 +214,7 @@ export function EmissionsBreakdown({
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <Text variant="large">
+                          <Text variant="body">
                             {categoryId}. {getCategoryName(categoryId)}
                           </Text>
                           <TooltipProvider>
@@ -228,14 +229,14 @@ export function EmissionsBreakdown({
                           </TooltipProvider>
                         </div>
                         {reportedCategory ? (
-                          <Text variant="large" className="text-blue-2">
+                          <Text variant="body" className="text-blue-2">
                             {reportedCategory.total.toLocaleString()}
                             <span className="text-sm text-grey ml-2">
                               {reportedCategory.unit}
                             </span>
                           </Text>
                         ) : (
-                          <Text variant="muted">
+                          <Text variant="body">
                             {t("emissionsBreakdown.notReported")}
                           </Text>
                         )}
@@ -266,7 +267,7 @@ export function EmissionsBreakdown({
               </Tooltip>
             </TooltipProvider>
           </div>
-          <Text variant="large" className="mt-2">
+          <Text variant="body" className="mt-2">
             {emissions.biogenicEmissions.total.toLocaleString()}
             <span className="text-sm text-grey ml-2">
               {emissions.biogenicEmissions.unit}

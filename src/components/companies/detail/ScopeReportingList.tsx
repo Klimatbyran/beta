@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
-import { getCategoryIcon, getCategoryColor } from "@/lib/constants/emissions";
 import {
   Tooltip,
   TooltipContent,
@@ -9,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { t } from "i18next";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 
 interface ScopeReportingListProps {
   companies: Array<{
@@ -24,6 +24,7 @@ export function ScopeReportingList({
   companies,
   className,
 }: ScopeReportingListProps) {
+  const { getCategoryColor, getCategoryIcon } = useCategoryMetadata();
   return (
     <div className={cn("space-y-4", className)}>
       {companies.map((company) => (

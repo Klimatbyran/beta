@@ -9,6 +9,8 @@ import {
 import { Text } from "@/components/ui/text";
 import type { CompanyDetails, ReportingPeriod } from "@/types/company";
 import { useTranslation } from "react-i18next";
+import { useScreenSize } from "@/hooks/useScreenSize";
+import { useState } from "react";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -26,6 +28,8 @@ export function CompanyOverview({
   selectedYear,
 }: CompanyOverviewProps) {
   const { t } = useTranslation();
+  const isMobile = useScreenSize();
+  const [showMore, setShowMore] = useState(false);
 
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   const sectorName =
@@ -57,12 +61,33 @@ export function CompanyOverview({
               {company.name}
             </Text>
           </div>
-          <Text
-            variant="body"
-            className="text-lg md:text-base sm:text-sm max-w-3xl"
-          >
-            {company.description}
-          </Text>
+          {isMobile ? (
+            <div>
+              <button
+                className="bg-black-1 text-white px-3 py-1 rounded-md mt-1 text-sm"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore
+                  ? t("companies.overview.readLess")
+                  : t("companies.overview.readMore")}
+              </button>
+              {showMore && (
+                <Text
+                  variant="body"
+                  className="text-lg md:text-base sm:text-sm max-w-3xl mt-2"
+                >
+                  {company.description}
+                </Text>
+              )}
+            </div>
+          ) : (
+            <Text
+              variant="body"
+              className="text-lg md:text-base sm:text-sm max-w-3xl"
+            >
+              {company.description}
+            </Text>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-4">
             <Text
               variant="body"
@@ -104,15 +129,15 @@ export function CompanyOverview({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         <div>
-          <Text variant="body" className="mb-2 text-lg md:text-base sm:text-sm">
+          <Text variant="body" className="mb-2 lg:text-lg md:text-base sm:text-sm">
             {t("companies.overview.totalEmissions")} {periodYear}
           </Text>
           <div className="flex items-baseline gap-4">
-            <Text className="text-6xl md:text-4xl sm:text-2xl font-light text-orange-2 tracking-tighter leading-none">
+            <Text className="lg:text-6xl md:text-4xl sm:text-3xl font-light text-orange-2 tracking-tighter leading-none">
               {(
                 selectedPeriod.emissions?.calculatedTotalEmissions || 0
               ).toLocaleString("sv-SE")}
-              <span className="text-2xl md:text-lg sm:text-sm ml-2 text-grey">
+              <span className="lg:text-2xl md:text-lg sm:text-sm ml-2 text-grey">
                 {t("companies.overview.tonsCO2e")}
               </span>
             </Text>
@@ -120,10 +145,10 @@ export function CompanyOverview({
         </div>
 
         <div>
-          <Text className="mb-2 text-lg md:text-base sm:text-sm">
+          <Text className="mb-2 lg:text-lg md:text-base sm:text-sm">
             {t("companies.overview.changeSinceLastYear")}
           </Text>
-          <Text className="text-6xl md:text-4xl sm:text-2xl font-light tracking-tighter leading-none">
+          <Text className="lg:text-6xl md:text-4xl sm:text-3xl font-light tracking-tighter leading-none">
             {yearOverYearChange !== null ? (
               <span
                 className={

@@ -14,11 +14,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getCategoryColor } from "@/lib/constants/emissions";
 import { SECTOR_NAMES } from "@/lib/constants/sectors";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
 import { useTranslation } from "react-i18next";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 
 type CompanyCardProps = Pick<
   RankedCompany,
@@ -39,6 +39,7 @@ export function CompanyCard({
   reportingPeriods,
 }: CompanyCardProps) {
   const { t } = useTranslation();
+  const { getCategoryColor } = useCategoryMetadata();
 
   const latestPeriod = reportingPeriods[0];
   const previousPeriod = reportingPeriods[1];
