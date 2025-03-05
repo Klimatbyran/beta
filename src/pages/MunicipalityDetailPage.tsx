@@ -8,11 +8,17 @@ import { MunicipalitySection } from "@/components/municipalities/MunicipalitySec
 import { MunicipalityStatCard } from "@/components/municipalities/MunicipalityStatCard";
 import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLinkCard";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 export function MunicipalityDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { municipality, loading, error } = useMunicipalityDetails(id || "");
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (loading) return <Text>{t("municipalityDetailPage.loading")}</Text>;
   if (error) return <Text>{t("municipalityDetailPage.error")}</Text>;
@@ -33,8 +39,32 @@ export function MunicipalityDetailPage() {
     ? (lastYearEmissions.value / 1000).toFixed(1)
     : "N/A";
 
+  const lastYearEmissions = municipality.approximatedHistoricalEmission.at(-1);
+  const lastYear = lastYearEmissions?.year;
+  const lastYearEmissionsKTon = lastYearEmissions
+    ? (lastYearEmissions.value / 1000).toFixed(1)
+    : "N/A";
+
   return (
-    <div className="space-y-16 max-w-[1400px] mx-auto">
+    <>
+      <Helmet>
+        <title>{municipality.name} - {t("municipalityDetailPage.metaTitle")} - Klimatkollen</title>
+        <meta name="description" content={t("municipalityDetailPage.metaDescription", { 
+          municipality: municipality.name, 
+          emissions: lastYearEmissionsKTon,
+          year: lastYear
+        })} />
+        <meta property="og:title" content={`${municipality.name} - ${t("municipalityDetailPage.metaTitle")} - Klimatkollen`} />
+        <meta property="og:description" content={t("municipalityDetailPage.metaDescription", { 
+          municipality: municipality.name, 
+          emissions: lastYearEmissionsKTon,
+          year: lastYear
+        })} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://klimatkollen.se/municipalities/${id}`} />
+        <link rel="canonical" href={`https://klimatkollen.se/municipalities/${id}`} />
+      </Helmet>
+      <div className="space-y-16 max-w-[1400px] mx-auto">
       <div className="bg-black-2 rounded-level-1 p-8 md:p-16">
         <Text className="text-4xl md:text-8xl">{municipality.name}</Text>
         <Text className="text-grey">{municipality.region}</Text>
@@ -174,6 +204,7 @@ export function MunicipalityDetailPage() {
           },
         ]}
       />
-    </div>
+      </div>
+    </>
   );
 }

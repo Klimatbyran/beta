@@ -1,16 +1,21 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCompanyDetails } from "@/hooks/useCompanyDetails";
 import { CompanyOverview } from "@/components/companies/detail/CompanyOverview";
 import { CompanyHistory } from "@/components/companies/detail/CompanyHistory";
 import { Text } from "@/components/ui/text";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export function CompanyDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { company, loading, error } = useCompanyDetails(id!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (loading) {
     return (
@@ -63,7 +68,33 @@ export function CompanyDetailPage() {
       : undefined;
 
   return (
-    <div className="space-y-16 max-w-[1400px] mx-auto">
+    <>
+      <Helmet>
+        <title>{company.name} - {t("companyDetailPage.metaTitle")} - Klimatkollen</title>
+        <meta name="description" content={t("companyDetailPage.metaDescription", { 
+          company: company.name,
+          industry: company.industry?.industryGics?.sv?.sectorName || t("companyDetailPage.unknownIndustry")
+        })} />
+        <meta property="og:title" content={`${company.name} - ${t("companyDetailPage.metaTitle")} - Klimatkollen`} />
+        <meta property="og:description" content={t("companyDetailPage.metaDescription", { 
+          company: company.name,
+          industry: company.industry?.industryGics?.sv?.sectorName || t("companyDetailPage.unknownIndustry")
+        })} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://klimatkollen.se/companies/${id}`} />
+        <link rel="canonical" href={`https://klimatkollen.se/companies/${id}`} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": company.name,
+            "description": company.description,
+            "url": `https://klimatkollen.se/companies/${id}`,
+            "industry": company.industry?.industryGics?.sv?.sectorName
+          })}
+        </script>
+      </Helmet>
+      <div className="space-y-16 max-w-[1400px] mx-auto">
       <CompanyOverview
         company={company}
         selectedPeriod={selectedPeriod}
@@ -87,6 +118,7 @@ export function CompanyDetailPage() {
       />
 
       <CompanySectorComparison company={company} /> */}
-    </div>
+      </div>
+    </>
   );
 }
