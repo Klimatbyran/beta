@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { plugin as markdown } from "vite-plugin-markdown";
 import { Mode } from "vite-plugin-markdown";
+import { VitePluginSitemap } from 'vite-plugin-sitemap';
 
 export default defineConfig({
   plugins: [
@@ -14,6 +15,22 @@ export default defineConfig({
       },
     }),
     markdown({ mode: ["html", "toc", "meta", "react"] as Mode[] }),
+    VitePluginSitemap({
+      hostname: 'https://klimatkollen.se',
+      dynamicRoutes: [
+        '/',
+        '/municipalities',
+        '/companies',
+        '/about',
+        '/methodology',
+        '/insights',
+        '/insights/klimatmal',
+        '/insights/utslappsberakning'
+      ],
+      exclude: ['/404'],
+      outDir: 'dist',
+      filename: 'sitemap.xml'
+    }),
   ],
   resolve: {
     alias: {

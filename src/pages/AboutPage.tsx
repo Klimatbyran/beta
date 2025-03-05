@@ -7,13 +7,39 @@ import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
 import { MembersGrid } from "@/components/MembersGrid";
+import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 export function AboutPage() {
   const { t } = useTranslation();
   const teamMembers = useTeamMembers();
   const boardMembers = useBoardMembers();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
+    <>
+      <Helmet>
+        <title>{t("aboutPage.header.title")} - Klimatkollen</title>
+        <meta name="description" content={t("aboutPage.header.description")} />
+        <meta property="og:title" content={`${t("aboutPage.header.title")} - Klimatkollen`} />
+        <meta property="og:description" content={t("aboutPage.header.description")} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://klimatkollen.se/about" />
+        <link rel="canonical" href="https://klimatkollen.se/about" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Klimatkollen",
+            "url": "https://klimatkollen.se",
+            "logo": "https://klimatkollen.se/images/social-picture.png",
+            "description": t("aboutPage.header.description")
+          })}
+        </script>
+      </Helmet>
     <div className="max-w-[1200px] mx-auto space-y-20">
       <PageHeader
         title={t("aboutPage.header.title")}
@@ -170,5 +196,6 @@ export function AboutPage() {
         </AccordionGroup>
       </Accordion>
     </div>
+    </>
   );
 }
