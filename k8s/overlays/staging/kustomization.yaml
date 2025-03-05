@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: frontend-stage
 resources:
   - ../../base
+patches:
+  - path: backend-service-patch.yaml
 images:
   - name: ghcr.io/klimatbyran/frontend
     newTag: "3.2.1-rc.5" # {"$imagepolicy": "flux-system:frontend-stage:tag"}
