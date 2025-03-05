@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getCompanies, getMunicipalities } from './api.js';
+import { createSlug } from './utils.js';
 
 // Set NODE_TLS_REJECT_UNAUTHORIZED to allow self-signed certificates during development
 // This is only used during sitemap generation in Node.js environment
@@ -137,13 +138,7 @@ export async function generateSitemap(outputPath: string): Promise<void> {
           .filter(municipality => municipality.name) // Ensure municipality has a name
           .map(municipality => {
             // Create a URL-friendly ID from the municipality name
-            const id = municipality.name
-              .toLowerCase()
-              .replace(/[åä]/g, "a")
-              .replace(/[ö]/g, "o")
-              .replace(/[é]/g, "e")
-              .replace(/[\s-]+/g, "-")
-              .replace(/[^a-z0-9-]/g, "");
+            const id = createSlug(municipality.name);
               
             return {
               loc: `https://klimatkollen.se/municipalities/${id}`,
@@ -170,16 +165,7 @@ export async function generateSitemap(outputPath: string): Promise<void> {
       if (companies && companies.length > 0) {
         const companyRoutes = companies.map(company => {
           // Create a URL-friendly slug from the company name
-          const slug = company.name
-            .toLowerCase()
-            .replace(/[åäá]/g, "a")
-            .replace(/[öô]/g, "o")
-            .replace(/[éèê]/g, "e")
-            .replace(/[üû]/g, "u")
-            .replace(/[ç]/g, "c")
-            .replace(/[ñ]/g, "n")
-            .replace(/[\s-]+/g, "-")
-            .replace(/[^a-z0-9-]/g, "");
+          const slug = createSlug(company.name);
             
           return {
             loc: `https://klimatkollen.se/foretag/${slug}-${company.wikidataId}`,
@@ -191,16 +177,7 @@ export async function generateSitemap(outputPath: string): Promise<void> {
         
         // Add English versions of company routes
         const englishCompanyRoutes = companies.map(company => {
-          const slug = company.name
-            .toLowerCase()
-            .replace(/[åäá]/g, "a")
-            .replace(/[öô]/g, "o")
-            .replace(/[éèê]/g, "e")
-            .replace(/[üû]/g, "u")
-            .replace(/[ç]/g, "c")
-            .replace(/[ñ]/g, "n")
-            .replace(/[\s-]+/g, "-")
-            .replace(/[^a-z0-9-]/g, "");
+          const slug = createSlug(company.name);
             
           return {
             loc: `https://klimatkollen.se/en/companies/${company.wikidataId}/${slug}`,
