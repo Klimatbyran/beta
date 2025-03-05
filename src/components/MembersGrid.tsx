@@ -7,11 +7,11 @@ interface TeamMember {
   imageUrl: string;
 }
 
-interface TeamMembersProps {
+interface MembersGridProps {
   members: TeamMember[];
 }
 
-export function TeamMembers({ members }: TeamMembersProps) {
+export function MembersGrid({ members }: MembersGridProps) {
   return (
     <div className="bg-black-2 rounded-level-2 p-4 md:p-16 space-y-8 md:space-y-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

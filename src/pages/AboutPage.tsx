@@ -6,7 +6,7 @@ import { AccordionGroup } from "../components/layout/AccordionGroup";
 import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
-import { TeamMembers } from "@/components/TeamMember";
+import { MembersGrid } from "@/components/MembersGrid";
 
 export function AboutPage() {
   const { t } = useTranslation();
@@ -57,7 +57,7 @@ export function AboutPage() {
           title={t("aboutPage.teamSection.title")}
           value="teamSection"
         >
-          <TeamMembers members={teamMembers} />
+          <MembersGrid members={teamMembers} />
         </AccordionGroup>
 
         {/* Board Section */}
@@ -65,7 +65,7 @@ export function AboutPage() {
           title={t("aboutPage.boardSection.title")}
           value="boardSection"
         >
-          <TeamMembers members={boardMembers} />
+          <MembersGrid members={boardMembers} />
           <div className="p-8 prose prose-invert">
             <p>
               {t("aboutPage.boardSection.links.stadgar")}{" "}
