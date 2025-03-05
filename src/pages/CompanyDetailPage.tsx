@@ -10,8 +10,14 @@ import { Helmet } from "react-helmet-async";
 export function CompanyDetailPage() {
   const { t } = useTranslation();
   const { id, slug } = useParams<{ id: string; slug?: string }>();
-  const actualId = id?.startsWith('Q') ? id : id;
-  const { company, loading, error } = useCompanyDetails(actualId!);
+  // Extract Wikidata ID (Q-number) from URL parameters
+  // For /companies/:id routes, the id is already the Wikidata ID
+  // For /foretag/:slug-:id routes, we need to extract the ID from the combined parameter
+  const wikidataId = id?.includes('Q') 
+    ? id.substring(id.indexOf('Q')) // Extract Q-number if it's part of a string
+    : id;
+  
+  const { company, loading, error } = useCompanyDetails(wikidataId!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
   
   useEffect(() => {
