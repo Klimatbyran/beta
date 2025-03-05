@@ -8,7 +8,7 @@ import { MunicipalitySection } from "@/components/municipalities/MunicipalitySec
 import { MunicipalityStatCard } from "@/components/municipalities/MunicipalityStatCard";
 import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLinkCard";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import { PageSEO } from "@/components/SEO/PageSEO";
 import { useEffect } from "react";
 
 export function MunicipalityDetailPage() {
@@ -45,46 +45,36 @@ export function MunicipalityDetailPage() {
     ? (lastYearEmissions.value / 1000).toFixed(1)
     : "N/A";
 
+  // Prepare SEO data
+  const canonicalUrl = `https://klimatkollen.se/municipalities/${id}`;
+  const pageTitle = `${municipality.name} - ${t("municipalityDetailPage.metaTitle")} - Klimatkollen`;
+  const pageDescription = t("municipalityDetailPage.metaDescription", { 
+    municipality: municipality.name, 
+    emissions: lastYearEmissionsKTon,
+    year: lastYear
+  });
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "GovernmentOrganization",
+    "name": `${municipality.name} kommun`,
+    "description": pageDescription,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": municipality.name,
+      "addressRegion": municipality.region,
+      "addressCountry": "SE"
+    }
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{municipality.name} - {t("municipalityDetailPage.metaTitle")} - Klimatkollen</title>
-        <meta name="description" content={t("municipalityDetailPage.metaDescription", { 
-          municipality: municipality.name, 
-          emissions: lastYearEmissionsKTon,
-          year: lastYear
-        })} />
-        <meta property="og:title" content={`${municipality.name} - ${t("municipalityDetailPage.metaTitle")} - Klimatkollen`} />
-        <meta property="og:description" content={t("municipalityDetailPage.metaDescription", { 
-          municipality: municipality.name, 
-          emissions: lastYearEmissionsKTon,
-          year: lastYear
-        })} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://klimatkollen.se/municipalities/${id}`} />
-        <link rel="canonical" href={`https://klimatkollen.se/municipalities/${id}`} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "GovernmentOrganization",
-            "name": `${municipality.name} kommun`,
-            "description": t("municipalityDetailPage.metaDescription", { 
-              municipality: municipality.name, 
-              emissions: lastYearEmissionsKTon,
-              year: lastYear
-            }),
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": municipality.name,
-              "addressRegion": municipality.region,
-              "addressCountry": "SE"
-            }
-          })}
-        </script>
-      </Helmet>
-      
-      {/* SEO-optimized content section - hidden visually but available to search engines */}
-      <div className="sr-only">
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      >
         <h1>{municipality.name} - {t("municipalityDetailPage.parisAgreement")}</h1>
         <p>
           {t("municipalityDetailPage.seoText.intro", { 
@@ -125,7 +115,7 @@ export function MunicipalityDetailPage() {
             evGrowth: (municipality.electricCarChangePercent * 100).toFixed(1)
           })}
         </p>
-      </div>
+      </PageSEO>
       
       <div className="space-y-16 max-w-[1400px] mx-auto">
       <div className="bg-black-2 rounded-level-1 p-8 md:p-16">

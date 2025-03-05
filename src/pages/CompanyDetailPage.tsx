@@ -5,7 +5,8 @@ import { CompanyOverview } from "@/components/companies/detail/CompanyOverview";
 import { CompanyHistory } from "@/components/companies/detail/CompanyHistory";
 import { Text } from "@/components/ui/text";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { createSlug } from "@/lib/utils";
 
 export function CompanyDetailPage() {
   const { t } = useTranslation();
@@ -84,36 +85,31 @@ export function CompanyDetailPage() {
   // Get industry for SEO content
   const industry = company.industry?.industryGics?.sv?.sectorName || t("companyDetailPage.unknownIndustry");
 
+  // Prepare SEO data
+  const canonicalUrl = `https://klimatkollen.se/foretag/${createSlug(company.name)}-${id}`;
+  const pageTitle = `${company.name} - ${t("companyDetailPage.metaTitle")} - Klimatkollen`;
+  const pageDescription = t("companyDetailPage.metaDescription", { 
+    company: company.name,
+    industry: industry
+  });
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": company.name,
+    "description": company.description,
+    "url": canonicalUrl,
+    "industry": industry
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{company.name} - {t("companyDetailPage.metaTitle")} - Klimatkollen</title>
-        <meta name="description" content={t("companyDetailPage.metaDescription", { 
-          company: company.name,
-          industry: industry
-        })} />
-        <meta property="og:title" content={`${company.name} - ${t("companyDetailPage.metaTitle")} - Klimatkollen`} />
-        <meta property="og:description" content={t("companyDetailPage.metaDescription", { 
-          company: company.name,
-          industry: industry
-        })} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${id}`} />
-        <link rel="canonical" href={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${id}`} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": company.name,
-            "description": company.description,
-            "url": `https://klimatkollen.se/foretag/${createSlug(company.name)}-${actualId}`,
-            "industry": industry
-          })}
-        </script>
-      </Helmet>
-      
-      {/* SEO-optimized content section - hidden visually but available to search engines */}
-      <div className="sr-only">
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      >
         <h1>{company.name} - {t("companyDetailPage.seoText.climateData")}</h1>
         <p>
           {t("companyDetailPage.seoText.intro", { 
@@ -156,7 +152,7 @@ export function CompanyDetailPage() {
             </p>
           </>
         )}
-      </div>
+      </PageSEO>
       
       <div className="space-y-16 max-w-[1400px] mx-auto">
       <CompanyOverview

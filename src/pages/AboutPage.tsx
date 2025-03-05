@@ -7,7 +7,7 @@ import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
 import { MembersGrid } from "@/components/MembersGrid";
-import { Helmet } from "react-helmet-async";
+import { PageSEO } from "@/components/SEO/PageSEO";
 import { useEffect } from "react";
 
 export function AboutPage() {
@@ -19,27 +19,28 @@ export function AboutPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Prepare SEO data
+  const canonicalUrl = "https://klimatkollen.se/about";
+  const pageTitle = `${t("aboutPage.header.title")} - Klimatkollen`;
+  const pageDescription = t("aboutPage.header.description");
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Klimatkollen",
+    "url": "https://klimatkollen.se",
+    "logo": "https://klimatkollen.se/images/social-picture.png",
+    "description": pageDescription
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{t("aboutPage.header.title")} - Klimatkollen</title>
-        <meta name="description" content={t("aboutPage.header.description")} />
-        <meta property="og:title" content={`${t("aboutPage.header.title")} - Klimatkollen`} />
-        <meta property="og:description" content={t("aboutPage.header.description")} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://klimatkollen.se/about" />
-        <link rel="canonical" href="https://klimatkollen.se/about" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Klimatkollen",
-            "url": "https://klimatkollen.se",
-            "logo": "https://klimatkollen.se/images/social-picture.png",
-            "description": t("aboutPage.header.description")
-          })}
-        </script>
-      </Helmet>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      />
     <div className="max-w-[1200px] mx-auto space-y-20">
       <PageHeader
         title={t("aboutPage.header.title")}
