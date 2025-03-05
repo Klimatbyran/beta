@@ -7,124 +7,21 @@ import './index.css';
 
 // Import pages and components
 import { Layout } from './components/layout/Layout';
-import { LandingPage } from './pages/LandingPage';
-import { CompaniesPage } from './pages/CompaniesPage';
-import { CompanyDetailPage } from './pages/CompanyDetailPage';
-import { MunicipalitiesPage } from './pages/MunicipalitiesPage';
-import { MunicipalityDetailPage } from './pages/MunicipalityDetailPage';
-import { AboutPage } from './pages/AboutPage';
-import { MethodsPage } from './pages/MethodsPage';
-import { InsightsPage } from './pages/InsightsPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+import { LanguageProvider } from './components/LanguageProvider';
+import { AppRoutes } from './routes';
 
-// Create routes for both Swedish (default) and English versions
+// Create router with all routes
 const router = createBrowserRouter([
-  // Swedish routes (default)
   {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <LandingPage />,
-      },
-      {
-        path: "/companies",
-        element: <CompaniesPage />,
-      },
-      {
-        path: "/companies/:id",
-        element: <CompanyDetailPage />,
-      },
-      {
-        path: "/companies/:id/:slug",
-        element: <CompanyDetailPage />,
-      },
-      {
-        path: "/foretag/:slug-:id",
-        element: <CompanyDetailPage />,
-      },
-      {
-        path: "/municipalities",
-        element: <MunicipalitiesPage />,
-      },
-      {
-        path: "/municipalities/:id",
-        element: <MunicipalityDetailPage />,
-      },
-      {
-        path: "/about",
-        element: <AboutPage />,
-      },
-      {
-        path: "/methodology",
-        element: <MethodsPage />,
-      },
-      {
-        path: "/insights",
-        element: <InsightsPage />,
-      },
-      {
-        path: "/insights/:slug",
-        element: <InsightsPage />,
-      },
-      {
-        path: "*",
-        element: <NotFoundPage />,
-      },
-    ],
-  },
-  // English routes
-  {
-    path: "/en",
-    element: <Layout />,
-    children: [
-      {
-        path: "",
-        element: <LandingPage />,
-      },
-      {
-        path: "companies",
-        element: <CompaniesPage />,
-      },
-      {
-        path: "companies/:id",
-        element: <CompanyDetailPage />,
-      },
-      {
-        path: "companies/:id/:slug",
-        element: <CompanyDetailPage />,
-      },
-      {
-        path: "municipalities",
-        element: <MunicipalitiesPage />,
-      },
-      {
-        path: "municipalities/:id",
-        element: <MunicipalityDetailPage />,
-      },
-      {
-        path: "about",
-        element: <AboutPage />,
-      },
-      {
-        path: "methodology",
-        element: <MethodsPage />,
-      },
-      {
-        path: "insights",
-        element: <InsightsPage />,
-      },
-      {
-        path: "insights/:slug",
-        element: <InsightsPage />,
-      },
-      {
-        path: "*",
-        element: <NotFoundPage />,
-      },
-    ],
-  },
+    path: "*",
+    element: (
+      <Layout>
+        <LanguageProvider>
+          <AppRoutes />
+        </LanguageProvider>
+      </Layout>
+    ),
+  }
 ]);
 
 const queryClient = new QueryClient({
