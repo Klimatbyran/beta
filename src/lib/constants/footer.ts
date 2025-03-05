@@ -1,21 +1,20 @@
 import {
-    Github,
-    Linkedin,
-    Twitter,
-    Disc as Discord,
     MailIcon,
+    LinkedinIcon,
   } from "lucide-react";
   
 export const socialLinks = [
     { href: "mailto:hej@klimatkollen.se", icon: MailIcon, title: "Email" },
-    { href: "https://github.com/klimatbyran", icon: Github, title: "GitHub" },
+    { href: "https://github.com/klimatbyran", icon: "./logos/social/github.svg", title: "GitHub" },
     {
       href: "https://linkedin.com/company/klimatkollen",
-      icon: Linkedin,
+      icon: LinkedinIcon,
       title: "LinkedIn",
     },
-    { href: "https://twitter.com/klimatkollen", icon: Twitter, title: "Twitter" },
-    { href: "https://discord.gg/klimatkollen", icon: Discord, title: "Discord" },
+    { href: "https://twitter.com/klimatkollen", icon: "./logos/social/twitter.svg", title: "Twitter" },
+    { href: "https://discord.gg/klimatkollen", icon: "./logos/social/discord.svg", title: "Discord" },
+    { href: "https://www.instagram.com/klimatkollen.se/", icon: "./logos/social/instagram.svg", title: "Instagram" },
+    { href: "https://www.facebook.com/klimatkollen/", icon: "/logos/social/facebook.svg", title: "Facebook" },
   ];
   
   export const partners = [
