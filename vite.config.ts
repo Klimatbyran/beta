@@ -2,7 +2,38 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { plugin as markdown } from "vite-plugin-markdown";
 import { Mode } from "vite-plugin-markdown";
-import { VitePluginSitemap } from 'vite-plugin-sitemap';
+import fs from 'fs';
+import path from 'path';
+
+// Custom plugin for sitemap generation
+function customSitemapPlugin() {
+  return {
+    name: 'vite-plugin-custom-sitemap',
+    closeBundle: async () => {
+      try {
+        // Dynamically import the sitemap generator
+        const { generateSitemap } = await import('./src/lib/sitemap-generator');
+        const outputPath = path.resolve(process.cwd(), 'dist/sitemap.xml');
+        await generateSitemap(outputPath);
+      } catch (error) {
+        console.error('Failed to generate dynamic sitemap:', error);
+        
+        // Fallback to static sitemap if dynamic generation fails
+        try {
+          const staticSitemapPath = path.resolve(process.cwd(), 'public/sitemap.xml');
+          const distSitemapPath = path.resolve(process.cwd(), 'dist/sitemap.xml');
+          
+          if (fs.existsSync(staticSitemapPath)) {
+            fs.copyFileSync(staticSitemapPath, distSitemapPath);
+            console.log('Copied static sitemap as fallback');
+          }
+        } catch (fallbackError) {
+          console.error('Failed to copy static sitemap:', fallbackError);
+        }
+      }
+    }
+  };
+}
 
 export default defineConfig({
   plugins: [
@@ -15,22 +46,7 @@ export default defineConfig({
       },
     }),
     markdown({ mode: ["html", "toc", "meta", "react"] as Mode[] }),
-    VitePluginSitemap({
-      hostname: 'https://klimatkollen.se',
-      dynamicRoutes: [
-        '/',
-        '/municipalities',
-        '/companies',
-        '/about',
-        '/methodology',
-        '/insights',
-        '/insights/klimatmal',
-        '/insights/utslappsberakning'
-      ],
-      exclude: ['/404'],
-      outDir: 'dist',
-      filename: 'sitemap.xml'
-    }),
+    customSitemapPlugin(),
   ],
   resolve: {
     alias: {
