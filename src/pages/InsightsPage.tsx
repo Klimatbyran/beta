@@ -5,6 +5,8 @@ import { blogMetadata } from "../lib/blog/blogPostsList";
 import { isMobile } from "react-device-detect";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { useEffect } from "react";
 
 // Component for blog metadata (category, date, read time)
 function BlogMeta({
@@ -34,7 +36,8 @@ function BlogMeta({
         <Clock className="w-4 h-4" />
         <span aria-label="Read Time">{readTime}</span>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -82,9 +85,33 @@ export function InsightsPage() {
   const featuredPost = isMobile ? undefined : blogMetadata[0];
   const otherPosts = isMobile ? blogMetadata.slice(0) : blogMetadata.slice(1);
   const { t } = useTranslation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  // Prepare SEO data
+  const canonicalUrl = "https://klimatkollen.se/insights";
+  const pageTitle = `${t("insightsPage.title")} - Klimatkollen`;
+  const pageDescription = t("insightsPage.description");
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t("insightsPage.title"),
+    "description": pageDescription,
+    "url": canonicalUrl
+  };
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto space-y-8">
+    <>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      />
+      <div className="w-full max-w-[1200px] mx-auto space-y-8">
       <PageHeader
         title={t("insightsPage.title")}
         description={t("insightsPage.description")}

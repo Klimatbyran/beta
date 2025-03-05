@@ -7,13 +7,40 @@ import { LinkButton } from "@/components/layout/LinkButton";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
 import { MembersGrid } from "@/components/MembersGrid";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { useEffect } from "react";
 
 export function AboutPage() {
   const { t } = useTranslation();
   const teamMembers = useTeamMembers();
   const boardMembers = useBoardMembers();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Prepare SEO data
+  const canonicalUrl = "https://klimatkollen.se/about";
+  const pageTitle = `${t("aboutPage.header.title")} - Klimatkollen`;
+  const pageDescription = t("aboutPage.header.description");
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Klimatkollen",
+    "url": "https://klimatkollen.se",
+    "logo": "https://klimatkollen.se/images/social-picture.png",
+    "description": pageDescription
+  };
 
   return (
+    <>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      />
     <div className="max-w-[1200px] mx-auto space-y-20">
       <PageHeader
         title={t("aboutPage.header.title")}
@@ -170,5 +197,6 @@ export function AboutPage() {
         </AccordionGroup>
       </Accordion>
     </div>
+    </>
   );
 }

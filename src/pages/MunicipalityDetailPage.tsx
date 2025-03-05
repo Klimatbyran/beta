@@ -8,11 +8,17 @@ import { MunicipalitySection } from "@/components/municipalities/MunicipalitySec
 import { MunicipalityStatCard } from "@/components/municipalities/MunicipalityStatCard";
 import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLinkCard";
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { useEffect } from "react";
 
 export function MunicipalityDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { municipality, loading, error } = useMunicipalityDetails(id || "");
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (loading) return <Text>{t("municipalityDetailPage.loading")}</Text>;
   if (error) return <Text>{t("municipalityDetailPage.error")}</Text>;
@@ -33,8 +39,85 @@ export function MunicipalityDetailPage() {
     ? (lastYearEmissions.value / 1000).toFixed(1)
     : "N/A";
 
+  const lastYearEmissions = municipality.approximatedHistoricalEmission.at(-1);
+  const lastYear = lastYearEmissions?.year;
+  const lastYearEmissionsKTon = lastYearEmissions
+    ? (lastYearEmissions.value / 1000).toFixed(1)
+    : "N/A";
+
+  // Prepare SEO data
+  const canonicalUrl = `https://klimatkollen.se/municipalities/${id}`;
+  const pageTitle = `${municipality.name} - ${t("municipalityDetailPage.metaTitle")} - Klimatkollen`;
+  const pageDescription = t("municipalityDetailPage.metaDescription", { 
+    municipality: municipality.name, 
+    emissions: lastYearEmissionsKTon,
+    year: lastYear
+  });
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "GovernmentOrganization",
+    "name": `${municipality.name} kommun`,
+    "description": pageDescription,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": municipality.name,
+      "addressRegion": municipality.region,
+      "addressCountry": "SE"
+    }
+  };
+
   return (
-    <div className="space-y-16 max-w-[1400px] mx-auto">
+    <>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      >
+        <h1>{municipality.name} - {t("municipalityDetailPage.parisAgreement")}</h1>
+        <p>
+          {t("municipalityDetailPage.seoText.intro", { 
+            municipality: municipality.name,
+            emissions: lastYearEmissionsKTon,
+            year: lastYear
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.emissionsHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.emissionsText", { 
+            municipality: municipality.name,
+            reduction: municipality.neededEmissionChangePercent.toFixed(1),
+            budget: (municipality.budget / 1000).toFixed(1)
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.climateGoalsHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.climateGoalsText", { 
+            municipality: municipality.name,
+            budgetRunsOut: municipality.budgetRunsOut === "Håller budget" 
+              ? t("municipalityDetailPage.budgetHolds")
+              : municipality.budgetRunsOut
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.consumptionHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.consumptionText", { 
+            municipality: municipality.name,
+            consumption: (municipality.totalConsumptionEmission / 1000).toFixed(1)
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.transportHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.transportText", { 
+            municipality: municipality.name,
+            bikeMeters: municipality.bicycleMetrePerCapita.toFixed(1),
+            evGrowth: (municipality.electricCarChangePercent * 100).toFixed(1)
+          })}
+        </p>
+      </PageSEO>
+      
+      <div className="space-y-16 max-w-[1400px] mx-auto">
       <div className="bg-black-2 rounded-level-1 p-8 md:p-16">
         <Text className="text-4xl md:text-8xl">{municipality.name}</Text>
         <Text className="text-grey">{municipality.region}</Text>
@@ -174,6 +257,7 @@ export function MunicipalityDetailPage() {
           },
         ]}
       />
-    </div>
+      </div>
+    </>
   );
 }

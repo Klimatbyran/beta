@@ -8,12 +8,32 @@ import { Typewriter } from "@/components/ui/typewriter";
 import { useCompanies } from "@/hooks/useCompanies";
 import { useMunicipalities } from "@/hooks/useMunicipalities";
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { useEffect } from "react";
 
 export function LandingPage() {
   const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState("companies");
   const { companies } = useCompanies();
   const { getTopMunicipalities } = useMunicipalities();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  // Prepare SEO data
+  const canonicalUrl = "https://klimatkollen.se";
+  const pageTitle = `Klimatkollen - ${t("landingPage.metaTitle")}`;
+  const pageDescription = t("landingPage.metaDescription");
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Klimatkollen",
+    "url": canonicalUrl,
+    "logo": "https://klimatkollen.se/images/social-picture.png",
+    "description": pageDescription
+  };
 
   const companyTypewriterTexts = [
     t("landingPage.typewriter.company.reduceEmissions"),
@@ -59,7 +79,14 @@ export function LandingPage() {
   // );
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-16 md:py-24">
         <div className="mb-8 md:mb-12">
           <Tabs
@@ -175,6 +202,7 @@ export function LandingPage() {
           />
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
