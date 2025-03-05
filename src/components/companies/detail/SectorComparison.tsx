@@ -1,3 +1,5 @@
+// FIXME ADD TRANSLATIONS
+
 import { useState } from "react";
 import { Building2 } from "lucide-react";
 import { Text } from "@/components/ui/text";
@@ -12,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 type ComparisonView = "emissions" | "reporting" | "scope3";
 
@@ -27,6 +30,7 @@ export function SectorComparison({
   className,
 }: SectorComparisonProps) {
   const [view, setView] = useState<ComparisonView>("emissions");
+  const { t } = useTranslation();
 
   // Sort companies by emissions reduction (best to worst)
   const sortedCompanies = [...sectorCompanies].sort(
@@ -60,7 +64,9 @@ export function SectorComparison({
   });
 
   const sectorCode = currentCompany.industry?.industryGics?.sectorCode;
-  const sectorName = sectorCode ? SECTOR_NAMES[sectorCode] : "Okänd sektor";
+  const sectorName = sectorCode
+    ? t(SECTOR_NAMES[sectorCode])
+    : t("companies.sectorComparison.sectorUnknown");
 
   if (!sectorCode) {
     return null;
@@ -71,7 +77,9 @@ export function SectorComparison({
       case "emissions":
         return (
           <div className="space-y-8">
-            <Text variant="h4">Utsläppsminskning</Text>
+            <Text variant="h4">
+              {t("companies.sectorComparison.emissionsReduction")}
+            </Text>
             <div className="grid grid-cols-1 gap-4">
               {sortedCompanies.map((company, index) => (
                 <div
@@ -109,7 +117,9 @@ export function SectorComparison({
       case "reporting":
         return (
           <div className="space-y-8">
-            <Text variant="h4">Rapporterade år</Text>
+            <Text variant="h4">
+              {t("companies.sectorComparison.reportingYears")}
+            </Text>
             <div className="grid grid-cols-1 gap-4">
               {sortedCompanies.map((company) => {
                 const years = company.reportingPeriods
@@ -147,7 +157,9 @@ export function SectorComparison({
       case "scope3":
         return (
           <div className="space-y-8">
-            <Text variant="h4">Rapporterade scope 3-kategorier</Text>
+            <Text variant="h4">
+              {t("companies.sectorComparison.reportedCategories")}
+            </Text>
             <ScopeReportingList companies={companiesWithScopes} />
           </div>
         );
@@ -158,7 +170,9 @@ export function SectorComparison({
     <div className={cn("bg-black-2 rounded-level-1 p-16", className)}>
       <div className="flex items-center justify-between mb-12">
         <div className="space-y-2">
-          <Text variant="h3">Jämförelse inom {sectorName}</Text>
+          <Text variant="h3">
+            {t("companies.sectorComparison.comparisonIn", { sectorName })}
+          </Text>
           <Text variant="body">
             Plats {currentCompanyRank} av {sectorCompanies.length} företag i
             sektorn
@@ -173,9 +187,15 @@ export function SectorComparison({
               <SelectValue placeholder="Välj jämförelse" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="emissions">Utsläppsminskning</SelectItem>
-              <SelectItem value="reporting">Rapporterade år</SelectItem>
-              <SelectItem value="scope3">Scope 3-kategorier</SelectItem>
+              <SelectItem value="emissions">
+                {t("companies.sectorComparison.emissionsReduction")}
+              </SelectItem>
+              <SelectItem value="reporting">
+                {t("companies.sectorComparison.reportingYears")}
+              </SelectItem>
+              <SelectItem value="scope3">
+                {t("companies.sectorComparison.reportedCategories")}
+              </SelectItem>
             </SelectContent>
           </Select>
           <div className="w-12 h-12 rounded-full bg-blue-5/30 flex items-center justify-center">

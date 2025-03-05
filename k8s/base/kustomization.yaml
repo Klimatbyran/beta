@@ -5,4 +5,4 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
-  - configmap.yaml
+  - backend-service.yaml

@@ -14,14 +14,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getCategoryColor } from "@/lib/constants/emissions";
 import { SECTOR_NAMES } from "@/lib/constants/sectors";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
 import { useScreenSize } from "@/hooks/useScreenSize";
-
-
-
+import { useTranslation } from "react-i18next";
+import { useCategoryMetadata } from "@/hooks/useCategories";
 
 type CompanyCardProps = Pick<
   RankedCompany,
@@ -41,7 +39,12 @@ export function CompanyCard({
   industry,
   reportingPeriods,
 }: CompanyCardProps) {
+
   const isMobile = useScreenSize();
+
+  const { t } = useTranslation();
+  const { getCategoryColor } = useCategoryMetadata();
+
   const latestPeriod = reportingPeriods[0];
   const previousPeriod = reportingPeriods[1];
 
@@ -55,11 +58,11 @@ export function CompanyCard({
   const employeeCount = latestPeriod?.economy?.employees?.value;
   const formattedEmployeeCount = employeeCount
     ? employeeCount.toLocaleString()
-    : "N/A";
+    : t("companies.card.noData");
 
   const sectorName = industry?.industryGics?.sectorCode
-    ? SECTOR_NAMES[industry.industryGics.sectorCode]
-    : "Okänd sektor";
+    ? t(SECTOR_NAMES[industry.industryGics.sectorCode])
+    : t("companies.card.unknownSector");
 
   // Find the largest scope 3 category
   const scope3Categories = latestPeriod?.emissions?.scope3?.categories || [];
@@ -134,14 +137,14 @@ export function CompanyCard({
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
-              <span>Utsläpp</span>
+              {t("companies.card.emissions")}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info className="w-4 h-4" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Totala utsläpp (Scope 1 & 2)</p>
+                    <p>{t("companies.card.totalEmissionsInfo")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -153,24 +156,21 @@ export function CompanyCard({
                   <span className="text-lg text-grey ml-1">tCO₂e</span>
                 </span>
               ) : (
-                <span className="text-grey">Ingen data</span>
+                <span className="text-grey">{t("companies.card.noData")}</span>
               )}
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
-              <span>Förändringstakt</span>
+              <span>{t("companies.card.emissionsChangeRate")}</span>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info className="w-4 h-4" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>
-                      Förändringstakt för utsläpp jämfört med föregående
-                      rapporteringsperiod.
-                    </p>
+                    <p>{t("companies.card.emissionsChangeRateInfo")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -186,7 +186,7 @@ export function CompanyCard({
                   {Math.ceil(emissionsChange).toLocaleString("sv-SE")}%
                 </span>
               ) : (
-                <span className="text-grey">Ingen data</span>
+                <span className="text-grey">{t("companies.card.noData")}</span>
               )}
             </div>
           </div>
@@ -199,12 +199,12 @@ export function CompanyCard({
                 className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
                 <Wallet className="w-4 h-4" />
-                <span> Omsättning</span>
+                <span>{t("companies.card.turnover")}</span>
               </Text>
               <Text variant="h6">
                 {latestPeriod.economy.turnover.value
                   ? (latestPeriod.economy.turnover.value / 1e9).toFixed(1)
-                  : "N/A"}{" "}
+                  : t("companies.card.noData")}{" "}
                 mdr
                 <span className="text-lg text-grey ml-1">
                   {latestPeriod.economy.turnover.currency}
@@ -218,14 +218,15 @@ export function CompanyCard({
                 variant="body"
                 className="flex items-center gap-2 text-grey mb-2 text-lg"
               >
-                <Users className="w-4 h-4" /> <span>Anställda</span>
+                <Users className="w-4 h-4" />{" "}
+                <span>{t("companies.card.employees")}</span>
               </Text>
               <Text variant="h6">{formattedEmployeeCount}</Text>
             </div>
           )}
         </div>
         {/* Climate Plan */}
-        {latestPeriod.reportURL && (
+        {latestPeriod?.reportURL && (
           <a
             href={latestPeriod.reportURL}
             target="_blank"
@@ -239,11 +240,11 @@ export function CompanyCard({
                   className="flex items-center gap-2 text-white mb-2"
                 >
                   <FileText className="w-6 h-6 text-white" />
-                  <span>Company Report</span>
+                  <span>{t("companies.card.companyReport")}</span>
                 </Text>
                 <Text variant="body" className=" text-grey">
                   {latestPeriod.reportURL === "Saknar report"
-                    ? "Saknar report"
+                    ? t("companies.card.missingReport")
                     : ``}
                 </Text>
               </div>

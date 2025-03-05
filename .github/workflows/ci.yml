@@ -4,80 +4,24 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: klimatbyran/frontend # FIXME restore to ${{ github.repository }} as soon as repos are merged
 
 on:
   push:
     branches:
       - main
-      - staging
     paths-ignore:
       - "k8s/**"
 
 jobs:
-  version:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 🛎️ Checkout
-        uses: actions/checkout@v4
-        with:
-          progress: false
-
-      - name: 🧹 Clean Install Dependencies
-        run: |
-          rm -rf node_modules package-lock.json
-          npm install --legacy-peer-deps
-          npm rebuild
-
-      - name: 📌 Show Node.js & NPM versions
-        run: |
-          node -v
-          npm -v
-          npx vite -v
-
-      - name: 🎫 Update patch version
-        run: |
-          git fetch
-          git checkout main
-          git pull origin main
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          if [[ $GITHUB_REF == refs/tags/production* ]]; then
-            npm version major
-          elif [[ $GITHUB_REF == refs/tags/staging* ]]; then
-            npm version minor
-          else
-            npm version patch
-          fi
-          git fetch --all
-          git push origin main
-
   ci:
     runs-on: ubuntu-latest
-    needs: version
 
     steps:
       - name: 🛎️ Checkout
         uses: actions/checkout@v4
         with:
-          show-progress: false
-
-      - id: imagename
-        uses: ASzc/change-string-case-action@v2
-        with:
-          string: ${{ github.repository }}
-
-      - run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          if [[ $GITHUB_REF == refs/tags/production* ]]; then
-            npm version major
-          elif [[ $GITHUB_REF == refs/tags/staging* ]]; then
-            npm version minor
-          else
-            npm version patch
-          fi
+          fetch-depth: 0
 
       - name: 📝 Get Current Version
         id: package-version
@@ -90,9 +34,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 🏗️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: 🔧 Build and push Docker Image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ steps.imagename.outputs.lowercase  }}:${{ steps.package-version.outputs.current-version}}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version}}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: 🎫 Update patch version
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git pull --rebase origin main
+          npm version prerelease --preid=rc
+          git push origin main

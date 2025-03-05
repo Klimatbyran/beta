@@ -1,4 +1,5 @@
-import { getCategoryName } from "@/lib/constants/emissions";
+import { useCategoryMetadata } from "@/hooks/useCategories";
+import { useTranslation } from "react-i18next";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -6,7 +7,14 @@ interface CustomTooltipProps {
   label?: string;
 }
 
-export const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+export const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: CustomTooltipProps) => {
+  const { t } = useTranslation();
+  const { getCategoryName } = useCategoryMetadata();
+
   if (active && payload && payload.length) {
     return (
       <div className="bg-black-1 px-4 py-3 rounded-level-2">
@@ -26,8 +34,10 @@ export const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) =>
           // Correctly display "No Data Available" if original value was null
           const displayValue =
             originalValue === null
-              ? "No Data Available"
-              : `${Math.round(entry.value).toLocaleString()} ton CO₂e`;
+              ? t("companies.tooltip.noDataAvailable")
+              : `${Math.round(entry.value).toLocaleString()} ${t(
+                  "companies.tooltip.tonsCO2e"
+                )}`;
 
           return (
             <div key={entry.dataKey} className="text-sm">

@@ -316,7 +316,6 @@ export function projectEmissions(
 ): Array<{ year: number; trend: number; paris: number }> {
   const startYear = analysis.baseYear;
   const years = endYear - startYear + 1;
-
   // If no emissions, return flat zero projections
   if (!analysis.hasEmissions) {
     return Array.from({ length: years }, (_, i) => ({
@@ -382,7 +381,6 @@ export function projectEmissions(
   return Array.from({ length: years }, (_, i) => {
     const year = startYear + i;
     const dampingFactor = getDampingFactor(i);
-
     // Calculate trend value using damped percentage change
     // Use Math.max to ensure we don't go below zero
     const dampedChange = initialAnnualChange * dampingFactor;

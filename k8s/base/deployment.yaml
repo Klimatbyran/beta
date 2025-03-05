@@ -46,12 +46,5 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
           env:
-            - name: NODE_ENV
-              value: "production"
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-      volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config
+            - name: VITE_NODE_ENV
+              value: "staging"

@@ -7,8 +7,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
-import { EmissionsComparison } from "./EmissionsComparison";
 import type { CompanyDetails, ReportingPeriod } from "@/types/company";
+import { useTranslation } from "react-i18next";
+import { useScreenSize } from "@/hooks/useScreenSize";
+import { useState } from "react";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -25,11 +27,15 @@ export function CompanyOverview({
   onYearSelect,
   selectedYear,
 }: CompanyOverviewProps) {
+  const { t } = useTranslation();
+  const isMobile = useScreenSize();
+  const [showMore, setShowMore] = useState(false);
+
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   const sectorName =
     company.industry?.industryGics?.sv?.sectorName ||
     company.industry?.industryGics?.en?.sectorName ||
-    "Okänd sektor";
+    t("company.unknownSector");
 
   const yearOverYearChange =
     previousPeriod && selectedPeriod.emissions?.calculatedTotalEmissions
@@ -48,16 +54,46 @@ export function CompanyOverview({
       <div className="flex flex-col md:flex-row items-start justify-between mb-12">
         <div className="space-y-4 w-full">
           <div className="flex flex-wrap items-center gap-4">
-            <Text variant="display" className="text-4xl md:text-3xl sm:text-2xl">
+            <Text
+              variant="display"
+              className="text-4xl md:text-3xl sm:text-2xl"
+            >
               {company.name}
             </Text>
           </div>
-          <Text variant="body" className="text-lg md:text-base sm:text-sm max-w-3xl">
-            {company.description}
-          </Text>
+          {isMobile ? (
+            <div>
+              <button
+                className="bg-black-1 text-white px-3 py-1 rounded-md mt-1 text-sm"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore
+                  ? t("companies.overview.readLess")
+                  : t("companies.overview.readMore")}
+              </button>
+              {showMore && (
+                <Text
+                  variant="body"
+                  className="text-lg md:text-base sm:text-sm max-w-3xl mt-2"
+                >
+                  {company.description}
+                </Text>
+              )}
+            </div>
+          ) : (
+            <Text
+              variant="body"
+              className="text-lg md:text-base sm:text-sm max-w-3xl"
+            >
+              {company.description}
+            </Text>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-4">
-            <Text variant="body" className="text-grey text-lg md:text-base sm:text-sm">
-              Sektor:
+            <Text
+              variant="body"
+              className="text-grey text-lg md:text-base sm:text-sm"
+            >
+              {t("companies.overview.sector")}:
             </Text>
             <Text variant="body" className="text-lg md:text-base sm:text-sm">
               {sectorName}
@@ -66,10 +102,12 @@ export function CompanyOverview({
           <div className="mt-4 w-full max-w-[180px]">
             <Select value={selectedYear} onValueChange={onYearSelect}>
               <SelectTrigger className="w-full bg-black-1 text-white px-3 py-2 rounded-md">
-                <SelectValue placeholder="Välj år" />
+                <SelectValue placeholder={t("companies.overview.selectYear")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="latest">Senaste året</SelectItem>
+                <SelectItem value="latest">
+                  {t("companies.overview.latestYear")}
+                </SelectItem>
                 {sortedPeriods.map((period) => {
                   const year = new Date(period.endDate)
                     .getFullYear()
@@ -91,22 +129,26 @@ export function CompanyOverview({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         <div>
-          <Text variant="body" className="mb-2 text-lg md:text-base sm:text-sm">
-            Totala utsläpp {periodYear}
+          <Text variant="body" className="mb-2 lg:text-lg md:text-base sm:text-sm">
+            {t("companies.overview.totalEmissions")} {periodYear}
           </Text>
           <div className="flex items-baseline gap-4">
-            <Text className="text-6xl md:text-4xl sm:text-2xl font-light text-orange-2 tracking-tighter leading-none">
+            <Text className="lg:text-6xl md:text-4xl sm:text-3xl font-light text-orange-2 tracking-tighter leading-none">
               {(
                 selectedPeriod.emissions?.calculatedTotalEmissions || 0
               ).toLocaleString("sv-SE")}
-              <span className="text-2xl md:text-lg sm:text-sm ml-2 text-grey">ton CO₂e</span>
+              <span className="lg:text-2xl md:text-lg sm:text-sm ml-2 text-grey">
+                {t("companies.overview.tonsCO2e")}
+              </span>
             </Text>
           </div>
         </div>
 
         <div>
-          <Text className="mb-2 text-lg md:text-base sm:text-sm">Förändring sedan förra året</Text>
-          <Text className="text-6xl md:text-4xl sm:text-2xl font-light tracking-tighter leading-none">
+          <Text className="mb-2 lg:text-lg md:text-base sm:text-sm">
+            {t("companies.overview.changeSinceLastYear")}
+          </Text>
+          <Text className="lg:text-6xl md:text-4xl sm:text-3xl font-light tracking-tighter leading-none">
             {yearOverYearChange !== null ? (
               <span
                 className={
@@ -117,7 +159,9 @@ export function CompanyOverview({
                 {Math.ceil(yearOverYearChange).toLocaleString("sv-SE")}%
               </span>
             ) : (
-              <span className="text-grey">Ingen data</span>
+              <span className="text-grey">
+                {t("companies.overview.noData")}
+              </span>
             )}
           </Text>
         </div>
@@ -126,28 +170,30 @@ export function CompanyOverview({
       <div className="mt-12 bg-black-1 rounded-level-2 p-8 md:p-6 sm:p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Text className="mb-2 text-lg md:text-base sm:text-sm">Omsättning ({periodYear})</Text>
+            <Text className="mb-2 text-lg md:text-base sm:text-sm">
+              {t("companies.overview.turnover")} ({periodYear})
+            </Text>
             <Text className="text-lg md:text-base sm:text-sm">
               {selectedPeriod.economy?.turnover?.value
                 ? `${(selectedPeriod.economy.turnover.value / 1e9).toFixed(
                     1
                   )} mdr ${selectedPeriod.economy.turnover.currency}`
-                : "Ej rapporterat"}
+                : t("company.notReported")}
             </Text>
           </div>
 
           <div>
             <Text className="text-lg md:text-base sm:text-sm mb-2">
-              Antal anställda ({periodYear})
+              {t("companies.overview.employees")} ({periodYear})
             </Text>
             <Text className="text-lg md:text-base sm:text-sm">
               {selectedPeriod.economy?.employees?.value
                 ? selectedPeriod.economy.employees.value.toLocaleString("sv-SE")
-                : "Ej rapporterat"}
+                : t("company.notReported")}
             </Text>
           </div>
 
-          {selectedPeriod.reportURL && (
+          {selectedPeriod?.reportURL && (
             <div className="flex items-end">
               <a
                 href={selectedPeriod.reportURL}
@@ -155,7 +201,7 @@ export function CompanyOverview({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-blue-2 hover:text-blue-1 transition-colors"
               >
-                Läs årsredovisning
+                {t("companies.overview.readAnnualReport")}
                 <ArrowUpRight className="w-4 h-4 sm:w-3 sm:h-3" />
               </a>
             </div>
