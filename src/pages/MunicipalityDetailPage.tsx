@@ -63,7 +63,70 @@ export function MunicipalityDetailPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://klimatkollen.se/municipalities/${id}`} />
         <link rel="canonical" href={`https://klimatkollen.se/municipalities/${id}`} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "GovernmentOrganization",
+            "name": `${municipality.name} kommun`,
+            "description": t("municipalityDetailPage.metaDescription", { 
+              municipality: municipality.name, 
+              emissions: lastYearEmissionsKTon,
+              year: lastYear
+            }),
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": municipality.name,
+              "addressRegion": municipality.region,
+              "addressCountry": "SE"
+            }
+          })}
+        </script>
       </Helmet>
+      
+      {/* SEO-optimized content section - hidden visually but available to search engines */}
+      <div className="sr-only">
+        <h1>{municipality.name} - {t("municipalityDetailPage.parisAgreement")}</h1>
+        <p>
+          {t("municipalityDetailPage.seoText.intro", { 
+            municipality: municipality.name,
+            emissions: lastYearEmissionsKTon,
+            year: lastYear
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.emissionsHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.emissionsText", { 
+            municipality: municipality.name,
+            reduction: municipality.neededEmissionChangePercent.toFixed(1),
+            budget: (municipality.budget / 1000).toFixed(1)
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.climateGoalsHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.climateGoalsText", { 
+            municipality: municipality.name,
+            budgetRunsOut: municipality.budgetRunsOut === "Håller budget" 
+              ? t("municipalityDetailPage.budgetHolds")
+              : municipality.budgetRunsOut
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.consumptionHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.consumptionText", { 
+            municipality: municipality.name,
+            consumption: (municipality.totalConsumptionEmission / 1000).toFixed(1)
+          })}
+        </p>
+        <h2>{t("municipalityDetailPage.seoText.transportHeading")}</h2>
+        <p>
+          {t("municipalityDetailPage.seoText.transportText", { 
+            municipality: municipality.name,
+            bikeMeters: municipality.bicycleMetrePerCapita.toFixed(1),
+            evGrowth: (municipality.electricCarChangePercent * 100).toFixed(1)
+          })}
+        </p>
+      </div>
+      
       <div className="space-y-16 max-w-[1400px] mx-auto">
       <div className="bg-black-2 rounded-level-1 p-8 md:p-16">
         <Text className="text-4xl md:text-8xl">{municipality.name}</Text>
