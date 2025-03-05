@@ -18,6 +18,10 @@ import { getCategoryColor } from "@/lib/constants/emissions";
 import { SECTOR_NAMES } from "@/lib/constants/sectors";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
+import { useScreenSize } from "@/hooks/useScreenSize";
+
+
+
 
 type CompanyCardProps = Pick<
   RankedCompany,
@@ -37,6 +41,7 @@ export function CompanyCard({
   industry,
   reportingPeriods,
 }: CompanyCardProps) {
+  const isMobile = useScreenSize();
   const latestPeriod = reportingPeriods[0];
   const previousPeriod = reportingPeriods[1];
 
@@ -125,7 +130,7 @@ export function CompanyCard({
             <Building2 className="w-6 h-6" />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className={isMobile ? "flex flex-col gap-4" : "grid grid-cols-2 gap-4"}>
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-grey mb-2 text-lg">
               <TrendingDown className="w-4 h-4" />
