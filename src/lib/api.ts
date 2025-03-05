@@ -55,6 +55,7 @@ export async function getMunicipalities() {
     return data || [];
   } catch (error) {
     console.error('Error fetching municipalities:', error);
+    // Return empty array to avoid undefined errors
     return [];
   }
 }

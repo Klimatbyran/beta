@@ -78,12 +78,25 @@ export async function generateSitemap(outputPath: string): Promise<void> {
       // Add municipalities
       const municipalities = await getMunicipalities();
       if (municipalities && municipalities.length > 0) {
-        const municipalityRoutes = municipalities.map(municipality => ({
-          loc: `https://klimatkollen.se/municipalities/${municipality.id}`,
-          lastmod: currentDate,
-          changefreq: 'monthly',
-          priority: '0.6'
-        }));
+        const municipalityRoutes = municipalities
+          .filter(municipality => municipality.name) // Ensure municipality has a name
+          .map(municipality => {
+            // Create a URL-friendly ID from the municipality name
+            const id = municipality.name
+              .toLowerCase()
+              .replace(/[åä]/g, "a")
+              .replace(/[ö]/g, "o")
+              .replace(/[é]/g, "e")
+              .replace(/[\s-]+/g, "-")
+              .replace(/[^a-z0-9-]/g, "");
+              
+            return {
+              loc: `https://klimatkollen.se/municipalities/${id}`,
+              lastmod: currentDate,
+              changefreq: 'monthly',
+              priority: '0.6'
+            };
+          });
         allRoutes.push(...municipalityRoutes);
         console.log(`Added ${municipalityRoutes.length} municipality routes to sitemap`);
       }
