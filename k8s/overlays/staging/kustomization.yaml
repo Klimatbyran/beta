@@ -6,3 +6,4 @@ resources:
 images:
   - name: ghcr.io/klimatbyran/frontend
     newTag: "3.2.1-rc.3" # {"$imagepolicy": "flux-system:frontend-stage:tag"}
+
