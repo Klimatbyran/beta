@@ -17,7 +17,11 @@ function SocialLinks() {
           className="p-2 md:p-3 bg-black-1 rounded-full hover:bg-black-1/80 transition-colors"
           title={title}
         >
-          <Icon className="w-5 h-5 md:w-6 md:h-6" aria-label={title} />
+          {typeof Icon === "string" ? (
+            <img src={Icon} alt={title} className="w-5 h-5 md:w-6 md:h-6" />
+          ) : (
+            <Icon className="w-5 h-5 md:w-6 md:h-6" aria-label={title} />
+          )}
         </a>
       ))}
     </div>

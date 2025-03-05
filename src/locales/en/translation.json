@@ -36,7 +36,7 @@
       "company": {
         "reduceEmissions": "reducing emissions",
         "scope3Emissions": "scope 3 emissions",
-        "meetParisAgreement": "meet the Paris Agreement"
+        "meetParisAgreement": "meeting the Paris Agreement"
       },
       "municipality": {
         "reduceEmissions": "reducing emissions",
@@ -339,6 +339,10 @@
     "kayla": {
       "role": "Developer",
       "description": "Frontend developer with a passion for sustainability and user-friendly digital solutions. Previously worked as an environmental consultant focused on interpreting regulations and calculating greenhouse gas emissions for companies."
+    },
+    "catharina": {
+      "role": "",
+      "description": ""
     }
   },
   "board": {
