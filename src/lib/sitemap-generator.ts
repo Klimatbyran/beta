@@ -2,6 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { getCompanies, getMunicipalities } from './api.js';
 
+// Set NODE_TLS_REJECT_UNAUTHORIZED to allow self-signed certificates during development
+// This is only used during sitemap generation in Node.js environment
+if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 interface SitemapEntry {
   loc: string;
   lastmod: string;

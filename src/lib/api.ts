@@ -1,7 +1,13 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './api-types';
 
-const baseUrl = '/api';
+// Determine the base URL based on the environment
+// For sitemap generation (Node.js environment), use the public API
+// For browser environment, use the relative path
+const baseUrl = typeof window === 'undefined' 
+  ? 'https://api.klimatkollen.se' 
+  : '/api';
+
 const { GET, POST } = createClient<paths>({ baseUrl });
 
 // Auth API
