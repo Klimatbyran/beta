@@ -104,14 +104,28 @@ export async function generateSitemap(outputPath: string): Promise<void> {
       // Add companies
       const companies = await getCompanies();
       if (companies && companies.length > 0) {
-        const companyRoutes = companies.map(company => ({
-          loc: `https://klimatkollen.se/companies/${company.wikidataId}`,
-          lastmod: currentDate,
-          changefreq: 'monthly',
-          priority: '0.6'
-        }));
+        const companyRoutes = companies.map(company => {
+          // Create a URL-friendly slug from the company name
+          const slug = company.name
+            .toLowerCase()
+            .replace(/[åäá]/g, "a")
+            .replace(/[öô]/g, "o")
+            .replace(/[éèê]/g, "e")
+            .replace(/[üû]/g, "u")
+            .replace(/[ç]/g, "c")
+            .replace(/[ñ]/g, "n")
+            .replace(/[\s-]+/g, "-")
+            .replace(/[^a-z0-9-]/g, "");
+            
+          return {
+            loc: `https://klimatkollen.se/foretag/${slug}-${company.wikidataId}`,
+            lastmod: currentDate,
+            changefreq: 'monthly',
+            priority: '0.6'
+          };
+        });
         allRoutes.push(...companyRoutes);
-        console.log(`Added ${companyRoutes.length} company routes to sitemap`);
+        console.log(`Added ${companyRoutes.length} company routes with slugs to sitemap`);
       }
     } catch (error) {
       console.error('Error fetching dynamic routes:', error);

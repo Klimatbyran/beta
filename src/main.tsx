@@ -39,6 +39,10 @@ const router = createBrowserRouter([
         element: <CompanyDetailPage />,
       },
       {
+        path: "/foretag/:slug-:id",
+        element: <CompanyDetailPage />,
+      },
+      {
         path: "/municipalities",
         element: <MunicipalitiesPage />,
       },

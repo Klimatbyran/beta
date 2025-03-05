@@ -9,8 +9,9 @@ import { Helmet } from "react-helmet-async";
 
 export function CompanyDetailPage() {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
-  const { company, loading, error } = useCompanyDetails(id!);
+  const { id, slug } = useParams<{ id: string; slug?: string }>();
+  const actualId = id?.startsWith('Q') ? id : id;
+  const { company, loading, error } = useCompanyDetails(actualId!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
   
   useEffect(() => {
@@ -81,8 +82,8 @@ export function CompanyDetailPage() {
           industry: company.industry?.industryGics?.sv?.sectorName || t("companyDetailPage.unknownIndustry")
         })} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://klimatkollen.se/companies/${id}`} />
-        <link rel="canonical" href={`https://klimatkollen.se/companies/${id}`} />
+        <meta property="og:url" content={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${actualId}`} />
+        <link rel="canonical" href={`https://klimatkollen.se/foretag/${createSlug(company.name)}-${actualId}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
