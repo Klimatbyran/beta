@@ -14,10 +14,10 @@ import { useEffect } from 'react';
 
 export function AppRoutes() {
   const { currentLanguage } = useLanguage();
-  
+
   // Define base path based on language
-  const basePath = currentLanguage === 'sv' ? '' : '/en';
-  
+  const basePath = currentLanguage === "sv" ? "" : "/en";
+
   // Log for debugging
   useEffect(() => {
     console.log(`Current language: ${currentLanguage}, base path: ${basePath}`);
@@ -28,21 +28,30 @@ export function AppRoutes() {
       {/* Root path - matches both / and /en */}
       <Route path={`${basePath}`} element={<LandingPage />} />
       <Route path={`${basePath}/`} element={<LandingPage />} />
-      
+
       {/* Companies routes */}
       <Route path={`${basePath}/companies`} element={<CompaniesPage />} />
-      <Route path={`${basePath}/companies/:id`} element={<CompanyDetailPage />} />
-      <Route path={`${basePath}/companies/:id/:slug`} element={<CompanyDetailPage />} />
-      
-      {/* Special Swedish route for companies */}
-      {currentLanguage === 'sv' && (
-        <Route path="/foretag/:slug-:id" element={<CompanyDetailPage />} />
-      )}
-      
+      <Route
+        path={`${basePath}/companies/:id`}
+        element={<CompanyDetailPage />}
+      />
+      <Route
+        path={`${basePath}/companies/:id/:slug`}
+        element={<CompanyDetailPage />}
+      />
+
+      <Route path="/foretag/:slug-:id" element={<CompanyDetailPage />} />
+
       {/* Municipalities routes */}
-      <Route path={`${basePath}/municipalities`} element={<MunicipalitiesPage />} />
-      <Route path={`${basePath}/municipalities/:id`} element={<MunicipalityDetailPage />} />
-      
+      <Route
+        path={`${basePath}/municipalities`}
+        element={<MunicipalitiesPage />}
+      />
+      <Route
+        path={`${basePath}/municipalities/:id`}
+        element={<MunicipalityDetailPage />}
+      />
+
       {/* Other pages */}
       <Route path={`${basePath}/about`} element={<AboutPage />} />
       <Route path={`${basePath}/methodology`} element={<MethodsPage />} />

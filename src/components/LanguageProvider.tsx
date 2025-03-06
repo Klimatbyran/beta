@@ -1,7 +1,17 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { detectLanguageFromPath, getLanguageUrl, SupportedLanguage } from '@/lib/languageDetection';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import {
+  detectLanguageFromPath,
+  getLanguageUrl,
+  SupportedLanguage,
+} from "@/lib/languageDetection";
 
 // Create context for language
 interface LanguageContextType {
@@ -11,7 +21,7 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  currentLanguage: 'sv',
+  currentLanguage: "sv",
   changeLanguage: () => {},
   getLocalizedPath: (path) => path,
 });
@@ -26,7 +36,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   const { i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('sv');
+  const [currentLanguage, setCurrentLanguage] =
+    useState<SupportedLanguage>("sv");
 
   // Detect language from URL on initial load and route changes
   useEffect(() => {
@@ -40,11 +51,15 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   // Change language and navigate to the localized URL
   const changeLanguage = (lang: SupportedLanguage) => {
     if (lang === currentLanguage) return;
-    
-    const newPath = getLanguageUrl(location.pathname, lang);
-    setCurrentLanguage(lang);
+
+    // Force language change in i18n first
     i18n.changeLanguage(lang);
-    navigate(newPath);
+    setCurrentLanguage(lang);
+
+    // Then handle URL navigation with window.location for a hard navigation
+    const newPath = getLanguageUrl(location.pathname, lang);
+    console.log("LanguageProvider: Navigating to:", newPath);
+    window.location.href = newPath;
   };
 
   // Get localized path for a given route
@@ -53,7 +68,9 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   };
 
   return (
-    <LanguageContext.Provider value={{ currentLanguage, changeLanguage, getLocalizedPath }}>
+    <LanguageContext.Provider
+      value={{ currentLanguage, changeLanguage, getLocalizedPath }}
+    >
       {children}
     </LanguageContext.Provider>
   );

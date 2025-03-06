@@ -38,9 +38,11 @@ function PartnerLogos() {
 
 export function Footer() {
   const { t } = useTranslation();
-  const { getAuthUrl, isAuthentificated, parseToken, logout } = useAuth()
-  const userinfo = parseToken();
-  const navigate = useNavigate()
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  // Check if parseToken exists before calling it
+  const userinfo = auth.parseToken ? auth.parseToken() : null;
 
   return (
     <footer className="bg-black-2 py-4 md:py-8">
@@ -89,27 +91,43 @@ export function Footer() {
           >
             {t("footer.ccBySa")}
           </a>
-          {!isAuthentificated() && (
-            <a onClick={() => {window.location.href = getAuthUrl()}} className="hover:text-white transition-colors cursor-pointer">
+          {auth.isAuthentificated && !auth.isAuthentificated() && (
+            <a
+              onClick={() => {
+                window.location.href = auth.getAuthUrl
+                  ? auth.getAuthUrl()
+                  : "#";
+              }}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
               Login
             </a>
           )}
-          { isAuthentificated() && (
-            <a onClick={() => {logout(); navigate("/")}} className="hover:text-white cursor-pointer transition-colors">
-              Logout
-            </a>    
-          )}     
-          {isAuthentificated() && (
-            <div className='hover:text-white ms-auto flex items-center'>
+          {auth.isAuthentificated &&
+            auth.isAuthentificated() &&
+            auth.logout && (
+              <a
+                onClick={() => {
+                  auth.logout();
+                  navigate("/");
+                }}
+                className="hover:text-white cursor-pointer transition-colors"
+              >
+                Logout
+              </a>
+            )}
+          {auth.isAuthentificated && auth.isAuthentificated() && userinfo && (
+            <div className="hover:text-white ms-auto flex items-center">
               <span>Välkommen, {userinfo?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">
-                <AvatarImage className='w-[45px] h-[45px] border border-grey rounded-full' src={userinfo!.githubImageUrl || ""} />
-                <AvatarFallback>
-                  {userinfo?.name ?? ""}
-                </AvatarFallback>
+                <AvatarImage
+                  className="w-[45px] h-[45px] border border-grey rounded-full"
+                  src={userinfo.githubImageUrl || ""}
+                />
+                <AvatarFallback>{userinfo?.name ?? ""}</AvatarFallback>
               </Avatar>
             </div>
-          )}     
+          )}
         </div>
       </div>
     </footer>

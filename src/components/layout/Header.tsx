@@ -12,7 +12,6 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { NewsletterPopover } from "../NewsletterPopover";
-import { useScreenSize } from "@/hooks/useScreenSize";
 import { useLanguage } from "../LanguageProvider";
 
 export function Header() {
@@ -27,13 +26,17 @@ export function Header() {
     <div className={cn("flex items-center gap-2", className)}>
       <button
         onClick={() => changeLanguage("en")}
-        className={cn(currentLanguage === "en" && "bg-black-1 rounded-full px-1")}
+        className={cn(
+          currentLanguage === "en" && "bg-black-1 rounded-full px-1"
+        )}
       >
         🇬🇧
       </button>
       <button
         onClick={() => changeLanguage("sv")}
-        className={cn(currentLanguage === "sv" && "bg-black-1 rounded-full px-1")}
+        className={cn(
+          currentLanguage === "sv" && "bg-black-1 rounded-full px-1"
+        )}
       >
         🇸🇪
       </button>

@@ -3,43 +3,41 @@
  */
 
 // Supported languages
-export const SUPPORTED_LANGUAGES = ['sv', 'en'] as const;
-export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
+export const SUPPORTED_LANGUAGES = ["sv", "en"] as const;
+export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 /**
  * Detect browser language from navigator
  * @returns The detected language code or default language
  */
 export function detectBrowserLanguage(): SupportedLanguage {
-  if (typeof navigator === 'undefined') return 'sv'; // Default for SSR
+  if (typeof navigator === "undefined") return "sv"; // Default for SSR
 
   // Get browser language
-  const browserLang = navigator.language.split('-')[0].toLowerCase();
-  
+  const browserLang = navigator.language.split("-")[0].toLowerCase();
+
   // Check if browser language is supported
   if (SUPPORTED_LANGUAGES.includes(browserLang as SupportedLanguage)) {
     return browserLang as SupportedLanguage;
   }
-  
+
   // Default to Swedish
-  return 'sv';
+  return "sv";
 }
 
 /**
  * Detect language from URL path
  * @param path Current URL path
- * @returns The detected language code or null if not found
+ * @returns The detected language code or default language
  */
-export function detectLanguageFromPath(path: string): SupportedLanguage | null {
-  // Check if path starts with a language code
-  const pathParts = path.split('/').filter(Boolean);
-  const firstPart = pathParts[0];
-  
-  if (SUPPORTED_LANGUAGES.includes(firstPart as SupportedLanguage)) {
-    return firstPart as SupportedLanguage;
+export function detectLanguageFromPath(path: string): SupportedLanguage {
+  // Check if path starts with /en
+  if (path.startsWith("/en")) {
+    return "en";
   }
-  
-  return null;
+
+  // Default to Swedish for all other paths
+  return "sv";
 }
 
 /**
@@ -48,22 +46,28 @@ export function detectLanguageFromPath(path: string): SupportedLanguage | null {
  * @param language Target language
  * @returns URL with language prefix
  */
-export function getLanguageUrl(path: string, language: SupportedLanguage): string {
-  // Remove any existing language prefix
-  const currentLanguage = detectLanguageFromPath(path);
-  let cleanPath = path;
-  
-  if (currentLanguage) {
-    cleanPath = '/' + path.split('/').slice(2).join('/');
+export function getLanguageUrl(
+  path: string,
+  language: SupportedLanguage
+): string {
+  // For English
+  if (language === "en") {
+    // If already has /en prefix, return as is
+    if (path.startsWith("/en")) {
+      return path;
+    }
+    // Add /en prefix
+    return `/en${path === "/" ? "" : path}`;
   }
-  
-  // Default language (Swedish) doesn't need a prefix
-  if (language === 'sv') {
-    return cleanPath || '/';
+
+  // For Swedish
+  if (path.startsWith("/en")) {
+    // Remove /en prefix
+    const newPath = path.substring(3);
+    return newPath || "/";
   }
-  
-  // Add language prefix for non-default languages
-  return `/${language}${cleanPath}`;
+
+  return path;
 }
 
 /**
@@ -73,13 +77,29 @@ export function getLanguageUrl(path: string, language: SupportedLanguage): strin
  */
 export function isSearchBot(userAgent: string): boolean {
   const botPatterns = [
-    'googlebot', 'bingbot', 'yandexbot', 'duckduckbot', 'slurp',
-    'baiduspider', 'facebookexternalhit', 'twitterbot', 'rogerbot',
-    'linkedinbot', 'embedly', 'quora link preview', 'showyoubot',
-    'outbrain', 'pinterest', 'slackbot', 'vkshare', 'w3c_validator',
-    'crawler', 'spider', 'bot'
+    "googlebot",
+    "bingbot",
+    "yandexbot",
+    "duckduckbot",
+    "slurp",
+    "baiduspider",
+    "facebookexternalhit",
+    "twitterbot",
+    "rogerbot",
+    "linkedinbot",
+    "embedly",
+    "quora link preview",
+    "showyoubot",
+    "outbrain",
+    "pinterest",
+    "slackbot",
+    "vkshare",
+    "w3c_validator",
+    "crawler",
+    "spider",
+    "bot",
   ];
-  
+
   const lowerCaseUA = userAgent.toLowerCase();
-  return botPatterns.some(pattern => lowerCaseUA.includes(pattern));
+  return botPatterns.some((pattern) => lowerCaseUA.includes(pattern));
 }
