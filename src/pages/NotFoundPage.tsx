@@ -2,9 +2,11 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { PageSEO } from "@/components/SEO/PageSEO";
 import { Text } from "@/components/ui/text";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export function NotFoundPage() {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
 
   // Prepare SEO data
   const canonicalUrl = "https://klimatkollen.se/404";
@@ -18,6 +20,9 @@ export function NotFoundPage() {
     description: pageDescription,
     url: canonicalUrl,
   };
+
+  // Use the current language for any links on the 404 page
+  const homePath = `/${currentLanguage}/`;
 
   return (
     <>
@@ -36,7 +41,7 @@ export function NotFoundPage() {
         </Text>
         <Text className="mb-8 max-w-md">{t("notFoundPage.description")}</Text>
         <Link
-          to="/"
+          to={homePath}
           className="px-6 py-3 bg-blue-5 text-white rounded-full hover:bg-blue-4 transition-colors"
         >
           {t("notFoundPage.backToHome")}

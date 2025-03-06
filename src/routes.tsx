@@ -11,6 +11,7 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { useLanguage } from "./components/LanguageProvider";
 import { useEffect } from "react";
+import { LanguageRedirect } from "@/components/LanguageRedirect";
 
 export function AppRoutes() {
   const { currentLanguage } = useLanguage();
@@ -25,6 +26,9 @@ export function AppRoutes() {
 
   return (
     <Routes>
+      {/* Language redirect for non-prefixed routes */}
+      <Route path="*" element={<LanguageRedirect />} />
+
       {/* Redirect root path to Swedish version */}
       <Route path="/" element={<Navigate to="/sv/" replace />} />
 
@@ -43,7 +47,10 @@ export function AppRoutes() {
         element={<CompanyDetailPage />}
       />
 
-      <Route path={`${basePath}/foretag/:slug-:id`} element={<CompanyDetailPage />} />
+      <Route
+        path={`${basePath}/foretag/:slug-:id`}
+        element={<CompanyDetailPage />}
+      />
 
       {/* Municipalities routes */}
       <Route
@@ -64,8 +71,8 @@ export function AppRoutes() {
       {/* Error pages */}
       <Route path={`${basePath}/error/:code`} element={<ErrorPage />} />
 
-      {/* Catch-all route */}
-      <Route path="*" element={<NotFoundPage />} />
+      {/* This catch-all should now only handle invalid routes */}
+      <Route path={`${basePath}/*`} element={<NotFoundPage />} />
     </Routes>
   );
 }
