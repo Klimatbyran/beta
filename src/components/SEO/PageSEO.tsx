@@ -41,7 +41,7 @@ export function PageSEO({
           </script>
         )}
       </Helmet>
-      
+
       {/* Hidden SEO content for search engines */}
       {children && <div className="sr-only">{children}</div>}
     </>

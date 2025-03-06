@@ -16,7 +16,7 @@ import { useLanguage } from "../LanguageProvider";
 
 export function Header() {
   const { t } = useTranslation();
-  const { currentLanguage, changeLanguage, getLocalizedPath } = useLanguage();
+  const { currentLanguage, changeLanguage } = useLanguage();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);

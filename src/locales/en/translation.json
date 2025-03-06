@@ -19,11 +19,6 @@
     "internationalLicense": "International License",
     "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
   },
-  "notFound": {
-    "title": "404",
-    "message": "Oops! Page not found.",
-    "goHome": "Go back to homepage"
-  },
   "newsletter": {
     "subscribe": "Subscribe to our newsletter",
     "description": "Stay informed with our newsletter—get the latest updates on emissions delivered straight to your inbox.",

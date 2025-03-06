@@ -19,11 +19,6 @@
     "internationalLicense": "International license",
     "ccBySa": "CC BY-SA - Attribution-ShareAlike 4.0"
   },
-  "notFound": {
-    "title": "404",
-    "message": "Oops! Sidan hittades inte.",
-    "goHome": "Tillbaka till startsidan"
-  },
   "newsletter": {
     "subscribe": "Prenumerera på vårt nyhetsbrev",
     "emailPlaceholder": "Din e-postadress",

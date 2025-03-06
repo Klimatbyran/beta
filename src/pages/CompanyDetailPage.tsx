@@ -15,7 +15,7 @@ export function CompanyDetailPage() {
   // It's either directly from /companies/:id or extracted from /foretag/:slug-:id
   const { company, loading, error } = useCompanyDetails(id!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -72,34 +72,42 @@ export function CompanyDetailPage() {
 
   // Get the latest reporting period for SEO content
   const latestPeriod = sortedPeriods[0];
-  const latestYear = latestPeriod ? new Date(latestPeriod.endDate).getFullYear() : new Date().getFullYear();
-  
+  const latestYear = latestPeriod
+    ? new Date(latestPeriod.endDate).getFullYear()
+    : new Date().getFullYear();
+
   // Calculate total emissions for SEO content
   const totalEmissions = latestPeriod?.emissions?.calculatedTotalEmissions;
-  const formattedEmissions = totalEmissions 
-    ? (totalEmissions >= 1000 
-        ? (totalEmissions / 1000).toFixed(1) + ' tusen' 
-        : totalEmissions.toFixed(1))
-    : 'N/A';
-  
+  const formattedEmissions = totalEmissions
+    ? totalEmissions >= 1000
+      ? (totalEmissions / 1000).toFixed(1) + " tusen"
+      : totalEmissions.toFixed(1)
+    : "N/A";
+
   // Get industry for SEO content
-  const industry = company.industry?.industryGics?.sv?.sectorName || t("companyDetailPage.unknownIndustry");
+  const industry =
+    company.industry?.industryGics?.sv?.sectorName ||
+    t("companyDetailPage.unknownIndustry");
 
   // Prepare SEO data
-  const canonicalUrl = `https://klimatkollen.se/foretag/${createSlug(company.name)}-${id}`;
-  const pageTitle = `${company.name} - ${t("companyDetailPage.metaTitle")} - Klimatkollen`;
-  const pageDescription = t("companyDetailPage.metaDescription", { 
+  const canonicalUrl = `https://klimatkollen.se/foretag/${createSlug(
+    company.name
+  )}-${id}`;
+  const pageTitle = `${company.name} - ${t(
+    "companyDetailPage.metaTitle"
+  )} - Klimatkollen`;
+  const pageDescription = t("companyDetailPage.metaDescription", {
     company: company.name,
-    industry: industry
+    industry: industry,
   });
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": company.name,
-    "description": company.description,
-    "url": canonicalUrl,
-    "industry": industry
+    name: company.name,
+    description: company.description,
+    url: canonicalUrl,
+    industry: industry,
   };
 
   return (
@@ -110,34 +118,36 @@ export function CompanyDetailPage() {
         canonicalUrl={canonicalUrl}
         structuredData={structuredData}
       >
-        <h1>{company.name} - {t("companyDetailPage.seoText.climateData")}</h1>
+        <h1>
+          {company.name} - {t("companyDetailPage.seoText.climateData")}
+        </h1>
         <p>
-          {t("companyDetailPage.seoText.intro", { 
+          {t("companyDetailPage.seoText.intro", {
             company: company.name,
-            industry: industry
+            industry: industry,
           })}
         </p>
         <h2>{t("companyDetailPage.seoText.emissionsHeading")}</h2>
         <p>
-          {t("companyDetailPage.seoText.emissionsText", { 
+          {t("companyDetailPage.seoText.emissionsText", {
             company: company.name,
             emissions: formattedEmissions,
-            year: latestYear
+            year: latestYear,
           })}
         </p>
         <h2>{t("companyDetailPage.seoText.industryHeading")}</h2>
         <p>
-          {t("companyDetailPage.seoText.industryText", { 
+          {t("companyDetailPage.seoText.industryText", {
             company: company.name,
-            industry: industry
+            industry: industry,
           })}
         </p>
         {company.goals && company.goals.length > 0 && (
           <>
             <h2>{t("companyDetailPage.seoText.goalsHeading")}</h2>
             <p>
-              {t("companyDetailPage.seoText.goalsText", { 
-                company: company.name
+              {t("companyDetailPage.seoText.goalsText", {
+                company: company.name,
               })}
             </p>
           </>
@@ -146,25 +156,25 @@ export function CompanyDetailPage() {
           <>
             <h2>{t("companyDetailPage.seoText.initiativesHeading")}</h2>
             <p>
-              {t("companyDetailPage.seoText.initiativesText", { 
-                company: company.name
+              {t("companyDetailPage.seoText.initiativesText", {
+                company: company.name,
               })}
             </p>
           </>
         )}
       </PageSEO>
-      
-      <div className="space-y-16 max-w-[1400px] mx-auto">
-      <CompanyOverview
-        company={company}
-        selectedPeriod={selectedPeriod}
-        previousPeriod={previousPeriod}
-        onYearSelect={setSelectedYear}
-        selectedYear={selectedYear}
-      />
 
-      <CompanyHistory company={company} />
-      {/* <CompanyScope3
+      <div className="space-y-16 max-w-[1400px] mx-auto">
+        <CompanyOverview
+          company={company}
+          selectedPeriod={selectedPeriod}
+          previousPeriod={previousPeriod}
+          onYearSelect={setSelectedYear}
+          selectedYear={selectedYear}
+        />
+
+        <CompanyHistory company={company} />
+        {/* <CompanyScope3
         emissions={selectedPeriod.emissions!}
         year={new Date(selectedPeriod.endDate).getFullYear()}
         isRealEstate={company.industry?.industryGics?.sectorCode === "60"}
