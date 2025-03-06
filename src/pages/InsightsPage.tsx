@@ -37,7 +37,6 @@ function BlogMeta({
         <span aria-label="Read Time">{readTime}</span>
       </div>
       </div>
-    </>
   );
 }
 
