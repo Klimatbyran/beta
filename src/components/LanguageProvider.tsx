@@ -58,8 +58,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 
     // Then handle URL navigation with window.location for a hard navigation
     const newPath = getLanguageUrl(location.pathname, lang);
-    console.log("LanguageProvider: Navigating to:", newPath);
-    window.location.href = newPath;
+    navigate(newPath);
   };
 
   // Get localized path for a given route

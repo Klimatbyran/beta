@@ -18,15 +18,15 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: (
-      <Layout>
-        <LanguageProvider>
+      <LanguageProvider>
+        <Layout>
           <ToastProvider>
             <AuthProvider>
               <AppRoutes />
             </AuthProvider>
           </ToastProvider>
-        </LanguageProvider>
-      </Layout>
+        </Layout>
+      </LanguageProvider>
     ),
   },
 ]);
