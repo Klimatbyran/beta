@@ -29,9 +29,6 @@ export function AppRoutes() {
       {/* Language redirect for non-prefixed routes */}
       <Route path="*" element={<LanguageRedirect />} />
 
-      {/* Redirect root path to Swedish version */}
-      <Route path="/" element={<Navigate to="/sv/" replace />} />
-
       {/* Root path - matches both /sv and /en */}
       <Route path={`${basePath}`} element={<LandingPage />} />
       <Route path={`${basePath}/`} element={<LandingPage />} />
