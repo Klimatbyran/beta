@@ -8,6 +8,7 @@ import { AboutPage } from './pages/AboutPage';
 import { MethodsPage } from './pages/MethodsPage';
 import { InsightsPage } from './pages/InsightsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { ErrorPage } from './pages/ErrorPage';
 import { useLanguage } from './components/LanguageProvider';
 import { useEffect } from 'react';
 
@@ -47,6 +48,9 @@ export function AppRoutes() {
       <Route path={`${basePath}/methodology`} element={<MethodsPage />} />
       <Route path={`${basePath}/insights`} element={<InsightsPage />} />
       <Route path={`${basePath}/insights/:slug`} element={<InsightsPage />} />
+      
+      {/* Error pages */}
+      <Route path={`${basePath}/error/:code`} element={<ErrorPage />} />
       
       {/* Catch-all route */}
       <Route path="*" element={<NotFoundPage />} />
