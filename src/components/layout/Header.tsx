@@ -54,16 +54,15 @@ export function Header() {
     {
       label: t("header.companies"),
       icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
-      path: "/companies",
+      path: `${currentLanguage}/companies`,
     },
     {
       label: t("header.municipalities"),
       icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
-      path: "/municipalities",
+      path: `${currentLanguage}/municipalities`,
     },
-    { path: "/about", label: t("header.about") },
-    { path: "/insights", label: t("header.insights") },
-    { path: "/methodology", label: t("header.methodology") },
+    { path: `${currentLanguage}/about`, label: t("header.about") },
+    { path: `${currentLanguage}/insights`, label: t("header.insights") },
   ];
 
   return (

@@ -43,7 +43,7 @@ export function AppRoutes() {
         element={<CompanyDetailPage />}
       />
 
-      <Route path="/foretag/:slug-:id" element={<CompanyDetailPage />} />
+      <Route path={`${basePath}/foretag/:slug-:id`} element={<CompanyDetailPage />} />
 
       {/* Municipalities routes */}
       <Route
