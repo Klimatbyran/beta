@@ -15,7 +15,7 @@ export function MunicipalityDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { municipality, loading, error } = useMunicipalityDetails(id || "");
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -39,32 +39,28 @@ export function MunicipalityDetailPage() {
     ? (lastYearEmissions.value / 1000).toFixed(1)
     : "N/A";
 
-  const lastYearEmissions = municipality.approximatedHistoricalEmission.at(-1);
-  const lastYear = lastYearEmissions?.year;
-  const lastYearEmissionsKTon = lastYearEmissions
-    ? (lastYearEmissions.value / 1000).toFixed(1)
-    : "N/A";
-
   // Prepare SEO data
   const canonicalUrl = `https://klimatkollen.se/municipalities/${id}`;
-  const pageTitle = `${municipality.name} - ${t("municipalityDetailPage.metaTitle")} - Klimatkollen`;
-  const pageDescription = t("municipalityDetailPage.metaDescription", { 
-    municipality: municipality.name, 
+  const pageTitle = `${municipality.name} - ${t(
+    "municipalityDetailPage.metaTitle"
+  )} - Klimatkollen`;
+  const pageDescription = t("municipalityDetailPage.metaDescription", {
+    municipality: municipality.name,
     emissions: lastYearEmissionsKTon,
-    year: lastYear
+    year: lastYear,
   });
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "GovernmentOrganization",
-    "name": `${municipality.name} kommun`,
-    "description": pageDescription,
-    "address": {
+    name: `${municipality.name} kommun`,
+    description: pageDescription,
+    address: {
       "@type": "PostalAddress",
-      "addressLocality": municipality.name,
-      "addressRegion": municipality.region,
-      "addressCountry": "SE"
-    }
+      addressLocality: municipality.name,
+      addressRegion: municipality.region,
+      addressCountry: "SE",
+    },
   };
 
   return (
@@ -75,188 +71,201 @@ export function MunicipalityDetailPage() {
         canonicalUrl={canonicalUrl}
         structuredData={structuredData}
       >
-        <h1>{municipality.name} - {t("municipalityDetailPage.parisAgreement")}</h1>
+        <h1>
+          {municipality.name} - {t("municipalityDetailPage.parisAgreement")}
+        </h1>
         <p>
-          {t("municipalityDetailPage.seoText.intro", { 
+          {t("municipalityDetailPage.seoText.intro", {
             municipality: municipality.name,
             emissions: lastYearEmissionsKTon,
-            year: lastYear
+            year: lastYear,
           })}
         </p>
         <h2>{t("municipalityDetailPage.seoText.emissionsHeading")}</h2>
         <p>
-          {t("municipalityDetailPage.seoText.emissionsText", { 
+          {t("municipalityDetailPage.seoText.emissionsText", {
             municipality: municipality.name,
             reduction: municipality.neededEmissionChangePercent.toFixed(1),
-            budget: (municipality.budget / 1000).toFixed(1)
+            budget: (municipality.budget / 1000).toFixed(1),
           })}
         </p>
         <h2>{t("municipalityDetailPage.seoText.climateGoalsHeading")}</h2>
         <p>
-          {t("municipalityDetailPage.seoText.climateGoalsText", { 
+          {t("municipalityDetailPage.seoText.climateGoalsText", {
             municipality: municipality.name,
-            budgetRunsOut: municipality.budgetRunsOut === "Håller budget" 
-              ? t("municipalityDetailPage.budgetHolds")
-              : municipality.budgetRunsOut
+            budgetRunsOut:
+              municipality.budgetRunsOut === "Håller budget"
+                ? t("municipalityDetailPage.budgetHolds")
+                : municipality.budgetRunsOut,
           })}
         </p>
         <h2>{t("municipalityDetailPage.seoText.consumptionHeading")}</h2>
         <p>
-          {t("municipalityDetailPage.seoText.consumptionText", { 
+          {t("municipalityDetailPage.seoText.consumptionText", {
             municipality: municipality.name,
-            consumption: (municipality.totalConsumptionEmission / 1000).toFixed(1)
+            consumption: (municipality.totalConsumptionEmission / 1000).toFixed(
+              1
+            ),
           })}
         </p>
         <h2>{t("municipalityDetailPage.seoText.transportHeading")}</h2>
         <p>
-          {t("municipalityDetailPage.seoText.transportText", { 
+          {t("municipalityDetailPage.seoText.transportText", {
             municipality: municipality.name,
             bikeMeters: municipality.bicycleMetrePerCapita.toFixed(1),
-            evGrowth: (municipality.electricCarChangePercent * 100).toFixed(1)
+            evGrowth: (municipality.electricCarChangePercent * 100).toFixed(1),
           })}
         </p>
       </PageSEO>
-      
+
       <div className="space-y-16 max-w-[1400px] mx-auto">
-      <div className="bg-black-2 rounded-level-1 p-8 md:p-16">
-        <Text className="text-4xl md:text-8xl">{municipality.name}</Text>
-        <Text className="text-grey">{municipality.region}</Text>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 mt-8">
-          <MunicipalityStatCard
-            title={t("municipalityDetailPage.totalEmissions", {
-              year: lastYear,
-            })}
-            value={lastYearEmissionsKTon}
-            unit={t("municipalityDetailPage.thousandTons")}
-            valueClassName="text-orange-2"
-          />
-          <MunicipalityStatCard
-            title={municipality.budgetRunsOut.toString() !== "Håller budget" ? t("municipalityDetailPage.budgetRunsOut") : t("municipalityDetailPage.budgetKept")}
-            value={
-              municipality.budgetRunsOut.toString() === "Håller budget"
-                ? t("municipalityDetailPage.budgetHolds")
-                : municipality.budgetRunsOut.toString()
+        <div className="bg-black-2 rounded-level-1 p-8 md:p-16">
+          <Text className="text-4xl md:text-8xl">{municipality.name}</Text>
+          <Text className="text-grey">{municipality.region}</Text>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 mt-8">
+            <MunicipalityStatCard
+              title={t("municipalityDetailPage.totalEmissions", {
+                year: lastYear,
+              })}
+              value={lastYearEmissionsKTon}
+              unit={t("municipalityDetailPage.thousandTons")}
+              valueClassName="text-orange-2"
+            />
+            <MunicipalityStatCard
+              title={
+                municipality.budgetRunsOut.toString() !== "Håller budget"
+                  ? t("municipalityDetailPage.budgetRunsOut")
+                  : t("municipalityDetailPage.budgetKept")
+              }
+              value={
+                municipality.budgetRunsOut.toString() === "Håller budget"
+                  ? t("municipalityDetailPage.budgetHolds")
+                  : municipality.budgetRunsOut.toString()
+              }
+              valueClassName={
+                municipality.budgetRunsOut === "Håller budget"
+                  ? "text-green-3"
+                  : "text-pink-3"
+              }
+            />
+            <MunicipalityStatCard
+              title={t("municipalityDetailPage.hitNetZero")}
+              value={
+                municipality.hitNetZero === "Aldrig"
+                  ? t("municipalityDetailPage.never")
+                  : municipality.hitNetZero.toString()
+              }
+              valueClassName={cn(
+                municipality.hitNetZero === "Aldrig" ||
+                  new Date(municipality.hitNetZero) > new Date("2050-01-01")
+                  ? "text-pink-3"
+                  : "text-green-3"
+              )}
+            />
+          </div>
+        </div>
+
+        <div className={cn("bg-black-2 rounded-level-1 py-8 md:py-16")}>
+          <div className="px-8 md:px-16">
+            <Text className="text-2xl md:text-4xl">
+              {t("municipalityDetailPage.emissionsDevelopment")}
+            </Text>
+            <Text className="text-grey">
+              {t("municipalityDetailPage.inThousandTons")}
+            </Text>
+          </div>
+          <div className="mt-8 mr-8">
+            <MunicipalityEmissionsGraph projectedData={emissionsData} />
+          </div>
+        </div>
+
+        <MunicipalitySection
+          title={t("municipalityDetailPage.futureEmissions")}
+          items={[
+            {
+              title: t("municipalityDetailPage.annualChangeSince2015"),
+              value: `${municipality.historicalEmissionChangePercent.toFixed(
+                1
+              )}%`,
+              valueClassName: cn(
+                Math.abs(municipality.historicalEmissionChangePercent) >=
+                  municipality.neededEmissionChangePercent
+                  ? "text-green-3"
+                  : "text-pink-3"
+              ),
+            },
+            {
+              title: t("municipalityDetailPage.reductionToMeetParis"),
+              value: `-${municipality.neededEmissionChangePercent.toFixed(1)}%`,
+              valueClassName: "text-green-3",
+            },
+            {
+              title: t("municipalityDetailPage.consumptionEmissionsPerCapita"),
+              value: (municipality.totalConsumptionEmission / 1000).toFixed(1),
+              valueClassName: "text-orange-2",
+            },
+          ]}
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <MunicipalityLinkCard
+            title={t("municipalityDetailPage.climatePlan")}
+            description={
+              municipality.climatePlanYear === "Saknar plan"
+                ? t("municipalityDetailPage.noClimatePlan")
+                : t("municipalityDetailPage.adopted", {
+                    year: municipality.climatePlanYear,
+                  })
             }
-            valueClassName={
-              municipality.budgetRunsOut === "Håller budget"
-                ? "text-green-3"
-                : "text-pink-3"
+            link={
+              municipality.climatePlanLink !== "Saknar plan"
+                ? municipality.climatePlanLink
+                : undefined
             }
-          />
-          <MunicipalityStatCard
-            title={t("municipalityDetailPage.hitNetZero")}
-            value={municipality.hitNetZero === "Aldrig" ? t("municipalityDetailPage.never") : municipality.hitNetZero.toString()}
-            valueClassName={cn(
-              municipality.hitNetZero === "Aldrig" ||
-                new Date(municipality.hitNetZero) > new Date("2050-01-01")
+            descriptionClassName={
+              municipality.climatePlanYear === "Saknar plan"
                 ? "text-pink-3"
                 : "text-green-3"
-            )}
+            }
           />
-        </div>
-      </div>
-
-      <div className={cn("bg-black-2 rounded-level-1 py-8 md:py-16")}>
-        <div className="px-8 md:px-16">
-          <Text className="text-2xl md:text-4xl">
-            {t("municipalityDetailPage.emissionsDevelopment")}
-          </Text>
-          <Text className="text-grey">
-            {t("municipalityDetailPage.inThousandTons")}
-          </Text>
-        </div>
-        <div className="mt-8 mr-8">
-          <MunicipalityEmissionsGraph projectedData={emissionsData} />
-        </div>
-      </div>
-
-      <MunicipalitySection
-        title={t("municipalityDetailPage.futureEmissions")}
-        items={[
-          {
-            title: t("municipalityDetailPage.annualChangeSince2015"),
-            value: `${municipality.historicalEmissionChangePercent.toFixed(
-              1
-            )}%`,
-            valueClassName: cn(
-              Math.abs(municipality.historicalEmissionChangePercent) >=
-                municipality.neededEmissionChangePercent
+          <MunicipalityLinkCard
+            title={t("municipalityDetailPage.procurementRequirements")}
+            description={requirementsInProcurement}
+            link={municipality.procurementLink || undefined}
+            descriptionClassName={
+              municipality.procurementScore === "2"
                 ? "text-green-3"
                 : "text-pink-3"
-            ),
-          },
-          {
-            title: t("municipalityDetailPage.reductionToMeetParis"),
-            value: `-${municipality.neededEmissionChangePercent.toFixed(1)}%`,
-            valueClassName: "text-green-3",
-          },
-          {
-            title: t("municipalityDetailPage.consumptionEmissionsPerCapita"),
-            value: (municipality.totalConsumptionEmission / 1000).toFixed(1),
-            valueClassName: "text-orange-2",
-          },
-        ]}
-      />
+            }
+          />
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <MunicipalityLinkCard
-          title={t("municipalityDetailPage.climatePlan")}
-          description={
-            municipality.climatePlanYear === "Saknar plan"
-              ? t("municipalityDetailPage.noClimatePlan")
-              : t("municipalityDetailPage.adopted", {
-                  year: municipality.climatePlanYear,
-                })
-          }
-          link={
-            municipality.climatePlanLink !== "Saknar plan"
-              ? municipality.climatePlanLink
-              : undefined
-          }
-          descriptionClassName={
-            municipality.climatePlanYear === "Saknar plan"
-              ? "text-pink-3"
-              : "text-green-3"
-          }
+        <MunicipalitySection
+          title={t("municipalityDetailPage.sustainableTransport")}
+          items={[
+            {
+              title: t("municipalityDetailPage.electricCarChange"),
+              value: `${(municipality.electricCarChangePercent * 100).toFixed(
+                1
+              )}%`,
+              valueClassName: "text-orange-2",
+            },
+            {
+              title: t("municipalityDetailPage.electricCarsPerChargePoint"),
+              value: municipality.electricVehiclePerChargePoints
+                ? municipality.electricVehiclePerChargePoints.toFixed(1)
+                : t("municipalityDetailPage.noChargePoints"),
+              valueClassName: municipality.electricVehiclePerChargePoints
+                ? "text-green-3"
+                : "text-pink-3",
+            },
+            {
+              title: t("municipalityDetailPage.bicycleMetrePerCapita"),
+              value: municipality.bicycleMetrePerCapita.toFixed(1),
+              valueClassName: "text-orange-2",
+            },
+          ]}
         />
-        <MunicipalityLinkCard
-          title={t("municipalityDetailPage.procurementRequirements")}
-          description={requirementsInProcurement}
-          link={municipality.procurementLink || undefined}
-          descriptionClassName={
-            municipality.procurementScore === "2"
-              ? "text-green-3"
-              : "text-pink-3"
-          }
-        />
-      </div>
-
-      <MunicipalitySection
-        title={t("municipalityDetailPage.sustainableTransport")}
-        items={[
-          {
-            title: t("municipalityDetailPage.electricCarChange"),
-            value: `${(municipality.electricCarChangePercent * 100).toFixed(
-              1
-            )}%`,
-            valueClassName: "text-orange-2",
-          },
-          {
-            title: t("municipalityDetailPage.electricCarsPerChargePoint"),
-            value: municipality.electricVehiclePerChargePoints
-              ? municipality.electricVehiclePerChargePoints.toFixed(1)
-              : t("municipalityDetailPage.noChargePoints"),
-            valueClassName: municipality.electricVehiclePerChargePoints
-              ? "text-green-3"
-              : "text-pink-3",
-          },
-          {
-            title: t("municipalityDetailPage.bicycleMetrePerCapita"),
-            value: municipality.bicycleMetrePerCapita.toFixed(1),
-            valueClassName: "text-orange-2",
-          },
-        ]}
-      />
       </div>
     </>
   );
