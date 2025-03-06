@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run generate-api && vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run generate-sitemap",
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-api": "npx openapi-typescript http://localhost:3000/api/openapi.json -o src/lib/api-types.ts",
