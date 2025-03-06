@@ -28,15 +28,15 @@ export function detectBrowserLanguage(): SupportedLanguage {
 /**
  * Detect language from URL path
  * @param path Current URL path
- * @returns The detected language code
+ * @returns The detected language code or default language
  */
 export function detectLanguageFromPath(path: string): SupportedLanguage {
   // Check if path starts with /en
   if (path.startsWith("/en")) {
     return "en";
   }
-  
-  // All other paths (including /sv/) are treated as Swedish
+
+  // Default to Swedish for all other paths
   return "sv";
 }
 
@@ -50,30 +50,18 @@ export function getLanguageUrl(
   path: string,
   language: SupportedLanguage
 ): string {
-  // For English
+  // Normalize path by removing any existing language prefix
+  const normalizedPath = path.replace(/^\/(en|sv)/, "");
+
+  // Add language prefix based on the desired language
   if (language === "en") {
-    // If already has /en prefix, return as is
-    if (path.startsWith("/en")) {
-      return path;
-    }
-    // Add /en prefix
-    return `/en${path === "/" ? "" : path}`;
+    return `/en${normalizedPath || "/"}`;
+  } else if (language === "sv") {
+    return `/sv${normalizedPath || "/"}`;
   }
 
-  // For Swedish
-  if (path.startsWith("/en")) {
-    // Remove /en prefix
-    const newPath = path.substring(3);
-    return newPath || "/";
-  }
-  
-  // If path starts with /sv/, remove it
-  if (path.startsWith("/sv")) {
-    const newPath = path.substring(3);
-    return newPath || "/";
-  }
-
-  return path;
+  // Default to the normalized path if language is not recognized
+  return normalizedPath || "/";
 }
 
 /**

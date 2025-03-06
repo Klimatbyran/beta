@@ -5,10 +5,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import "./i18n";
-import AuthProvider from "./contexts/AuthContext";
-import { ToastProvider } from "./contexts/ToastContext";
-import { AppRoutes } from "./routes";
 
+import App from "./App";
 // Import pages and components
 import { Layout } from "./components/layout/Layout";
 import { LanguageProvider } from "./components/LanguageProvider";
@@ -20,11 +18,7 @@ const router = createBrowserRouter([
     element: (
       <LanguageProvider>
         <Layout>
-          <ToastProvider>
-            <AuthProvider>
-              <AppRoutes />
-            </AuthProvider>
-          </ToastProvider>
+          <App />
         </Layout>
       </LanguageProvider>
     ),
