@@ -114,7 +114,7 @@ export function InsightsPage() {
         <PageHeader
           title={t("insightsPage.title")}
           description={t("insightsPage.description")}
-        ></PageHeader>
+        />
         <div className="max-w-[1150px] mx-auto space-y-8">
           {/* Featured Post */}
           {featuredPost && (
