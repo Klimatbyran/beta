@@ -13,7 +13,7 @@ RUN npm ci
 # Copy source files
 COPY . .
 
-# Build the app
+# Build the app (includes sitemap generation)
 RUN npm run build
 
 # Production stage

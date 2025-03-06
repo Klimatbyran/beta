@@ -12,30 +12,31 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { NewsletterPopover } from "../NewsletterPopover";
-import { useScreenSize } from "@/hooks/useScreenSize";
+import { useLanguage } from "../LanguageProvider";
 
 export function Header() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { currentLanguage, changeLanguage } = useLanguage();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
-
   const LanguageButtons = ({ className }: { className?: string }) => (
     <div className={cn("flex items-center gap-2", className)}>
       <button
         onClick={() => changeLanguage("en")}
-        className={cn(i18n.language === "en" && "bg-black-1 rounded-full px-1")}
+        className={cn(
+          currentLanguage === "en" && "bg-black-1 rounded-full px-1"
+        )}
       >
         🇬🇧
       </button>
       <button
         onClick={() => changeLanguage("sv")}
-        className={cn(i18n.language === "sv" && "bg-black-1 rounded-full px-1")}
+        className={cn(
+          currentLanguage === "sv" && "bg-black-1 rounded-full px-1"
+        )}
       >
         🇸🇪
       </button>
@@ -53,16 +54,15 @@ export function Header() {
     {
       label: t("header.companies"),
       icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
-      path: "/companies",
+      path: `${currentLanguage}/companies`,
     },
     {
       label: t("header.municipalities"),
       icon: <BarChart3 className="w-4 h-4" aria-hidden="true" />,
-      path: "/municipalities",
+      path: `${currentLanguage}/municipalities`,
     },
-    { path: "/about", label: t("header.about") },
-    { path: "/insights", label: t("header.insights") },
-    { path: "/methodology", label: t("header.methodology") },
+    { path: `${currentLanguage}/about`, label: t("header.about") },
+    { path: `${currentLanguage}/insights`, label: t("header.insights") },
   ];
 
   return (
