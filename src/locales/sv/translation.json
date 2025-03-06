@@ -586,5 +586,18 @@
       "total": "Totalt",
       "year": "År"
     }
+  },
+  "errorPage": {
+    "title": "Fel",
+    "description": "Ett fel uppstod när din förfrågan behandlades.",
+    "serverTitle": "Serverfel",
+    "serverDescription": "Något gick fel på våra servrar. Försök igen senare eller kontakta support om problemet kvarstår.",
+    "backToHome": "Tillbaka till startsidan",
+    "tryAgain": "Försök igen"
+  },
+  "notFoundPage": {
+    "title": "Sidan hittades inte",
+    "description": "Sidan du letar efter finns inte eller har flyttats.",
+    "backToHome": "Tillbaka till startsidan"
   }
 }
