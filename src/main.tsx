@@ -10,6 +10,8 @@ import App from "./App";
 // Import pages and components
 import { Layout } from "./components/layout/Layout";
 import { LanguageProvider } from "./components/LanguageProvider";
+import { ToastProvider } from "@radix-ui/react-toast";
+import AuthProvider from "./contexts/AuthContext";
 
 // Create router with all routes
 const router = createBrowserRouter([
@@ -17,9 +19,13 @@ const router = createBrowserRouter([
     path: "*",
     element: (
       <LanguageProvider>
-        <Layout>
-          <App />
-        </Layout>
+        <ToastProvider>
+          <AuthProvider>
+            <Layout>
+              <App />
+            </Layout>
+          </AuthProvider>
+        </ToastProvider>
       </LanguageProvider>
     ),
   },

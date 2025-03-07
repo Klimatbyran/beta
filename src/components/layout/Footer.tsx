@@ -91,9 +91,10 @@ export function Footer() {
           >
             {t("footer.ccBySa")}
           </a>
-          {auth.isAuthentificated && !auth.isAuthentificated() && (
+          {!auth.isAuthenticated() && (
             <a
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 window.location.href = auth.getAuthUrl
                   ? auth.getAuthUrl()
                   : "#";
@@ -103,20 +104,18 @@ export function Footer() {
               Login
             </a>
           )}
-          {auth.isAuthentificated &&
-            auth.isAuthentificated() &&
-            auth.logout && (
-              <a
-                onClick={() => {
-                  auth.logout();
-                  navigate("/");
-                }}
-                className="hover:text-white cursor-pointer transition-colors"
-              >
-                Logout
-              </a>
-            )}
-          {auth.isAuthentificated && auth.isAuthentificated() && userinfo && (
+          {auth.isAuthenticated && auth.isAuthenticated() && auth.logout && (
+            <a
+              onClick={() => {
+                auth.logout();
+                navigate("/");
+              }}
+              className="hover:text-white cursor-pointer transition-colors"
+            >
+              Logout
+            </a>
+          )}
+          {auth.isAuthenticated && auth.isAuthenticated() && userinfo && (
             <div className="hover:text-white ms-auto flex items-center">
               <span>Välkommen, {userinfo?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">

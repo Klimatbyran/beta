@@ -8,7 +8,7 @@ export interface AuthContext {
   token: string;
   login: (code: string, state: string) => Promise<boolean>;
   logout: () => void;
-  isAuthentificated: () => boolean;
+  isAuthenticated: () => boolean;
   getAuthUrl: () => string;
   parseToken: () => Token | null;
 }
@@ -16,7 +16,16 @@ export interface AuthContext {
 const AuthContext = createContext<AuthContext>({} as AuthContext);
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context || Object.keys(context).length === 0) {
+    console.error(
+      "❌ useAuth: AuthContext is empty! Ensure AuthProvider wraps your app."
+    );
+    throw new Error(
+      "AuthContext is missing. Did you forget to wrap your app with AuthProvider?"
+    );
+  }
+  return context;
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -44,7 +53,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const isAuthentificated = () => {
+  const isAuthenticated = () => {
     const parsedToken = parseToken();
     if (parsedToken !== null) {
       return parsedToken.exp > Date.now() / 1000;
@@ -69,22 +78,20 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const oauthStateKey = nanoid(5);
     localStorage.setItem(oauthStateKey, oauthState);
 
-    const redirectUri = `${window.location.origin}/auth/callback`;
-    const environment = import.meta.env.VITE_NODE_ENV;
+    const redirectUri = `${window.location.origin}/sv/auth/callback`;
 
     let app_client_id;
-    switch (environment) {
-      case "production":
-        app_client_id = "Ov23liRK6WrVG8jPDU5M";
-        break;
-      case "staging":
-        app_client_id = "Ov23liKHcV6ZlmTZqOtv";
-        break;
-      default:
-        app_client_id = "Ov23liXxnsQCvlF3VVnH";
+    const hostname = window.location.hostname;
+
+    if (hostname.includes("staging")) {
+      app_client_id = "Ov23liKHcV6ZlmTZqOtv";
+    } else if (hostname.includes("klimatkollen.se")) {
+      app_client_id = "Ov23liRK6WrVG8jPDU5M";
+    } else {
+      app_client_id = "Ov23liXxnsQCvlF3VVnH";
     }
 
-    console.log("environment", environment);
+    console.log("OAuth Environment:", hostname, "Client ID:", app_client_id);
 
     return `https://github.com/login/oauth/authorize?client_id=${app_client_id}&redirect_uri=${encodeURIComponent(
       redirectUri
@@ -102,7 +109,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         token,
         login,
         logout,
-        isAuthentificated,
+        isAuthenticated,
         getAuthUrl,
         parseToken,
       }}
