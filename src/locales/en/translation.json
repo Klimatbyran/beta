@@ -576,5 +576,18 @@
       "total": "Total",
       "year": "Year"
     }
+  },
+  "errorPage": {
+    "title": "Error",
+    "description": "An error occurred while processing your request.",
+    "serverTitle": "Server Error",
+    "serverDescription": "Something went wrong on our servers. Please try again later or contact support if the problem persists.",
+    "backToHome": "Back to Home",
+    "tryAgain": "Try Again"
+  },
+  "notFoundPage": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for doesn't exist or has been moved.",
+    "backToHome": "Back to Home"
   }
 }

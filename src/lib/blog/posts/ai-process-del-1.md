@@ -4,8 +4,6 @@ id: "ai-process-del-1"
 
 ## Vad är problemet med klimatdata?
 
-[Screenshot av några av de mest kluriga sidorna i företagens rapportering.]
-
 Inom EU finns det numera lagstiftning (CSRD) för hur företag måste rapportera sina utsläpp, helst enligt GHG-protokollet. Dessa ska rapporteras inom tre olika så kallade scopes. Scope 1 är alla direkta utsläpp från källor som företaget äger eller kontrollerar – det handlar om utsläpp från egna fabriker och fordon. Scope 2 är inköpt energi som el och värme, som kan rapporteras i antingen marknadsbaserad redovisning (där tex solceller minskar utsläppen) eller platsbaserad (där man bara tittar på KWh och tar ett genomsnitt av utsläppen baserad på den platsen per KWh).
 
 Scope 3 är därmed den del som egentligen är mest intressant, då de flesta företag i Sverige har inte sina största utsläpp i sin egen verksamhet. Scope 3 inkluderar alla övriga indirekta utsläpp i företagets värdekedja, dessa delas in i 15 olika kategorier. Volvo tillverkar bilar men köper produkter från underleverantörer som i sin tur har genererat utsläpp. Volvo säljer dessutom bilar som när de köps genererar utsläpp när de används. Men det handlar också om saker som tjänsteresor, anställdas pendling och avfallshantering. Allt detta samlas i vad som kallas Scope 3.
@@ -63,7 +61,7 @@ Därför påbörjar vi just nu en AI-baserad datastudio kring klimatdata. Vårt 
 
 ## Var med och bidra
 
-Om du tycker det här verkar som ett meningsfullt och viktigt projekt så är vi glada för all hjälp vi kan få. Klimatbyrån är en ideell satsning och vi har fått finansiering från Google att fortsätta utforska dessa frågor under 2025. Vi har en Discordserver där vi hjälps åt att bygga – och all källkod ligger på GitHub där vi gärna tar emot PR:s eller issues.
+Om du tycker det här verkar som ett meningsfullt och viktigt projekt så är vi glada för all hjälp vi kan få. Klimatkollen är en ideell satsning och vi har fått finansiering från Google att fortsätta utforska dessa frågor under 2025. Vi har en Discordserver där vi hjälps åt att bygga – och all källkod ligger på GitHub där vi gärna tar emot PR:s eller issues.
 
 Just nu behöver vi hjälp av:
 

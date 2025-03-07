@@ -1,23 +1,10 @@
-import "./i18n";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "./components/layout/Layout";
-import { LandingPage } from "./pages/LandingPage";
-import { CompaniesPage } from "./pages/CompaniesPage";
-import { CompanyDetailPage } from "./pages/CompanyDetailPage";
-import { MunicipalitiesPage } from "./pages/MunicipalitiesPage";
-import { MunicipalityDetailPage } from "./pages/MunicipalityDetailPage";
-import { AboutPage } from "./pages/AboutPage";
-import { InsightsPage } from "./pages/InsightsPage";
-import { BlogDetailPage } from "./pages/BlogDetailPage";
-import { EmissionsTestPage } from "./pages/EmissionsTestPage";
-import { MethodsPage } from "./pages/MethodsPage";
-import { PrivacyPage } from "./pages/PrivacyPage";
 import AuthProvider from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { AuthCallback } from "./pages/AuthCallback";
 import { UnauthorizedErrorPage } from './pages/error/UnauthorizedErrorPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { CompanyEditPage } from './pages/CompanyEditPage';
+import { AppRoutes } from "./routes";
 
 function App() {
   return (
@@ -48,6 +35,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+        <AppRoutes />
       </AuthProvider>
     </ToastProvider>
   );

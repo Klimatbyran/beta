@@ -2,7 +2,7 @@
 
 This is the new version of [klimatkollen.se](https://klimatkollen.se). You can find our legacy code [here](https://github.com/Klimatbyran/klimatkollen).
 
-We are rebuilding our site to be faster, better, and stronger using TypeScript, React, Vite, and Tailwind CSS. This is also where our new UX/UI is implemented
+We are rebuilding our site to be faster, better, and stronger using TypeScript, React, Vite, and Tailwind CSS. This is also where our new UX/UI is implemented.
 
 ## 🚀 Project Structure
 

@@ -1,16 +1,24 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCompanyDetails } from "@/hooks/useCompanyDetails";
 import { CompanyOverview } from "@/components/companies/detail/CompanyOverview";
 import { CompanyHistory } from "@/components/companies/detail/CompanyHistory";
 import { Text } from "@/components/ui/text";
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "@/components/SEO/PageSEO";
+import { createSlug } from "@/lib/utils";
 
 export function CompanyDetailPage() {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
+  const { id, slug } = useParams<{ id: string; slug?: string }>();
+  // The id parameter is always the Wikidata ID (Q-number)
+  // It's either directly from /companies/:id or extracted from /foretag/:slug-:id
   const { company, loading, error } = useCompanyDetails(id!);
   const [selectedYear, setSelectedYear] = useState<string>("latest");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (loading) {
     return (
@@ -62,18 +70,111 @@ export function CompanyDetailPage() {
       ? sortedPeriods[selectedIndex + 1]
       : undefined;
 
-  return (
-    <div className="space-y-16 max-w-[1400px] mx-auto">
-      <CompanyOverview
-        company={company}
-        selectedPeriod={selectedPeriod}
-        previousPeriod={previousPeriod}
-        onYearSelect={setSelectedYear}
-        selectedYear={selectedYear}
-      />
+  // Get the latest reporting period for SEO content
+  const latestPeriod = sortedPeriods[0];
+  const latestYear = latestPeriod
+    ? new Date(latestPeriod.endDate).getFullYear()
+    : new Date().getFullYear();
 
-      <CompanyHistory company={company} />
-      {/* <CompanyScope3
+  // Calculate total emissions for SEO content
+  const totalEmissions = latestPeriod?.emissions?.calculatedTotalEmissions;
+  const formattedEmissions = totalEmissions
+    ? totalEmissions >= 1000
+      ? (totalEmissions / 1000).toFixed(1) + " tusen"
+      : totalEmissions.toFixed(1)
+    : "N/A";
+
+  // Get industry for SEO content
+  const industry =
+    company.industry?.industryGics?.sv?.sectorName ||
+    t("companyDetailPage.unknownIndustry");
+
+  // Prepare SEO data
+  const canonicalUrl = `https://klimatkollen.se/foretag/${createSlug(
+    company.name
+  )}-${id}`;
+  const pageTitle = `${company.name} - ${t(
+    "companyDetailPage.metaTitle"
+  )} - Klimatkollen`;
+  const pageDescription = t("companyDetailPage.metaDescription", {
+    company: company.name,
+    industry: industry,
+  });
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: company.name,
+    description: company.description,
+    url: canonicalUrl,
+    industry: industry,
+  };
+
+  return (
+    <>
+      <PageSEO
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl={canonicalUrl}
+        structuredData={structuredData}
+      >
+        <h1>
+          {company.name} - {t("companyDetailPage.seoText.climateData")}
+        </h1>
+        <p>
+          {t("companyDetailPage.seoText.intro", {
+            company: company.name,
+            industry: industry,
+          })}
+        </p>
+        <h2>{t("companyDetailPage.seoText.emissionsHeading")}</h2>
+        <p>
+          {t("companyDetailPage.seoText.emissionsText", {
+            company: company.name,
+            emissions: formattedEmissions,
+            year: latestYear,
+          })}
+        </p>
+        <h2>{t("companyDetailPage.seoText.industryHeading")}</h2>
+        <p>
+          {t("companyDetailPage.seoText.industryText", {
+            company: company.name,
+            industry: industry,
+          })}
+        </p>
+        {company.goals && company.goals.length > 0 && (
+          <>
+            <h2>{t("companyDetailPage.seoText.goalsHeading")}</h2>
+            <p>
+              {t("companyDetailPage.seoText.goalsText", {
+                company: company.name,
+              })}
+            </p>
+          </>
+        )}
+        {company.initiatives && company.initiatives.length > 0 && (
+          <>
+            <h2>{t("companyDetailPage.seoText.initiativesHeading")}</h2>
+            <p>
+              {t("companyDetailPage.seoText.initiativesText", {
+                company: company.name,
+              })}
+            </p>
+          </>
+        )}
+      </PageSEO>
+
+      <div className="space-y-16 max-w-[1400px] mx-auto">
+        <CompanyOverview
+          company={company}
+          selectedPeriod={selectedPeriod}
+          previousPeriod={previousPeriod}
+          onYearSelect={setSelectedYear}
+          selectedYear={selectedYear}
+        />
+
+        <CompanyHistory company={company} />
+        {/* <CompanyScope3
         emissions={selectedPeriod.emissions!}
         year={new Date(selectedPeriod.endDate).getFullYear()}
         isRealEstate={company.industry?.industryGics?.sectorCode === "60"}
@@ -87,6 +188,7 @@ export function CompanyDetailPage() {
       />
 
       <CompanySectorComparison company={company} /> */}
-    </div>
+      </div>
+    </>
   );
 }
