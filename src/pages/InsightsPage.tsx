@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
 import { PageSEO } from "@/components/SEO/PageSEO";
 import { useEffect } from "react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 // Component for blog metadata (category, date, read time)
 function BlogMeta({
@@ -43,10 +44,11 @@ function BlogMeta({
 // Component for blog post cards
 function BlogCard({ post }: { post: (typeof blogMetadata)[number] }) {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
 
   return (
     <Link
-      to={`/insights/${post.id}`}
+      to={`/${currentLanguage}/insights/${post.id}`}
       className="group bg-black-2 rounded-level-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
     >
       <div className="relative h-36 overflow-hidden">
