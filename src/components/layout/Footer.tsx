@@ -38,6 +38,8 @@ function PartnerLogos() {
 
 export function Footer() {
   const { t } = useTranslation();
+  const { getAuthUrl, isAuthenticated, parseToken, logout } = useAuth()
+  const navigate = useNavigate()
   const auth = useAuth();
   const navigate = useNavigate();
 
