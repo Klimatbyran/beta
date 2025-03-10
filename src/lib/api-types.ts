@@ -1030,6 +1030,7 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
+                                    verified?: boolean;
                                 };
                                 scope2?: {
                                     /** @description Market-based scope 2 emissions */
@@ -1043,6 +1044,7 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
+                                    verified?: boolean;
                                 };
                                 scope3?: {
                                     categories?: {
@@ -1053,6 +1055,7 @@ export interface paths {
                                          * @enum {string}
                                          */
                                         unit?: "tCO2e" | "tCO2";
+                                        verified?: boolean;
                                     }[];
                                     statedTotalEmissions?: {
                                         total: number;
@@ -1061,6 +1064,7 @@ export interface paths {
                                          * @enum {string}
                                          */
                                         unit?: "tCO2e" | "tCO2";
+                                        verified?: boolean;
                                     };
                                 };
                                 biogenic?: {
@@ -1070,6 +1074,7 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
+                                    verified?: boolean;
                                 };
                                 statedTotalEmissions?: {
                                     total: number;
@@ -1078,6 +1083,7 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
+                                    verified?: boolean;
                                 };
                                 scope1And2?: {
                                     total: number;
@@ -1086,16 +1092,19 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     unit?: "tCO2e" | "tCO2";
+                                    verified?: boolean;
                                 };
                             };
                             economy?: {
                                 turnover?: {
                                     value?: number;
                                     currency?: string;
+                                    verified?: boolean;
                                 };
                                 employees?: {
                                     value?: number;
                                     unit?: string;
+                                    verified?: boolean;
                                 };
                             };
                         }[];

@@ -33,7 +33,7 @@ export const blogMetadata: BlogPostMeta[] = [
     title:
       "Så kan AI hjälpa oss förstå företagens klimatdata. Del 1 – Översikt",
     excerpt:
-      "Vi på Klimatbyrån har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!",
+      "Vi på Klimatkollen har spenderat ett år med att bygga en öppen databas över företags klimatpåverkan. Det här är första delen i en serie där jag berättar hur vi använder AI för att automatisera inhämtning och tolkning av klimatdata. Och vi behöver din hjälp!",
     date: "2025-01-20",
     readTime: "8 min",
     category: CategoryEnum.Methodology,
@@ -80,33 +80,35 @@ export const blogMetadata: BlogPostMeta[] = [
     relatedPosts: ["metod", "ai-process-del-1"],
   },
   {
-    id: 'klimatmal',
-    title: 'Analys av riksdagspartiernas klimatmål – sex av åtta partier missar helt Parisavtalets 1,5-gradersmål',
-    excerpt: '',
-    date: '2022-09-01',
-    readTime: '5 min',
+    id: "klimatmal",
+    title:
+      "Analys av riksdagspartiernas klimatmål – sex av åtta partier missar helt Parisavtalets 1,5-gradersmål",
+    excerpt: "",
+    date: "2022-09-01",
+    readTime: "5 min",
     category: CategoryEnum.Analysis,
     image: "/images/blogImages/image1-31.webp",
     language: LangEnum.SE,
     author: {
       name: "Ola Spännar",
-      avatar: '/people/ola.jpg',
+      avatar: "/people/ola.jpg",
     },
-    relatedPosts: ['utslappsberakning', 'metod']
+    relatedPosts: ["utslappsberakning", "metod"],
   },
   {
-    id: 'utslappsberakning',
-    title: 'Utsläppsberäkning av riksdagspartiernas politik',
-    excerpt: 'Utsläppsberäkning av riksdagspartiernas politik gällande tolv centrala klimatåtgärder. Bakom uträkningarna står Klimatkollen, Världsnaturfonden WWF, ClimateView, Naturskyddsföreningen och Våra barns klimat. Beräkningarna visade att den nya regeringens politik kan öka utsläppen med 25 miljoner ton redan under mandatperioden 2022–2026.',
-    date: '2022-09-01',
-    readTime: '5 min',
+    id: "utslappsberakning",
+    title: "Utsläppsberäkning av riksdagspartiernas politik",
+    excerpt:
+      "Utsläppsberäkning av riksdagspartiernas politik gällande tolv centrala klimatåtgärder. Bakom uträkningarna står Klimatkollen, Världsnaturfonden WWF, ClimateView, Naturskyddsföreningen och Våra barns klimat. Beräkningarna visade att den nya regeringens politik kan öka utsläppen med 25 miljoner ton redan under mandatperioden 2022–2026.",
+    date: "2022-09-01",
+    readTime: "5 min",
     category: CategoryEnum.Analysis,
     image: "/images/blogImages/totala-utslapp-alla-partier.webp",
     language: LangEnum.SE,
     author: {
       name: "Ola Spännar",
-      avatar: '/people/ola.jpg',
+      avatar: "/people/ola.jpg",
     },
-    relatedPosts: ['klimatmal', 'metod']
+    relatedPosts: ["klimatmal", "metod"],
   },
 ];

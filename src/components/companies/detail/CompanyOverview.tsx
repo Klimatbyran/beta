@@ -68,7 +68,7 @@ export function CompanyOverview({
                 <Button variant="outline" size="sm" className="gap-2 mt-2" onClick={() => navigate("edit")}>
                     Edit
                     <div className="w-5 h-5 rounded-full bg-orange-5/30 text-orange-2 text-xs flex items-center justify-center">
-                      <Pen></Pen>
+                      <Pen />
                     </div>
                 </Button>
               )}

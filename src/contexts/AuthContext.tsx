@@ -5,33 +5,37 @@ import { nanoid } from "nanoid";
 import React, { useContext, createContext, useState } from "react";
 
 export interface AuthContext {
-    token: string
-    login: (code: string, state: string) => Promise<boolean>
-    logout: () => void,
-    isAuthenticated: () => boolean,
-    getAuthUrl: () => string,
-    parseToken: () => Token | null,
-    updateToken: (token: string) => void
+  token: string;
+  login: (code: string, state: string) => Promise<boolean>;
+  logout: () => void;
+  isAuthenticated: () => boolean;
+  getAuthUrl: () => string;
+  parseToken: () => Token | null;
+  updateToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContext>({} as AuthContext);
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    throw "No Auth Context";
+  }
+  return ctx;
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
-    const login = async (code: string, state: string) => {       
-        try {
-            const stateParts = state.split(":");
-            const oauthState = localStorage.getItem(stateParts[0]);
-            localStorage.removeItem(stateParts[0]);
-            
-            if(stateParts[1] !== oauthState) {
-                throw new Error("States do not match up");
-            }
+  const login = async (code: string, state: string) => {
+    try {
+      const stateParts = state.split(":");
+      const oauthState = localStorage.getItem(stateParts[0]);
+      localStorage.removeItem(stateParts[0]);
+
+      if (stateParts[1] !== oauthState) {
+        throw new Error("States do not match up");
+      }
 
       if (stateParts[1] !== oauthState) {
         console.log("error");
@@ -99,16 +103,28 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const updateToken = (token) => {
     localStorage.setItem("token", token);
     setToken(token);
-  }
+  };
 
   const logout = () => {
     setToken("");
     localStorage.removeItem("token");
   };
 
-    return (<AuthContext.Provider value={{token, login, logout, isAuthenticated, getAuthUrl, parseToken, updateToken}}>
-        {children}
-    </AuthContext.Provider>);  
-}
+  return (
+    <AuthContext.Provider
+      value={{
+        token,
+        login,
+        logout,
+        isAuthenticated,
+        getAuthUrl,
+        parseToken,
+        updateToken,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export default AuthProvider;
