@@ -8,15 +8,20 @@ export interface AuthContext {
   token: string;
   login: (code: string, state: string) => Promise<boolean>;
   logout: () => void;
-  isAuthentificated: () => boolean;
+  isAuthenticated: () => boolean;
   getAuthUrl: () => string;
   parseToken: () => Token | null;
+  updateToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContext>({} as AuthContext);
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    throw "No Auth Context";
+  }
+  return ctx;
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -27,6 +32,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const stateParts = state.split(":");
       const oauthState = localStorage.getItem(stateParts[0]);
       localStorage.removeItem(stateParts[0]);
+
+      if (stateParts[1] !== oauthState) {
+        throw new Error("States do not match up");
+      }
 
       if (stateParts[1] !== oauthState) {
         console.log("error");
@@ -44,7 +53,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const isAuthentificated = () => {
+  const isAuthenticated = () => {
     const parsedToken = parseToken();
     if (parsedToken !== null) {
       return parsedToken.exp > Date.now() / 1000;
@@ -84,11 +93,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         app_client_id = "Ov23liXxnsQCvlF3VVnH";
     }
 
-    console.log("environment", environment);
-
     return `https://github.com/login/oauth/authorize?client_id=${app_client_id}&redirect_uri=${encodeURIComponent(
       redirectUri
     )}&scope=user:email,%20read:org&state=${oauthStateKey}:${oauthState}`;
+  };
+
+  const updateToken = (token) => {
+    localStorage.setItem("token", token);
+    setToken(token);
   };
 
   const logout = () => {
@@ -102,9 +114,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         token,
         login,
         logout,
-        isAuthentificated,
+        isAuthenticated,
         getAuthUrl,
         parseToken,
+        updateToken,
       }}
     >
       {children}
