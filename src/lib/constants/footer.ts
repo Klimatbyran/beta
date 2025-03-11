@@ -57,4 +57,14 @@ export const socialLinks = [
       src: "/logos/partners/2050_white.png",
       alt: "2050 logo",
     },
+    {
+      href: "https://www.lmu.de/",
+      src: "/logos/partners/LMU_Muenchen_Logo.svg",
+      alt: "LMU Munich logo",
+    },
+    {
+      href: "https://www.uzh.ch/en.html/",
+      src: "/logos/partners/Uni_Zuerich_Siegel.svg",
+      alt: "University of Zurich logo",
+    },
   ];
