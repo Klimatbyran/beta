@@ -28,6 +28,7 @@
     "privacyLink": "your personal data is processed."
   },
   "landingPage": {
+    "metaTitle": "",
     "tabs": {
       "companies": "Companies",
       "municipalities": "Municipalities"
