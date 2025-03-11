@@ -11,6 +11,7 @@ import type { CompanyDetails, ReportingPeriod } from "@/types/company";
 import { useTranslation } from "react-i18next";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { useState } from "react";
+import { CompanyChat } from "./CompanyChat";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -60,6 +61,9 @@ export function CompanyOverview({
             >
               {company.name}
             </Text>
+            {/* <div className="flex items-end"> */}
+              <CompanyChat title="Chatta med Garbo" company={company} selectedPeriod={selectedPeriod} />
+            {/* </div> */}
           </div>
           {isMobile ? (
             <div>
@@ -207,6 +211,7 @@ export function CompanyOverview({
             </div>
           )}
         </div>
+
       </div>
     </div>
   );
