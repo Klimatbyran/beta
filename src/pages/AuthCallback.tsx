@@ -6,13 +6,13 @@ import { useToast } from "@/contexts/ToastContext";
 export const AuthCallback = () => {
   const called = useRef(false)
   const { showToast } = useToast();
-  const { login, isAuthentificated } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   
   useEffect(() => {
     ;(async () => {
-      if (isAuthentificated() === false) {
+      if (isAuthenticated() === false) {
         try {
           if (called.current) return // prevent rerender caused by StrictMode
           called.current = true
@@ -31,6 +31,6 @@ export const AuthCallback = () => {
         navigate('/')
       }
     })()
-  }, [isAuthentificated, login, navigate, searchParams, showToast])
+  }, [isAuthenticated, login, navigate, searchParams, showToast])
   return <></>
 }

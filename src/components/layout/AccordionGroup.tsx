@@ -21,7 +21,7 @@ export function AccordionGroup({
       <AccordionTrigger className="bg-black-2 rounded-level-2 p-8 hover:no-underline hover:bg-black-1 data-[state=open]:bg-black-1">
         <Text variant="h4">{title}</Text>
       </AccordionTrigger>
-      <AccordionContent className="p-8">{children}</AccordionContent>
+      <AccordionContent className="p-4 md:p-8">{children}</AccordionContent>
     </AccordionItem>
   );
 }

@@ -2,13 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend
+  annotations:
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   tls:
     - hosts:
-        - v3.klimatkollen.se
+        - klimatkollen.se
+        - www.klimatkollen.se
       secretName: frontend-klimatkollen-tls
   rules:
-    - host: v3.klimatkollen.se
+    - host: klimatkollen.se
       http:
         paths:
           - path: /

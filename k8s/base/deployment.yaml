@@ -48,11 +48,3 @@ spec:
           env:
             - name: VITE_NODE_ENV
               value: "staging"
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-              readOnly: true
-      volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config

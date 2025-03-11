@@ -41,9 +41,9 @@ function PartnerLogos() {
 }
 
 export function Footer() {
-  const { t } = useTranslation();
-  const { getAuthUrl, isAuthentificated, parseToken, logout } = useAuth()
-  const userinfo = parseToken();
+  const { t } = useTranslation()
+  const { getAuthUrl, isAuthenticated, parseToken, logout } = useAuth()
+  const userinfo = parseToken()
   const navigate = useNavigate()
 
   return (
@@ -93,27 +93,41 @@ export function Footer() {
           >
             {t("footer.ccBySa")}
           </a>
-          {!isAuthentificated() && (
-            <a onClick={() => {window.location.href = getAuthUrl()}} className="hover:text-white transition-colors cursor-pointer">
+          {!isAuthenticated() && (
+            <a
+              onClick={() => {
+                window.location.href = getAuthUrl
+                  ? getAuthUrl()
+                  : "#";
+              }}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
               Login
             </a>
           )}
-          { isAuthentificated() && (
-            <a onClick={() => {logout(); navigate("/")}} className="hover:text-white cursor-pointer transition-colors">
-              Logout
-            </a>    
-          )}     
-          {isAuthentificated() && (
-            <div className='hover:text-white ms-auto flex items-center'>
+          {isAuthenticated() && (
+              <a
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+                className="hover:text-white cursor-pointer transition-colors"
+              >
+                Logout
+              </a>
+            )}
+          {isAuthenticated() && userinfo && (
+            <div className="hover:text-white ms-auto flex items-center">
               <span>Välkommen, {userinfo?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">
-                <AvatarImage className='w-[45px] h-[45px] border border-grey rounded-full' src={userinfo!.githubImageUrl || ""} />
-                <AvatarFallback>
-                  {userinfo?.name ?? ""}
-                </AvatarFallback>
+                <AvatarImage
+                  className="w-[45px] h-[45px] border border-grey rounded-full"
+                  src={userinfo.githubImageUrl || ""}
+                />
+                <AvatarFallback>{userinfo?.name ?? ""}</AvatarFallback>
               </Avatar>
             </div>
-          )}     
+          )}
         </div>
       </div>
     </footer>
