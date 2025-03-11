@@ -36,22 +36,16 @@ export const useTeamMembers = () => {
       imageUrl: "/people/christian.jpg",
     },
     {
-      name: "Hugo Björk",
-      role: t("team.hugo.role"),
-      description: t("team.hugo.description"),
-      imageUrl: "/people/hugo.jpeg",
-    },
-    {
       name: "Kayla Woodbury",
       role: t("team.kayla.role"),
       description: t("team.kayla.description"),
-      imageUrl: "/people/placeholder-user.jpg",
+      imageUrl: "/people/kayla.jpg",
     },
     {
       name: "Catharina Höglund",
       role: t("team.catharina.role"),
       description: t("team.catharina.description"),
-      imageUrl: "/people/catharina.jpg",
+      imageUrl: "/people/placeholder-user.jpg",
     },
   ];
 
