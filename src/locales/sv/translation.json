@@ -49,8 +49,8 @@
     "bestPerformers": "Vilka är bäst?",
     "bestMunicipalities": "Sveriges bästa kommuner",
     "municipalitiesDescription": "Årlig utsläppsminskning sedan Parisavtalet 2015",
-    "bestCompanies": "Företag som minskat utsläppen mest",
-    "companiesDescription": "Utsläppsminskning mellan 2023 och 2024",
+    "largestEmittor": "Företag med störst utsläpp",
+    "companiesDescription": "Utsläpp från senaste rapporterade året",
     "aboutUsTitle": "Vilka är vi?",
     "aboutUsContent": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och bygger stöd för minskade utsläpp enligt Parisavtalet. Vi tror på kraften i enkel och tilltalande datavisualisering för att öka kunskapen och engagemanget kring klimatdebatten.",
     "tabName": {

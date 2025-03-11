@@ -13,6 +13,8 @@ interface RankedListProps {
   }>;
   type: "municipality" | "company";
   className?: string;
+  textColor: string;
+  unit: string;
 }
 
 export function RankedList({
@@ -21,6 +23,8 @@ export function RankedList({
   items: initialItems,
   type,
   className,
+  textColor,
+  unit,
 }: RankedListProps) {
   return (
     <div className={cn("bg-black-2 rounded-level-2 p-4 md:p-8", className)}>
@@ -57,12 +61,19 @@ export function RankedList({
             </span>
             <div className="grid grid-cols-1 md:grid-cols-2 items-center md:gap-4">
               <span className="text-base md:text-lg">{item.name}</span>
-              <span
-                className={"text-base md:text-lg md:text-right text-green-3"}
-              >
-                {item.value > 0 ? "-" : ""}
-                {item.displayValue || item.value.toFixed(1)}%
-              </span>
+              <div className="flex items-center md:justify-end">
+                <span
+                  className={cn(
+                    "text-base md:text-lg md:text-right",
+                    textColor
+                  )}
+                >
+                  {item.displayValue || item.value.toFixed(1)}
+                </span>
+                <span className={cn("text-grey", unit !== "%" && "ml-2")}>
+                  {unit}
+                </span>
+              </div>
             </div>
           </div>
         ))}
