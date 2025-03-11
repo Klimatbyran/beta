@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { X, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCategoryMetadata } from "@/hooks/useCategories";
+import { useTranslation } from "react-i18next";
 
 interface Scope3ChartProps {
   categories: Array<{
@@ -78,6 +79,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
   };
 
   const CustomTooltip = ({ active, payload }: any) => {
+    const { t } = useTranslation();
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
@@ -89,7 +91,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
           <Text>{Math.round(data.value).toLocaleString()} ton CO₂e</Text>
           <Text className="text-grey">({data.percentage.toFixed(1)}%)</Text>
           <Text variant="small" className="text-blue-2 mt-2">
-            Klicka för att filtrera bort
+            {t("companies.scope3Chart.clickToFilter")}
           </Text>
         </div>
       );
@@ -216,7 +218,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
               paddingAngle={2}
               dataKey="value"
               nameKey="name"
-              label={size.showLabels ? renderCustomizedLabel : null}
+              label={size.showLabels ? renderCustomizedLabel : undefined}
               labelLine={false}
               onClick={(entry) => handleCategoryClick(entry.category)}
               className="cursor-pointer"

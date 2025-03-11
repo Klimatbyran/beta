@@ -3,15 +3,11 @@ import type { Emissions, Scope3HistoricalData } from "@/types/company";
 
 interface CompanyScope3Props {
   emissions: Emissions;
-  year: number;
-  isRealEstate: boolean;
   historicalData?: Scope3HistoricalData[];
 }
 
 export function CompanyScope3({
   emissions,
-  year,
-  isRealEstate,
   historicalData,
 }: CompanyScope3Props) {
   if (!emissions?.scope3?.categories?.length) {
@@ -33,8 +29,6 @@ export function CompanyScope3({
   return (
     <Scope3Data
       emissions={transformedEmissions}
-      year={year}
-      isRealEstate={isRealEstate}
       historicalData={historicalData}
     />
   );

@@ -96,18 +96,18 @@ export function Scope3Data({
       </div>
       <Tabs defaultValue="chart" className="space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-          <TabsList className="bg-black-1">
-            <TabsTrigger value="chart">
+          <TabsList className="bg-black-1 w-full sm:w-auto flex">
+            <TabsTrigger value="chart" className="flex-1 text-center">
               {t("companies.scope3Data.visualization")}
             </TabsTrigger>
-            <TabsTrigger value="data">
+            <TabsTrigger value="data" className="flex-1 text-center">
               {t("companies.scope3Data.data")}
             </TabsTrigger>
           </TabsList>
 
           {historicalData && historicalData.length > 0 && (
             <Select value={selectedYear} onValueChange={setSelectedYear}>
-              <SelectTrigger className="w-[180px] bg-black-1">
+              <SelectTrigger className="w-full sm:w-[180px] bg-black-1">
                 <SelectValue
                   placeholder={t("companies.scope3Data.selectYear")}
                 />
