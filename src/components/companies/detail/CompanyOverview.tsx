@@ -59,7 +59,7 @@ export function CompanyOverview({
       <div className="flex items-start justify-between mb-12">
         <div className="space-y-4">
           <div className="flex items-center gap-4">
-            <Text variant="display">{company.name}</Text>
+            <Text className=" text-4xl lg:text-6xl">{company.name}</Text>
             <div className='flex flex-col h-full justify-around'>
               {isAuthenticated() && (
                 <Button variant="outline" size="sm" className="gap-2 mt-2" onClick={() => navigate("edit")}>
