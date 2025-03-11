@@ -79,10 +79,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem(oauthStateKey, oauthState);
 
     const redirectUri = `${window.location.origin}/auth/callback`;
-    const environment = import.meta.env.VITE_NODE_ENV;
 
     let app_client_id;
-    switch (environment) {
+    switch (process.env.NODE_ENV) {
       case "production":
         app_client_id = "Ov23liRK6WrVG8jPDU5M";
         break;

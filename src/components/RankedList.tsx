@@ -6,13 +6,15 @@ interface RankedListProps {
   title: string;
   description: string;
   items: Array<{
-    id: string;
+    id?: string;
     name: string;
     value: number;
     displayValue?: string;
   }>;
   type: "municipality" | "company";
   className?: string;
+  textColor: string;
+  unit: string;
 }
 
 export function RankedList({
@@ -21,6 +23,8 @@ export function RankedList({
   items: initialItems,
   type,
   className,
+  textColor,
+  unit,
 }: RankedListProps) {
   return (
     <div className={cn("bg-black-2 rounded-level-2 p-4 md:p-8", className)}>
@@ -47,7 +51,7 @@ export function RankedList({
             key={item.id || index}
             className="grid grid-cols-[auto_1fr] items-center gap-4 hover:bg-black-1 transition-colors rounded-lg"
             href={(type === "municipality" ? "municipalities/" : "/companies/") + item.name}
-          >
+           >
             <span
               className={cn(
                 "text-2xl md:text-5xl font-light",
