@@ -48,7 +48,7 @@ export function LandingPage() {
     t("landingPage.typewriter.municipality.climatePlans"),
   ];
 
-  // Get top 5 companies by emissions reduction
+  // Get top 5 companies by total emissions
   const largestCompanyEmitters = companies
     .sort(
       (a, b) =>
