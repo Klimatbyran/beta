@@ -1,5 +1,3 @@
-import { CategoryEnum } from "../blog/blogPostsList";
-
 export const reports = [
   {
     id: 1,
