@@ -6,7 +6,7 @@ interface RankedListProps {
   title: string;
   description: string;
   items: Array<{
-    id: string;
+    id?: string;
     name: string;
     value: number;
     displayValue?: string;
