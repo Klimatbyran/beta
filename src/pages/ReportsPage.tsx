@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { reports } from "@/lib/constants/reports";
 import { useLanguage } from "@/components/LanguageProvider";
 
-// Component for blog metadata (category, date, read time)
+// Component for report metadata (category, date, read time)
 function ReportMeta({
   category,
   date,
@@ -39,7 +39,7 @@ function ReportMeta({
   );
 }
 
-// Component for blog post cards
+// Component for report cards
 function ReportCard({ report }: { report: (typeof reports)[number] }) {
   const { t } = useTranslation();
 
