@@ -1,6 +1,6 @@
 // FIXME ADD TRANSLATIONS
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -12,22 +12,40 @@ import MailchimpSubscribe from "react-mailchimp-subscribe";
 import { useTranslation } from "react-i18next";
 
 interface NewsletterPopoverProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   buttonText: string;
 }
 
 export function NewsletterPopover({
   isOpen,
-  setIsOpen,
+  onOpenChange,
   buttonText,
 }: NewsletterPopoverProps) {
   const [email, setEmail] = useState("");
   const { t } = useTranslation();
   const MAILCHIMP_URL = import.meta.env.VITE_MAILCHIMP_URL || "https://";
 
+  // Use the props if provided, otherwise use internal state
+  const [open, setOpen] = useState(isOpen || false);
+
+  // Update internal state when prop changes
+  useEffect(() => {
+    if (isOpen !== undefined) {
+      setOpen(isOpen);
+    }
+  }, [isOpen]);
+
+  // Notify parent component when state changes
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (onOpenChange) {
+      onOpenChange(newOpen);
+    }
+  };
+
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <Button className="bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium">
           {buttonText}
@@ -39,7 +57,7 @@ export function NewsletterPopover({
         <button
           className="absolute top-2 right-2 text-grey hover:text-white transition"
           aria-label="Close"
-          onClick={() => setIsOpen(false)}
+          onClick={() => handleOpenChange(false)}
         >
           <X className="w-5 h-5" />
         </button>
