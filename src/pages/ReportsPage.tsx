@@ -1,5 +1,4 @@
 import { CalendarDays, Clock, ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Text } from "@/components/ui/text";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
@@ -45,13 +44,15 @@ function ReportCard({ report }: { report: (typeof reports)[number] }) {
   const { t } = useTranslation();
 
   return (
-    <Link
-      to={`/reports/${report.slug}`}
+    <a
+      href={report.pdfUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className="group bg-black-2 rounded-level-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
     >
       <div className="relative h-36 overflow-hidden">
         <img
-          src={report.image}
+          src={report.coverImage}
           alt={report.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -76,7 +77,7 @@ function ReportCard({ report }: { report: (typeof reports)[number] }) {
           <ArrowUpRight className="w-4 h-4" />
         </div>
       </div>
-    </Link>
+    </a>
   );
 }
 

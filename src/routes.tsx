@@ -66,7 +66,6 @@ export function AppRoutes() {
       <Route path={`${basePath}/articles`} element={<InsightsPage />} />
       <Route path={`${basePath}/reports`} element={<ReportsPage />} />
       <Route path={`${basePath}/articles/:slug`} element={<InsightsPage />} />
-      <Route path={`${basePath}/reports/:slug`} element={<ReportsPage />} />
 
       {/* Error pages */}
       <Route path={`${basePath}/error/:code`} element={<ErrorPage />} />

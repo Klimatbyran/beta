@@ -62,6 +62,7 @@ export function Header() {
       path: `${currentLanguage}/municipalities`,
     },
     { path: `${currentLanguage}/about`, label: t("header.about") },
+    { path: `${currentLanguage}/methodology`, label: t("header.methodology") },
     {
       path: `${currentLanguage}/insights`,
       label: t("header.insights"),
