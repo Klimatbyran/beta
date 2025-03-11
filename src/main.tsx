@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AuthProvider from "./contexts/AuthContext";
 import "./index.css";
 import "./i18n";
 
@@ -16,11 +17,13 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: (
-      <LanguageProvider>
-        <Layout>
-          <App />
-        </Layout>
-      </LanguageProvider>
+      <AuthProvider>
+        <LanguageProvider>
+          <Layout>
+            <App />
+          </Layout>
+        </LanguageProvider>
+      </AuthProvider>
     ),
   },
 ]);

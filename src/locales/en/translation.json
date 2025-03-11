@@ -589,5 +589,30 @@
     "title": "Page Not Found",
     "description": "The page you are looking for doesn't exist or has been moved.",
     "backToHome": "Back to Home"
+  },
+  "unauthorizedPage": {
+    "title": "Access Denied",
+    "errorMessage": "You do not have the necessary permissions to view this page"
+  },
+  "companyEditPage": {
+    "error": {
+      "couldNotFetch": "Could not fetch company data",
+      "tryAgainLater": "Please try again later",
+      "couldNotFind": "The company could not be found",
+      "checkId": "Please make sure the company ID is correct"
+    },
+    "rowName": {
+      "reportingTimespan": "Reporting Period",
+      "reportingStart": "Start",
+      "reportingEnd": "End",
+      "marketBased": "Market-based",
+      "locationBased": "Location-based",
+      "unknown": "Unknown"
+    },
+    "save": "Save",
+    "success": {
+      "title": "Changes have been saved!",
+      "description": "Changes to the reporting period have been made successfully"
+    }
   }
 }
