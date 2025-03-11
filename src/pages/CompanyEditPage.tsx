@@ -11,8 +11,10 @@ import { CompanyDetails } from '@/types/company';
 import { mapCompanyEditFormToRequestBody } from '@/lib/company-edit';
 import { updateReportingPeriods } from '@/lib/api';
 import { useToast } from '@/contexts/ToastContext';
+import { useTranslation } from 'react-i18next';
 
 export function CompanyEditPage() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>();
   const { company, loading, error, refetch } = useCompanyDetails(id!);
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
@@ -46,9 +48,9 @@ export function CompanyEditPage() {
     return (
       <div className="text-center py-24">
         <Text variant="h3" className="text-red-500 mb-4">
-          Det gick inte att hämta företagsinformation
+          {t("companyEditPage.error.couldNotFetch")}
         </Text>
-        <Text variant="muted">Försök igen senare</Text>
+        <Text variant="muted">{t("companyEditPage.error.tryAgainLater")}</Text>
       </div>
     );
   }
@@ -57,10 +59,10 @@ export function CompanyEditPage() {
     return (
       <div className="text-center py-24">
         <Text variant="h3" className="text-red-500 mb-4">
-          Företaget kunde inte hittas
+          {t("companyEditPage.error.couldNotFind")}
         </Text>
         <Text variant="muted">
-          Kontrollera att företags-ID:t är korrekt
+          {t("companyEditPage.error.checkId")}
         </Text>
       </div>
     );
@@ -88,7 +90,7 @@ export function CompanyEditPage() {
       await refetch();
       setSelectedYears(selectedYears);
       setIsUpdating(false);
-      showToast("Changes Saved!", "Reporting Period was successfully updated");
+      showToast(t("companyEditPage.success.title"), t("companyEditPage.success.description"));
     }    
   };
 
@@ -106,7 +108,9 @@ export function CompanyEditPage() {
         <CompanyEditScope1 periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditScope1>
         <CompanyEditScope2 periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditScope2>
         <CompanyEditScope3 periods={selectedPeriods} onInputChange={handleInputChange}></CompanyEditScope3>
-        <button type="submit" className='inline-flex float-right mt-2 items-center justify-center text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white disabled:pointer-events-none hover:opacity-80 active:ring-1 active:ring-white disabled:opacity-50 h-10 bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium'>Save</button>
+        <button type="submit" className='inline-flex float-right mt-2 items-center justify-center text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white disabled:pointer-events-none hover:opacity-80 active:ring-1 active:ring-white disabled:opacity-50 h-10 bg-blue-5 text-white rounded-lg hover:bg-blue-6 transition px-4 py-1 font-medium'>
+          {t("companyEditPage.save")}
+        </button>
         </form>
       )}
       </div>

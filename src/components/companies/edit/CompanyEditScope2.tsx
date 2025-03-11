@@ -1,9 +1,9 @@
-import { IconCheckbox } from "@/components/ui/icon-checkbox";
-import { Input } from "@/components/ui/input";
 import { CompanyEditRow } from "./CompanyEditRow";
 import { CompanyEditInputField, CompanyEmptyField } from "./CompanyEditField";
+import { useTranslation } from "react-i18next";
 
 export function CompanyEditScope2({ periods, onInputChange }) {
+  const { t } = useTranslation()
   return (
     <>
       <CompanyEditRow
@@ -15,7 +15,7 @@ export function CompanyEditScope2({ periods, onInputChange }) {
       ></CompanyEditRow>
       <CompanyEditRow
       key={"scope-2-mb"}
-        name="Market-based"
+        name={t("companyEditPage.rowName.marketBased")}
         fields={periods.map((period) =>
           CompanyEditInputField({
             type: "number",
@@ -28,7 +28,7 @@ export function CompanyEditScope2({ periods, onInputChange }) {
       ></CompanyEditRow>
       <CompanyEditRow
         key={"scope-2-lb"}
-        name="Location-based"
+        name={t("companyEditPage.rowName.locationBased")}
         fields={periods.map((period) =>
           CompanyEditInputField({
             type: "number",
@@ -41,7 +41,7 @@ export function CompanyEditScope2({ periods, onInputChange }) {
       ></CompanyEditRow>
       <CompanyEditRow
         key={"scope-2-unknown"}
-        name="Unknown"
+        name={t("companyEditPage.rowName.unknown")}
         fields={periods.map((period) =>
           CompanyEditInputField({
             type: "number",
