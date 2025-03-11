@@ -79,10 +79,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem(oauthStateKey, oauthState);
 
     const redirectUri = `${window.location.origin}/auth/callback`;
-    const environment = import.meta.env.VITE_NODE_ENV;
 
     let app_client_id;
-    switch (environment) {
+    switch (process.env.NODE_ENV) {
       case "production":
         app_client_id = "Ov23liRK6WrVG8jPDU5M";
         break;
@@ -92,6 +91,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       default:
         app_client_id = "Ov23liXxnsQCvlF3VVnH";
     }
+
+    console.log(process.env.NODE_ENV, app_client_id)
 
     return `https://github.com/login/oauth/authorize?client_id=${app_client_id}&redirect_uri=${encodeURIComponent(
       redirectUri
