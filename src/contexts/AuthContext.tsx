@@ -92,8 +92,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         app_client_id = "Ov23liXxnsQCvlF3VVnH";
     }
 
-    console.log(process.env.NODE_ENV, app_client_id)
-
     return `https://github.com/login/oauth/authorize?client_id=${app_client_id}&redirect_uri=${encodeURIComponent(
       redirectUri
     )}&scope=user:email,%20read:org&state=${oauthStateKey}:${oauthState}`;
