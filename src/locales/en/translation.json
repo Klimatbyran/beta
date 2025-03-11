@@ -9,7 +9,9 @@
     "methodology": "Sources and Method",
     "newsletter": "Newsletter",
     "openMenu": "Open Menu",
-    "closeMenu": "Close Menu"
+    "closeMenu": "Close Menu",
+    "articles": "Articles",
+    "reports": "Reports"
   },
   "footer": {
     "contactUs": "Contact Us",
@@ -108,9 +110,12 @@
   "insightsPage": {
     "title": "Insights",
     "description": "In-depth analyses and reports on Sweden’s climate transition.",
-    "newsletter": "Subscribe to our newsletter",
-    "readMore": "Read more",
-    "subscribeNewsletter": "Subscribe to our newsletter"
+    "readMore": "Read more"
+  },
+  "reportsPage": {
+    "title": "Reports",
+    "description": "In-depth analyses and reports on Sweden’s climate transition.",
+    "readMore": "Read more"
   },
   "blogDetailPage": {
     "loading": "Loading...",

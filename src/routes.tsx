@@ -12,6 +12,7 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { useLanguage } from "./components/LanguageProvider";
 import { useEffect } from "react";
 import { LanguageRedirect } from "@/components/LanguageRedirect";
+import { ReportsPage } from "./pages/ReportsPage";
 
 export function AppRoutes() {
   const { currentLanguage } = useLanguage();
@@ -62,8 +63,10 @@ export function AppRoutes() {
       {/* Other pages */}
       <Route path={`${basePath}/about`} element={<AboutPage />} />
       <Route path={`${basePath}/methodology`} element={<MethodsPage />} />
-      <Route path={`${basePath}/insights`} element={<InsightsPage />} />
-      <Route path={`${basePath}/insights/:slug`} element={<InsightsPage />} />
+      <Route path={`${basePath}/articles`} element={<InsightsPage />} />
+      <Route path={`${basePath}/reports`} element={<ReportsPage />} />
+      <Route path={`${basePath}/articles/:slug`} element={<InsightsPage />} />
+      <Route path={`${basePath}/reports/:slug`} element={<ReportsPage />} />
 
       {/* Error pages */}
       <Route path={`${basePath}/error/:code`} element={<ErrorPage />} />

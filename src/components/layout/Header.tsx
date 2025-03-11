@@ -62,7 +62,14 @@ export function Header() {
       path: `${currentLanguage}/municipalities`,
     },
     { path: `${currentLanguage}/about`, label: t("header.about") },
-    { path: `${currentLanguage}/insights`, label: t("header.insights") },
+    {
+      path: `${currentLanguage}/insights`,
+      label: t("header.insights"),
+      sublinks: [
+        { label: t("header.articles"), path: `${currentLanguage}/articles` },
+        { label: t("header.reports"), path: `${currentLanguage}/reports` },
+      ],
+    },
   ];
 
   return (
