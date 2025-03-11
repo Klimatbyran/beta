@@ -13,6 +13,11 @@ import { useLanguage } from "./components/LanguageProvider";
 import { useEffect } from "react";
 import { LanguageRedirect } from "@/components/LanguageRedirect";
 import { ReportsPage } from "./pages/ReportsPage";
+import { BlogDetailPage } from "./pages/BlogDetailPage";
+import { UnauthorizedErrorPage } from "./pages/error/UnauthorizedErrorPage";
+import { AuthCallback } from "./pages/AuthCallback";
+import { CompanyEditPage } from "./pages/CompanyEditPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export function AppRoutes() {
   const { currentLanguage } = useLanguage();
@@ -50,6 +55,10 @@ export function AppRoutes() {
         element={<CompanyDetailPage />}
       />
 
+      <Route element={<ProtectedRoute/>}>
+        <Route path={`${basePath}/companies/:id/edit`} element={<CompanyEditPage/>}/>
+      </Route> 
+
       {/* Municipalities routes */}
       <Route
         path={`${basePath}/municipalities`}
@@ -65,13 +74,16 @@ export function AppRoutes() {
       <Route path={`${basePath}/methodology`} element={<MethodsPage />} />
       <Route path={`${basePath}/articles`} element={<InsightsPage />} />
       <Route path={`${basePath}/reports`} element={<ReportsPage />} />
-      <Route path={`${basePath}/articles/:slug`} element={<InsightsPage />} />
+      <Route path={`${basePath}/insights/:id`} element={<BlogDetailPage />} />
 
       {/* Error pages */}
       <Route path={`${basePath}/error/:code`} element={<ErrorPage />} />
 
       {/* This catch-all should now only handle invalid routes */}
       <Route path={`${basePath}/*`} element={<NotFoundPage />} />
+
+      <Route path={`${basePath}/403`} element={<UnauthorizedErrorPage/>} />
+      <Route path="auth/callback" element={<AuthCallback />} />
     </Routes>
   );
 }

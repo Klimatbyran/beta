@@ -1,5 +1,6 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './api-types';
+import { authMiddleware } from './auth-middleware';
 
 // Determine the base URL based on the environment
 // For sitemap generation (Node.js environment), use the public API
@@ -7,6 +8,8 @@ import type { paths } from './api-types';
 const baseUrl = typeof window === 'undefined' 
   ? 'https://api.klimatkollen.se/api' 
   : '/api';
+const client = createClient<paths>({ baseUrl });
+client.use(authMiddleware);
 
 // Set a timeout for API requests during sitemap generation
 const timeout = typeof window === 'undefined' ? 10000 : undefined;
@@ -31,7 +34,7 @@ const { GET, POST } = createClient<paths>({
 
 // Auth API
 export async function authenticateWithGithub(code: string) {
-  const {data, error} = await POST('/auth/github', {
+  const {data, error} = await client.POST('/auth/github', {
     body: {
       code
     }
@@ -55,7 +58,7 @@ export async function getCompanies() {
 }
 
 export async function getCompanyDetails(id: string) {
-  const { data, error } = await GET('/companies/{wikidataId}', {
+  const { data, error } = await client.GET('/companies/{wikidataId}', {
     params: {
       path: {
         wikidataId: id
@@ -89,4 +92,13 @@ export async function getMunicipalityDetails(name: string) {
   return data;
 }
 
-
+export async function updateReportingPeriods(wikidataId: string, body) {
+  const {data, error} = await client.POST('/companies/{wikidataId}/reporting-periods', {
+    params: {
+      path: {wikidataId}
+    },
+    body
+  });
+  if(error) throw error;
+  return data;
+}
