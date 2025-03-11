@@ -589,5 +589,9 @@
     "title": "Page Not Found",
     "description": "The page you are looking for doesn't exist or has been moved.",
     "backToHome": "Back to Home"
+  },
+  "unauthorizedPage": {
+    "title": "Access Denied",
+    "errorMessage": "You do not have the necessary permissions to view this page"
   }
 }

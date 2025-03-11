@@ -80,7 +80,7 @@ export function AppRoutes() {
       {/* This catch-all should now only handle invalid routes */}
       <Route path={`${basePath}/*`} element={<NotFoundPage />} />
 
-      <Route path="403" element={<UnauthorizedErrorPage/>} />
+      <Route path={`${basePath}/403`} element={<UnauthorizedErrorPage/>} />
       <Route path="auth/callback" element={<AuthCallback />} />
     </Routes>
   );

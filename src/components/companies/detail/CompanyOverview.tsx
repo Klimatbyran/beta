@@ -11,8 +11,6 @@ import type { CompanyDetails, ReportingPeriod } from "@/types/company";
 import { useTranslation } from "react-i18next";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { useState } from "react";
-import { CompanyChat } from './CompanyChat';
-import { EmissionsComparison } from './EmissionsComparison';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -63,7 +61,6 @@ export function CompanyOverview({
           <div className="flex items-center gap-4">
             <Text variant="display">{company.name}</Text>
             <div className='flex flex-col h-full justify-around'>
-            <CompanyChat companyName={company.name} companyId={company.wikidataId} />
               {isAuthenticated() && (
                 <Button variant="outline" size="sm" className="gap-2 mt-2" onClick={() => navigate("edit")}>
                     Edit

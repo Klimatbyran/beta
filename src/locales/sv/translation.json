@@ -598,5 +598,9 @@
     "title": "Sidan hittades inte",
     "description": "Sidan du letar efter finns inte eller har flyttats.",
     "backToHome": "Tillbaka till startsidan"
+  },
+  "unauthorizedPage": {
+    "title": "Åtkomst Nekad",
+    "errorMessage": "Du har inte den nödvändiga behörigheten för att visa denna sida"
   }
 }

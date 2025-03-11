@@ -102,22 +102,3 @@ export async function updateReportingPeriods(wikidataId: string, body) {
   if(error) throw error;
   return data;
 }
-
-// Other API endpoints...
-export async function getCO2Level() {
-  const { data, error } = await client.GET('/co2', {});
-  if (error) throw error;
-  return data;
-}
-
-export async function getSeaLevel() {
-  const { data, error } = await client.GET('/sea-level', {});
-  if (error) throw error;
-  return data;
-}
-
-export async function getArcticIce() {
-  const { data, error } = await client.GET('/arctic-ice', {});
-  if (error) throw error;
-  return data;
-}

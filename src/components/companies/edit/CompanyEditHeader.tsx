@@ -35,7 +35,7 @@ export function CompanyEditHeader({
       </div>
       <div className="flex items-center gap-4">
         <div>
-          <label className="text-sm">Reportingperiod:</label>
+          <label className="text-sm">Reporting Period(s):</label>
           <Select
             options={periods}
             isMulti
