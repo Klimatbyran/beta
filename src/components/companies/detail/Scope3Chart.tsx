@@ -147,11 +147,10 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
 
   return (
     <div
-      className={cn("bg-black-2 rounded-level-1 p-4 md:p-8 lg:p-16", className)}
+      className={cn("bg-black-2 rounded-level-1 p-4 md:p-8 lg:p-8", className)}
     >
-
       {excludedCategories.length > 0 && (
-        <div className="mb-8 p-4 bg-black-1 rounded-level-2">
+        <div className="mb-6 p-4 bg-black-1 rounded-level-2">
           <Text variant="small" className="text-grey">
             Visar {chartData.length} av {categories.length} kategorier.
             Filtrerade kategorier:
@@ -187,7 +186,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
           </div>
         </div>
       )}
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex-1" />
         {excludedCategories.length > 0 && (
           <Button
