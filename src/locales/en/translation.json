@@ -9,7 +9,9 @@
     "methodology": "Sources and Method",
     "newsletter": "Newsletter",
     "openMenu": "Open Menu",
-    "closeMenu": "Close Menu"
+    "closeMenu": "Close Menu",
+    "articles": "Articles",
+    "reports": "Reports"
   },
   "footer": {
     "contactUs": "Contact Us",
@@ -51,8 +53,8 @@
     "bestPerformers": "Who is the best?",
     "bestMunicipalities": "Sweden's best municipalities",
     "municipalitiesDescription": "By average annual reduction in emissions since the Paris Agreement (2015)",
-    "bestCompanies": "Top Companies in Emission Reduction",
-    "companiesDescription": "Emissions reduction between 2023 and 2024",
+    "largestEmittor": "Company with the largest emissions",
+    "companiesDescription": "Emissions from the most recently reported year",
     "aboutUsTitle": "Who are we?",
     "aboutUsContent": "Klimatkollen is a citizen platform that provides climate data and builds support for reducing emissions in line with the Paris Agreement. We believe in the power of simple, engaging data visualization to enhance knowledge and drive participation in the climate conversation.",
     "tabName": {
@@ -107,11 +109,14 @@
     }
   },
   "insightsPage": {
-    "title": "Insights",
+    "title": "Articles",
+    "description": "Articles and updates about Klimatkollen and the climate transition.",
+    "readMore": "Read more"
+  },
+  "reportsPage": {
+    "title": "Reports",
     "description": "In-depth analyses and reports on Sweden’s climate transition.",
-    "newsletter": "Subscribe to our newsletter",
-    "readMore": "Read more",
-    "subscribeNewsletter": "Subscribe to our newsletter"
+  "readMore": "Read more"
   },
   "blogDetailPage": {
     "loading": "Loading...",
