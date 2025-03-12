@@ -80,19 +80,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const redirectUri = `${window.location.origin}/auth/callback`;
 
-    let app_client_id;
-    switch (process.env.NODE_ENV) {
-      case "production":
-        app_client_id = "Ov23liRK6WrVG8jPDU5M";
-        break;
-      case "staging":
-        app_client_id = "Ov23liKHcV6ZlmTZqOtv";
-        break;
-      default:
-        app_client_id = "Ov23liXxnsQCvlF3VVnH";
-    }
-
-    return `https://github.com/login/oauth/authorize?client_id=${app_client_id}&redirect_uri=${encodeURIComponent(
+    return `https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(
       redirectUri
     )}&scope=user:email,%20read:org&state=${oauthStateKey}:${oauthState}`;
   };
