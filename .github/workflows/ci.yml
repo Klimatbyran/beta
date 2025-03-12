@@ -37,13 +37,15 @@ jobs:
       - name: 🏗️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: 🔧 Build and push Docker Image
+      - name: 🔧 Build and push Docker Image with Secrets
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version}}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          build-args: |
+            VITE_MAILCHIMP_URL=${{ secrets.VITE_MAILCHIMP_URL }}
 
       - name: 🎫 Update patch version
         run: |
@@ -52,3 +54,18 @@ jobs:
           git pull --rebase origin main
           npm version prerelease --preid=rc
           git push origin main
+
+  update-k8s-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔑 Set up Kubernetes CLI
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: 🔑 Apply Kubernetes Secret for Mailchimp URL
+        run: |
+          kubectl delete secret mailchimp-secret --ignore-not-found=true
+          kubectl create secret generic mailchimp-secret \
+            --from-literal=VITE_MAILCHIMP_URL=${{ secrets.VITE_MAILCHIMP_URL }} \
+            --dry-run=client -o yaml | kubectl apply -f -
