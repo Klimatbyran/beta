@@ -94,7 +94,7 @@ export function Scope3Data({
       <div className="flex items-center justify-between mb-8">
         <Text variant="h3">{t("companies.scope3Data.categories")}</Text>
       </div>
-      <Tabs defaultValue="chart" className="space-y-8">
+      <Tabs defaultValue="chart" className="space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
           <TabsList className="bg-black-1 w-full sm:w-auto flex">
             <TabsTrigger value="chart" className="flex-1 text-center">

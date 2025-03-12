@@ -6,6 +6,8 @@ import { PageSEO } from "@/components/SEO/PageSEO";
 import { useEffect } from "react";
 import { reports } from "@/lib/constants/reports";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useScreenSize } from "@/hooks/useScreenSize";
+
 
 // Component for report metadata (category, date, read time)
 function ReportMeta({
@@ -17,11 +19,13 @@ function ReportMeta({
   date: string;
   readTime: string;
 }) {
+  const isMobile = useScreenSize();
+  
   return (
     <div className="flex items-center gap-4">
       <span
         aria-label="Category"
-        className="px-3 py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm"
+        className={`py-1 bg-blue-5/50 rounded-full text-blue-2 text-sm ${isMobile ? "px-2" : "px-3"}`}
       >
         {category}
       </span>
@@ -42,6 +46,7 @@ function ReportMeta({
 // Component for report cards
 function ReportCard({ report }: { report: (typeof reports)[number] }) {
   const { t } = useTranslation();
+  const isMobile = useScreenSize();
 
   return (
     <a
@@ -57,7 +62,7 @@ function ReportCard({ report }: { report: (typeof reports)[number] }) {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
-      <div className="p-8 space-y-4">
+      <div className={`space-y-4 ${isMobile ? "p-4" : "p-8"}`}>
         <ReportMeta
           category={report.category}
           date={report.date}

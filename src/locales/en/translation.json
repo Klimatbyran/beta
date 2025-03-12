@@ -109,14 +109,14 @@
     }
   },
   "insightsPage": {
-    "title": "Insights",
-    "description": "In-depth analyses and reports on Sweden’s climate transition.",
+    "title": "Articles",
+    "description": "Articles and updates about Klimatkollen and the climate transition.",
     "readMore": "Read more"
   },
   "reportsPage": {
     "title": "Reports",
     "description": "In-depth analyses and reports on Sweden’s climate transition.",
-    "readMore": "Read more"
+  "readMore": "Read more"
   },
   "blogDetailPage": {
     "loading": "Loading...",

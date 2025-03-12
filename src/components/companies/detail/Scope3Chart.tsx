@@ -150,7 +150,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
       className={cn("bg-black-2 rounded-level-1 p-4 md:p-8 lg:p-8", className)}
     >
       {excludedCategories.length > 0 && (
-        <div className="mb-6 p-4 bg-black-1 rounded-level-2">
+        <div className="mb-2 p-4 bg-black-1 rounded-level-2">
           <Text variant="small" className="text-grey">
             Visar {chartData.length} av {categories.length} kategorier.
             Filtrerade kategorier:

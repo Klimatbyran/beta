@@ -108,13 +108,13 @@
     }
   },
   "insightsPage": {
-    "title": "Insikter",
-    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige",
+    "title": "Artiklar",
+    "description": "Artiklar och uppdateringar om Klimatkollen och klimatomställningen.",
     "readMore": "Läs mer"
   },
   "reportsPage": {
     "title": "Rapporter",
-    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige",
+    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige.",
     "readMore": "Läs mer"
   },
   "blogDetailPage": {
