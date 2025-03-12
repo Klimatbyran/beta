@@ -12,7 +12,7 @@ export const socialLinks = [
       title: "LinkedIn",
     },
     { href: "https://twitter.com/klimatkollen", icon: "./logos/social/twitter.svg", title: "Twitter" },
-    { href: "https://discord.gg/klimatkollen", icon: "./logos/social/discord.svg", title: "Discord" },
+    { href: "https://discord.gg/N5P64QPQ6v", icon: "./logos/social/discord.svg", title: "Discord" },
     { href: "https://www.instagram.com/klimatkollen.se/", icon: "./logos/social/instagram.svg", title: "Instagram" },
     { href: "https://www.facebook.com/klimatkollen/", icon: "/logos/social/facebook.svg", title: "Facebook" },
   ];
