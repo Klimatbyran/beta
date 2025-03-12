@@ -12,6 +12,7 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { useLanguage } from "./components/LanguageProvider";
 import { useEffect } from "react";
 import { LanguageRedirect } from "@/components/LanguageRedirect";
+import { ReportsPage } from "./pages/ReportsPage";
 import { BlogDetailPage } from "./pages/BlogDetailPage";
 import { UnauthorizedErrorPage } from "./pages/error/UnauthorizedErrorPage";
 import { AuthCallback } from "./pages/AuthCallback";
@@ -71,7 +72,8 @@ export function AppRoutes() {
       {/* Other pages */}
       <Route path={`${basePath}/about`} element={<AboutPage />} />
       <Route path={`${basePath}/methodology`} element={<MethodsPage />} />
-      <Route path={`${basePath}/insights`} element={<InsightsPage />} />
+      <Route path={`${basePath}/articles`} element={<InsightsPage />} />
+      <Route path={`${basePath}/reports`} element={<ReportsPage />} />
       <Route path={`${basePath}/insights/:id`} element={<BlogDetailPage />} />
 
       {/* Error pages */}

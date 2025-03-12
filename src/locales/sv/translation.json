@@ -9,7 +9,9 @@
     "methodology": "Källor och metod",
     "newsletter": "Nyhetsbrev",
     "openMenu": "Öppna meny",
-    "closeMenu": "Stäng meny"
+    "closeMenu": "Stäng meny",
+    "articles": "Artiklar",
+    "reports": "Rapporter"
   },
   "footer": {
     "contactUs": "Kontakta oss",
@@ -106,11 +108,14 @@
     }
   },
   "insightsPage": {
-    "title": "Insikter",
-    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige",
-    "newsletter": "Prenumerera på nyhetsbrev",
-    "readMore": "Läs mer",
-    "subscribeNewsletter": "Prenumerera på nyhetsbrev"
+    "title": "Artiklar",
+    "description": "Artiklar och uppdateringar om Klimatkollen och klimatomställningen.",
+    "readMore": "Läs mer"
+  },
+  "reportsPage": {
+    "title": "Rapporter",
+    "description": "Fördjupande analyser och rapporter om klimatomställningen i Sverige.",
+    "readMore": "Läs mer"
   },
   "blogDetailPage": {
     "loading": "Laddar...",
