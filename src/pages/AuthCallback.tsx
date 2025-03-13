@@ -2,8 +2,10 @@ import { useEffect,} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
+import { useTranslation } from "react-i18next";
 
 export const AuthCallback = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { authenticate, token } = useAuth();
@@ -18,16 +20,16 @@ export const AuthCallback = () => {
 
     if (error) {
       console.error('Authentication error:', error);
-      navigate('/', { state: { error: 'Authentication failed' } });
+      navigate('/', { state: { error: t("authCallbackpage.failed") } });
     }
   }, [location, navigate]);
 
   useEffect(() => {
     if (token) {
-      showToast("Logged In", "Welcome")
+      showToast(t('authCallbackPage.success.title'), t('authCallbackPage.success.description'))
       navigate('/')
     }
   }, [token])
   
-  return <div>Processing authentication...</div>;
+  return <div>{t('blogDetailPage.loading')}</div>;
 }

@@ -14,6 +14,9 @@
     "reports": "Reports"
   },
   "footer": {
+    "login": "Login",
+    "logout": "Logout",
+    "welcome": "Welcome",
     "contactUs": "Contact Us",
     "description": "Klimatkollen is a citizen platform that provides climate data and is developed with open <0>source code</0>.",
     "privacyTerms": "Privacy & Terms",
@@ -623,6 +626,13 @@
     "success": {
       "title": "Changes have been saved!",
       "description": "Changes to the reporting period have been made successfully"
+    }
+  },
+  "authCallbackPage" : {
+    "failed": "Authentication failed",
+    "success": {
+      "title": "Logged in",
+      "description": "Welcome"
     }
   }
 }

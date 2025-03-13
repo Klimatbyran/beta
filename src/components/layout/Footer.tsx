@@ -97,7 +97,7 @@ export function Footer() {
               onClick={() => login()}
               className="hover:text-white transition-colors cursor-pointer"
             >
-              Login
+              {t('footer.login')}
             </a>
           )}
           {token && (
@@ -108,12 +108,12 @@ export function Footer() {
                 }}
                 className="hover:text-white cursor-pointer transition-colors"
               >
-                Logout
+                {t('footer.logout')}
               </a>
             )}
           {token && user && (
             <div className="hover:text-white ms-auto flex items-center">
-              <span>Välkommen, {user?.name ?? ""}</span>
+              <span>{t('footer.welcome')}, {user?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">
                 <AvatarImage
                   className="w-[45px] h-[45px] border border-grey rounded-full"
