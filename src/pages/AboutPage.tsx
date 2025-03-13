@@ -100,7 +100,7 @@ export function AboutPage() {
               <p>
                 {t("aboutPage.boardSection.links.stadgar")}{" "}
                 <a
-                  href="https://www.klimatkollen.se/stadgar.pdf"
+                  href="/documents/stadgar.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-white"
@@ -109,7 +109,7 @@ export function AboutPage() {
                 </a>
                 {", "}{" "}
                 <a
-                  href="https://www.klimatkollen.se/uppforandekod.pdf"
+                  href="/documents/uppforandekod.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-white"
@@ -118,7 +118,7 @@ export function AboutPage() {
                 </a>{" "}
                 {t("aboutPage.boardSection.links.and")}{" "}
                 <a
-                  href="https://www.klimatkollen.se/antikorruptionspolicy.pdf"
+                  href="/documents/antikorruptionspolicy.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-white"

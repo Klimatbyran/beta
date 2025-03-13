@@ -48,3 +48,8 @@ spec:
           env:
             - name: VITE_NODE_ENV
               value: "staging"
+            - name: VITE_MAILCHIMP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mailchimp-secret
+                  key: VITE_MAILCHIMP_URL

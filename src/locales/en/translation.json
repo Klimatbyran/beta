@@ -39,7 +39,7 @@
       "company": {
         "reduceEmissions": "reducing emissions",
         "scope3Emissions": "scope 3 emissions",
-        "meetParisAgreement": "meet the Paris Agreement"
+        "meetParisAgreement": "meeting the Paris Agreement"
       },
       "municipality": {
         "reduceEmissions": "reducing emissions",
@@ -345,6 +345,10 @@
     "kayla": {
       "role": "Developer",
       "description": "Frontend developer with a passion for sustainability and user-friendly digital solutions. Previously worked as an environmental consultant focused on interpreting regulations and calculating greenhouse gas emissions for companies."
+    },
+    "catharina": {
+      "role": "Communicator",
+      "description": "Communicator and filmmaker focusing on climate and sustainability, co-leading Ett hållbart Lidingö, with a background as a management consultant."
     }
   },
   "board": {

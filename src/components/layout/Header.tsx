@@ -1,7 +1,7 @@
 import { BarChart3, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation, matchPath } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Menubar,
@@ -21,6 +21,13 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.get("newsletter") === "open") {
+      setIsSignUpOpen(true);
+    }
+  }, [location]);
 
   const LanguageButtons = ({ className }: { className?: string }) => (
     <div className={cn("flex items-center gap-2", className)}>
@@ -144,7 +151,7 @@ export function Header() {
               <LanguageButtons className={"hidden md:flex mx-4 "} />
               <NewsletterPopover
                 isOpen={isSignUpOpen}
-                setIsOpen={setIsSignUpOpen}
+                onOpenChange={setIsSignUpOpen}
                 buttonText={t("header.newsletter")}
               />
             </div>
