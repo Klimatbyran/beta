@@ -52,8 +52,8 @@ export function LandingPage() {
   const largestCompanyEmitters = companies
     .sort(
       (a, b) =>
-        (b.reportingPeriods[0].emissions?.calculatedTotalEmissions || 0) -
-        (a.reportingPeriods[0].emissions?.calculatedTotalEmissions || 0)
+        (b.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0) -
+        (a.reportingPeriods[0]?.emissions?.calculatedTotalEmissions || 0)
     )
     .slice(0, 5)
     .map((company) => ({
