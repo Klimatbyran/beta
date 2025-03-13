@@ -45,7 +45,7 @@ export const useTeamMembers = () => {
       name: "Catharina Höglund",
       role: t("team.catharina.role"),
       description: t("team.catharina.description"),
-      imageUrl: "/people/placeholder-user.jpg",
+      imageUrl: "/people/catharina.jpeg",
     },
   ];
 
