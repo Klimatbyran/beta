@@ -1,7 +1,7 @@
 import { BarChart3, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation, matchPath } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Menubar,
@@ -21,6 +21,13 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.get("newsletter") === "open") {
+      setIsSignUpOpen(true);
+    }
+  }, [location]);
 
   const LanguageButtons = ({ className }: { className?: string }) => (
     <div className={cn("flex items-center gap-2", className)}>
@@ -62,7 +69,15 @@ export function Header() {
       path: `${currentLanguage}/municipalities`,
     },
     { path: `${currentLanguage}/about`, label: t("header.about") },
-    { path: `${currentLanguage}/insights`, label: t("header.insights") },
+    { path: `${currentLanguage}/methodology`, label: t("header.methodology") },
+    {
+      path: `${currentLanguage}/insights`,
+      label: t("header.insights"),
+      sublinks: [
+        { label: t("header.articles"), path: `${currentLanguage}/articles` },
+        { label: t("header.reports"), path: `${currentLanguage}/reports` },
+      ],
+    },
   ];
 
   return (
@@ -136,7 +151,7 @@ export function Header() {
               <LanguageButtons className={"hidden md:flex mx-4 "} />
               <NewsletterPopover
                 isOpen={isSignUpOpen}
-                setIsOpen={setIsSignUpOpen}
+                onOpenChange={setIsSignUpOpen}
                 buttonText={t("header.newsletter")}
               />
             </div>

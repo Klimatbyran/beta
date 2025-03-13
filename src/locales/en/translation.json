@@ -9,7 +9,9 @@
     "methodology": "Sources and Method",
     "newsletter": "Newsletter",
     "openMenu": "Open Menu",
-    "closeMenu": "Close Menu"
+    "closeMenu": "Close Menu",
+    "articles": "Articles",
+    "reports": "Reports"
   },
   "footer": {
     "contactUs": "Contact Us",
@@ -37,7 +39,7 @@
       "company": {
         "reduceEmissions": "reducing emissions",
         "scope3Emissions": "scope 3 emissions",
-        "meetParisAgreement": "meet the Paris Agreement"
+        "meetParisAgreement": "meeting the Paris Agreement"
       },
       "municipality": {
         "reduceEmissions": "reducing emissions",
@@ -51,8 +53,8 @@
     "bestPerformers": "Who is the best?",
     "bestMunicipalities": "Sweden's best municipalities",
     "municipalitiesDescription": "By average annual reduction in emissions since the Paris Agreement (2015)",
-    "bestCompanies": "Top Companies in Emission Reduction",
-    "companiesDescription": "Emissions reduction between 2023 and 2024",
+    "largestEmittor": "Company with the largest emissions",
+    "companiesDescription": "Emissions from the most recently reported year",
     "aboutUsTitle": "Who are we?",
     "aboutUsContent": "Klimatkollen is a citizen platform that provides climate data and builds support for reducing emissions in line with the Paris Agreement. We believe in the power of simple, engaging data visualization to enhance knowledge and drive participation in the climate conversation.",
     "tabName": {
@@ -107,11 +109,14 @@
     }
   },
   "insightsPage": {
-    "title": "Insights",
+    "title": "Articles",
+    "description": "Articles and updates about Klimatkollen and the climate transition.",
+    "readMore": "Read more"
+  },
+  "reportsPage": {
+    "title": "Reports",
     "description": "In-depth analyses and reports on Sweden’s climate transition.",
-    "newsletter": "Subscribe to our newsletter",
-    "readMore": "Read more",
-    "subscribeNewsletter": "Subscribe to our newsletter"
+  "readMore": "Read more"
   },
   "blogDetailPage": {
     "loading": "Loading...",
@@ -340,6 +345,10 @@
     "kayla": {
       "role": "Developer",
       "description": "Frontend developer with a passion for sustainability and user-friendly digital solutions. Previously worked as an environmental consultant focused on interpreting regulations and calculating greenhouse gas emissions for companies."
+    },
+    "catharina": {
+      "role": "Communicator",
+      "description": "Communicator and filmmaker focusing on climate and sustainability, co-leading Ett hållbart Lidingö, with a background as a management consultant."
     }
   },
   "board": {
