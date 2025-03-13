@@ -14,6 +14,9 @@
     "reports": "Rapporter"
   },
   "footer": {
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "welcome": "Välkommen",
     "contactUs": "Kontakta oss",
     "description": "Klimatkollen är en medborgarplattform som tillgängliggör klimatdata och är utvecklad med öppen <0>källkod</0>.",
     "privacyTerms": "Privacy & Terms",
@@ -632,6 +635,13 @@
     "success": {
       "title": "Ändringar sparade!",
       "description": "Rapporteringsperioden har nu uppdaterats"
+    }
+  },
+  "authCallbackPage" : {
+    "failed": "Autentisering misslyckades",
+    "success": {
+      "title": "Inloggad",
+      "description": "Välkommen"
     }
   }
 }

@@ -42,8 +42,7 @@ function PartnerLogos() {
 
 export function Footer() {
   const { t } = useTranslation()
-  const { getAuthUrl, isAuthenticated, parseToken, logout } = useAuth()
-  const userinfo = parseToken()
+  const { login, logout, token, user } = useAuth()
   const navigate = useNavigate()
 
   return (
@@ -93,19 +92,15 @@ export function Footer() {
           >
             {t("footer.ccBySa")}
           </a>
-          {!isAuthenticated() && (
+          {!token && (
             <a
-              onClick={() => {
-                window.location.href = getAuthUrl
-                  ? getAuthUrl()
-                  : "#";
-              }}
+              onClick={() => login()}
               className="hover:text-white transition-colors cursor-pointer"
             >
-              Login
+              {t('footer.login')}
             </a>
           )}
-          {isAuthenticated() && (
+          {token && (
               <a
                 onClick={() => {
                   logout();
@@ -113,18 +108,18 @@ export function Footer() {
                 }}
                 className="hover:text-white cursor-pointer transition-colors"
               >
-                Logout
+                {t('footer.logout')}
               </a>
             )}
-          {isAuthenticated() && userinfo && (
+          {token && user && (
             <div className="hover:text-white ms-auto flex items-center">
-              <span>Välkommen, {userinfo?.name ?? ""}</span>
+              <span>{t('footer.welcome')}, {user?.name ?? ""}</span>
               <Avatar className="flex-shrink-0 ms-1">
                 <AvatarImage
                   className="w-[45px] h-[45px] border border-grey rounded-full"
-                  src={userinfo.githubImageUrl || ""}
+                  src={user.githubImageUrl || ""}
                 />
-                <AvatarFallback>{userinfo?.name ?? ""}</AvatarFallback>
+                <AvatarFallback>{user?.name ?? ""}</AvatarFallback>
               </Avatar>
             </div>
           )}
