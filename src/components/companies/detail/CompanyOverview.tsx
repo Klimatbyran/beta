@@ -34,7 +34,7 @@ export function CompanyOverview({
   const { t } = useTranslation();
   const isMobile = useScreenSize();
   const [showMore, setShowMore] = useState(false);
-  const {isAuthenticated} = useAuth();
+  const { token } = useAuth();
   const navigate = useNavigate();
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   const sectorName =
@@ -61,7 +61,7 @@ export function CompanyOverview({
           <div className="flex items-center gap-4">
             <Text className=" text-4xl lg:text-6xl">{company.name}</Text>
             <div className='flex flex-col h-full justify-around'>
-              {isAuthenticated() && (
+              {token && (
                 <Button variant="outline" size="sm" className="gap-2 mt-2" onClick={() => navigate("edit")}>
                     Edit
                     <div className="w-5 h-5 rounded-full bg-orange-5/30 text-orange-2 text-xs flex items-center justify-center">
