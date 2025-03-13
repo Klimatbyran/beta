@@ -51,5 +51,5 @@ spec:
             - name: VITE_MAILCHIMP_URL
               valueFrom:
                 secretKeyRef:
-                  name: mailchimp-secret
+                  name: mailchimp-url
                   key: VITE_MAILCHIMP_URL
