@@ -30,7 +30,11 @@
     "emailPlaceholder": "Your email address",
     "subscribeButton": "Subscribe",
     "privacyNotice": "When you submit your details, they will be processed by Klimatbyrån, the non-profit association behind Klimatkollen. You have the right to information on how",
-    "privacyLink": "your personal data is processed."
+    "privacyLink": "your personal data is processed.",
+    "errorEmptyEmail": "Please enter a valid email address.",
+    "errorInvalidEmail": "Please enter a valid email address.",
+    "errorGeneric": "An error occurred. Please try again later.",
+    "successMessage": "Thank you! You have now subscribed to our newsletter."
   },
   "landingPage": {
     "metaTitle": "Open climate data for citizens",

@@ -1,4 +1,4 @@
-import { BarChart3, ChevronDown, Menu, X } from "lucide-react";
+import { BarChart3, ChevronDown, Menu, X, Mail } from "lucide-react";
 import { Link, useLocation, matchPath } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useState, useCallback, useEffect } from "react";
@@ -39,6 +39,7 @@ export function Header() {
       >
         🇬🇧
       </button>
+      <span className="text-grey">|</span>
       <button
         onClick={() => changeLanguage("sv")}
         className={cn(
@@ -188,6 +189,17 @@ export function Header() {
                   )}
                 </div>
               ))}
+              {/* Newsletter button in mobile menu */}
+              <button
+                onClick={() => {
+                  setMenuOpen(false); // Close the menu
+                  setIsSignUpOpen(true); // Open the newsletter popover
+                }}
+                className="flex items-center gap-2 text-blue-3"
+              >
+                <Mail className="w-4 h-4" />
+                {t("header.newsletter")}
+              </button>
             </div>
           </div>
         )}
