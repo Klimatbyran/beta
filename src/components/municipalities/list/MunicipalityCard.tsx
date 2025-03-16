@@ -5,18 +5,21 @@ import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import type { Municipality } from "@/types/municipality";
 import { CardInfo } from "./MunicipalityCardInfo";
+import { localizeUnit } from "@/utils/localizeUnit";
+
 
 interface MunicipalityCardProps {
   municipality: Municipality;
 }
 
+
 export function MunicipalityCard({ municipality }: MunicipalityCardProps) {
   const { t } = useTranslation();
   const meetsParis = municipality.budgetRunsOut === "Håller budget";
-
+  
   const lastYearEmission = municipality.approximatedHistoricalEmission.at(-1);
   const lastYearEmissionsKtons = lastYearEmission
-    ? (lastYearEmission.value / 1000).toFixed(1)
+    ? localizeUnit(lastYearEmission.value / 1000)
     : t("municipalities.card.noData");
   const lastYear = lastYearEmission?.year.toString();
 

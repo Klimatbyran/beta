@@ -1,6 +1,7 @@
 import { Building2, TreePine } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Text } from "@/components/ui/text";
+import { localizeUnit } from "@/utils/localizeUnit";
 
 interface RankedListProps {
   title: string;
@@ -69,7 +70,7 @@ export function RankedList({
                     textColor
                   )}
                 >
-                  {item.displayValue || item.value.toFixed(1)}
+                  {localizeUnit(item.value) || item.value.toFixed(1)}
                 </span>
                 <span className={cn("text-grey", unit !== "%" && "ml-2")}>
                   {unit}
