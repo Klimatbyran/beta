@@ -188,7 +188,7 @@ export function CompanyOverview({
                 ? `${(selectedPeriod.economy.turnover.value / 1e9).toFixed(
                     1
                   )} mdr ${selectedPeriod.economy.turnover.currency}`
-                : t("company.notReported")}
+                : t("companies.overview.notReported")}
             </Text>
           </div>
 
@@ -199,7 +199,7 @@ export function CompanyOverview({
             <Text className="text-lg md:text-base sm:text-sm">
               {selectedPeriod.economy?.employees?.value
                 ? selectedPeriod.economy.employees.value.toLocaleString("sv-SE")
-                : t("company.notReported")}
+                : t("companies.overview.notReported")}
             </Text>
           </div>
 

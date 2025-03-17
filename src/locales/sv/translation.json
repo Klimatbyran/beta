@@ -140,21 +140,23 @@
     "searchInFilter": "Sök i filter...",
     "noFiltersFound": "Inga filter hittades.",
     "sortingOptions": {
-      "emissionsChange": "utsläppsförändring",
+      "emissionsChange": "Utsläppsförändring (%)",
       "totalEmissions": "Totala utsläpp",
-      "scope3Coverage": "Scope 3-utsläpp",
-      "name": "Namn"
+      "scope3Coverage": "Scope 3-rapportering",
+      "nameAsc": "Företagsnamn A-Ö",
+      "nameDesc": "Företagsnamn Ö-A"
     },
     "sector": "Sektor",
     "errorTitle": "Det gick inte att hämta företagsinformation",
     "errorDescription": "Försök igen senare",
-    "title": "Företagsrapporter",
+    "title": "Företagens Klimatdata",
     "description": "Översikt över företagens klimatpåverkan och hållbarhetsarbete",
-    "searchPlaceholder": "Sök (separera med ,)",
+    "searchPlaceholder": "Sök företag (separera med komma)",
     "noCompaniesFound": "Inga företag hittades",
     "tryDifferentCriteria": "Försök med andra sökkriterier",
     "sorting": "Sorterar:",
-    "filtering": "Filter:"
+    "filtering": "Filter:",
+    "allSectors": "Alla sektorer"
   },
   "companyDetailPage": {
     "errorTitle": "Det gick inte att hämta företagsinformation",
@@ -260,7 +262,7 @@
   "municipalitiesPage": {
     "errorTitle": "Det gick inte att hämta kommuninformation",
     "errorDescription": "Försök igen senare",
-    "title": "Jämförelse kommuner",
+    "title": "Kommunrapporter",
     "description": "Översikt över utsläpp och omställning i kommunerna",
     "filter": {
       "searchPlaceholder": "Sök kommun (flera: separera med komma)",
@@ -642,7 +644,7 @@
       "description": "Rapporteringsperioden har nu uppdaterats"
     }
   },
-  "authCallbackPage" : {
+  "authCallbackPage": {
     "failed": "Autentisering misslyckades",
     "success": {
       "title": "Inloggad",

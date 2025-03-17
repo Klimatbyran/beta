@@ -44,7 +44,7 @@ export function MunicipalitiesPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Kommunrapporter"
+        title={t("municipalitiesPage.title")}
         description={t("municipalitiesPage.description")}
         className="-ml-4"
       />
