@@ -160,7 +160,7 @@ export function AboutPage() {
           >
             <div className="prose prose-invert w-[90%] max-w-5xl mx-auto space-y-8">
               <div className="space-y-4">
-                <Text variant="h3" className="text-blue-2 font-bold text-2xl">
+                <Text className="text-blue-2 font-bold text-2xl">
                   {t("aboutPage.previousProjectsSection.kommunprojektetTitle")}
                 </Text>
                 <Text variant="body">
@@ -171,7 +171,7 @@ export function AboutPage() {
               </div>
 
               <div className="space-y-4">
-                <Text variant="h3" className="text-blue-2 font-bold text-2xl">
+                <Text className="text-blue-2 font-bold text-2xl">
                   {t("aboutPage.previousProjectsSection.riksdagsvaletTitle")}
                 </Text>
                 <Text variant="body">
