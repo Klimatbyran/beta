@@ -18,6 +18,7 @@ import { UnauthorizedErrorPage } from "./pages/error/UnauthorizedErrorPage";
 import { AuthCallback } from "./pages/AuthCallback";
 import { CompanyEditPage } from "./pages/CompanyEditPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { PrivacyPage } from "./pages/PrivacyPage";
 
 export function AppRoutes() {
   const { currentLanguage } = useLanguage();
@@ -75,6 +76,7 @@ export function AppRoutes() {
       <Route path={`${basePath}/articles`} element={<InsightsPage />} />
       <Route path={`${basePath}/reports`} element={<ReportsPage />} />
       <Route path={`${basePath}/insights/:id`} element={<BlogDetailPage />} />
+      <Route path={`${basePath}/privacy`} element={<PrivacyPage />} />
 
       {/* Error pages */}
       <Route path={`${basePath}/error/:code`} element={<ErrorPage />} />

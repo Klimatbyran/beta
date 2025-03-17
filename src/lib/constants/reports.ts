@@ -11,7 +11,7 @@ export const reports = [
       name: "Alexandra Palmquist",
       avatar: "/people/alex.jpg",
     },
-    pdfUrl: "/reports/2025-03_StorfoeretagensHistoriskaUtslaepp.pdf",
+    pdfUrl: "/reports/2025-03_Storföretagens_historiska_utsläpp.pdf",
     coverImage: "/images/reportImages/2024_report_sv2.png",
     language: "sv",
   },
