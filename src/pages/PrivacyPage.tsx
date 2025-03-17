@@ -28,22 +28,22 @@ export function PrivacyPage() {
           <div className="flex flex-col md:flex-row items-start justify-between mb-12">
             <div className="space-y-4 w-full">
               <div className="flex flex-wrap items-center gap-4">
-                <Text variant="h3" className="text-4xl md:text-3xl sm:text-2xl">
+                <Text variant="h3" className="text-3xl md:text-3xl sm:text-2xl">
                   {t("privacyPage.responsibilityTitle")}
                 </Text>
               </div>
               <Text
                 variant="body"
-                className="text-lg md:text-base sm:text-sm max-w-3xl"
+                className="text-base md:text-base sm:text-sm max-w-3xl"
               >
                 {t("privacyPage.responsibilityText")}
               </Text>
               <div className="flex flex-wrap items-center gap-4">
-                <Text variant="h3" className="text-4xl md:text-3xl sm:text-2xl">
+                <Text variant="h3" className="text-3xl md:text-3xl sm:text-2xl">
                   {t("privacyPage.dataCollectionTitle")}
                 </Text>
               </div>
-              <Text variant="body" className="text-lg md:text-base sm:text-sm">
+              <Text variant="body" className="text-base md:text-base sm:text-sm">
                 {t("privacyPage.dataCollectionText")}
               </Text>
             </div>

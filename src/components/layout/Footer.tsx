@@ -41,9 +41,9 @@ function PartnerLogos() {
 }
 
 export function Footer() {
-  const { t } = useTranslation()
-  const { login, logout, token, user } = useAuth()
-  const navigate = useNavigate()
+  const { t } = useTranslation();
+  const { login, logout, token, user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <footer className="bg-black-2 py-4 md:py-8">
@@ -89,6 +89,8 @@ export function Footer() {
           <a
             href="https://creativecommons.org/licenses/by-sa/4.0/"
             className="hover:text-white transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {t("footer.ccBySa")}
           </a>
@@ -97,23 +99,25 @@ export function Footer() {
               onClick={() => login()}
               className="hover:text-white transition-colors cursor-pointer"
             >
-              {t('footer.login')}
+              {t("footer.login")}
             </a>
           )}
           {token && (
-              <a
-                onClick={() => {
-                  logout();
-                  navigate("/");
-                }}
-                className="hover:text-white cursor-pointer transition-colors"
-              >
-                {t('footer.logout')}
-              </a>
-            )}
+            <a
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+              className="hover:text-white cursor-pointer transition-colors"
+            >
+              {t("footer.logout")}
+            </a>
+          )}
           {token && user && (
             <div className="hover:text-white ms-auto flex items-center">
-              <span>{t('footer.welcome')}, {user?.name ?? ""}</span>
+              <span>
+                {t("footer.welcome")}, {user?.name ?? ""}
+              </span>
               <Avatar className="flex-shrink-0 ms-1">
                 <AvatarImage
                   className="w-[45px] h-[45px] border border-grey rounded-full"
