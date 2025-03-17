@@ -50,8 +50,11 @@ export function RankedList({
           <a
             key={item.id || index}
             className="grid grid-cols-[auto_1fr] items-center gap-4 hover:bg-black-1 transition-colors rounded-lg"
-            href={(type === "municipality" ? "municipalities/" : "/companies/") + item.name}
-           >
+            href={
+              (type === "municipality" ? "/municipalities/" : "/companies/") +
+              (item.id || item.name)
+            }
+          >
             <span
               className={cn(
                 "text-2xl md:text-5xl font-light",
