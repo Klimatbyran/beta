@@ -72,7 +72,7 @@ export function Header() {
     { path: `${currentLanguage}/about`, label: t("header.about") },
     { path: `${currentLanguage}/methodology`, label: t("header.methodology") },
     {
-      path: `${currentLanguage}/insights`,
+      path: `${currentLanguage}/articles`,
       label: t("header.insights"),
       sublinks: [
         { label: t("header.articles"), path: `${currentLanguage}/articles` },
@@ -180,6 +180,7 @@ export function Header() {
                         <Link
                           key={sublink.path}
                           to={sublink.path}
+                          onClick={toggleMenu}
                           className="flex items-center gap-2 text-sm text-gray-400"
                         >
                           {sublink.label}
