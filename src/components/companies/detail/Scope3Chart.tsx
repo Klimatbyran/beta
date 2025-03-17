@@ -49,6 +49,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
   const { getCategoryName, getCategoryColor, getCategoryFilterColors } =
     useCategoryMetadata();
   const { size, containerRef } = useResponsiveSize();
+  const { t } = useTranslation();
 
   const filteredCategories = categories.filter(
     (cat) => !excludedCategories.includes(cat.category)
@@ -79,13 +80,12 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
   };
 
   const CustomTooltip = ({ active, payload }: any) => {
-    const { t } = useTranslation();
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
         <div className="bg-black-1 px-4 py-3 rounded-level-2">
           <Text variant="small" className="text-grey">
-            Kategori {data.category}
+            {t("companies.scope3Chart.category", { number: data.category })}
           </Text>
           <Text variant="h4">{data.name}</Text>
           <Text>{Math.round(data.value).toLocaleString()} ton CO₂e</Text>
@@ -152,8 +152,10 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
       {excludedCategories.length > 0 && (
         <div className="mb-2 p-4 bg-black-1 rounded-level-2">
           <Text variant="small" className="text-grey">
-            Visar {chartData.length} av {categories.length} kategorier.
-            Filtrerade kategorier:
+            {t("companies.scope3Chart.showingCategories", {
+              shown: chartData.length,
+              total: categories.length,
+            })}
           </Text>
           <div className="mt-2 flex flex-wrap gap-2">
             {excludedCategories.map((catId) => {
@@ -196,7 +198,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
             className="gap-2"
           >
             <RotateCcw className="w-4 h-4" />
-            Återställ alla
+            {t("companies.scope3Chart.resetAll")}
           </Button>
         )}
       </div>

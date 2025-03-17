@@ -544,7 +544,7 @@
       "tonsCO2e": "tons CO₂e",
       "clickToFilter": "Click to filter out",
       "resetAll": "Reset All",
-      "showingCategories": "Showing {shown} of {total} categories. Filtered categories:"
+      "showingCategories": "Showing {{shown}} of {{total}} categories. Filtered categories:"
     },
     "scope3Data": {
       "categories": "Scope 3 Categories",

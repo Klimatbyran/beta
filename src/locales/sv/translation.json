@@ -552,7 +552,7 @@
       "tonsCO2e": "ton CO₂e",
       "clickToFilter": "Klicka för att filtrera bort",
       "resetAll": "Återställ alla",
-      "showingCategories": "Visar {shown} av {total} kategorier. Filtrerade kategorier:"
+      "showingCategories": "Visar {{shown}} av {{total}} kategorier. Filtrerade kategorier:"
     },
     "scope3Data": {
       "categories": "Scope 3-kategorier",
