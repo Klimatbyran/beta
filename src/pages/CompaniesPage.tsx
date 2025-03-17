@@ -28,6 +28,7 @@ import {
   type SortOption,
   useSectors,
   useSectorNames,
+  SectorCode,
 } from "@/hooks/useCompanyFilters";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
@@ -306,9 +307,13 @@ export function CompaniesPage() {
         <SectionedCompanyList
           companies={filteredCompanies.map(({ ...rest }) => ({
             ...rest,
+            metrics: {
+              emissionsReduction: 0,
+              displayReduction: "0%",
+            },
             reportingPeriods: rest.reportingPeriods.map((period) => ({
               ...period,
-              id: period.startDate, // Using startDate as temporary id
+              id: period.startDate,
             })),
           }))}
           sortBy={sortBy}
@@ -321,7 +326,13 @@ export function CompaniesPage() {
               className="group overflow-hidden rounded-level-2"
             >
               <div className="transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(153,207,255,0.15)]">
-                <CompanyCard {...company} />
+                <CompanyCard
+                  {...company}
+                  metrics={{
+                    emissionsReduction: 0,
+                    displayReduction: "0%",
+                  }}
+                />
               </div>
             </div>
           ))}

@@ -14,7 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { SECTOR_NAMES } from "@/hooks/useCompanyFilters";
+import { useSectorNames, SectorCode } from "@/hooks/useCompanyFilters";
 import type { RankedCompany } from "@/types/company";
 import { Text } from "@/components/ui/text";
 import { useScreenSize } from "@/hooks/useScreenSize";
@@ -43,6 +43,7 @@ export function CompanyCard({
 
   const { t } = useTranslation();
   const { getCategoryColor } = useCategoryMetadata();
+  const sectorNames = useSectorNames();
 
   const latestPeriod = reportingPeriods[0];
   const previousPeriod = reportingPeriods[1];
@@ -60,7 +61,7 @@ export function CompanyCard({
     : t("companies.card.noData");
 
   const sectorName = industry?.industryGics?.sectorCode
-    ? t(SECTOR_NAMES[industry.industryGics.sectorCode])
+    ? sectorNames[industry.industryGics.sectorCode as SectorCode]
     : t("companies.card.unknownSector");
 
   // Find the largest scope 3 category

@@ -177,8 +177,6 @@ export function CompanyDetailPage() {
         <CompanyHistory company={company} />
         <CompanyScope3
           emissions={selectedPeriod.emissions!}
-          year={new Date(selectedPeriod.endDate).getFullYear()}
-          isRealEstate={company.industry?.industryGics?.sectorCode === "60"}
           historicalData={sortedPeriods
             .filter(
               (period) =>
