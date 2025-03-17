@@ -642,5 +642,23 @@
       "title": "Logged in",
       "description": "Welcome"
     }
+  },
+  "privacyPage": {
+    "seoTitle": "Privacy Policy - Klimatkollen",
+    "seoDescription": "Read about how Klimatkollen processes personal data and protects your privacy.",
+    "seoHeading": "Privacy Policy",
+    "seoText": "Klimatkollen values your personal privacy and complies with the General Data Protection Regulation (GDPR).",
+    "title": "How Klimatkollen Processes Personal Data",
+    "lastUpdated": "Last updated: {{date}}",
+    "responsibilityTitle": "Data Controller",
+    "responsibilityText": "Klimatbyrån with organization number 802537-8814 is the data controller when the organization processes personal data.",
+    "dataCollectionTitle": "What data do we process?",
+    "dataCollectionText": "The personal data we collect is primarily information that you provide yourself (name, address, mobile number, etc.) when, for example, you sign up for our newsletter or become a member. You may also be employed by a partner or other contact of Klimatbyrån, in which case the personal data is your contact information at work.",
+    "whyTitle": "Why do we process personal data?",
+    "whyText1": "We process the data to fulfill the commitments associated with the purpose stated at the time of collection or for the collaboration. Otherwise, we use your information only for purposes related to Klimatbyrån's own activities. We do not share your information with third parties.",
+    "whyText2": "Klimatbyrån values personal integrity. Handling personal data correctly and securely is a priority for us. Those who entrust us with their information should feel secure.",
+    "whyText3": "We comply with the General Data Protection Regulation and other laws and regulations in the data protection area. You always have the right to request correction or deletion of your personal data.",
+    "contactTitle": "Contact Us",
+    "contactText1": "If you have questions or requests regarding the handling of your personal data, please contact us."
   }
 }
