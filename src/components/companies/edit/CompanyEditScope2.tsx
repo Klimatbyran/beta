@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 export function CompanyEditScope2({ periods, onInputChange }) {
   const { t } = useTranslation()
-  console.log("scope 2 periods", periods)
+
   return (
     <>
       <CompanyEditRow
@@ -21,8 +21,8 @@ export function CompanyEditScope2({ periods, onInputChange }) {
           CompanyEditInputField({
             type: "number",
             name: "scope-2-mb-" + period.id,
-            value: period.emissions.scope2.mb ?? 0,            
-            verified: period.emissions.scope2.metadata?.verifiedBy,
+            value: period.emissions?.scope2?.mb ?? '',            
+            verified: period.emissions?.scope2?.metadata?.verifiedBy,
             onInputChange
           })
         )}
@@ -34,8 +34,8 @@ export function CompanyEditScope2({ periods, onInputChange }) {
           CompanyEditInputField({
             type: "number",
             name: "scope-2-lb-" + period.id,
-            value: period.emissions.scope2.lb ?? 0,            
-            verified: period.emissions.scope2.metadata?.verifiedBy,
+            value: period.emissions?.scope2?.lb ?? '',            
+            verified: period.emissions?.scope2?.metadata?.verifiedBy,
             onInputChange
           })
         )}
@@ -47,8 +47,8 @@ export function CompanyEditScope2({ periods, onInputChange }) {
           CompanyEditInputField({
             type: "number",
             name: "scope-2-unknown-" + period.id,
-            value: period.emissions.scope2.unknown ?? 0,            
-            verified: period.emissions.scope2.metadata?.verifiedBy,
+            value: period.emissions?.scope2?.unknown ?? '',            
+            verified: period.emissions?.scope2?.metadata?.verifiedBy,
             onInputChange
           })
         )}
