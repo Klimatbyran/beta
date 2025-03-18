@@ -2,7 +2,6 @@ import { CompanyEditRow } from "./CompanyEditRow";
 import { CompanyEditInputField } from "./CompanyEditField";
 
 export function CompanyEditScope1({ periods, onInputChange }) {
-  console.log("scope 1 periods", periods)
   return (
     <CompanyEditRow
       headerName

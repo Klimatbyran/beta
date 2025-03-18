@@ -38,7 +38,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       if (stateParts[1] !== oauthState) {
-        console.log("error");
         throw new Error("States do not match up");
       }
 

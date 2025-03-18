@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 export function CompanyEditScope2({ periods, onInputChange }) {
   const { t } = useTranslation()
-  console.log("scope 2 periods", periods)
+
   return (
     <>
       <CompanyEditRow
