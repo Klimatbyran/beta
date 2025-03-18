@@ -68,7 +68,7 @@ export function MethodsPage() {
                 />
               </p>
               <p>{t("methodsPage.accordion.parisAgreement.paragraph3")}</p>
-              <div className="space-y-6 max-w-3xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
                 <LinkButton
                   title={t("methodsPage.accordion.parisAgreement.link.title")}
                   text={t("methodsPage.accordion.parisAgreement.link.text")}
