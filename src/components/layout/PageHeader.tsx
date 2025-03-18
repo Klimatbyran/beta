@@ -15,7 +15,7 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <div>
+    <div className="mb-8 pt-4">
       <div className="absolute inset-0 w-screen bg-black left-0 right-0 -z-10 h-full" />
       <div
         className={cn(
