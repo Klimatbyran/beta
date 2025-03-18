@@ -1,10 +1,12 @@
-import { Filter, X } from "lucide-react";
+import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
 import { FilterGroup } from "./FilterGroup";
 import { SortingDropdown } from "./SortingDropdown";
-import { FilterBadge } from "./FilterBadge";
+import { FilterBadges, FilterBadge } from "./FilterBadge";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface CompanyFiltersProps {
   isFilterOpen: boolean;
@@ -17,7 +19,7 @@ interface CompanyFiltersProps {
   sortBy: string;
   setSortBy: (sortBy: string) => void;
   sortOptions: { value: string; label: string }[];
-  activeFilters: { label: string; onRemove: () => void }[];
+  activeFilters: FilterBadge[];
 }
 
 export function CompanyFilters({
@@ -34,9 +36,25 @@ export function CompanyFilters({
   activeFilters,
 }: CompanyFiltersProps) {
   const { t } = useTranslation();
+  const [headerHeight, setHeaderHeight] = useState(48);
+  
+  // Measure the actual header height
+  useEffect(() => {
+    const header = document.querySelector('header');
+    if (header) {
+      const height = header.getBoundingClientRect().height;
+      setHeaderHeight(height);
+    }
+  }, []);
 
   return (
-    <div className="mb-8">
+    <div 
+      className="sticky z-30 bg-black pt-4 pb-2 -mt-4"
+      style={{ 
+        top: `${headerHeight}px`,
+        boxShadow: '0 -10px 15px 15px rgba(0, 0, 0, 1)' // Shadow to cover any gap
+      }}
+    >
       <div className="flex flex-col md:flex-row gap-4 mb-4">
         <div className="relative flex-1">
           <Input
@@ -56,7 +74,10 @@ export function CompanyFilters({
         </Button>
       </div>
 
-      {isFilterOpen && (
+      <div className={cn(
+        "transition-all duration-300 overflow-hidden",
+        isFilterOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+      )}>
         <div className="bg-black-2 rounded-level-2 p-8 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
@@ -84,17 +105,11 @@ export function CompanyFilters({
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {activeFilters.length > 0 && (
-        <div className="flex flex-wrap gap-3 mt-4">
-          {activeFilters.map((filter, index) => (
-            <FilterBadge
-              key={index}
-              label={filter.label}
-              onRemove={filter.onRemove}
-            />
-          ))}
+        <div className="mt-2 mb-2">
+          <FilterBadges filters={activeFilters} />
         </div>
       )}
     </div>

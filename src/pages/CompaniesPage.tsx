@@ -7,6 +7,7 @@ import { CompanyGrid } from "@/components/companies/list/CompanyGrid";
 import { useTranslation } from "react-i18next";
 import { PageSEO } from "@/components/SEO/PageSEO";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { FilterBadge } from "@/components/companies/filters/FilterBadge";
 
 export function CompaniesPage() {
   const { t } = useTranslation();
@@ -52,25 +53,24 @@ export function CompaniesPage() {
     filteredCompanies,
   } = useCompanyFilters(companies as any);
 
-  const activeFilters = [
+  const activeFilters: FilterBadge[] = [
     ...sectors.map((sec) => ({
-      label: `${t("companiesPage.filtering")} ${
-        sectorNames[sec as keyof typeof sectorNames] || sec
-      }`,
+      type: "filter" as const,
+      label: sectorNames[sec as keyof typeof sectorNames] || sec,
       onRemove: () => setSectors(sectors.filter((s) => s !== sec)),
     })),
     ...(searchQuery
       ? [
           {
+            type: "filter" as const,
             label: searchQuery,
             onRemove: () => setSearchQuery(""),
           },
         ]
       : []),
     {
-      label: `${t("companiesPage.sorting")} ${
-        sortOptions.find((opt) => opt.value === sortBy)?.label || sortBy
-      }`,
+      type: "sort" as const,
+      label: sortOptions.find((opt) => opt.value === sortBy)?.label || sortBy,
       onRemove: () => setSortBy("emissions_reduction"),
     },
   ];
@@ -112,14 +112,16 @@ export function CompaniesPage() {
         activeFilters={activeFilters}
       />
 
-      {viewMode === "grid" ? (
-        <CompanyGrid companies={companiesWithMetrics} />
-      ) : (
-        <SectionedCompanyList
-          companies={companiesWithMetrics}
-          sortBy={sortBy}
-        />
-      )}
+      <div className="pt-4">
+        {viewMode === "grid" ? (
+          <CompanyGrid companies={companiesWithMetrics} />
+        ) : (
+          <SectionedCompanyList
+            companies={companiesWithMetrics}
+            sortBy={sortBy}
+          />
+        )}
+      </div>
     </div>
   );
 }

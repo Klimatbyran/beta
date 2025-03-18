@@ -1,23 +1,65 @@
 import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
+
+export interface FilterBadge {
+  type: "filter" | "sort";
+  label: string;
+  onRemove?: () => void;
+}
 
 interface FilterBadgeProps {
   label: string;
   onRemove: () => void;
+  type?: "filter" | "sort";
 }
 
-export function FilterBadge({ label, onRemove }: FilterBadgeProps) {
+export function FilterBadge({
+  label,
+  onRemove,
+  type = "filter",
+}: FilterBadgeProps) {
+  const { t } = useTranslation();
+
   return (
-    <div className="flex items-center gap-2 bg-black-2 rounded-full px-4 py-2">
-      <span className="text-sm text-grey">{label}</span>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="h-5 w-5 rounded-full hover:bg-black-1"
-        onClick={onRemove}
-      >
-        <X className="h-3.5 w-3.5" />
-      </Button>
+    <Badge
+      variant="secondary"
+      className="bg-blue-5/30 text-blue-2 pl-2 pr-1 flex items-center gap-1"
+    >
+      <span className="text-grey text-xs mr-1">
+        {type === "sort"
+          ? t("companiesPage.sorting")
+          : t("companiesPage.filtering")}
+      </span>
+      {label}
+      {type === "filter" && onRemove && (
+        <button
+          type="button"
+          title={t("companiesPage.removeFilter")}
+          onClick={(e) => {
+            e.preventDefault();
+            onRemove();
+          }}
+          className="hover:bg-blue-5/50 p-1 rounded-sm transition-colors"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
+    </Badge>
+  );
+}
+
+export function FilterBadges({ filters }: { filters: FilterBadge[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {filters.map((filter, index) => (
+        <FilterBadge
+          key={index}
+          label={filter.label}
+          onRemove={filter.onRemove || (() => {})}
+          type={filter.type}
+        />
+      ))}
     </div>
   );
 }
