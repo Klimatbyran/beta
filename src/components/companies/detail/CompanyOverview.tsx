@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Pen } from "lucide-react";
 import { useSectorNames, SectorCode } from "@/hooks/useCompanyFilters";
+import { localizeUnit } from "@/utils/localizeUnit";
 
 interface CompanyOverviewProps {
   company: CompanyDetails;
@@ -192,9 +193,9 @@ export function CompanyOverview({
             </Text>
             <Text className="text-base md:text-base sm:text-sm">
               {selectedPeriod.economy?.turnover?.value
-                ? `${(selectedPeriod.economy.turnover.value / 1e9).toFixed(
-                    1
-                  )} mdr ${selectedPeriod.economy.turnover.currency}`
+                ? `${localizeUnit(selectedPeriod.economy.turnover.value / 1e9)
+
+                } mdr ${selectedPeriod.economy.turnover.currency}`
                 : t("companies.overview.notReported")}
             </Text>
           </div>

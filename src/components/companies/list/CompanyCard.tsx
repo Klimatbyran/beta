@@ -20,6 +20,8 @@ import { Text } from "@/components/ui/text";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { useTranslation } from "react-i18next";
 import { useCategoryMetadata } from "@/hooks/useCategories";
+import { localizeUnit } from "@/utils/localizeUnit";
+
 
 type CompanyCardProps = Pick<
   RankedCompany,
@@ -207,7 +209,7 @@ export function CompanyCard({
               </Text>
               <Text variant="h6">
                 {latestPeriod.economy.turnover.value
-                  ? (latestPeriod.economy.turnover.value / 1e9).toFixed(1)
+                  ? localizeUnit(latestPeriod.economy.turnover.value / 1e9)
                   : t("companies.card.noData")}{" "}
                 mdr
                 <span className="text-lg text-grey ml-1">

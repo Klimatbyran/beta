@@ -6,6 +6,7 @@ import { X, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCategoryMetadata } from "@/hooks/useCategories";
 import { useTranslation } from "react-i18next";
+import { localizeUnit } from "@/utils/localizeUnit";
 
 interface Scope3ChartProps {
   categories: Array<{
@@ -89,7 +90,7 @@ export function Scope3Chart({ categories, className }: Scope3ChartProps) {
           </Text>
           <Text variant="h4">{data.name}</Text>
           <Text>{Math.round(data.value).toLocaleString()} ton CO₂e</Text>
-          <Text className="text-grey">({data.percentage.toFixed(1)}%)</Text>
+          <Text className="text-grey">({localizeUnit(data.percentage)}%)</Text>
           <Text variant="small" className="text-blue-2 mt-2">
             {t("companies.scope3Chart.clickToFilter")}
           </Text>
