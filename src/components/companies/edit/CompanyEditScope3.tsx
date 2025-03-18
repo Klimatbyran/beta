@@ -22,7 +22,7 @@ export function CompanyEditScope3({ periods, onInputChange }) {
 
   const getCategoryVerified = (index: number, categories) => {
     const category = categories.find((category) => category.category === index);
-    return category !== undefined ? (category.metadata.verifiedBy !== null) : false;
+    return category !== undefined ? (category.metadata?.verifiedBy) : false;
   };
 
   return (

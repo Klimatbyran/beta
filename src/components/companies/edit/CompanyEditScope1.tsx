@@ -2,6 +2,7 @@ import { CompanyEditRow } from "./CompanyEditRow";
 import { CompanyEditInputField } from "./CompanyEditField";
 
 export function CompanyEditScope1({ periods, onInputChange }) {
+  console.log("scope 1 periods", periods)
   return (
     <CompanyEditRow
       headerName
@@ -12,7 +13,7 @@ export function CompanyEditScope1({ periods, onInputChange }) {
           name: "scope-1-" + period.id,
           type: "number",
           value: period.emissions.scope1.total ?? 0,
-          verified: period.emissions.scope1.metadata.verifiedBy !== null,
+          verified: period.emissions.scope1.metadata?.verifiedBy,
           onInputChange
         })
       )}
