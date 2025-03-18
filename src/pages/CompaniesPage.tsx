@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCompanies } from "@/hooks/useCompanies";
 import { CompanyCard } from "@/components/companies/list/CompanyCard";
 import { SectionedCompanyList } from "@/components/companies/list/SectionedCompanyList";
-import { Filter, Check, X } from "lucide-react";
+import { Filter, Check, X, BarChart, List } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,6 +34,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslation } from "react-i18next";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { cn } from "@/lib/utils";
+import SectorGraphs from "@/components/companies/list/SectorGraphs";
 
 type FilterBadge = {
   type: "filter" | "sort";
@@ -189,6 +190,7 @@ export function CompaniesPage() {
   const [filterOpen, setFilterOpen] = useState(false);
   const sortOptions = useSortOptions();
   const sectorNames = useSectorNames();
+  const [viewMode, setViewMode] = useState<"graphs" | "list">("graphs");
 
   const {
     searchQuery,
@@ -254,13 +256,41 @@ export function CompaniesPage() {
       >
         <div className="absolute inset-0 w-full bg-black -z-10" />
 
-        {/* Wrapper for Filters, Search, and Badges */}
+        {/* Wrapper for View Toggle, Filters, Search, and Badges */}
         <div
           className={cn(
             "flex flex-wrap items-start gap-4",
             isMobile ? "flex-col" : "items-center"
           )}
         >
+          {/* View Toggle */}
+          <div className="flex bg-black-1 rounded-md overflow-hidden">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn(
+                "h-8 px-3 rounded-none",
+                viewMode === "graphs" ? "bg-blue-5/30 text-blue-2" : "text-grey"
+              )}
+              onClick={() => setViewMode("graphs")}
+              title={t("companiesPage.viewModes.graphs")}
+            >
+              <BarChart className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn(
+                "h-8 px-3 rounded-none",
+                viewMode === "list" ? "bg-blue-5/30 text-blue-2" : "text-grey"
+              )}
+              onClick={() => setViewMode("list")}
+              title={t("companiesPage.viewModes.list")}
+            >
+              <List className="w-4 h-4" />
+            </Button>
+          </div>
+
           {/* Search Input */}
           <Input
             type="text"
@@ -303,40 +333,45 @@ export function CompaniesPage() {
             {t("companiesPage.tryDifferentCriteria")}
           </p>
         </div>
-      ) : sectors.length === 0 && !searchQuery ? (
-        <SectionedCompanyList
-          companies={filteredCompanies.map(({ ...rest }) => ({
-            ...rest,
-            metrics: {
-              emissionsReduction: 0,
-              displayReduction: "0%",
-            },
-            reportingPeriods: rest.reportingPeriods.map((period) => ({
-              ...period,
-              id: period.startDate,
-            })),
-          }))}
-          sortBy={sortBy}
-        />
+      ) : viewMode === "list" ? (
+        sectors.length === 0 && !searchQuery ? (
+          <SectionedCompanyList
+            companies={filteredCompanies.map(({ ...rest }) => ({
+              ...rest,
+              metrics: {
+                emissionsReduction: 0,
+                displayReduction: "0%",
+              },
+              reportingPeriods: rest.reportingPeriods.map((period) => ({
+                ...period,
+                id: period.startDate,
+              })),
+            }))}
+            sortBy={sortBy}
+          />
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {filteredCompanies.map((company) => (
+              <CompanyCard
+                key={company.wikidataId}
+                {...company}
+                metrics={{
+                  emissionsReduction: 0,
+                  displayReduction: "0%",
+                }}
+              />
+            ))}
+          </div>
+        )
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredCompanies.map((company) => (
-            <div
-              key={company.wikidataId}
-              className="group overflow-hidden rounded-level-2"
-            >
-              <div className="transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(153,207,255,0.15)]">
-                <CompanyCard
-                  {...company}
-                  metrics={{
-                    emissionsReduction: 0,
-                    displayReduction: "0%",
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+        <SectorGraphs
+          companies={companies}
+          // selectedSectors={
+          //   sectors.length > 0
+          //     ? sectors
+          //     : Object.keys(sectorNames).filter((key) => key !== "all")
+          // }
+        />
       )}
     </div>
   );
