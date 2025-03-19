@@ -75,7 +75,7 @@ const DetailPopup: React.FC<DetailPopupProps> = ({
           <div>
             <h4 className="text-sm text-grey mb-2">Total Emissions</h4>
             <p className="text-2xl font-light text-white">
-              {total.toLocaleString()} tonnes CO₂e
+              {total.toLocaleString()} tCO₂e
             </p>
           </div>
 
@@ -84,7 +84,7 @@ const DetailPopup: React.FC<DetailPopupProps> = ({
               <div className="flex justify-between items-center">
                 <span className="text-sm text-grey">Scope 1</span>
                 <span className="text-sm text-white">
-                  {scope1.toLocaleString()} tonnes CO₂e
+                  {scope1.toLocaleString()} tCO₂e
                 </span>
               </div>
               <div className="h-2 bg-black-1 rounded-full overflow-hidden">
@@ -99,7 +99,7 @@ const DetailPopup: React.FC<DetailPopupProps> = ({
               <div className="flex justify-between items-center">
                 <span className="text-sm text-grey">Scope 2</span>
                 <span className="text-sm text-white">
-                  {scope2.toLocaleString()} tonCO₂e
+                  {scope2.toLocaleString()} tCO₂e
                 </span>
               </div>
               <div className="h-2 bg-black-1 rounded-full overflow-hidden">
@@ -114,7 +114,7 @@ const DetailPopup: React.FC<DetailPopupProps> = ({
               <div className="flex justify-between items-center">
                 <span className="text-sm text-grey">Scope 3</span>
                 <span className="text-sm text-white">
-                  {scope3.toLocaleString()} tonCO₂e
+                  {scope3.toLocaleString()} tCO₂e
                 </span>
               </div>
               <div className="h-2 bg-black-1 rounded-full overflow-hidden">
@@ -136,47 +136,61 @@ const CustomTooltip = ({
   payload,
   label,
 }: TooltipProps<number, string>) => {
-  if (!active || !payload || !payload.length || !payload[0].dataKey)
-    return null;
+  if (!active || !payload || !payload.length) return null;
 
-  const [sector] = payload[0].dataKey.split("_scope");
+  // Extract the sector name from the first payload item's dataKey
+  const firstDataKey = payload[0].dataKey as string;
+  const [sectorName] = firstDataKey.split("_scope");
+
+  // Find all payload items for this sector
+  const sectorPayloads = payload.filter((p) =>
+    (p.dataKey as string).startsWith(`${sectorName}_scope`)
+  );
+
+  // Get values for each scope
   const scope1 =
-    payload.find((p) => p.dataKey === `${sector}_scope1`)?.value || 0;
+    sectorPayloads.find((p) => (p.dataKey as string).endsWith("_scope1"))
+      ?.value || 0;
+
   const scope2 =
-    payload.find((p) => p.dataKey === `${sector}_scope2`)?.value || 0;
+    sectorPayloads.find((p) => (p.dataKey as string).endsWith("_scope2"))
+      ?.value || 0;
+
   const scope3 =
-    payload.find((p) => p.dataKey === `${sector}_scope3`)?.value || 0;
+    sectorPayloads.find((p) => (p.dataKey as string).endsWith("_scope3"))
+      ?.value || 0;
+
   const total = scope1 + scope2 + scope3;
 
   return (
     <div className="bg-black-2 border border-black-1 rounded-lg shadow-xl p-4 text-white">
       <p className="text-sm font-medium mb-2">{label}</p>
       <div className="mb-3">
-        <p className="text-sm font-medium mb-2">{sector}</p>
+        <p className="text-sm font-medium mb-2">{sectorName}</p>
         <div className="space-y-1">
           <div className="flex justify-between text-sm text-grey">
             <span>Scope 1:</span>
             <span className="font-medium text-white">
-              {Number(scope1).toLocaleString()} tonnes CO₂e
+              {Number(scope1).toLocaleString()} tCO₂e
             </span>
           </div>
           <div className="flex justify-between text-sm text-grey">
             <span>Scope 2:</span>
             <span className="font-medium text-white">
-              {Number(scope2).toLocaleString()} tonnes CO₂e
+              {Number(scope2).toLocaleString()} tCO₂e
             </span>
           </div>
           <div className="flex justify-between text-sm text-grey">
             <span>Scope 3:</span>
             <span className="font-medium text-white">
-              {Number(scope3).toLocaleString()} tonnes CO₂e
+              {Number(scope3).toLocaleString()} tCO₂e
             </span>
           </div>
           <div className="pt-2 border-t border-black-1">
             <div className="flex justify-between text-sm">
               <span className="text-grey">Total:</span>
               <span className="font-medium text-white">
-                {Number(total).toLocaleString()} tonnes CO₂e
+                {Number(total).toLocaleString()} tCO₂e
               </span>
             </div>
           </div>
@@ -240,7 +254,7 @@ const PieChartTooltip = ({ active, payload }: TooltipProps<number, string>) => {
       <div className="flex justify-between text-sm">
         <span className="text-grey">Emissions:</span>
         <span className="font-medium text-white">
-          {Number(value).toLocaleString()} tonCO₂e
+          {Number(value).toLocaleString()} tCO₂e
         </span>
       </div>
       <div className="flex justify-between text-sm mt-1">
@@ -252,19 +266,19 @@ const PieChartTooltip = ({ active, payload }: TooltipProps<number, string>) => {
           <div className="flex justify-between text-sm text-grey">
             <span>Scope 1:</span>
             <span className="font-medium text-white">
-              {Number(data.scope1).toLocaleString()} tonCO₂e
+              {Number(data.scope1).toLocaleString()} tCO₂e
             </span>
           </div>
           <div className="flex justify-between text-sm text-grey">
             <span>Scope 2:</span>
             <span className="font-medium text-white">
-              {Number(data.scope2).toLocaleString()} tonCO₂e
+              {Number(data.scope2).toLocaleString()} tCO₂e
             </span>
           </div>
           <div className="flex justify-between text-sm text-grey">
             <span>Scope 3:</span>
             <span className="font-medium text-white">
-              {Number(data.scope3).toLocaleString()} tonCO₂e
+              {Number(data.scope3).toLocaleString()} tCO₂e
             </span>
           </div>
         </div>
@@ -289,26 +303,26 @@ const CompanyTooltip: React.FC<TooltipProps<number, string>> = ({
         <div className="flex justify-between text-sm text-grey">
           <span>Scope 1:</span>
           <span className="font-medium text-white">
-            {Number(scope1).toLocaleString()} tonnes CO₂e
+            {Number(scope1).toLocaleString()} tCO₂e
           </span>
         </div>
         <div className="flex justify-between text-sm text-grey">
           <span>Scope 2:</span>
           <span className="font-medium text-white">
-            {Number(scope2).toLocaleString()} tonnes CO₂e
+            {Number(scope2).toLocaleString()} tCO₂e
           </span>
         </div>
         <div className="flex justify-between text-sm text-grey">
           <span>Scope 3:</span>
           <span className="font-medium text-white">
-            {Number(scope3).toLocaleString()} tonnes CO₂e
+            {Number(scope3).toLocaleString()} tCO₂e
           </span>
         </div>
         <div className="pt-2 border-t border-black-1">
           <div className="flex justify-between text-sm">
             <span className="text-grey">Total:</span>
             <span className="font-medium text-white">
-              {Number(total).toLocaleString()} tonnes CO₂e
+              {Number(total).toLocaleString()} tCO₂e
             </span>
           </div>
         </div>
@@ -579,7 +593,7 @@ const EmissionsChart: React.FC<EmissionsChartProps> = ({
                   {selectedSector ? "Sector Total" : "Total"} Emissions
                 </div>
                 <div className="text-xl font-light text-white">
-                  {totalEmissions.toLocaleString()} tonnes CO₂e
+                  {totalEmissions.toLocaleString()} tCO₂e
                 </div>
               </div>
               <select
