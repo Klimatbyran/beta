@@ -237,6 +237,11 @@
           }
         }
       },
+      "calculations": {
+        "title": "Om våra beräkningar",
+        "paragraph1": "Utsläppsdata för kommunerna bygger på SMHI:s nationella emissionsdatabas för åren 1990-2022 och har för 2022–2024 approximerats utifrån historiska trender för att kunna visa data fram till idag.",
+        "paragraph2": "<0>Här</0> kan du läsa ett exempel på hur vi beräknar nyckeltal för kommuners utsläpp."
+      },
       "co2Budgets": {
         "title": "Om koldioxidbudgetar",
         "paragraph1": "En koldioxidbudget anger hur mycket koldioxid som kan släppas ut innan koldioxidhalten i atmosfären blir så hög att uppvärmningen överstiger Parisavtalets 1,5-gradersmål.",
@@ -552,7 +557,7 @@
       "tonsCO2e": "ton CO₂e",
       "clickToFilter": "Klicka för att filtrera bort",
       "resetAll": "Återställ alla",
-      "showingCategories": "Visar {shown} av {total} kategorier. Filtrerade kategorier:"
+      "showingCategories": "Visar {{shown}} av {{total}} kategorier. Filtrerade kategorier:"
     },
     "scope3Data": {
       "categories": "Scope 3-kategorier",

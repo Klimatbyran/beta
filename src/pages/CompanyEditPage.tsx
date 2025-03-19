@@ -81,7 +81,7 @@ export function CompanyEditPage() {
         if(input.type === "checkbox") {
           setFormData(formData.set(input.name, input.checked ? "true" : "false"));
         } else {
-          setFormData(formData.set(input.name, input.value));
+          input.value && setFormData(formData.set(input.name, input.value));
         }
       }
     }

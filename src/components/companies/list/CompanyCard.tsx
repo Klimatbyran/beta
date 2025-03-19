@@ -82,7 +82,7 @@ export function CompanyCard({
     <div className="relative rounded-level-2">
       <Link
         to={`/companies/${wikidataId}`}
-        className="block bg-black-2 rounded-level-2 p-8 space-y-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
+        className="block bg-black-2 rounded-level-2 p-8 space-y-8 transition-all duration-300 hover:shadow-[0_0_10px_rgba(153,207,255,0.15)] hover:bg-[#1a1a1a]"
       >
         <div className="flex items-start justify-between rounded-level-2">
           <div className="space-y-2">
