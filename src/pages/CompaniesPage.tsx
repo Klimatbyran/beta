@@ -323,9 +323,9 @@ export function CompaniesPage() {
           {filteredCompanies.map((company) => (
             <div
               key={company.wikidataId}
-              className="group overflow-hidden rounded-level-2"
+              className="block rounded-level-2"
             >
-              <div className="transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(153,207,255,0.15)]">
+              <div>
                 <CompanyCard
                   {...company}
                   metrics={{
