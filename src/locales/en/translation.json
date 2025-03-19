@@ -229,6 +229,11 @@
           }
         }
       },
+      "calculations": {
+        "title": "About Our Calculations",
+        "paragraph1": "The emissions data for municipalities is based on SMHI's national emissions database for the years 1990–2022. For 2022–2024, emissions have been approximated based on historical trends to provide data up to the present day.",
+        "paragraph2": "<0>Here</0> you can read an example of how we calculate key figures for municipal emissions (link in Swedish)."
+      },
       "co2Budgets": {
         "title": "About Carbon Budgets",
         "paragraph1": "A carbon budget represents the amount of carbon dioxide that can be emitted before atmospheric CO₂ levels rise high enough to exceed the Paris Agreement's 1.5°C target.",
