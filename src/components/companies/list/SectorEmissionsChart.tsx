@@ -17,7 +17,6 @@ import {
   X,
   BarChart3,
   PieChart as PieChartIcon,
-  Filter,
   ArrowLeft,
 } from "lucide-react";
 import {
@@ -137,7 +136,8 @@ const CustomTooltip = ({
   payload,
   label,
 }: TooltipProps<number, string>) => {
-  if (!active || !payload || !payload.length) return null;
+  if (!active || !payload || !payload.length || !payload[0].dataKey)
+    return null;
 
   const [sector] = payload[0].dataKey.split("_scope");
   const scope1 =
@@ -232,7 +232,7 @@ const PieChartTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (!active || !payload || !payload.length) return null;
 
   const { name, value, payload: data } = payload[0];
-  const percentage = ((value / data.total) * 100).toFixed(1);
+  const percentage = value ? ((value / data.total) * 100).toFixed(1) : "0.0";
 
   return (
     <div className="bg-black-2 border border-black-1 rounded-lg shadow-xl p-4 text-white">
@@ -616,12 +616,27 @@ const EmissionsChart: React.FC<EmissionsChartProps> = ({
               />
               <YAxis
                 label={{
-                  value: "CO₂e (tonnes)",
+                  value: "tonCO₂e",
                   angle: -90,
                   position: "insideLeft",
                   fill: "#888888",
+                  style: { fontSize: "10px" },
                 }}
-                tick={{ fill: "#888888" }}
+                tick={{
+                  fill: "#888888",
+                  fontSize: 10,
+                }}
+                tickFormatter={(value) => {
+                  if (value >= 1000000000) {
+                    return `${(value / 1000000000).toFixed(1)}B`;
+                  } else if (value >= 1000000) {
+                    return `${(value / 1000000).toFixed(1)}M`;
+                  } else if (value >= 1000) {
+                    return `${(value / 1000).toFixed(1)}K`;
+                  }
+                  return value;
+                }}
+                width={50}
               />
               <Tooltip
                 content={

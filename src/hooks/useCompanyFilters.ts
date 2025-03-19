@@ -284,28 +284,51 @@ export const useCompanyFilters = (companies: Company[]) => {
   };
 };
 
-// Add a hook to get company colors for charts
+// Update the useCompanyColors hook to use CSS variables
 export function useCompanyColors() {
   const companyColorPalettes = [
+    // Blue palette
     {
-      base: "#FF9F1C",
-      scope1: "#FF9F1C",
-      scope2: "#FFBF69",
-      scope3: "#FFF0D9",
+      base: "var(--blue-5)",
+      scope1: "var(--blue-5)",
+      scope2: "var(--blue-3)",
+      scope3: "var(--blue-1)",
     },
     {
-      base: "#2EC4B6",
-      scope1: "#2EC4B6",
-      scope2: "#7DDFD5",
-      scope3: "#CBF3EF",
+      base: "var(--blue-4)",
+      scope1: "var(--blue-4)",
+      scope2: "var(--blue-2)",
+      scope3: "var(--blue-1)",
     },
     {
-      base: "#E71D36",
-      scope1: "#E71D36",
-      scope2: "#F27D8E",
-      scope3: "#FBDCE1",
+      base: "var(--blue-3)",
+      scope1: "var(--blue-3)",
+      scope2: "var(--blue-5)",
+      scope3: "var(--blue-1)",
     },
-    // Add more color palettes as needed
+
+      
+    // Green palette
+    {
+      base: "var(--green-5)",
+      scope1: "var(--green-5)",
+      scope2: "var(--green-3)",
+      scope3: "var(--green-1)",
+    },
+    // Pink palette
+    {
+      base: "var(--pink-5)",
+      scope1: "var(--pink-5)",
+      scope2: "var(--pink-3)",
+      scope3: "var(--pink-1)",
+    },
+    // Orange palette
+    {
+      base: "var(--orange-5)",
+      scope1: "var(--orange-5)",
+      scope2: "var(--orange-3)",
+      scope3: "var(--orange-1)",
+    },
   ];
 
   return (index: number) => {

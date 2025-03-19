@@ -49,6 +49,7 @@ interface FilterPopoverProps {
   setSectors: React.Dispatch<React.SetStateAction<CompanySector[]>>;
   sortBy: SortOption;
   setSortBy: (sort: SortOption) => void;
+  viewMode: "graphs" | "list";
 }
 
 function FilterPopover({
@@ -58,37 +59,81 @@ function FilterPopover({
   setSectors,
   sortBy,
   setSortBy,
+  viewMode,
 }: FilterPopoverProps) {
   const { t } = useTranslation();
+  const sectorOptions = useSectors();
+  const sortOptions = useSortOptions();
 
   return (
     <Popover open={filterOpen} onOpenChange={setFilterOpen}>
       <PopoverTrigger asChild>
         <Button
-          type="button"
           variant="outline"
           size="sm"
-          className="h-8 bg-black-1 border-none gap-2"
+          className="bg-black-1 border-black-1 text-grey hover:text-white hover:bg-black-1/80 hover:border-black-1"
         >
-          <Filter className="w-4 h-4" />
+          <Filter className="mr-2 h-4 w-4" />
           {t("companiesPage.filter")}
-          {sectors.length > 0 && (
-            <Badge
-              variant="secondary"
-              className="ml-1 bg-blue-5/30 text-blue-2"
-            >
-              {sectors.length}
-            </Badge>
-          )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" align="end">
-        <FilterCommands
-          sectors={sectors}
-          setSectors={setSectors}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
+      <PopoverContent
+        className="w-[300px] p-0 bg-black-2 border-black-1"
+        align="end"
+      >
+        <Command className="bg-transparent">
+          <CommandInput
+            placeholder={t("companiesPage.filterPlaceholder")}
+            className="border-b border-black-1"
+          />
+          <CommandList className="max-h-[300px]">
+            <CommandEmpty>{t("companiesPage.noResults")}</CommandEmpty>
+            <CommandGroup heading={t("companiesPage.sector")}>
+              {sectorOptions.map((sector) => (
+                <CommandItem
+                  key={sector.value}
+                  onSelect={() => {
+                    if (sector.value === "all") {
+                      setSectors(["all"]);
+                    } else if (sectors.includes("all")) {
+                      setSectors([sector.value]);
+                    } else if (sectors.includes(sector.value)) {
+                      setSectors(sectors.filter((s) => s !== sector.value));
+                    } else {
+                      setSectors([...sectors, sector.value]);
+                    }
+                  }}
+                  className="flex items-center justify-between cursor-pointer"
+                >
+                  <span>{sector.label}</span>
+                  {sectors.includes(sector.value) && (
+                    <Check className="h-4 w-4 text-blue-2" />
+                  )}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+
+            {viewMode === "list" && (
+              <>
+                <CommandSeparator className="bg-black-1" />
+                <CommandGroup heading={t("companiesPage.sortBy")}>
+                  {sortOptions.map((option) => (
+                    <CommandItem
+                      key={option.value}
+                      onSelect={() => setSortBy(option.value)}
+                      className="flex items-center justify-between cursor-pointer"
+                    >
+                      <span>{option.label}</span>
+                      {sortBy === option.value && (
+                        <Check className="h-4 w-4 text-blue-2" />
+                      )}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </>
+            )}
+          </CommandList>
+        </Command>
       </PopoverContent>
     </Popover>
   );
@@ -211,12 +256,16 @@ export function CompaniesPage() {
           : sectorNames[sec as SectorCode] || sec,
       onRemove: () => setSectors((prev) => prev.filter((s) => s !== sec)),
     })),
-    {
-      type: "sort" as const,
-      label: String(
-        sortOptions.find((s) => s.value === sortBy)?.label ?? sortBy
-      ),
-    },
+    ...(viewMode === "list"
+      ? [
+          {
+            type: "sort" as const,
+            label: String(
+              sortOptions.find((s) => s.value === sortBy)?.label ?? sortBy
+            ),
+          },
+        ]
+      : []),
   ];
 
   if (loading) {
@@ -291,14 +340,16 @@ export function CompaniesPage() {
             </Button>
           </div>
 
-          {/* Search Input */}
-          <Input
-            type="text"
-            placeholder={t("companiesPage.searchPlaceholder")}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 relative w-full md:w-[350px]"
-          />
+          {/* Search Input - Only show in list view */}
+          {viewMode === "list" && (
+            <Input
+              type="text"
+              placeholder={t("companiesPage.searchPlaceholder")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-black-1 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-2 relative w-full md:w-[350px]"
+            />
+          )}
 
           {/* Filter Button */}
           <FilterPopover
@@ -308,6 +359,7 @@ export function CompaniesPage() {
             setSectors={setSectors}
             sortBy={sortBy}
             setSortBy={setSortBy}
+            viewMode={viewMode}
           />
 
           {/* Badges - Stay inline on desktop, wrap on mobile */}
@@ -366,11 +418,11 @@ export function CompaniesPage() {
       ) : (
         <SectorGraphs
           companies={companies}
-          // selectedSectors={
-          //   sectors.length > 0
-          //     ? sectors
-          //     : Object.keys(sectorNames).filter((key) => key !== "all")
-          // }
+          selectedSectors={
+            sectors.length > 0
+              ? sectors
+              : Object.keys(sectorNames).filter((key) => key !== "all")
+          }
         />
       )}
     </div>
