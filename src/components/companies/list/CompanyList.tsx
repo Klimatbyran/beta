@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslation } from "react-i18next";
 import { useCategoryMetadata } from "@/hooks/useCategories";
+import { localizeUnit } from "@/utils/localizeUnit";
 
 type SortOption = "emissions" | "turnover" | "employees" | "name";
 
@@ -158,7 +159,7 @@ export function CompanyList() {
                       </span>
                     </div>
                     <div className="text-lg font-light">
-                      {(turnover.value / 1e9).toFixed(1)} mdr
+                      {localizeUnit(turnover.value / 1e9)} mdr
                       <span className="text-xs text-grey ml-1">
                         {turnover.currency}
                       </span>
@@ -175,7 +176,7 @@ export function CompanyList() {
                       </span>
                     </div>
                     <div className="text-lg font-light">
-                      {employees.value.toLocaleString()}
+                      {localizeUnit(employees.value)}
                     </div>
                   </div>
                 )}
@@ -189,7 +190,7 @@ export function CompanyList() {
                       </span>
                     </div>
                     <div className="text-lg font-light">
-                      {(emissions.scope1And2.total / 1000).toFixed(1)}k
+                      {localizeUnit(emissions.scope1And2.total / 1000)}k
                       <span className="text-xs text-grey ml-1">
                         {emissions.scope1And2.unit}
                       </span>
