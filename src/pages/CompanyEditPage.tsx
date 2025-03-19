@@ -78,10 +78,12 @@ export function CompanyEditPage() {
     if(formRef.current !== null) {
       const inputs = formRef.current.querySelectorAll("input");
       for(const input of inputs) {
+        if (input.value === input.defaultValue) continue
+
         if(input.type === "checkbox") {
           setFormData(formData.set(input.name, input.checked ? "true" : "false"));
         } else {
-          input.value && setFormData(formData.set(input.name, input.value));
+          setFormData(formData.set(input.name, input.value));
         }
       }
     }
