@@ -109,6 +109,88 @@ export type SortOption =
   | "name_asc"
   | "name_desc";
 
+// Add sector color types
+export interface SectorColor {
+  base: string;
+  scope1: string;
+  scope2: string;
+  scope3: string;
+}
+
+export type SectorColors = {
+  [key in SectorCode]: SectorColor;
+};
+
+// Add the sector colors
+export const sectorColors: SectorColors = {
+  "10": {
+    base: "var(--green-5)",
+    scope1: "var(--green-5)",
+    scope2: "var(--green-4)",
+    scope3: "var(--green-3)",
+  },
+  "15": {
+    base: "blue-5",
+    scope1: "var(--blue-5)",
+    scope2: "var(--blue-4)",
+    scope3: "var(--blue-3)",
+  },
+  "20": {
+    base: "pink-5",
+    scope1: "var(--pink-5)",
+    scope2: "var(--pink-4)",
+    scope3: "var(--pink-3)",
+  },
+  "25": {
+    base: "orange-5",
+    scope1: "var(--orange-5)",
+    scope2: "var(--orange-4)",
+    scope3: "var(--orange-3)",
+  },
+  "30": {
+    base: "green-3",
+    scope1: "var(--green-3)",
+    scope2: "var(--green-2)",
+    scope3: "var(--green-1)",
+  },
+  "35": {
+    base: "blue-3",
+    scope1: "var(--blue-3)",
+    scope2: "var(--blue-2)",
+    scope3: "var(--blue-1)",
+  },
+  "40": {
+    base: "pink-3",
+    scope1: "var(--pink-3)",
+    scope2: "var(--pink-2)",
+    scope3: "var(--pink-1)",
+  },
+  "45": {
+    base: "orange-3",
+    scope1: "var(--orange-3)",
+    scope2: "var(--orange-2)",
+    scope3: "var(--orange-1)",
+  },
+  "50": {
+    base: "blue-4",
+    scope1: "var(--blue-4)",
+    scope2: "var(--blue-3)",
+    scope3: "var(--blue-2)",
+  },
+  "55": {
+    base: "blue-4",
+    scope1: "var(--blue-4)",
+    scope2: "var(--blue-3)",
+    scope3: "var(--blue-2)",
+  },
+  "60": {
+    base: "var(--pink-4)",
+    scope1: "var(--pink-4)",
+    scope2: "var(--pink-3)",
+    scope3: "var(--pink-2)",
+  },
+};
+
 export const useCompanyFilters = (companies: Company[]) => {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -201,3 +283,55 @@ export const useCompanyFilters = (companies: Company[]) => {
     sortOptions,
   };
 };
+
+// Update the useCompanyColors hook to use CSS variables
+export function useCompanyColors() {
+  const companyColorPalettes = [
+    // Blue palette
+    {
+      base: "var(--blue-5)",
+      scope1: "var(--blue-5)",
+      scope2: "var(--blue-3)",
+      scope3: "var(--blue-1)",
+    },
+    {
+      base: "var(--blue-4)",
+      scope1: "var(--blue-4)",
+      scope2: "var(--blue-2)",
+      scope3: "var(--blue-1)",
+    },
+    {
+      base: "var(--blue-3)",
+      scope1: "var(--blue-3)",
+      scope2: "var(--blue-5)",
+      scope3: "var(--blue-1)",
+    },
+
+      
+    // Green palette
+    {
+      base: "var(--green-5)",
+      scope1: "var(--green-5)",
+      scope2: "var(--green-3)",
+      scope3: "var(--green-1)",
+    },
+    // Pink palette
+    {
+      base: "var(--pink-5)",
+      scope1: "var(--pink-5)",
+      scope2: "var(--pink-3)",
+      scope3: "var(--pink-1)",
+    },
+    // Orange palette
+    {
+      base: "var(--orange-5)",
+      scope1: "var(--orange-5)",
+      scope2: "var(--orange-3)",
+      scope3: "var(--orange-1)",
+    },
+  ];
+
+  return (index: number) => {
+    return companyColorPalettes[index % companyColorPalettes.length];
+  };
+}
