@@ -1,12 +1,21 @@
-import { useLanguage } from "@/components/LanguageProvider";
+export const localizeUnit = (unit: number | Date | string, currentLanguage: string) => {
+    
+    const formatNumber = (num: number) => num.toLocaleString(
+      currentLanguage === 'sv' 
+      ? 'sv-SE' 
+      : 'en-US',
+      { minimumFractionDigits: 1, maximumFractionDigits: 1 }
+    );
+  
+    if (typeof unit === 'number') {
+      return formatNumber(unit);
+    }
 
-export const localizeUnit = (unit: number) => {
-    const { currentLanguage } = useLanguage();
-
-    return unit.toLocaleString(
-        currentLanguage === 'sv'
-        ? 'sv-SE'
-        : 'en-US',
-        { minimumFractionDigits: 1, maximumFractionDigits: 1 }
-    )
-}
+    if (unit instanceof Date) {
+      return new Intl.DateTimeFormat(
+        currentLanguage === 'sv' ? 'sv-SE' : 'en-US',
+        { dateStyle: 'short' }
+      ).format(unit);
+    }
+  }
+  

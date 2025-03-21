@@ -152,9 +152,9 @@ export function CompanyOverview({
           </Text>
           <div className="flex items-baseline gap-4">
             <Text className="text-3xl lg:text-6xl md:text-4xl sm:text-3xl font-light text-orange-2 tracking-tighter leading-none">
-              {(
-                selectedPeriod.emissions?.calculatedTotalEmissions || 0
-              ).toLocaleString("sv-SE")}
+              {
+                localizeUnit(selectedPeriod.emissions?.calculatedTotalEmissions || 0)
+              }
               <span className="text-lg lg:text-2xl md:text-lg sm:text-sm ml-2 text-grey">
                 {t("companies.overview.tonsCO2e")}
               </span>
@@ -206,7 +206,7 @@ export function CompanyOverview({
             </Text>
             <Text className="text-base md:text-base sm:text-sm">
               {selectedPeriod.economy?.employees?.value
-                ? selectedPeriod.economy.employees.value.toLocaleString("sv-SE")
+                ? localizeUnit(selectedPeriod.economy.employees.value)
                 : t("companies.overview.notReported")}
             </Text>
           </div>

@@ -1,7 +1,6 @@
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 
-
 interface StatCardProps {
   title: string;
   value: string | number;

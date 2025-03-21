@@ -24,6 +24,8 @@ import { CustomTooltip } from "./CustomTooltip";
 import { DataViewSelector } from "./DataViewSelector";
 import { useTranslation } from "react-i18next";
 import { useCategoryMetadata } from "@/hooks/useCategories";
+import { useLanguage } from "@/components/LanguageProvider";
+
 
 export function EmissionsHistory({
   reportingPeriods,
@@ -50,6 +52,8 @@ export function EmissionsHistory({
     );
   }
   const isMobile = useScreenSize();
+
+  const { currentLanguage } = useLanguage();
 
   const hasScope3Categories = useMemo(
     () =>
@@ -80,6 +84,8 @@ export function EmissionsHistory({
     () => getChartData(processedPeriods),
     [processedPeriods]
   );
+
+  console.log(chartData)
 
   const handleClick = (data: any) => {
     if (data?.activePayload?.[0]?.payload?.total) {
@@ -164,6 +170,7 @@ export function EmissionsHistory({
               width={80}
               domain={[0, "auto"]}
               padding={{ top: 0, bottom: 0 }}
+              tickFormatter={(value) => new Intl.NumberFormat(currentLanguage === 'sv' ? 'sv-SE' : 'en-US').format(value)}
             />
             <Tooltip content={<CustomTooltip />} />
 

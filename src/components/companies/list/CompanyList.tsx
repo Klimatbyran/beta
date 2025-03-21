@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslation } from "react-i18next";
 import { useCategoryMetadata } from "@/hooks/useCategories";
+import { useLanguage } from "@/components/LanguageProvider";
 import { localizeUnit } from "@/utils/localizeUnit";
 
 type SortOption = "emissions" | "turnover" | "employees" | "name";
@@ -27,6 +28,7 @@ export function CompanyList() {
   const [sortBy, setSortBy] = useState<SortOption>("emissions");
   const [sortedCompanies, setSortedCompanies] = useState(companies);
   const { getCategoryColor } = useCategoryMetadata();
+  const { currentLanguage } = useLanguage();
 
   // Memoize the sorting function to prevent unnecessary recalculations
   const getSortedCompanies = useMemo(
@@ -159,7 +161,7 @@ export function CompanyList() {
                       </span>
                     </div>
                     <div className="text-lg font-light">
-                      {localizeUnit(turnover.value / 1e9)} mdr
+                      {localizeUnit(turnover.value / 1e9, currentLanguage)}
                       <span className="text-xs text-grey ml-1">
                         {turnover.currency}
                       </span>
@@ -176,7 +178,7 @@ export function CompanyList() {
                       </span>
                     </div>
                     <div className="text-lg font-light">
-                      {localizeUnit(employees.value)}
+                      {localizeUnit(employees.value, currentLanguage)}
                     </div>
                   </div>
                 )}
@@ -190,7 +192,7 @@ export function CompanyList() {
                       </span>
                     </div>
                     <div className="text-lg font-light">
-                      {localizeUnit(emissions.scope1And2.total / 1000)}k
+                      {localizeUnit(emissions.scope1And2.total / 1000, currentLanguage)}k
                       <span className="text-xs text-grey ml-1">
                         {emissions.scope1And2.unit}
                       </span>
