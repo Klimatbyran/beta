@@ -10,12 +10,15 @@ import { MunicipalityLinkCard } from "@/components/municipalities/MunicipalityLi
 import { useTranslation } from "react-i18next";
 import { PageSEO } from "@/components/SEO/PageSEO";
 import { useEffect } from "react";
+import { localizeUnit } from "@/utils/localizeUnit";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export function MunicipalityDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { municipality, loading, error } = useMunicipalityDetails(id || "");
-
+  const { currentLanguage } = useLanguage(); 
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -36,7 +39,7 @@ export function MunicipalityDetailPage() {
   const lastYearEmissions = municipality.approximatedHistoricalEmission.at(-1);
   const lastYear = lastYearEmissions?.year;
   const lastYearEmissionsKTon = lastYearEmissions
-    ? (lastYearEmissions.value / 1000).toFixed(1)
+    ? localizeUnit((lastYearEmissions.value / 1000), currentLanguage)
     : "N/A";
 
   // Prepare SEO data
@@ -153,7 +156,7 @@ export function MunicipalityDetailPage() {
               value={
                 municipality.hitNetZero === "Aldrig"
                   ? t("municipalityDetailPage.never")
-                  : municipality.hitNetZero.toString()
+                  : localizeUnit(new Date(municipality.hitNetZero), currentLanguage)
               }
               valueClassName={cn(
                 municipality.hitNetZero === "Aldrig" ||
@@ -184,9 +187,7 @@ export function MunicipalityDetailPage() {
           items={[
             {
               title: t("municipalityDetailPage.annualChangeSince2015"),
-              value: `${municipality.historicalEmissionChangePercent.toFixed(
-                1
-              )}%`,
+              value: `${localizeUnit(municipality.historicalEmissionChangePercent, currentLanguage)}%`,
               valueClassName: cn(
                 Math.abs(municipality.historicalEmissionChangePercent) >=
                   municipality.neededEmissionChangePercent
@@ -196,12 +197,12 @@ export function MunicipalityDetailPage() {
             },
             {
               title: t("municipalityDetailPage.reductionToMeetParis"),
-              value: `-${municipality.neededEmissionChangePercent.toFixed(1)}%`,
+              value: `-${localizeUnit(municipality.neededEmissionChangePercent, currentLanguage)}%`,
               valueClassName: "text-green-3",
             },
             {
               title: t("municipalityDetailPage.consumptionEmissionsPerCapita"),
-              value: (municipality.totalConsumptionEmission / 1000).toFixed(1),
+              value: localizeUnit(municipality.totalConsumptionEmission / 1000, currentLanguage),
               valueClassName: "text-orange-2",
             },
           ]}
@@ -245,15 +246,13 @@ export function MunicipalityDetailPage() {
           items={[
             {
               title: t("municipalityDetailPage.electricCarChange"),
-              value: `${(municipality.electricCarChangePercent * 100).toFixed(
-                1
-              )}%`,
+              value: `${localizeUnit(municipality.electricCarChangePercent * 100, currentLanguage)}%`,
               valueClassName: "text-orange-2",
             },
             {
               title: t("municipalityDetailPage.electricCarsPerChargePoint"),
               value: municipality.electricVehiclePerChargePoints
-                ? municipality.electricVehiclePerChargePoints.toFixed(1)
+                ? localizeUnit(municipality.electricVehiclePerChargePoints, currentLanguage)
                 : t("municipalityDetailPage.noChargePoints"),
               valueClassName: municipality.electricVehiclePerChargePoints
                 ? "text-green-3"
@@ -261,7 +260,7 @@ export function MunicipalityDetailPage() {
             },
             {
               title: t("municipalityDetailPage.bicycleMetrePerCapita"),
-              value: municipality.bicycleMetrePerCapita.toFixed(1),
+              value: localizeUnit(municipality.electricVehiclePerChargePoints, currentLanguage),
               valueClassName: "text-orange-2",
             },
           ]}
