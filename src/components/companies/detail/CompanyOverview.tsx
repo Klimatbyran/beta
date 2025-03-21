@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Pen } from "lucide-react";
 import { useSectorNames, SectorCode } from "@/hooks/useCompanyFilters";
+import { useLanguage } from "@/components/LanguageProvider";
 import { localizeUnit } from "@/utils/localizeUnit";
 
 interface CompanyOverviewProps {
@@ -39,6 +40,7 @@ export function CompanyOverview({
   const { token } = useAuth();
   const navigate = useNavigate();
   const sectorNames = useSectorNames();
+  const { currentLanguage } = useLanguage();
   
   const periodYear = new Date(selectedPeriod.endDate).getFullYear();
   
@@ -153,7 +155,7 @@ export function CompanyOverview({
           <div className="flex items-baseline gap-4">
             <Text className="text-3xl lg:text-6xl md:text-4xl sm:text-3xl font-light text-orange-2 tracking-tighter leading-none">
               {
-                localizeUnit(selectedPeriod.emissions?.calculatedTotalEmissions || 0)
+                localizeUnit(selectedPeriod.emissions?.calculatedTotalEmissions || 0, currentLanguage)
               }
               <span className="text-lg lg:text-2xl md:text-lg sm:text-sm ml-2 text-grey">
                 {t("companies.overview.tonsCO2e")}
@@ -193,7 +195,7 @@ export function CompanyOverview({
             </Text>
             <Text className="text-base md:text-base sm:text-sm">
               {selectedPeriod.economy?.turnover?.value
-                ? `${localizeUnit(selectedPeriod.economy.turnover.value / 1e9)
+                ? `${localizeUnit(selectedPeriod.economy.turnover.value / 1e9, currentLanguage)
 
                 } mdr ${selectedPeriod.economy.turnover.currency}`
                 : t("companies.overview.notReported")}
@@ -206,7 +208,7 @@ export function CompanyOverview({
             </Text>
             <Text className="text-base md:text-base sm:text-sm">
               {selectedPeriod.economy?.employees?.value
-                ? localizeUnit(selectedPeriod.economy.employees.value)
+                ? localizeUnit(selectedPeriod.economy.employees.value, currentLanguage)
                 : t("companies.overview.notReported")}
             </Text>
           </div>
